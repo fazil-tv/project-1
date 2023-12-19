@@ -7,8 +7,9 @@ const path = require('path');
 adminRoute.set('view engine', 'ejs');
 adminRoute.set('views', './views/admin');
 
-adminRoute.get("/adminsign", (req, res) => {
-    res.send("hi");
+
+adminRoute.get("/sign", (req, res) => {
+    res.render("login");
 });
 
 

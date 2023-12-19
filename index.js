@@ -39,8 +39,8 @@ const userRoute = require('./routes/userRoute')
 app.use('/',userRoute)
 
 
-const adminRoute = require('./routes/userRoute')
-app.use('/',adminRoute)
+const adminRoute = require('./routes/adminRoute')
+app.use('/admin',adminRoute)
 
 
 //mongodb user otp verification model
