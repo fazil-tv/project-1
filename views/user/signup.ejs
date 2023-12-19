@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>RegistrationForm_v1 by Colorlib</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- MATERIAL DESIGN ICONIC FONT -->
+	<link rel="stylesheet"
+		href="fonts/user-reg-fonts/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+
+	<!-- STYLE CSS -->
+	<link rel="stylesheet" href="css/css/user-regster.css">
+</head>
+
+<body>
+<style>
+.validation-form{
+  color: red;
+  position: relative;
+  bottom: 15px;
+  display: none ;
+}
+</style>
+
+
+	<div class="wrapper" style="background-image: url('/images/user-reg-.jpg');">
+		<div class="inner">
+			<div class="image-holder">
+				<img src="/images/user-reg-img-1.jpg" alt="">
+			</div>
+			<form action="/signup" method="post" id = 'myForm' onsubmit="validateForm()">
+				<h3>Registration Form</h3>
+				 	<% if(typeof message !== 'undefined') {%>
+						<p class="user-exist-"><%=message%></p>
+					<%}%>
+				<div class="form-wrapper">
+					<input type="text" name="username" placeholder="Username" class="form-control">
+					<i class="zmdi zmdi-account"></i>
+				</div>
+				<div id = "nameField" class="validation-form">Please enter your name </div>
+				<div class="form-wrapper">
+					<input type="email" name="email" placeholder="Email Address" class="form-control">
+					<i class="zmdi zmdi-email"></i>
+				</div>
+				<div id = "emailField" class="validation-form">Please enter a valid email</div>
+				<div class="form-wrapper">
+					<input type="number" name="mobilenumber" placeholder="mobile number" class="form-control">
+					<i class="zmdi zmdi-account"></i>
+				</div>
+				<div id = "mobileField" class="validation-form">Please enter valid mobile numbers</div>
+				<div class="form-wrapper">
+					<i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
+				</div>
+				<div class="form-wrapper">
+					<input type="password" name="password" placeholder="Password" class="form-control">
+					<i class="zmdi zmdi-lock"></i>
+				</div>
+				<div id = "passwordField" class="validation-form">Please enter at least 10 digits</div>
+				<div class="form-wrapper">
+					<input type="password" name="confirmPassword" placeholder="Confirm Password" class="form-control">
+					<i class="zmdi zmdi-lock"></i>
+				</div>
+				<div id = "confirmpasswordField" class="validation-form">dosen't match password</div>
+				<button type="submit" value="submit">Register
+					<i class="zmdi zmdi-arrow-right"></i>
+				</button>
+			</form>
+		</div>
+	</div>
+
+
+	<script src="js/signup-validation.js">
+	
+	</script>
+
+</body>
+
+</html>
