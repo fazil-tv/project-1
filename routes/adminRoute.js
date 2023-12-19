@@ -1,14 +1,16 @@
 const express = require("express");
 const adminRoute = express();
+const adminController = require("../controllers/adminControllers");
+const path = require('path');
 
 
-adminRoute.set('view engine','ejs')
-adminRoute.set('views','./views/user')
+adminRoute.set('view engine', 'ejs');
+adminRoute.set('views', './views/admin');
 
-// adminRoute.get("/home",(req,res)=>{
-//     res.render('indexhome')
-// })
-// adminRoute.get("/kr",(req,res)=>{
-    
-// })
+adminRoute.get("/adminsign", (req, res) => {
+    res.send("hi");
+});
+
+
+
 module.exports = adminRoute;
