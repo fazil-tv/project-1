@@ -32,7 +32,4 @@ const userOTPverificationSchema = new Schema({
 const Otp = mongoose.model("Otp",userOTPverificationSchema);
 
 
-
-
-
 module.exports = Otp;

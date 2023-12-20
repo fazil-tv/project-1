@@ -4,14 +4,14 @@ const path = require("path");
 require('dotenv').config();
 const session = require('express-session');
 // const router = express.router();
-
-// password handler
-const bcrypt = require("bcrypt")
-
-// email handler
 const nodemailer = require("nodemailer");
+const Otp = require('../model/userOTPverification')
+const bcrypt = require("bcrypt");
+
+
+
 const userOTPverification = require("../model/userOTPverification");
-const util = require('../util/util')
+
 
 
 // ----------------signup---------
@@ -32,13 +32,9 @@ const insertUser = async (req, res) => {
         const { username, email, mobilenumber, password, confirmPassword } = req.body;
         // Check if the user already exists based on username or email
         const existingUser = await User.findOne({ $or: [{ username }, { email }, { mobilenumber }] });
-        // console.log(existingUser);
-        // const id = existingUser._id
-        // console.log(id);
 
         if (existingUser) {
             // User already exists
-            // res.send(`<p>User ${username} already exists. Please choose another username.</p>`);
             const message = "User already exists"
             return res.render('signup', { message });
 
@@ -80,9 +76,51 @@ const insertUser = async (req, res) => {
 }
 
 
+// //  1 nodemailer setup
+let transporter = nodemailer.createTransport({
+    service:'gmail' ,
+    auth: {
+        user: process.env.NODE_MAILER_EMAIL,
+        pass: process.env.NODE_MAILER_PASS,
+    }
+});
+
+
+// email sending 
+let sendEmails = async (email,_id) => {
+    try {
+        
+        const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+        const mailOptions = {
+            from: process.env.NODE_MAILER_EMAIL,
+            to: email,
+            subject: "Verify Your Email",
+            html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete the signup.</p>
+                   <p>This code <b>expires in 1 hour</b>.</p>`,
+        };
+
+        // Send the email
+        const hashedOTP = await bcrypt.hash(otp,10);
+
+        await transporter.sendMail(mailOptions);
+        const newOtp = new Otp({
+            user_id:_id,
+            email: email,
+            otp: hashedOTP,
+        });
+        await newOtp.save();
+
+        console.log("Email sent successfully");
+    } catch (error) {
+        console.error("Error sending email:", error.message);
+    }
+};
+
+
+
 const sendmailUser = async (email,id,res) => {
     try {
-        await util.sendEmails(email,id);
+        await sendEmails(email,id);
         console.log("Email sent successfully");
         console.log(id);
         res.redirect(`/otp?id=${id}`);
@@ -91,7 +129,6 @@ const sendmailUser = async (email,id,res) => {
         res.send("Error sending email");
     }
 };
-
 
 
 //otp verification 
@@ -127,7 +164,6 @@ const verifyPost = async (req, res) => {
                 }
             }
         
-
     } catch (error) {
         console.log(error.message);
     }
@@ -144,7 +180,6 @@ const login = async (req, res) => {
     }
 
 }
-
 // -----Verify_Login-------
 
 const verifyLogin = async (req, res) => {
@@ -183,5 +218,7 @@ module.exports = {
     insertUser,
     verifyPost,
     login,
-    verifyLogin
+    verifyLogin,
+    sendEmails,
+    transporter
 }
