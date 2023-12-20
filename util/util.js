@@ -34,7 +34,6 @@ let sendEmails = async (email,_id) => {
         await transporter.sendMail(mailOptions);
         const newOtp = new Otp({
             user_id:_id,
-
             email: email,
             otp: hashedOTP,
         });
