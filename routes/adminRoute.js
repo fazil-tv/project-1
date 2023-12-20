@@ -10,7 +10,10 @@ adminRoute.set('views','./views/admin')
 adminRoute.get("/login",adminController.signup);
 adminRoute.post('/login',adminController.adminverifyLogin);
 
-// adminRoute.post('/',adminController.adminverifyLogin);
+adminRoute.get("/users",adminController.loadUser);
+adminRoute.get("/index",adminController.loaddashbord);
+
+
 
 
 

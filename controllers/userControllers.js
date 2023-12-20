@@ -76,7 +76,7 @@ const insertUser = async (req, res) => {
 }
 
 
-// //  1 nodemailer setup
+//  nodemailer setup
 let transporter = nodemailer.createTransport({
     service:'gmail' ,
     auth: {
@@ -205,6 +205,13 @@ const verifyLogin = async (req, res) => {
         console.log(error.message);
     }
 }
+
+
+
+// const users = await User.findOne({ $or: [{ username }, { email }, { mobilenumber }] });
+
+
+
 
 
 

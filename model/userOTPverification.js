@@ -9,8 +9,7 @@ const userOTPverificationSchema = new Schema({
         required:true
     },
     email:{
-        // type:Schema.Types.ObjectId,
-        // ref:"User",
+        
         type:String,
         required:true,
     },
@@ -30,6 +29,5 @@ const userOTPverificationSchema = new Schema({
 });
 
 const Otp = mongoose.model("Otp",userOTPverificationSchema);
-
 
 module.exports = Otp;

@@ -1,11 +1,7 @@
 require('dotenv').config();
-
+const userModal = require('../model/userSchema')
 const path = require("path");
 
-
-
-// const email = process.env.ADMIN_EMAIL;
-// const password = process.env.ADMIN_PASSWORD;
 
 
 // ----------------signup---------
@@ -18,6 +14,10 @@ const signup = async (req, res) => {
 }
 
 
+
+
+
+//admin password verification
 const adminverifyLogin = async (req, res) => {
 
     try {
@@ -28,7 +28,7 @@ const adminverifyLogin = async (req, res) => {
         
 
         if (email==useremail&&password==userpassword) {
-                res.send("done");
+                res.render('index')
         } else {
             const message ="Incorrect username or password";
             res.render('login', { message });
@@ -38,7 +38,31 @@ const adminverifyLogin = async (req, res) => {
     }
 }
 
+const loaddashbord=async(req,res)=>{
+    try {
+        res.render("index");
+    } catch (error) {
+        console.log(error);
+    }
+    
+}
+
+
+const loadUser=async(req,res)=>{
+    try {
+        const usersData = await userModal.find({})
+        console.log(usersData);
+        res.render("users",{usersData});
+    } catch (error) {
+        console.log(error);
+    }
+    
+}
+
+
 module.exports={
     adminverifyLogin,
-    signup
+    signup,
+    loadUser,
+    loaddashbord
 }
