@@ -21,7 +21,19 @@ const userSchema = new mongoose.Schema({
     confirmPassword:{
         type :String,
         required:true
-    }
+    },
+    verfied:{
+        type:Boolean,
+        default:false
+  
+      },
+      isAdmin:{
+          type:Number
+      },
+      is_blocked: {
+          type: Boolean,
+          default:false
+      }
 
 });
 const User = mongoose.model("User",userSchema);

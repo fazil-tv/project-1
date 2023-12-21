@@ -62,7 +62,7 @@ const insertUser = async (req, res) => {
         if (userData) {
             // Render the home page if the save operation is successful
 
-            await sendmailUser(email,id,res);
+            await sendmailUser(email,id,res); 
             
         } else {
             // Handle the case where the save operation did not return user data
@@ -191,7 +191,8 @@ const verifyLogin = async (req, res) => {
 
         if (userData) {
             const passwordMatch = await bcrypt.compare(password, userData.password);
-            if (passwordMatch) {
+            const userblock = await User.findOne({is_blocked:false}); 
+            if (passwordMatch&&userblock) {
                 req.session.user_id = userData._id;
                 res.redirect('/home');
             } else {

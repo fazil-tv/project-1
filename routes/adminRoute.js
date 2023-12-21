@@ -15,6 +15,9 @@ adminRoute.get("/index",adminController.loaddashbord);
 
 
 
+adminRoute.put('/blockUser', adminController.blockUser);
+adminRoute.put('/unblockUser', adminController.unblockUser);
+
 
 
 module.exports = adminRoute;
