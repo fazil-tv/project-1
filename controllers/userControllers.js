@@ -3,18 +3,14 @@ const User = require("../model/userSchema");
 const path = require("path");
 require('dotenv').config();
 const session = require('express-session');
-// const router = express.router();
 const nodemailer = require("nodemailer");
 const Otp = require('../model/userOTPverification')
 const bcrypt = require("bcrypt");
+// const userOTPverification = require("../model/userOTPverification");
 
 
 
-const userOTPverification = require("../model/userOTPverification");
-
-
-
-// ----------------signup---------
+// signup
 
 const signup = async (req, res) => {
     try {
@@ -24,8 +20,7 @@ const signup = async (req, res) => {
     }
 }
 
-//---------------insert user Data---------
-
+//insert user Data
 const insertUser = async (req, res) => {
 
     try {
@@ -41,7 +36,7 @@ const insertUser = async (req, res) => {
         }
         
 
-        // -------password-security(bcrypt)-------
+        // password-security(bcrypt)
 
         const hashedpassword = await bcrypt.hash(req.body.password,10);
         const hashedconfirmPassword = await bcrypt.hash(req.body.confirmPassword,10);
@@ -140,13 +135,13 @@ const verifyPost = async (req, res) => {
         const userId = req.session.user_id;
         console.log("Session ID:", userId);
 
-        const userOTPVerificationrecord = await userOTPverification.find({user_id: userId })
+        const userOTPVerificationrecord = await Otp.find({user_id: userId })
         console.log(userOTPVerificationrecord);
 
         if (userOTPVerificationrecord.length == 0) {
             res.render('otp', { message: "record doesn't exist or has been verified already" })
         } else {
-            const { expiresAt } = userOTPVerificationrecord[0];
+            // const { expiresAt } = userOTPVerificationrecord[0];
             const hashedOTP = userOTPVerificationrecord[0].otp;
 
             // if (expiresAt < Date.now()) {
@@ -158,7 +153,7 @@ const verifyPost = async (req, res) => {
                     res.render('otp', { message: "Invalid code" })
                 } else {
                     // await User.updateOne({ _id: userId }, { verfied: true });
-                    await userOTPverification.deleteOne({ user_id:userId });
+                    await Otp.deleteOne({ user_id:userId });
 
                     res.redirect(`/home`)
                 }
@@ -170,7 +165,7 @@ const verifyPost = async (req, res) => {
 }
 
 
-// ----------------login---------
+// login
 
 const login = async (req, res) => {
     try {
@@ -180,7 +175,8 @@ const login = async (req, res) => {
     }
 
 }
-// -----Verify_Login-------
+
+// Verify_Login
 
 const verifyLogin = async (req, res) => {
 
@@ -207,19 +203,6 @@ const verifyLogin = async (req, res) => {
     }
 }
 
-
-
-// const users = await User.findOne({ $or: [{ username }, { email }, { mobilenumber }] });
-
-
-
-
-
-
-
-
-
-
 module.exports = {
     signup,
     sendmailUser,
@@ -228,5 +211,4 @@ module.exports = {
     login,
     verifyLogin,
     sendEmails,
-    transporter
 }

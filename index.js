@@ -3,16 +3,22 @@ const express = require("express");
 const app = express();
 // const nocache =require ("nocache");
 const session = require("express-session");
-const router = express.Router();
+const morgan = require("morgan");
+const config = require('./config/config');
 
 require('dotenv').config();
 const PORT = process.env.PORT
 
+
+//session management
 app.use(session({
-    secret: "eolooooooo",
+    secret:config.sessionSecretKey,
     saveUninitialized: true,
     resave: false
   }))
+
+//using morgan middleware for logging HTTp requests
+app.use(morgan('dev'));
 
 
 //connect to mongodb 
@@ -23,6 +29,7 @@ mongoose.connect(process.env.MONGOURL);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Connection error:'));
 db.once('open', () =>console.log('Connected to the database!'));
+
 
 app.use(express.static('public'));
 
@@ -43,8 +50,6 @@ const adminRoute = require('./routes/adminRoute')
 app.use('/admin',adminRoute)
 
 
-//mongodb user otp verification model
-const userOTPverification = require("./model/userOTPverification")
 
 
 app.listen(PORT,()=>console.log("server started"));

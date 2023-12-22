@@ -1,7 +1,6 @@
 require('dotenv').config();
 const userModal = require('../model/userSchema')
 const path = require("path");
-const User = require("../model/userSchema");
 
 
 
@@ -60,29 +59,13 @@ const loadUser=async(req,res)=>{
 }
 
 
-//block user
-// const blockUser = async (req,res)=>{
-//     try{
-//         const user = req.body.id;
-//         const uservalue = await user.findOne({_id:user});
-//         if(uservalue.is_blocked){
-//             await user.updateOne({_id:user},{$set:{is_blocked:false}})
-        
-//         }else{
-//             await user.updateOne({_id:user},{$set:{is_blocked:true}});
-//         }
-//     }catch(error){
-//         console.log(error);
-//     }
-// }
-
 
 // block user
 const blockUser = async (req, res) => {
     
     try {
         const userId = req.body.userId;
-        await User.updateOne({ _id: userId }, { $set: { is_blocked: true } });
+        await userModal.updateOne({ _id: userId }, { $set: { is_blocked: true } });
         res.status(200).json({ message: 'User blocked successfully' });
     } catch (error) {
         console.log(error);
@@ -94,7 +77,7 @@ const blockUser = async (req, res) => {
 const unblockUser = async (req, res) => {
     try {
         const user = req.body.userId;
-        await User.updateOne({ _id: user }, { $set: { is_blocked: false } });
+        await userModal.updateOne({ _id: user }, { $set: { is_blocked: false } });
         res.status(200).json({ message: 'User unblocked successfully' });
     } catch (error) {
         console.log(error);
