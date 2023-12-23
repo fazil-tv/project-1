@@ -6,7 +6,6 @@ const session = require('express-session');
 const nodemailer = require("nodemailer");
 const Otp = require('../model/userOTPverification')
 const bcrypt = require("bcrypt");
-// const userOTPverification = require("../model/userOTPverification");
 
 
 

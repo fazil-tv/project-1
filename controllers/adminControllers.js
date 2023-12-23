@@ -14,6 +14,25 @@ const signup = async (req, res) => {
 }
 
 
+// users
+const users = async (req, res) => {
+    try {
+        res.render("users");
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+//add product
+const Product = async (req, res) => {
+    try {
+        res.render("product");
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
 
 
 
@@ -90,6 +109,8 @@ module.exports={
     adminverifyLogin,
     signup,
     loadUser,
+    users,
+    Product,
     loaddashbord,
     blockUser,
     unblockUser
