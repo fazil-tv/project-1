@@ -18,7 +18,11 @@
     <link rel="stylesheet" href="/assets/css/main.css">
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <!-- //pagination style -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
 </head>
 
 <body>
@@ -48,9 +52,9 @@
                     </a>
                 </li>
                 <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-orders-1.html">
+                    <a class="menu-link" href="/admin/category">
                         <i class="icon material-icons md-shopping_cart"></i>
-                        <span class="text">Orders</span>
+                        <span class="text">Category</span>
                     </a>
                 </li>
                 <li class="menu-item has-submenu">
@@ -207,11 +211,14 @@
                                     </td>
                                     <td>
                                         <% if (usersData[i].is_blocked) { %>
-                                            <button onclick="showConfirmationModal('<%= usersData[i]._id %>','<%= usersData[i].is_blocked %>')"
-                                                class="unblock-user" id="blockButton<%= usersData[i]._id %>">unblock</button>
+                                            <button
+                                                onclick="showConfirmationModal('<%= usersData[i]._id %>','<%= usersData[i].is_blocked %>')"
+                                                class="unblock-user"
+                                                id="blockButton<%= usersData[i]._id %>">unblock</button>
                                             <% } else { %>
                                                 <button onclick="showConfirmationModal('<%= usersData[i]._id %>')"
-                                                     class="block-user" id="blockButton<%= usersData[i]._id %>">block</button>
+                                                    class="block-user"
+                                                    id="blockButton<%= usersData[i]._id %>">block</button>
                                                 <% } %>
                                     </td>
                                 </tr>
@@ -226,7 +233,7 @@
             </div>
         </section>
         <section>
-            
+
             <!-- Modal -->
             <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
                 aria-hidden="true">
@@ -240,8 +247,9 @@
                             Are you sure you want to <span id="">block</span> this user?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-danger" id="mbid" onclick="confirmBlockUser()"></button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger" id="mbid"
+                                onclick="confirmBlockUser()"></button>
                         </div>
                     </div>
                 </div>x
@@ -251,23 +259,23 @@
 
         <script>
             function blockUser(userId) {
-                
+
                 // Get the button element associated with the user
                 const blockButton = document.getElementById(`blockButton${userId}`);
 
                 // Get the current text content of the button
                 let text = blockButton.innerHTML;
-               
+
                 // Check the text content to determine whether to block or unblock the user
                 if (text === "block") {
                     console.log("done")
-                    
+
                     fetch(`/admin/blockUser`, {
                         method: 'PUT',
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        
+
                         body: JSON.stringify({ userId })
                     })
                         .then(response => response.json())
@@ -297,25 +305,25 @@
         </script>
 
         <script>
-            function showConfirmationModal(userId,status) {
+            function showConfirmationModal(userId, status) {
 
                 //button text changing
-                if(status=="true"){
+                if (status == "true") {
                     document.getElementById('mbid').innerText = 'unblock'
-                }else{
+                } else {
                     document.getElementById('mbid').innerText = 'block'
                 }
                 $('#confirmationModal').data('userId', userId);
 
                 $('#confirmationModal').modal('show');
             }
-            
+
             function confirmBlockUser() {
-                
+
                 const userId = $('#confirmationModal').data('userId');
                 console.log(userId)
-                blockUser( userId )
-               
+                blockUser(userId)
+
                 $('#confirmationModal').modal('hide');
             }    
         </script>
@@ -330,7 +338,7 @@
                     <script>
                         document.write(new Date().getFullYear());
                     </script>
-                    
+
                 </div>
                 <div class="col-sm-6">
                     <div class="text-sm-end">All rights reserved</div>
@@ -340,8 +348,16 @@
     </main>
 
 
-
-
+    <!-- pagination jQuery links and js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tablePagination').DataTable();
+        });
+    </script>
 
 
 

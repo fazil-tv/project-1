@@ -11,7 +11,8 @@
             required: true
         },
         category:{
-          type:String,
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'category',
           required:true
       },
         price: {
@@ -50,3 +51,6 @@
             required: true
         }
     });
+    
+    const product = mongoose.model("product",productSchema);
+    module.exports = product;

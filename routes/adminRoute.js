@@ -2,8 +2,10 @@
 const express = require("express");
 const adminRoute = express();
 
-// Require admin Controllers
-const adminController = require("../controllers/adminControllers");
+// Require  Controllers
+const adminController = require("../controllers/adminController");
+const productController = require('../controllers/productController')
+const categoryController = require('../controllers/categoryController');
 
 
 adminRoute.set('view engine', 'ejs');
@@ -24,7 +26,14 @@ adminRoute.put('/unblockUser', adminController.unblockUser);
 //users
 adminRoute.get('/users',adminController.users);
 //product
-adminRoute.get('/product',adminController.Product);
+adminRoute.get('/product',productController.Product);
+//addproduct
+adminRoute.get('/addproduct',productController.addproduct);
+//category
+adminRoute.get('/category',categoryController.category);
+//addcategory
+adminRoute.get('/addcategory',categoryController.addcategory);
+adminRoute.post('/addcategory',categoryController.addCategoryPost);
 
 
 

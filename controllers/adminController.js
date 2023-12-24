@@ -1,7 +1,5 @@
 require('dotenv').config();
 const userModal = require('../model/userSchema')
-const path = require("path");
-
 
 
 // ----------------signup---------
@@ -23,14 +21,6 @@ const users = async (req, res) => {
     }
 }
 
-//add product
-const Product = async (req, res) => {
-    try {
-        res.render("product");
-    } catch (error) {
-        console.log(error.message);
-    }
-}
 
 
 
@@ -110,7 +100,6 @@ module.exports={
     signup,
     loadUser,
     users,
-    Product,
     loaddashbord,
     blockUser,
     unblockUser

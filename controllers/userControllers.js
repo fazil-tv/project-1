@@ -21,7 +21,6 @@ const signup = async (req, res) => {
 
 //insert user Data
 const insertUser = async (req, res) => {
-
     try {
         const { username, email, mobilenumber, password, confirmPassword } = req.body;
         // Check if the user already exists based on username or email
@@ -54,13 +53,11 @@ const insertUser = async (req, res) => {
         const userData = await user.save();
         const id=userData._id
         if (userData) {
-            // Render the home page if the save operation is successful
-
+ 
             await sendmailUser(email,id,res); 
             
         } else {
             // Handle the case where the save operation did not return user data
-
             return res.render('signup', { message: "Signup failed" });
         }
     } catch (error) {
