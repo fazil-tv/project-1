@@ -74,10 +74,10 @@ const blockUser = async (req, res) => {
     
     try {
         const userId = req.body.userId;
+        console.log(userId)
         await userModal.updateOne({ _id: userId }, { $set: { is_blocked: true } });
         res.status(200).json({ message: 'User blocked successfully' });
     } catch (error) {
-        console.log(error);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
@@ -89,7 +89,6 @@ const unblockUser = async (req, res) => {
         await userModal.updateOne({ _id: user }, { $set: { is_blocked: false } });
         res.status(200).json({ message: 'User unblocked successfully' });
     } catch (error) {
-        console.log(error);
         res.status(500).json({ message: 'Internal server error' });
     }
 };

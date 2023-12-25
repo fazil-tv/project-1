@@ -34,6 +34,9 @@ adminRoute.get('/category',categoryController.category);
 //addcategory
 adminRoute.get('/addcategory',categoryController.addcategory);
 adminRoute.post('/addcategory',categoryController.addCategoryPost);
+//
+adminRoute.put('/blockCategory', categoryController.blockCategory);
+adminRoute.put('/unblockCategory',categoryController.unblockCategory);
 
 
 

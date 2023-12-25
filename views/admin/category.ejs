@@ -152,32 +152,6 @@
             </div>
         </header>
         <section class="content-main">
-            <section>
-                <!-- Modal -->
-                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Are you sure you want to <span id="">block</span> this user?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-danger" id="mbid"
-                                    onclick="confirmBlockUser()"></button>
-                            </div>
-                        </div>
-                    </div>x
-                </div>
-            </section>
-
-
-
 
             <div class="content-header d-flex justify-content-center">
                 <h2 class="content-title">Category</h2>
@@ -218,14 +192,14 @@
                                         </b>
                                     </td>
                                     <td>
-                                        <% if (NewCategory[i].is_blocked) { %>
+                                        <% if (NewCategory[i].is_list) { %>
                                             <button
                                                 onclick="showConfirmationModal('<%= NewCategory[i]._id %>','<%=NewCategory[i].is_list %>')"
-                                                class="unblock-user"
+                                                class="unblock-category"
                                                 id="blockButton<%=NewCategory[i]._id %>">unblock</button>
                                             <% } else { %>
                                                 <button onclick="showConfirmationModal('<%= NewCategory[i]._id %>')"
-                                                    class="block-user"
+                                                    class="block-category"
                                                     id="blockButton<%= NewCategory[i]._id %>">block</button>
                                                 <% } %>
                                     </td>
@@ -242,19 +216,89 @@
                     </tbody>
                 </table>
             </div>
+            <section>
+                <!-- Modal -->
+                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to <span id="">block</span> this user?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger" id="mbid"
+                                    onclick="confirmBlockCategory()"></button>
+                            </div>
+                        </div>
+                    </div>x
+                </div>
+            </section>
+            <script>
+                function blockCategory(categoryId) {
+                    console.log(categoryId);
+                    const blockButton = document.getElementById(`blockButton${categoryId}`);
+                    let text = blockButton.innerHTML;
+
+                    if (text === 'block') {
+                        fetch(`/admin/blockCategory`, {
+                            method: 'PUT',
+                            headers: { 
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({ categoryId })
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                window.location.reload();
+                            })
+                            .catch(error => {
+                                console.log("error", error);
+                            });
+                    }
+
+                    else if (text === "unblock") {
+                    fetch(`/admin/unblockCategory`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': "application/json"
+                        },
+                        body: JSON.stringify({ categoryId })
+
+                    }).then(response => response.json())
+                        .then(data => {
+                            window.location.reload();
+                        })
+                        .catch(error => {
+                            console.error("error", error);
+                        })
+                }
+                }
+
+            </script>
 
             <script>
-                function showConfirmationModal(userId, status) {
-    
+                function showConfirmationModal(categoryId, status) {
                     //button text changing
+
                     if (status == "true") {
                         document.getElementById('mbid').innerText = 'unblock'
                     } else {
                         document.getElementById('mbid').innerText = 'block'
                     }
-                    $('#confirmationModal').data('userId', userId);
-    
+                    $('#confirmationModal').data('categoryId', categoryId);
+
                     $('#confirmationModal').modal('show');
+                }
+                function confirmBlockCategory() {
+                    const categoryId = $('#confirmationModal').data('categoryId');
+                    blockCategory(categoryId)
+                    $('#confirmationModal').modal('hide');
                 }
             </script>
 

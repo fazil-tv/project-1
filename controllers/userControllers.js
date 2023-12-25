@@ -188,7 +188,7 @@ const verifyLogin = async (req, res) => {
                 req.session.user_id = userData._id;
                 res.redirect('/home');
             } else {
-                res.render('login', { message: "Incorrect username or password", type: "error" });
+         res.render('login', { message: "Incorrect username or password", type: "error" });
             }
         } else {
 

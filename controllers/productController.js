@@ -31,6 +31,7 @@ const addproduct = async (req, res) => {
 
 
 
+
 module.exports={
     Product,
     addproduct,

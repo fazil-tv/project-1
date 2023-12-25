@@ -194,6 +194,7 @@
 
                     </thead>
                     <tbody>
+
                         <% if (usersData.length> 0) { %>
                             <% for (let i=0; i < usersData.length; i++) { %>
                                 <tr>
@@ -209,7 +210,7 @@
                                     <td>
                                         <%= usersData[i].verfied%>
                                     </td>
-                                    <td>
+                                    <td id="table-id">
                                         <% if (usersData[i].is_blocked) { %>
                                             <button
                                                 onclick="showConfirmationModal('<%= usersData[i]._id %>','<%= usersData[i].is_blocked %>')"
@@ -256,7 +257,6 @@
             </div>
         </section>
 
-
         <script>
             function blockUser(userId) {
 
@@ -280,8 +280,7 @@
                     })
                         .then(response => response.json())
                         .then(data => {
-                            // Redirect to the user administration page after blocking
-                            window.location.reload();
+                            window.Location.reload();    
                         })
                         .catch(error => console.error('Error blocking user:', error));
                 } else if (text === "unblock") {
@@ -306,7 +305,6 @@
 
         <script>
             function showConfirmationModal(userId, status) {
-
                 //button text changing
                 if (status == "true") {
                     document.getElementById('mbid').innerText = 'unblock'

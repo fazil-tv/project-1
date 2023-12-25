@@ -52,4 +52,4 @@ app.use('/admin',adminRoute)
 
 
 
-app.listen(PORT,()=>console.log("server started"));
+app.listen(PORT,()=>console.log("server started http://localhost:5000"));
