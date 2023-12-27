@@ -58,7 +58,7 @@
                     </a>
                 </li>
                 <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-form-product-1.html">
+                    <a class="menu-link" href="/admin/product">
                         <i class="icon material-icons md-add_box"></i>
                         <span class="text">Add product</span>
                     </a>
@@ -253,7 +253,7 @@
                                 onclick="confirmBlockUser()"></button>
                         </div>
                     </div>
-                </div>x
+                </div>
             </div>
         </section>
 
@@ -280,7 +280,8 @@
                     })
                         .then(response => response.json())
                         .then(data => {
-                            window.Location.reload();    
+                            window.location.reload();   
+                            
                         })
                         .catch(error => console.error('Error blocking user:', error));
                 } else if (text === "unblock") {
@@ -296,6 +297,7 @@
                         .then(data => {
                             // Redirect to the user administration page after unblocking
                             window.location.reload();
+    
                         })
                         .catch(error => console.error('Error unblocking user:', error));
                 }
@@ -308,8 +310,11 @@
                 //button text changing
                 if (status == "true") {
                     document.getElementById('mbid').innerText = 'unblock'
+                    document.getElementById('mbid').style.backgroundColor = '#ed6f56';
+                    
                 } else {
                     document.getElementById('mbid').innerText = 'block'
+                    document.getElementById('mbid').style.backgroundColor = '#29A56C';
                 }
                 $('#confirmationModal').data('userId', userId);
 

@@ -738,6 +738,68 @@ b {
   background-color: rgba(173, 181, 189, 0.15);
 }
 
+
+
+
+
+
+.block-category{
+  color: white;
+  background-color: #29A56C;
+  border: none;
+  border-radius: 5px;
+  width: 60px;
+}
+.unblock-category{
+  color: white;
+  background-color: #ed6f56;
+  border: none;
+  border-radius: 5px;
+ 
+
+}
+.Edit-category{
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #4e9de6;
+ 
+}
+
+.block-user{
+  color: white;
+  background-color: #29A56C;
+  border: none;
+  border-radius: 5px;
+  width: 60px;
+}
+.unblock-user{
+  color: white;
+  background-color: #ed6f56;
+  border: none;
+  border-radius: 5px;
+ 
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*Pagination*/
 .pagination-area .page-item {
   margin: 0 5px;
@@ -3983,7 +4045,7 @@ body.aside-mini .menu-aside .menu-item.has-submenu .menu-link:after {
 footer.main-footer {
   bottom: 0;
   padding: 30px 3%;
-  position: absolute;
+  /* position: absolute; */
   right: 0;
   width: 100%;
   height: 60px;

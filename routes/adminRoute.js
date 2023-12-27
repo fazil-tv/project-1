@@ -7,6 +7,8 @@ const adminController = require("../controllers/adminController");
 const productController = require('../controllers/productController')
 const categoryController = require('../controllers/categoryController');
 
+const multer = require("../middlewares/multer");
+
 
 adminRoute.set('view engine', 'ejs');
 adminRoute.set('views','./views/admin')
@@ -29,15 +31,19 @@ adminRoute.get('/users',adminController.users);
 adminRoute.get('/product',productController.Product);
 //addproduct
 adminRoute.get('/addproduct',productController.addproduct);
+// adminRoute.post('/addproduct',multer.uploadProduct,productController.addProductspost);
+adminRoute.post('/addproduct', multer.uploadProduct, productController.addProductspost);
+
+
 //category
 adminRoute.get('/category',categoryController.category);
 //addcategory
 adminRoute.get('/addcategory',categoryController.addcategory);
 adminRoute.post('/addcategory',categoryController.addCategoryPost);
-//
+//block category and unblock
 adminRoute.put('/blockCategory', categoryController.blockCategory);
 adminRoute.put('/unblockCategory',categoryController.unblockCategory);
-
-
+//block product
+adminRoute.put('/blockProduct/:id',productController.blockProduct);
 
 module.exports = adminRoute;

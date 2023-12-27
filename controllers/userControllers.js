@@ -49,7 +49,6 @@ const insertUser = async (req, res) => {
         });
 
         // Save the new user
-
         const userData = await user.save();
         const id=userData._id
         if (userData) {

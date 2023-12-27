@@ -47,9 +47,9 @@
 
                 </li>
                 <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-orders-1.html">
+                    <a class="menu-link" href="/admin/category">
                         <i class="icon material-icons md-shopping_cart"></i>
-                        <span class="text">Orders</span>
+                        <span class="text">Category</span>
                     </a>
                 </li>
 
@@ -167,30 +167,42 @@
                                 <h4>Basic</h4>
                             </div>
                             <div class="card-body">
-                                <form>
+                                <form method="post" enctype="multipart/form-data" action="/admin/addproduct">
                                     <div class="mb-4">
                                         <label for="product_name" class="form-label">Product title</label>
-                                        <input type="text" placeholder="Type here" class="form-control"
+                                        <input type="text" placeholder="Type here" name="title" class="form-control"
                                             id="product_name" />
                                     </div>
                                     <div class="mb-4">
                                         <label for="product_name" class="form-label">Quantity</label>
-                                        <input type="text" placeholder="Type here" class="form-control"
-                                            id="product_name" />
+                                        <input type="number" placeholder="Type here" name="quantity"
+                                            class="form-control" id="product_name" />
                                     </div>
                                     <div class="mb-4">
-                                        <label for="product_name" class="form-label">Category</label>
-                                        <input type="text" placeholder="Type here" class="form-control"
-                                            id="product_name" />
+                                        <label for="category" class="form-label">Category:</label>
+                                        
+                                            <select name="category" id="category">
+                                                <% categorys.forEach(category => { %>
+                                                    <option value="<%= category._id %>">
+                                                        <%= category.name %>
+                                                    </option>
+                                                <% }); %>
+                                            </select>
                                     </div>
                                     <div class="mb-4">
                                         <label for="product_name" class="form-label">Price</label>
-                                        <input type="text" placeholder="Type here" class="form-control"
+                                        <input type="number" placeholder="Type here" name="price" class="form-control"
                                             id="product_name" />
                                     </div>
                                     <div class="mb-4">
+                                        <label for="offer">Offer</label>
+                                        <input type="number" class="form-control" id="offer" name="offer"
+                                            placeholder="Type here" required>
+                                    </div>
+                                    <div class="mb-4">
                                         <label class="form-label">Full description</label>
-                                        <textarea placeholder="Type here" class="form-control" rows="4"></textarea>
+                                        <textarea placeholder="Type here" class="form-control" rows="4"
+                                            name="description"></textarea>
                                     </div>
                                     <div class="card mb-4">
                                         <div class="card-header">
@@ -200,25 +212,39 @@
                                             <div class="input-upload col-lg-3">
                                                 <h5>image 1</h5>
                                                 <img src="/images/upload-img.svg" alt="" />
-                                                <input class="form-control" type="file" />
+                                                <label for="imageinput1">
+                                                    <input class="form-control" name="image1" type="file"
+                                                        accept="image/*" required>
+                                                </label>
+
                                             </div>
                                             <div class="input-upload col-lg-3">
                                                 <h5>image 2</h5>
-                                                <img src="/images/upload-img.svg" alt="" />
-                                                <input class="form-control" type="file" />
+                                                <img src="/images/upload-img.svg" alt="" required>
+                                                <label for="imageinput2">
+                                                    <input class="form-control" name="image2" type="file"
+                                                        accept="image/*" required>
+                                                </label>
                                             </div>
                                             <div class="input-upload col-lg-3">
                                                 <h5>image 3</h5>
                                                 <img src="/images/upload-img.svg" alt="" />
-                                                <input class="form-control" type="file" />
+                                                <label for="imageinput3">
+                                                    <input class="form-control" name="image3" type="file"
+                                                        accept="image/*" required>
+                                                </label>
                                             </div>
                                             <div class="input-upload col-lg-3">
                                                 <h5>image 4</h5>
                                                 <img src="/images/upload-img.svg" alt="" />
-                                                <input class="form-control" type="file" />
+                                                <label for="imageinput4">
+                                                    <input class="form-control" name="image4" type="file"
+                                                        accept="image/*" required>
+                                                </label>
                                             </div>
                                             <div class="pt-4 d-flex justify-content-center">
-                                                <a href="/" class="btn btn-primary"><i class="text-muted material-icons md-post_add"></i>submit</a>
+                                                <button class="btn btn-primary" type="submit"><i
+                                                        class="text-muted material-icons md-post_add"></i>submit</button>
                                             </div>
                                         </div>
                                     </div>
