@@ -274,7 +274,8 @@
                         success: function (data) {
                             console.log(data.message, 'data message from success');
                             // $(`#buttonContainer${productId}`).load(`admin/product #buttonContainer${productId}`)
-                            $('#buttonContainer').load('/admin/product #buttonContainer')
+                            // $('#buttonContainer').load('/admin/product #buttonContainer')
+                            window.location.reload();
                     
                         },
                         error: function (error) {
@@ -293,7 +294,8 @@
                         data: JSON.stringify({ productId }),
                         success: function (data) {
                             console.log(data.message);
-                            $("#buttonContainer").load('/admin/product #buttonContainer')
+                            // $("#buttonContainer").load('/admin/product #buttonContainer')
+                            window.location.reload();
 
                         },
                         error: function (error) {

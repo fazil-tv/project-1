@@ -359,6 +359,33 @@ small,
   font-size: 80%;
   font-weight: 400; }
 
+
+.product-name{
+  color: #000 !important;
+  width: 100% !important;
+  font-weight: 600;
+}
+.product-detile{
+  background-color: white;
+  padding: 15px;
+  
+
+}
+.kkk{
+  justify-content: space-around;
+  width: 90% !important;
+}
+.product-category-name{
+  color: #d3c177;
+  font-weight: 600;
+  /* width: 100% !important; */
+}
+.sale-price{
+  font-weight: 700;
+  padding: 5px;
+}
+
+
 mark,
 .mark {
   padding: 0.2em;

@@ -6,6 +6,7 @@ const session = require('express-session');
 const nodemailer = require("nodemailer");
 const Otp = require('../model/userOTPverification')
 const bcrypt = require("bcrypt");
+const productSchema = require("../model/productSchema");
 
 
 
@@ -18,6 +19,18 @@ const signup = async (req, res) => {
         console.log(error.message);
     }
 }
+
+
+// indexhome
+// const loadHome = async (req, res) => {
+//     try {
+//         res.render("indexhome");
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// }
+
+
 
 //insert user Data
 const insertUser = async (req, res) => {
@@ -170,6 +183,48 @@ const login = async (req, res) => {
     }
 
 }
+// blog
+const blog = async (req, res) => {
+    try {
+        res.render("blog");
+    } catch (error) {
+        console.log(error.message);
+    }
+
+}
+// indexhome
+const indexhome = async (req, res) => {
+    try {
+        
+        res.render("indexhome");
+    } catch (error) {
+        console.log(error.message);
+    }
+
+}
+// shop
+const shop = async (req, res) => {
+    try {
+        const product = await productSchema.find({}).populate('category');
+        console.log(product);
+        res.render("shop",{product:product});
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+
+}
+// product-single
+const singleproduct = async (req, res) => {
+    try {
+        const product = await productSchema.find({}).populate('category');
+        console.log(product);
+        res.render("singleproduct",{product:product});
+    } catch (error) {
+        console.log(error.message);
+    }
+
+}
 
 // Verify_Login
 
@@ -209,5 +264,9 @@ module.exports = {
     login,
     verifyLogin,
     sendEmails,
-    
+    blog,
+    indexhome,
+    shop,
+    singleproduct
+
 }
