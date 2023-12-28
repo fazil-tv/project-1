@@ -50,7 +50,7 @@ const blockCategory = async (req, res) => {
 
     try {
         const categoryId = req.body.categoryId;
-        console.log("hiii")
+       
         console.log(categoryId);
         await categorySchema.updateOne({ _id: categoryId }, { $set: { is_list: true } })
 
