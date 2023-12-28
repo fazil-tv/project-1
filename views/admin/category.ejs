@@ -177,17 +177,21 @@
                                     <td>
                                         <%= i + 1 %>
                                     </td>
-                                    <td>
-                                        <b>
-                                            <%= NewCategory[i].name %>
-                                        </b>
-                                    </td>
+                                    
+                                        <td>
+                                            <b  id="changecategory">
+                                                <%= NewCategory[i].name %>
+                                            </b>
+                                        </td>
 
-                                    <td>
-                                        <b>
-                                            <%= NewCategory[i].discription %>
-                                        </b>
-                                    </td>
+                                        <td>
+                                            <b>
+                                                <%= NewCategory[i].discription %>
+                                            </b>
+                                        </td>
+
+                 
+
                                     <td>
                                         <b>
                                             <%= NewCategory[i].is_list%>
@@ -367,7 +371,7 @@
 
                 function confirmEditCategory() {
                     const categoryId = $('#confirmationeditModal').data('categoryId');
-                     console.log("what od")
+                    console.log("what od")
                     console.log('check edit catogery'.categoryId);
                     editcategory(categoryId)
                     $('#confirmationeditModal').modal('hide');
@@ -375,7 +379,7 @@
 
                 function editcategory(categoryId) {
                     console.log("hi");
-                    console.log("categoryId"+categoryId)
+                    console.log("categoryId" + categoryId)
                     const editcategoryname = document.getElementById('editcategoryname').value;
                     const editcategorydesc = document.getElementById('editcategorydescription').value;
 
@@ -385,10 +389,14 @@
                         url: `/admin/editcategory/${categoryId}`,
                         type: 'PUT',
                         contentType: 'application/json',
-                      
-                        data: JSON.stringify({ categoryId , editcategoryname ,editcategorydesc}),
+
+                        data: JSON.stringify({ categoryId, editcategoryname, editcategorydesc }),
                         success: function (data) {
                             console.log(data.message);
+
+                            // $('#changecategory').load('/admin/category #changecategory')
+                            window.location.reload();
+
 
                         },
                         error: function (error) {

@@ -1,6 +1,5 @@
 
-
 const sessionSecretKey = "session@123";
-module.exports={
+module.exports = {
     sessionSecretKey
-}
+};

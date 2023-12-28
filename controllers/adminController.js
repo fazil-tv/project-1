@@ -2,7 +2,7 @@ require('dotenv').config();
 const userModal = require('../model/userSchema')
 
 
-// ----------------signup---------
+// signup
 const signup = async (req, res) => {
     try {
         res.render("login");
@@ -10,6 +10,20 @@ const signup = async (req, res) => {
         console.log(error.message);
     }
 }
+
+
+//logout
+const logout = async (req, res) => {
+    try {
+            req.session.admin_email=null;
+             res.redirect('/admin/login')
+
+    }catch(error){
+        console.log(error.message)
+    }
+}
+
+
 
 
 // users
@@ -30,16 +44,17 @@ const users = async (req, res) => {
 const adminverifyLogin = async (req, res) => {
 
     try {
-        const email =process.env.ADMIN_EMAIL;
-        const password =process.env.ADMIN_PASSWORD;     
+        const email = process.env.ADMIN_EMAIL;
+        const password = process.env.ADMIN_PASSWORD;
         const useremail = req.body.email;
         const userpassword = req.body.password;
-        
 
-        if (email==useremail&&password==userpassword) {
-                res.render('index')
+
+        if (email == useremail && password == userpassword) {
+            req.session.admin_email = email
+            res.redirect('index')
         } else {
-            const message ="Incorrect username or password";
+            const message = "Incorrect username or password";
             res.render('login', { message });
         }
     } catch (error) {
@@ -47,7 +62,7 @@ const adminverifyLogin = async (req, res) => {
     }
 }
 
-const loaddashbord=async(req,res)=>{
+const loaddashbord = async (req, res) => {
     try {
         res.render("index");
     } catch (error) {
@@ -56,22 +71,22 @@ const loaddashbord=async(req,res)=>{
 }
 
 // loding admin dashbord
-const loadUser=async(req,res)=>{
+const loadUser = async (req, res) => {
     try {
         const usersData = await userModal.find({})
         console.log(usersData);
-        res.render("users",{usersData});
+        res.render("users", { usersData });
     } catch (error) {
         console.log(error);
     }
-    
+
 }
 
 
 
 // block user
 const blockUser = async (req, res) => {
-    
+
     try {
         const userId = req.body.userId;
         console.log(userId)
@@ -94,12 +109,13 @@ const unblockUser = async (req, res) => {
 };
 
 
-module.exports={
+module.exports = {
     adminverifyLogin,
     signup,
     loadUser,
     users,
     loaddashbord,
     blockUser,
-    unblockUser
+    unblockUser,
+    logout
 }

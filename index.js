@@ -1,7 +1,7 @@
 
 const express = require("express");
 const app = express();
-// const nocache =require ("nocache");
+const nocache =require ("nocache");
 const session = require("express-session");
 const morgan = require("morgan");
 const config = require('./config/config');
@@ -37,6 +37,7 @@ app.use(express.static('public'));
 app.set('view engine','ejs')
 app.set('views','./views/user')
 
+app.use(nocache())
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
