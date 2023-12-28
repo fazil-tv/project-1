@@ -34,7 +34,35 @@ userRoute.post('/signup',userController.insertUser);
 userRoute.post('/login',userController.verifyLogin);
 userRoute.post('/',userController.verifyLogin);
 
-// //product 
-// userRoute.get('/shop',productController.shop);
+
+
+//shop
+userRoute.get("/shop",(req,res)=>{
+    res.render('shop')
+})
+//single prduct
+userRoute.get("/singleproduct",(req,res)=>{
+    res.render('product')
+})
+//about
+userRoute.get("/about",(req,res)=>{
+    res.render('about')
+})
+//blog
+userRoute.get("/blog",(req,res)=>{
+    res.render('blog')
+})
+//contact
+userRoute.get("/contact",(req,res)=>{
+    res.render('contact')
+})
+//cart
+userRoute.get("/cart",(req,res)=>{
+    res.render('cart')
+})
+//checkout
+userRoute.get("/checkout",(req,res)=>{
+    res.render('checkout')
+})
 
 module.exports = userRoute;

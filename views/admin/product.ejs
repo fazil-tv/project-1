@@ -162,9 +162,8 @@
                                             <%= i + 1 %>
                                         </td>
                                         <td>
-                                            <b>
-                                                <p>image not found</p>
-                                            </b>
+                                           
+                                            <img src="/sharpimg/<%= product[i].images.image1%>" alt="" style="width: 50px; height: 50px;">
                                         </td>
 
                                         <td>
@@ -179,7 +178,8 @@
                                         </td>
                                         <td>
                                             <b>
-                                                <%= product[i].category %>
+                                                <%= product[i].category ? product[i].category.name : 'No Category' %>
+
                                             </b>
                                         </td>
                                         <td>
@@ -275,12 +275,7 @@
                             console.log(data.message, 'data message from success');
                             // $(`#buttonContainer${productId}`).load(`admin/product #buttonContainer${productId}`)
                             $('#buttonContainer').load('/admin/product #buttonContainer')
-                            // $('#buttonContainer${productId}').load('/admin/product #buttonContainer${productId}')
-
-                            // Change text of the button
-                           // $(`#blockButton${productId}`).text('block');//
-                            // Change style of the button
-                          //  $(`#blockButton${productId}`).css('background-color', 'blue');//
+                    
                         },
                         error: function (error) {
                             console.log("error", error);
@@ -347,13 +342,13 @@
             </div>
         </footer>
     </main>
-    <script src="assets/js/vendors/jquery-3.6.0.min.js"></script>
+    <!-- <script src="assets/js/vendors/jquery-3.6.0.min.js"></script>
     <script src="assets/js/vendors/bootstrap.bundle.min.js"></script>
     <script src="assets/js/vendors/select2.min.js"></script>
     <script src="assets/js/vendors/perfect-scrollbar.js"></script>
-    <script src="assets/js/vendors/jquery.fullscreen.min.js"></script>
+    <script src="assets/js/vendors/jquery.fullscreen.min.js"></script> -->
     <!-- Main Script -->
-    <script src="assets/js/main.js?v=1.1" type="text/javascript"></script>
+    <!-- <script src="assets/js/main.js?v=1.1" type="text/javascript"></script> -->
 </body>
 
 </html>

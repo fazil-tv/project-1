@@ -198,6 +198,9 @@ const verifyLogin = async (req, res) => {
     }
 }
 
+
+
+
 module.exports = {
     signup,
     sendmailUser,
@@ -206,4 +209,5 @@ module.exports = {
     login,
     verifyLogin,
     sendEmails,
+    
 }

@@ -6,7 +6,7 @@ const path = require("path")
 
 const multer = require("multer")
 const sharp = require('sharp');
-const { log } = require("console");
+
 
 
 
@@ -16,7 +16,8 @@ const { log } = require("console");
 // product
 const Product = async (req, res) => {
     try {
-        const users = await productSchema.find({});
+        const users = await productSchema.find({}).populate('category');
+        console.log(users);
         res.render("product", { product: users });
     } catch (error) {
         console.log(error.message);
@@ -61,7 +62,7 @@ const addProductspost = async (req, res) => {
             }
         }
         if (requestData.quantity > 0 && requestData.price > 0) {
-            console.log("vennu njan");
+            console.log("ok");
             const product = new productSchema({
                 name: requestData.title,
                 quantity: requestData.quantity,
@@ -74,7 +75,7 @@ const addProductspost = async (req, res) => {
                 "images.image3": uploadedFiles.image3[0].filename,
                 "images.image4": uploadedFiles.image4[0].filename,
             })
-            console.log("veendum vennu njan");
+            
             await product.save()
             console.log(product);
             res.redirect('/admin/product');
