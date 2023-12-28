@@ -80,11 +80,14 @@ const editcategory = async (req, res) => {
 
     try {
         const categoryId = req.params.categoryId;
-        const editname = req.body.editname;
-        console.log("eathi",categoryId);
+        const editname = req.body.editcategoryname;
+        const editcategorydesc = req.body.editcategorydesc;
+        // const editname = document.getElementById('editcategoryname').value;
+        console.log("done", categoryId);
         console.log(editname);
+        console.log(editcategorydesc);
         // await  categorySchema.findById(categoryId,{categoryName:editname},{new:true});
-        const updatecategory = await categorySchema.findByIdAndUpdate(categoryId, { name: editname }, { new: true });
+        const updatecategory = await categorySchema.findByIdAndUpdate(categoryId, { name: editname, discription: editcategorydesc }, { new: true });
         res.json({ status: "success", updatecategory })
 
     } catch (error) {

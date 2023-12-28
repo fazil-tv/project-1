@@ -375,12 +375,18 @@
 
                 function editcategory(categoryId) {
                     console.log("hi");
-                    console.log("sdfs"+categoryId)
+                    console.log("categoryId"+categoryId)
+                    const editcategoryname = document.getElementById('editcategoryname').value;
+                    const editcategorydesc = document.getElementById('editcategorydescription').value;
+
+                    console.log(editcategoryname);
+                    console.log(editcategorydesc);
                     $.ajax({
                         url: `/admin/editcategory/${categoryId}`,
                         type: 'PUT',
                         contentType: 'application/json',
-                        data: JSON.stringify({ categoryId }),
+                      
+                        data: JSON.stringify({ categoryId , editcategoryname ,editcategorydesc}),
                         success: function (data) {
                             console.log(data.message);
 
