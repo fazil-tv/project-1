@@ -182,7 +182,7 @@
                                             <%= NewCategory[i].name %>
                                         </b>
                                     </td>
-                    
+
                                     <td>
                                         <b>
                                             <%= NewCategory[i].discription %>
@@ -195,7 +195,9 @@
                                     </td>
                                     <td>
                                         <b>
-                                            <button class="Edit-category">EDIT</button>
+                                            <button class="Edit-category"
+                                                onclick="confirmationeditModal('<%= NewCategory[i]._id %>')">EDIT
+                                            </button>
                                         </b>
                                     </td>
                                     <td>
@@ -246,9 +248,49 @@
                     </div>x
                 </div>
             </section>
+            <section>
+
+                <!-- edit category Modal -->
+
+                <div class="modal fade" id="confirmationeditModal" tabindex="-1"
+                    aria-labelledby="confirmationeditModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmationeditModalLabel">Confirmation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="card-body">
+                                    <form method="post" id="editCategoryForm">
+                                        <div class="mb-4">
+                                            <label for="product_name" class="form-label">Category name</label>
+                                            <input type="text" placeholder="Type here" name="editname"
+                                                class="form-control " id="editcategoryname" />
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="form-label">Full description</label>
+                                            <input type="text" name="editdiscription" placeholder="Type here"
+                                                class="form-control " id="editcategorydescription" />
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary" onclick="confirmEditCategory() "><i
+                                        class="text-muted material-icons md-post_add"></i>submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
             <script>
                 function blockCategory(categoryId) {
-                    console.log("category is :",categoryId);
+                    console.log("category is :", categoryId);
                     const blockButton = document.getElementById(`blockButton${categoryId}`);
                     let text = blockButton.innerHTML;
 
@@ -256,7 +298,7 @@
                         fetch(`/admin/blockCategory`, {
                             method: 'PUT',
                             headers: {
-                                "Content-Type": "application/json"
+                                "Content-Type": "applicati  on/json"
                             },
                             body: JSON.stringify({ categoryId })
                         })
@@ -308,6 +350,50 @@
                     blockCategory(categoryId)
                     $('#confirmationModal').modal('hide');
                 }
+
+
+
+
+
+
+
+
+                function confirmationeditModal(categoryId, status) {
+
+                    $('#confirmationeditModal').data('categoryId', categoryId);
+                    console.log("chexk:", categoryId);
+                    $('#confirmationeditModal').modal('show');
+                }
+
+                function confirmEditCategory() {
+                    const categoryId = $('#confirmationeditModal').data('categoryId');
+                     console.log("what od")
+                    console.log('check edit catogery'.categoryId);
+                    editcategory(categoryId)
+                    $('#confirmationeditModal').modal('hide');
+                }
+
+                function editcategory(categoryId) {
+                    console.log("hi");
+                    console.log("sdfs"+categoryId)
+                    $.ajax({
+                        url: `/admin/editcategory/${categoryId}`,
+                        type: 'PUT',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ categoryId }),
+                        success: function (data) {
+                            console.log(data.message);
+
+                        },
+                        error: function (error) {
+                            console.log("error", error);
+                        }
+                    });
+                }
+
+
+
+
             </script>
 
 

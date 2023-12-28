@@ -197,7 +197,7 @@
                                                 <button class="Edit-category">EDIT</button>
                                             </b>
                                         </td>
-                                        <td id="buttonContainer<%= product[i]._id%>"> 
+                                        <td id="buttonContainer<%= product[i].id%>"> 
 
                                             <% if (product[i].is_blocked) { %>
                                                 <button
@@ -273,7 +273,10 @@
                         data: JSON.stringify({ productId }),
                         success: function (data) {
                             console.log(data.message, 'data message from success');
-                            $(`#buttonContainer${productId}`).load(`admin/product #buttonContainer${productId}`)
+                            // $(`#buttonContainer${productId}`).load(`admin/product #buttonContainer${productId}`)
+                            $('#buttonContainer').load('/admin/product #buttonContainer')
+                            // $('#buttonContainer${productId}').load('/admin/product #buttonContainer${productId}')
+
                             // Change text of the button
                            // $(`#blockButton${productId}`).text('block');//
                             // Change style of the button

@@ -47,13 +47,13 @@ const addCategoryPost = async (req, res) => {
 
 //block category
 const blockCategory = async (req, res) => {
-  
+
     try {
-        const categoryId =req.body.categoryId;
+        const categoryId = req.body.categoryId;
         console.log("hiii")
         console.log(categoryId);
         await categorySchema.updateOne({ _id: categoryId }, { $set: { is_list: true } })
-        
+
         console.log(categorySchema);
         res.status(200).json({ message: 'category blocked' })
     } catch (error) {
@@ -63,7 +63,7 @@ const blockCategory = async (req, res) => {
 //unblock category
 const unblockCategory = async (req, res) => {
     try {
-        const categoryId =req.body.categoryId;
+        const categoryId = req.body.categoryId;
         console.log(categoryId);
         await categorySchema.updateOne({ _id: categoryId }, { $set: { is_list: false } })
         res.status(200).json({ message: "category unblocked" });
@@ -74,13 +74,53 @@ const unblockCategory = async (req, res) => {
 }
 
 
+// edit category
+const editcategory = async (req, res) => {
+    console.log("hiiiiia")
+
+    try {
+        const categoryId = req.params.categoryId;
+        const editname = req.body.editname;
+        console.log("eathi",categoryId);
+        console.log(editname);
+        // await  categorySchema.findById(categoryId,{categoryName:editname},{new:true});
+        const updatecategory = await categorySchema.findByIdAndUpdate(categoryId, { name: editname }, { new: true });
+        res.json({ status: "success", updatecategory })
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+
+// const updateCategory = async (req, res) => {
+//     try {
+
+//         const categoryId = req.query.id
+//         const updatecategory = await Category.updateOne({ _id: categoryId }, { $set: { name: req.body.categoryName } })
+//         if (updatecategory) {
+//             res.redirect("/admin/categorymanagement")
+//         } else {
+//             res.render("editcategory", { message: "There is an error occured, try again!" })
+//         }
+//     } catch (error) {
+//         console.log(error.message)
+
+//     }
+// }
+
+
+
 
 module.exports = {
     category,
     addcategory,
     addCategoryPost,
     blockCategory,
-    unblockCategory
+    unblockCategory,
+    editcategory
 }
 
 

@@ -123,7 +123,6 @@ const blockProduct = async (req, res) => {
 // }
 
 
-const editproduct = 
 
 module.exports = {
     Product,

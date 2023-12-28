@@ -40,10 +40,14 @@ adminRoute.get('/category',categoryController.category);
 //addcategory
 adminRoute.get('/addcategory',categoryController.addcategory);
 adminRoute.post('/addcategory',categoryController.addCategoryPost);
+
+//edit category
+adminRoute.put('/editcategory/:categoryId', categoryController.editcategory);
 //block category and unblock
 adminRoute.put('/blockCategory', categoryController.blockCategory);
 adminRoute.put('/unblockCategory',categoryController.unblockCategory);
 //block product
 adminRoute.put('/blockProduct/:id',productController.blockProduct);
+
 
 module.exports = adminRoute;
