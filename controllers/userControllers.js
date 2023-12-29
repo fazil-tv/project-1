@@ -217,9 +217,11 @@ const shop = async (req, res) => {
 // product-single
 const singleproduct = async (req, res) => {
     try {
-        const product = await productSchema.find({}).populate('category');
+        const productId = req.query.id;
+        console.log(productId);
+        const product = await productSchema.findOne({_id:productId}).populate('category');
         console.log(product);
-        res.render("singleproduct",{product:product});
+        res.render("singleproduct",{product});
     } catch (error) {
         console.log(error.message);
     }
