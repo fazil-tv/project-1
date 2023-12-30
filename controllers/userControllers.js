@@ -99,7 +99,7 @@ let sendEmails = async (email,_id) => {
             to: email,
             subject: "Verify Your Email",
             html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete the signup.</p>
-                   <p>This code <b>expires in 1 hour</b>.</p>`,
+                   <p>This code <b>expires in 5 minits</b>.</p>`,
         };
 
         // Send the email
@@ -227,6 +227,15 @@ const singleproduct = async (req, res) => {
     }
 
 }
+//about
+const about = async (req,res)=>{
+    try{
+        res.render('about');
+    }catch(error){
+        console.log(error);
+    }
+}
+
 
 // Verify_Login
 
@@ -269,6 +278,8 @@ module.exports = {
     blog,
     indexhome,
     shop,
+    about,
+    
     singleproduct
 
 }

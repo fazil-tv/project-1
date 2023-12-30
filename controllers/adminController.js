@@ -40,6 +40,10 @@ const users = async (req, res) => {
 
 
 
+
+
+
+
 //admin password verification
 const adminverifyLogin = async (req, res) => {
 
@@ -117,5 +121,7 @@ module.exports = {
     loaddashbord,
     blockUser,
     unblockUser,
-    logout
+    logout,
+    
+
 }

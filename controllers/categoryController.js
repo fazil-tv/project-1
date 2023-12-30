@@ -24,6 +24,9 @@ const addcategory = async (req, res) => {
 }
 
 
+
+
+
 const addCategoryPost = async (req, res) => {
     try {
         const name = req.body.name;
@@ -98,24 +101,6 @@ const editcategory = async (req, res) => {
 
 
 
-// const updateCategory = async (req, res) => {
-//     try {
-
-//         const categoryId = req.query.id
-//         const updatecategory = await Category.updateOne({ _id: categoryId }, { $set: { name: req.body.categoryName } })
-//         if (updatecategory) {
-//             res.redirect("/admin/categorymanagement")
-//         } else {
-//             res.render("editcategory", { message: "There is an error occured, try again!" })
-//         }
-//     } catch (error) {
-//         console.log(error.message)
-
-//     }
-// }
-
-
-
 
 module.exports = {
     category,
@@ -123,7 +108,7 @@ module.exports = {
     addCategoryPost,
     blockCategory,
     unblockCategory,
-    editcategory
+    editcategory,
 }
 
 

@@ -36,6 +36,11 @@ adminRoute.get('/addproduct',auth.isLogin,productController.addproduct);
 // adminRoute.post('/addproduct',multer.uploadProduct,productController.addProductspost);
 adminRoute.post('/addproduct',auth.isLogin, multer.uploadProduct, productController.addProductspost);
 
+// edit product
+// adminRoute.get('/editproduct',productController.editproduct);
+adminRoute.get('/editproduct', productController.editproduct);
+
+
 
 //category
 adminRoute.get('/category',auth.isLogin,categoryController.category);

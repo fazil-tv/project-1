@@ -38,6 +38,15 @@ const addproduct = async (req, res) => {
     }
 }
 
+//edit product
+const editproduct = async (req, res) => {
+    try {
+        res.render("editproduct");
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 //product post
 const addProductspost = async (req, res) => {
 
@@ -129,5 +138,6 @@ module.exports = {
     Product,
     addproduct,
     addProductspost,
-    blockProduct
+    blockProduct,
+    editproduct
 }

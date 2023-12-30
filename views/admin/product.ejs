@@ -162,8 +162,9 @@
                                             <%= i + 1 %>
                                         </td>
                                         <td>
-                                           
-                                            <img src="/sharpimg/<%= product[i].images.image1%>" alt="" style="width: 50px; height: 50px;">
+
+                                            <img src="/sharpimg/<%= product[i].images.image1%>" alt=""
+                                                style="width: 50px; height: 50px;">
                                         </td>
 
                                         <td>
@@ -194,10 +195,10 @@
                                         </td>
                                         <td>
                                             <b>
-                                                <button class="Edit-category">EDIT</button>
+                                                <button class="Edit-category" onclick="redirectToEditPage()">EDIT</button>
                                             </b>
                                         </td>
-                                        <td id="buttonContainer<%= product[i].id%>"> 
+                                        <td id="buttonContainer<%= product[i].id%>">
 
                                             <% if (product[i].is_blocked) { %>
                                                 <button
@@ -229,6 +230,14 @@
                 </div>
             </div>
         </section>
+        <script>
+            function redirectToEditPage() {
+                alert("hi")
+
+                window.location.href = '/admin/editproduct';
+            }
+
+        </script>
 
         <!-- Modal -->
         <section>
@@ -241,7 +250,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            Are you sure you want to <span id="">block</span> this user?
+                            Are you sure ?
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -252,7 +261,6 @@
                 </div>
             </div>
         </section>
-
 
         <script>
 
@@ -276,13 +284,13 @@
                             // $(`#buttonContainer${productId}`).load(`admin/product #buttonContainer${productId}`)
                             // $('#buttonContainer').load('/admin/product #buttonContainer')
                             window.location.reload();
-                    
+
                         },
                         error: function (error) {
                             console.log("error", error);
                         }
                     });
-                    
+
                 }
 
 
@@ -302,7 +310,7 @@
                             console.log("error", error);
                         }
                     });
-                  
+
                 }
             }
 

@@ -55,15 +55,10 @@ userRoute.post('/singleproduct', userController.singleproduct);
 //shop
 userRoute.get("/shop", userController.shop);
 userRoute.post('/shop', userController.shop);
-
-
-
-
-
 //about
-userRoute.get("/about", (req, res) => {
-    res.render('about')
-})
+userRoute.get("/about", userController.about);
+userRoute.post('/about', userController.about);
+
 
 
 //contact
