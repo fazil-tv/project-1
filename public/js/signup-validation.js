@@ -14,17 +14,26 @@ function validateForm() {
     const confirmPassword = document.forms["myForm"]["confirmPassword"].value;
     let isValid = true;
     
+    const emailevalidator = (email) => {
+        const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+        return emailPattern.test(email);
+    }
+
+
     if (username.trim() === "") {
         document.getElementById('nameField').style.display = 'block';
         isValid = false;
     }
-    if (email.length< 8) {
-        document.getElementById('emailField').style.display = 'block';
-        
-        isValid = false;
 
+    if (!emailevalidator(email)) {
+        document.getElementById('emailField').style.display = 'block';
+        console.log(`${email} is a  valid email address`)
+        isValid = false;
     }
-    if (mobilenumber.length<10) {
+    else {
+        console.log(`${email} is not a valid email address`)
+    }
+    if (mobilenumber.length < 10) {
         document.getElementById('mobileField').style.display = 'block';
         isValid = false;
     }
@@ -32,11 +41,11 @@ function validateForm() {
         document.getElementById('passwordField').style.display = 'block';
         isValid = false;
     }
-    if (password!==confirmPassword) {
+    if (password !== confirmPassword) {
         document.getElementById('confirmpasswordField').style.display = 'block';
         isValid = false;
     }
-    if(!isValid)return;
+    if (!isValid) return;
 
     document.getElementById('myForm').submit();
 }

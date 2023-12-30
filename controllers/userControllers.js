@@ -158,7 +158,7 @@ const verifyPost = async (req, res) => {
             // } else {
                 const validOTP = await bcrypt.compare(otp, hashedOTP);
                 if (!validOTP) {
-                    res.render('otp', { message: "Invalid code" })
+                    res.render('otp', { message: "Invalid Otp code" })
                 } else {
                     // await User.updateOne({ _id: userId }, { verfied: true });
                     await Otp.deleteOne({ user_id:userId });
@@ -279,7 +279,6 @@ module.exports = {
     indexhome,
     shop,
     about,
-    
     singleproduct
 
 }
