@@ -14,7 +14,6 @@ const localStorage = multer.diskStorage({
 
 const product = multer({storage:localStorage});
 const uploadProduct = product.fields([
-    
     { name: "image1", maxCount: 1 },
     { name: "image2", maxCount: 1 },
     { name: "image3", maxCount: 1 },

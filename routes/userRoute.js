@@ -19,12 +19,33 @@ userRoute.get("/login", (req, res) => {
     res.render("login");
 })
 
-userRoute.get("/otp", (req, res) => {
-    req.session.user_id = req.query.id
-    res.render("otp");
-})
 
+userRoute.get("/otp", (req, res) => {
+    const userId = req.session.user_id = req.query.id
+    console.log("kitty:",userId);
+    res.render("otp", { userId });
+
+});
 userRoute.post('/otp', userController.verifyPost)
+
+
+// userRoute.get("/resendotp", (req, res) => {
+//     const userId = req.session.user_id || req.query.id; // prioritize session user_id
+//     console.log(userId);
+//     console.log("hi");
+//     res.render("otp", { userId });
+// });
+
+// userRoute.post('/resendotp', (req, res) => {
+//     console.log('POST request to /resendotp received');
+//     userController.resendmailUser(req, res);
+// });
+userRoute.post('/resendotp', (req, res) => {
+    const { email, id } = req.body; // Assuming email and id are available in the request body
+    userController.resendmailUser(email, id, res);
+});
+
+
 
 
 // SIGN-UP
@@ -58,6 +79,11 @@ userRoute.post('/shop', userController.shop);
 //about
 userRoute.get("/about", userController.about);
 userRoute.post('/about', userController.about);
+
+//resetpassword
+userRoute.get(" /resetpassword", userController.resetpassword);
+userRoute.post('/resetpassword', userController.resetpassword);
+
 
 
 

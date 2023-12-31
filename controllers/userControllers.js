@@ -7,6 +7,7 @@ const nodemailer = require("nodemailer");
 const Otp = require('../model/userOTPverification')
 const bcrypt = require("bcrypt");
 const productSchema = require("../model/productSchema");
+const { log } = require("console");
 
 
 
@@ -21,14 +22,6 @@ const signup = async (req, res) => {
 }
 
 
-// indexhome
-// const loadHome = async (req, res) => {
-//     try {
-//         res.render("indexhome");
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
 
 
 
@@ -45,12 +38,12 @@ const insertUser = async (req, res) => {
             return res.render('signup', { message });
 
         }
-        
+
 
         // password-security(bcrypt)
 
-        const hashedpassword = await bcrypt.hash(req.body.password,10);
-        const hashedconfirmPassword = await bcrypt.hash(req.body.confirmPassword,10);
+        const hashedpassword = await bcrypt.hash(req.body.password, 10);
+        const hashedconfirmPassword = await bcrypt.hash(req.body.confirmPassword, 10);
 
         const user = new User({
             username: req.body.username,
@@ -63,11 +56,11 @@ const insertUser = async (req, res) => {
 
         // Save the new user
         const userData = await user.save();
-        const id=userData._id
+        const id = userData._id
         if (userData) {
- 
-            await sendmailUser(email,id,res); 
-            
+
+            await sendmailUser(email, id, res);
+
         } else {
             // Handle the case where the save operation did not return user data
             return res.render('signup', { message: "Signup failed" });
@@ -81,7 +74,7 @@ const insertUser = async (req, res) => {
 
 //  nodemailer setup
 let transporter = nodemailer.createTransport({
-    service:'gmail' ,
+    service: 'gmail',
     auth: {
         user: process.env.NODE_MAILER_EMAIL,
         pass: process.env.NODE_MAILER_PASS,
@@ -90,9 +83,9 @@ let transporter = nodemailer.createTransport({
 
 
 // email sending 
-let sendEmails = async (email,_id) => {
+let sendEmails = async (email, _id) => {
     try {
-        
+
         const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
         const mailOptions = {
             from: process.env.NODE_MAILER_EMAIL,
@@ -103,11 +96,11 @@ let sendEmails = async (email,_id) => {
         };
 
         // Send the email
-        const hashedOTP = await bcrypt.hash(otp,10);
+        const hashedOTP = await bcrypt.hash(otp, 10);
 
         await transporter.sendMail(mailOptions);
         const newOtp = new Otp({
-            user_id:_id,
+            user_id: _id,
             email: email,
             otp: hashedOTP,
         });
@@ -120,10 +113,9 @@ let sendEmails = async (email,_id) => {
 };
 
 
-
-const sendmailUser = async (email,id,res) => {
+const sendmailUser = async (email, id, res) => {
     try {
-        await sendEmails(email,id);
+        await sendEmails(email, id);
         console.log("Email sent successfully");
         console.log(id);
         res.redirect(`/otp?id=${id}`);
@@ -134,16 +126,64 @@ const sendmailUser = async (email,id,res) => {
 };
 
 
+
+
+//resend otp
+const resendEmails = async (email, _id) => {
+    try { 
+        console.log("sdsdsdhg")
+        console.log(email);
+        
+        // Generate a new OTP
+        const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+        const mailOptions = {
+            from: process.env.NODE_MAILER_EMAIL,
+            to: email,
+            subject: "Resend OTP - Verify Your Email",
+            html: `<p>Your new OTP is <b>${otp}</b>. Enter it in the app to verify your email address.</p>
+                   <p>This code <b>expires in 3 minutes</b>.</p>`,
+        };
+        const hashedOTP = await bcrypt.hash(otp, 10);
+
+        await transporter.sendMail(mailOptions);
+
+        // Update the OTP in the database
+        await Otp.findOneAndUpdate({ user_id: _id, email: email }, { otp: hashedOTP });
+
+        console.log("Email resent successfully");
+    } catch (error) {
+        console.error("Error resending email:", error.message);
+    }
+};
+
+const resendmailUser = async (email, id, res) => {
+    
+    try {
+        console.log("hiiiii")
+        console.log(id);
+        console.log(email)
+        await resendEmails(email, id);
+
+        console.log("Email sent successfully");
+        res.redirect(`/resendotp?id=${id}`);
+    } catch (error) {
+        console.error("Error sending email:", error);
+        res.send("Error sending email");
+    }
+};
+
+
+
 //otp verification 
 const verifyPost = async (req, res) => {
     try {
         const { num1, num2, num3, num4 } = req.body;
         const otp = `${num1}${num2}${num3}${num4}`;
-     
+
         const userId = req.session.user_id;
         console.log("Session ID:", userId);
 
-        const userOTPVerificationrecord = await Otp.find({user_id: userId })
+        const userOTPVerificationrecord = await Otp.find({ user_id: userId })
         console.log(userOTPVerificationrecord);
 
         if (userOTPVerificationrecord.length == 0) {
@@ -152,21 +192,18 @@ const verifyPost = async (req, res) => {
             // const { expiresAt } = userOTPVerificationrecord[0];
             const hashedOTP = userOTPVerificationrecord[0].otp;
 
-            // if (expiresAt < Date.now()) {
-            //     await userOTPVerificationrecord.deleteMany({ userId });
-            //     res.render('otp', { message: "your otp has been expired" })
-            // } else {
-                const validOTP = await bcrypt.compare(otp, hashedOTP);
-                if (!validOTP) {
-                    res.render('otp', { message: "Invalid Otp code" })
-                } else {
-                    // await User.updateOne({ _id: userId }, { verfied: true });
-                    await Otp.deleteOne({ user_id:userId });
+           
+            const validOTP = await bcrypt.compare(otp, hashedOTP);
+            if (!validOTP) {
+                res.render('otp', { message: "Invalid Otp code" })
+            } else {
+                // await User.updateOne({ _id: userId }, { verfied: true });
+                await Otp.deleteOne({ user_id: userId });
 
-                    res.redirect(`/home`)
-                }
+                res.redirect(`/home`)
             }
-        
+        }
+
     } catch (error) {
         console.log(error.message);
     }
@@ -195,7 +232,7 @@ const blog = async (req, res) => {
 // indexhome
 const indexhome = async (req, res) => {
     try {
-        
+
         res.render("indexhome");
     } catch (error) {
         console.log(error.message);
@@ -207,8 +244,8 @@ const shop = async (req, res) => {
     try {
         const product = await productSchema.find({}).populate('category');
         console.log(product);
-        res.render("shop",{product:product});
-        
+        res.render("shop", { product: product });
+
     } catch (error) {
         console.log(error.message);
     }
@@ -219,19 +256,27 @@ const singleproduct = async (req, res) => {
     try {
         const productId = req.query.id;
         console.log(productId);
-        const product = await productSchema.findOne({_id:productId}).populate('category');
+        const product = await productSchema.findOne({ _id: productId }).populate('category');
         console.log(product);
-        res.render("singleproduct",{product});
+        res.render("singleproduct", { product });
     } catch (error) {
         console.log(error.message);
     }
 
 }
 //about
-const about = async (req,res)=>{
-    try{
+const about = async (req, res) => {
+    try {
         res.render('about');
-    }catch(error){
+    } catch (error) {
+        console.log(error);
+    }
+}
+//otp
+const resetpassword = async (req, res) => {
+    try {
+        res.render('resetpassword');
+    } catch (error) {
         console.log(error);
     }
 }
@@ -248,12 +293,12 @@ const verifyLogin = async (req, res) => {
 
         if (userData) {
             const passwordMatch = await bcrypt.compare(password, userData.password);
-            const userblock = await User.findOne({is_blocked:false}); 
-            if (passwordMatch&&userblock) {
+            const userblock = await User.findOne({ is_blocked: false });
+            if (passwordMatch && userblock) {
                 req.session.user_id = userData._id;
                 res.redirect('/home');
             } else {
-         res.render('login', { message: "Incorrect username or password", type: "error" });
+                res.render('login', { message: "Incorrect username or password", type: "error" });
             }
         } else {
 
@@ -263,6 +308,8 @@ const verifyLogin = async (req, res) => {
         console.log(error.message);
     }
 }
+
+
 
 
 
@@ -279,6 +326,9 @@ module.exports = {
     indexhome,
     shop,
     about,
-    singleproduct
+    resetpassword,
+    singleproduct,
+    resendmailUser,
+    resendEmails
 
 }
