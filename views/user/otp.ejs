@@ -35,7 +35,6 @@
         <input name="num4" type="number" disabled />
       </div>
       <div>
-
         <p class="otp-text">Don't receive the OTP <a href="" onclick="fetchOTP('<%= userId %>')" id="resendButton"
             style="font-size: 12px; text-decoration: none; color: #0e4bf1">RESEND OTP</a></p>
 
@@ -46,34 +45,32 @@
         </a>
         <button type="submit" class="formbutton ">Verify OTP</button>
       </div>
-
-
     </form>
   </div>
 
 
   <script>
-    async function fetchOTP(userId,email) {
-      console.log("userid is ",userId);
+    async function fetchOTP(userId, email) {
+      
+      event.preventDefault();
       try {
         const response = await fetch('/resendotp', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ userId ,email}),
+          body: JSON.stringify({ userId, email }),
         });
 
         if (response.ok) {
+
           console.log('Resend OTP request successful');
-          
+
         } else {
           console.error('Resend OTP request failed');
-          // Optionally, handle the error or perform any action on failure
         }
       } catch (error) {
         console.error('Error during Resend OTP request:', error);
-        // Optionally, handle the error or perform any action on failure
       }
     }
 

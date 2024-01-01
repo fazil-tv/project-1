@@ -6,7 +6,6 @@ const path = require("path")
 
 const multer = require("multer")
 const sharp = require('sharp');
-const product = require("../model/productSchema");
 const { id } = require("schema/lib/objecttools");
 
 
@@ -136,17 +135,18 @@ const editproduct = async (req, res) => {
     }
 }
 
-
-
 //product post
 const editProductpost = async (req, res) => {
+    console.log("kitty")
 
     try {
         const id = req.query.id;
-        console.log();
+        console.log(id);
         const uploadedFiles = req.files;
-        const existingData = await product.findOne({_id:id})
+        const requestData = req.body;
+        const existingData = await productSchema.findOne({ _id: id })
         console.log("check:", Files);
+        console.log(requestData);
         const img = [
             uploadedFiles?.image1 ? (uploadedFiles.image1[0]?.filename || existingData.images.image1) : existingData.images.image1,
             uploadedFiles?.image2 ? (uploadedFiles.image2[0]?.filename || existingData.images.image2) : existingData.images.image2,
@@ -156,34 +156,35 @@ const editProductpost = async (req, res) => {
 
         for (let i = 0; i < img.length; i++) {
             if (img[i]) {
-                await sharp('public/multerimg/' + img[i])
+                await sharp('public/multerimg/${img[i]}')
                     .resize(500, 500)
-                    .toFile('public/sharpimg/' + img[i])
+                    .toFile('public/sharpimg/${img[i]}')
             }
         }
         if (requestData.quantity > 0 && requestData.price > 0) {
             console.log("ok");
-            const product = new productSchema({
+            const product = {
                 name: requestData.title,
                 quantity: requestData.quantity,
                 category: requestData.category,
                 price: requestData.price,
                 offer: requestData.offer,
                 description: requestData.description,
-                "images.image1": uploadedFiles.image1[0].filename,
-                "images.image2": uploadedFiles.image2[0].filename,
-                "images.image3": uploadedFiles.image3[0].filename,
-                "images.image4": uploadedFiles.image4[0].filename,
-            })
-
-            await product.save()
-            console.log(product);
+                images: {
+                    image1: img[0],
+                    image2: img[1],
+                    image3: img[2],
+                    image4: img[3],
+                },
+            }
+            const risult = await productSchema.findOneAndUpdate({ _id: id }, product, { new: true });
             res.redirect('/admin/product');
         }
     } catch (error) {
-        console.log(error.message)
+        console.log(error);
     }
 }
+
 
 
 

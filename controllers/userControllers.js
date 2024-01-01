@@ -56,6 +56,7 @@ const insertUser = async (req, res) => {
 
         // Save the new user
         const userData = await user.save();
+        req.session.user_id = userData._id;
         const id = userData._id
         if (userData) {
 
@@ -105,7 +106,7 @@ let sendEmails = async (email, _id) => {
             otp: hashedOTP,
         });
         await newOtp.save();
-
+        
         console.log("Email sent successfully");
     } catch (error) {
         console.error("Error sending email:", error.message);
@@ -116,8 +117,8 @@ let sendEmails = async (email, _id) => {
 const sendmailUser = async (email, id, res) => {
     try {
         await sendEmails(email, id);
-        console.log("Email sent successfully");
         console.log(id);
+        console.log("Email sent successfully");
         res.redirect(`/otp?id=${id}`);
     } catch (error) {
         console.error("Error sending email:", error);
@@ -166,15 +167,16 @@ const resendmailUser = async ( userId,res) => {
         const email = user.email;
         console.log("email",email);
         await resendEmails(email,userId);
+        console.log("last user",userId)
         console.log(" resent otp successfully");
-        // res.redirect(`/resendotp?id=${userId}`);
+        res.status(200).json({success:true});
     } catch (error) {
         console.error("Error sending email:", error);
         res.send("Error sending email");
     }
 };
 
-
+ 
 
 //otp verification 
 const verifyPost = async (req, res) => {
@@ -198,7 +200,7 @@ const verifyPost = async (req, res) => {
            
             const validOTP = await bcrypt.compare(otp, hashedOTP);
             if (!validOTP) {
-                res.render('otp', { message: "Invalid Otp code" })
+                res.redirect(`/otp?id=${userId}`)
             } else {
                 // await User.updateOne({ _id: userId }, { verfied: true });
                 await Otp.deleteOne({ user_id: userId });
