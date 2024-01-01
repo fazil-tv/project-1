@@ -39,8 +39,7 @@ adminRoute.post('/addproduct',auth.isLogin, multer.uploadProduct, productControl
 // edit product
 // adminRoute.get('/editproduct',productController.editproduct);
 adminRoute.get('/editproduct', productController.editproduct);
-
-
+adminRoute.post('/editproduct', multer.uploadProduct, productController.editProductpost);
 
 //category
 adminRoute.get('/category',auth.isLogin,categoryController.category);

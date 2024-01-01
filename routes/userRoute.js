@@ -5,6 +5,7 @@ const userRoute = express();
 // Require user Controllers
 const userController = require("../controllers/userControllers");
 const productController = require('../controllers/productController');
+const User = require("../model/userSchema");
 
 
 userRoute.set('view engine', 'ejs')
@@ -20,31 +21,24 @@ userRoute.get("/login", (req, res) => {
 })
 
 
-userRoute.get("/otp", (req, res) => {
+userRoute.get("/otp", async (req, res) => {
     const userId = req.session.user_id = req.query.id
     console.log("kitty:",userId);
-    res.render("otp", { userId });
+    const user = await User.findOne({_id:userId});
+    const email = user.email;
+    console.log("kitty:",email);
+    res.render("otp", { userId ,email});
 
 });
 userRoute.post('/otp', userController.verifyPost)
 
 
-// userRoute.get("/resendotp", (req, res) => {
-//     const userId = req.session.user_id || req.query.id; // prioritize session user_id
-//     console.log(userId);
-//     console.log("hi");
-//     res.render("otp", { userId });
-// });
-
-// userRoute.post('/resendotp', (req, res) => {
-//     console.log('POST request to /resendotp received');
-//     userController.resendmailUser(req, res);
-// });
 userRoute.post('/resendotp', (req, res) => {
-    const { email, id } = req.body; // Assuming email and id are available in the request body
-    userController.resendmailUser(email, id, res);
+    const { email, userId } = req.body;
+    console.log("nooop");
+    console.log(userId);
+    userController.resendmailUser(userId,res);
 });
-
 
 
 

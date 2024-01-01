@@ -156,16 +156,18 @@ const resendEmails = async (email, _id) => {
     }
 };
 
-const resendmailUser = async (email, id, res) => {
+const resendmailUser = async ( userId,res) => {
     
     try {
-        console.log("hiiiii")
-        console.log(id);
-        console.log(email)
-        await resendEmails(email, id);
-
-        console.log("Email sent successfully");
-        res.redirect(`/resendotp?id=${id}`);
+        console.log("hiiiii");
+        console.log(userId);
+        const user = await User.findOne({_id:userId});
+        console.log(user);
+        const email = user.email;
+        console.log("email",email);
+        await resendEmails(email,userId);
+        console.log(" resent otp successfully");
+        // res.redirect(`/resendotp?id=${userId}`);
     } catch (error) {
         console.error("Error sending email:", error);
         res.send("Error sending email");
@@ -181,6 +183,7 @@ const verifyPost = async (req, res) => {
         const otp = `${num1}${num2}${num3}${num4}`;
 
         const userId = req.session.user_id;
+
         console.log("Session ID:", userId);
 
         const userOTPVerificationrecord = await Otp.find({ user_id: userId })
@@ -296,6 +299,7 @@ const verifyLogin = async (req, res) => {
             const userblock = await User.findOne({ is_blocked: false });
             if (passwordMatch && userblock) {
                 req.session.user_id = userData._id;
+                req.session.email = email;
                 res.redirect('/home');
             } else {
                 res.render('login', { message: "Incorrect username or password", type: "error" });

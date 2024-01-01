@@ -167,7 +167,7 @@
                                 <h4>Basic</h4>
                             </div>
                             <div class="card-body">
-                                <form method="post">
+                                <form id="mycard" method="post">
                                     <div class="mb-4">
                                         <label for="product_name" class="form-label">Category name</label>
                                         <input type="text" placeholder="Type here" name="name" class="form-control "
@@ -179,7 +179,7 @@
                                             class="form-control " id="product_disc" />
                                     </div>
                                     <div class="pt-4 d-flex justify-content-center">
-                                        <button type="submit" class="btn btn-primary" onsubmit="addCategoryValidation()">
+                                        <button type="button" class="btn btn-primary" onclick="addCategoryValidation()">
                                             <i class="text-muted material-icons md-post_add"></i>submit
                                         </button>
 
@@ -204,6 +204,7 @@
 </body>
 <script>
     function addCategoryValidation() {
+        alert('hi')
         event.preventDefault();
         const categoryname = document.getElementById('product_name').value;
         console.log(categoryname);
@@ -217,17 +218,14 @@
         const isCategoryValid = validateCategoryName(categoryname);
 
         if (isCategoryValid && description) {
-
+            $('#mycard').submit();
             return console.log("Category name is valid");
+            
         } else {
             console.log("Invalid category name or empty description");
         }
+       
     }
-
-    document.querySelector('form').addEventListener('submit', function (event) {
-        event.preventDefault();
-        addCategoryValidation();
-    });
 
 </script>
 
