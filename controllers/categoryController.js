@@ -53,7 +53,7 @@ const blockCategory = async (req, res) => {
 
     try {
         const categoryId = req.body.categoryId;
-       
+
         console.log(categoryId);
         await categorySchema.updateOne({ _id: categoryId }, { $set: { is_list: true } })
 
@@ -85,11 +85,15 @@ const editcategory = async (req, res) => {
         const categoryId = req.params.categoryId;
         const editname = req.body.editcategoryname;
         const editcategorydesc = req.body.editcategorydesc;
-        // const editname = document.getElementById('editcategoryname').value;
         console.log("done", categoryId);
         console.log(editname);
         console.log(editcategorydesc);
-        // await  categorySchema.findById(categoryId,{categoryName:editname},{new:true});
+
+        const existingCategory = await categorySchema.findOne({ name: editname});
+        if (existingCategory) {
+            return res.status(400).json({ status: "error", message: "Category with the same name already exists." });
+        }
+
         const updatecategory = await categorySchema.findByIdAndUpdate(categoryId, { name: editname, discription: editcategorydesc }, { new: true });
         res.json({ status: "success", updatecategory })
 
@@ -97,6 +101,8 @@ const editcategory = async (req, res) => {
         console.log(error);
     }
 }
+
+
 
 
 

@@ -169,17 +169,20 @@
                             <div class="card-body">
                                 <form method="post">
                                     <div class="mb-4">
-                                        <label for="product_name" class="form-label" >Category name</label>
+                                        <label for="product_name" class="form-label">Category name</label>
                                         <input type="text" placeholder="Type here" name="name" class="form-control "
                                             id="product_name" />
                                     </div>
                                     <div class="mb-4">
-                                        <label class="form-label" >Full description</label>
-                                        <input type="text" name="discription"placeholder="Type here" class="form-control "
-                                            id="product_name" />
+                                        <label class="form-label" id="labelu">Full description</label>
+                                        <input type="text" name="discription" placeholder="Type here"
+                                            class="form-control " id="product_disc" />
                                     </div>
                                     <div class="pt-4 d-flex justify-content-center">
-                                        <button type="submit" class="btn btn-primary"><i class="text-muted material-icons md-post_add"></i>submit</button>
+                                        <button type="submit" class="btn btn-primary" onsubmit="addCategoryValidation()">
+                                            <i class="text-muted material-icons md-post_add"></i>submit
+                                        </button>
+
                                     </div>
                                 </form>
                             </div>
@@ -198,13 +201,34 @@
             </div>
         </footer>
     </main>
-    <!-- <script src="assets/js/vendors/jquery-3.6.0.min.js"></script>
-    <script src="assets/js/vendors/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/vendors/select2.min.js"></script>
-    <script src="assets/js/vendors/perfect-scrollbar.js"></script>
-    <script src="assets/js/vendors/jquery.fullscreen.min.js"></script> -->
-    <!-- Main Script -->
-    <!-- <script src="assets/js/main.js?v=1.1" type="text/javascript"></script> -->
 </body>
+<script>
+    function addCategoryValidation() {
+        event.preventDefault();
+        const categoryname = document.getElementById('product_name').value;
+        console.log(categoryname);
+        const description = document.getElementById('product_disc').value;
+
+        const validateCategoryName = (categoryname) => {
+            const categoryRegex = /^[a-zA-Z0-9]+\s*[a-zA-Z0-9]*$/;
+            return categoryRegex.test(categoryname);
+        };
+
+        const isCategoryValid = validateCategoryName(categoryname);
+
+        if (isCategoryValid && description) {
+
+            return console.log("Category name is valid");
+        } else {
+            console.log("Invalid category name or empty description");
+        }
+    }
+
+    document.querySelector('form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        addCategoryValidation();
+    });
+
+</script>
 
 </html>
