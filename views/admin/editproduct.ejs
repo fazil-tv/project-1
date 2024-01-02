@@ -167,37 +167,44 @@
                                 <h4>Basic</h4>
                             </div>
                             <div class="card-body">
-                                <form method="post" enctype="multipart/form-data" action="/admin/addproduct">
+                                <form method="post" enctype="multipart/form-data">
                                     <div class="mb-4">
-                                        <label for="product_name" class="form-label">Product title</label>
-                                        <input type="text" placeholder="Type here" name="title" class="form-control"
+                                        <label for="product_name"  class="form-label">Product title</label>
+                                        <input type="text" placeholder="Type here" name="title" class="form-control" value="<%=product.name%>"
                                             id="product_name" />
                                     </div>
                                     <div class="mb-4">
                                         <label for="product_name" class="form-label">Quantity</label>
-                                        <input type="number" placeholder="Type here" name="quantity"
+                                        <input type="number" placeholder="Type here" name="quantity" value="<%=product.quantity%>"
                                             class="form-control" id="product_name" />
                                     </div>
                                     <div class="mb-4">
-                                        <label for="category" class="form-label">Category:</label>
-                                        
-                
+                                        <label for="category"  class="form-label">Category:</label>
+
+                                        <select name="category" id="category">
+                                            <% categorys.forEach(category=> { %>
+                                                <option value="<%= category._id %>">
+                                                    <%= category.name %>
+                                                </option>
+                                                <% }); %>
+                                        </select>
                                     </div>
                                     <div class="mb-4">
                                         <label for="product_name" class="form-label">Price</label>
-                                        <input type="number" placeholder="Type here" name="price" class="form-control"
+                                        <input type="number" placeholder="Type here" name="price" class="form-control"  value="<%= product.price %>"
                                             id="product_name" />
                                     </div>
                                     <div class="mb-4">
                                         <label for="offer">Offer</label>
-                                        <input type="number" class="form-control" id="offer" name="offer"
+                                        <input type="number" class="form-control" id="offer" name="offer" value="<%= product.offer %>"
                                             placeholder="Type here" required>
                                     </div>
                                     <div class="mb-4">
                                         <label class="form-label">Full description</label>
-                                        <textarea placeholder="Type here" class="form-control" rows="4"
-                                            name="description"></textarea>
+                                        <input placeholder="Type here"  class="form-control" rows="4" value="<%= product.description%>"
+                                            name="description" row="4"></input>
                                     </div>
+                                   
                                     <div class="card mb-4">
                                         <div class="card-header">
                                             <h4>Media</h4>
@@ -208,7 +215,7 @@
                                                 <img src="/images/upload-img.svg" alt="" />
                                                 <label for="imageinput1">
                                                     <input class="form-control" name="image1" type="file"
-                                                        accept="image/*" required>
+                                                        accept="image/*" required>  
                                                 </label>
 
                                             </div>

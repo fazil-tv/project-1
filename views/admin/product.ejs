@@ -197,8 +197,8 @@
                                         </td>
                                         <td>
                                             <b>
-                                                <button class="Edit-category"
-                                                    onclick="redirectToEditPage()">EDIT</button>
+                                                <a href="/admin/editproduct?id=<%=product[i]._id%>"><button
+                                                        class="Edit-category"> EDIT</button></a>
                                             </b>
                                         </td>
                                         <td id="buttonContainer<%= product[i].id%>">
@@ -213,8 +213,6 @@
                                                         class="block-category"
                                                         id="blockButton<%= product[i]._id %>">block</button>
                                                     <% } %>
-
-
                                         </td>
 
                                     </tr>
@@ -233,12 +231,12 @@
                 </div>
             </div>
         </section>
-        <script>
+        <!-- <script>
             function redirectToEditPage() {
                 window.location.href = '/admin/editproduct';
             }
 
-        </script>
+        </script> -->
 
         <!-- Modal -->
         <section>

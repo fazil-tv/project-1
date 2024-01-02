@@ -286,7 +286,6 @@ const resetpassword = async (req, res) => {
     }
 }
 
-
 // Verify_Login
 
 const verifyLogin = async (req, res) => {

@@ -11,9 +11,6 @@ const { id } = require("schema/lib/objecttools");
 
 
 
-
-
-
 // product
 const Product = async (req, res) => {
     try {
@@ -119,83 +116,92 @@ const blockProduct = async (req, res) => {
 
 
 //edit product
-const editproduct = async (req, res) => {
+// const editproduct = async (req, res) => {
+//     try {
+//         const id = req.query.id;
+//         const product = await productSchema.find({}).populate('category');
+//         const categorys = await categorySchema.find({});
+//         console.log(categorys );
+//         // console.log("dfsd",product);
+//         // console.log(categorys);
+
+//         res.render("editproduct", { product,categorys })
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// }
+const editProduct = async (req, res) => {
     try {
         const id = req.query.id;
-        const product = await productSchema.find({});
+        console.log(id)
+        const product = await productSchema.findById(id)
         const categorys = await categorySchema.find({});
-
-        console.log(id);
-        console.log(product);
-        console.log(categorys);
-
-        res.render("editproduct", { data: product, data1: categorys });
+        res.render("editproduct", { product, categorys, id });
     } catch (error) {
         console.log(error.message);
     }
-}
+};
+
 
 //product post
 const editProductpost = async (req, res) => {
-    console.log("kitty")
-
     try {
+        console.log("kkkkk");
         const id = req.query.id;
-        console.log(id);
+        console.log("kitty", id);
         const uploadedFiles = req.files;
         const requestData = req.body;
         const existingData = await productSchema.findOne({ _id: id })
-        console.log("check:", Files);
-        console.log(requestData);
         const img = [
             uploadedFiles?.image1 ? (uploadedFiles.image1[0]?.filename || existingData.images.image1) : existingData.images.image1,
             uploadedFiles?.image2 ? (uploadedFiles.image2[0]?.filename || existingData.images.image2) : existingData.images.image2,
             uploadedFiles?.image3 ? (uploadedFiles.image3[0]?.filename || existingData.images.image3) : existingData.images.image3,
             uploadedFiles?.image4 ? (uploadedFiles.image4[0]?.filename || existingData.images.image4) : existingData.images.image4,
         ];
+        console.log(img);
 
         for (let i = 0; i < img.length; i++) {
             if (img[i]) {
-                await sharp('public/multerimg/${img[i]}')
+                await sharp(`public/multerimg/${img[i]}`)
                     .resize(500, 500)
-                    .toFile('public/sharpimg/${img[i]}')
+                    .toFile(`public/sharpimg/${img[i]}`);
             }
         }
-        if (requestData.quantity > 0 && requestData.price > 0) {
-            console.log("ok");
-            const product = {
-                name: requestData.title,
-                quantity: requestData.quantity,
-                category: requestData.category,
-                price: requestData.price,
-                offer: requestData.offer,
-                description: requestData.description,
-                images: {
-                    image1: img[0],
-                    image2: img[1],
-                    image3: img[2],
-                    image4: img[3],
-                },
-            }
-            const risult = await productSchema.findOneAndUpdate({ _id: id }, product, { new: true });
-            res.redirect('/admin/product');
-        }
-    } catch (error) {
-        console.log(error);
+     
+
+if (requestData.quantity > 0 && requestData.price > 0) {
+    console.log("ok");
+    const product = {
+
+        name: requestData.title,
+        quantity: requestData.quantity,
+        category: requestData.category,
+        price: requestData.price,
+        offer: requestData.offer,
+        description: requestData.description,
+        images: {
+            image1: img[0],
+            image2: img[1],
+            image3: img[2],
+            image4: img[3],
+        },
     }
+    console.log("io io io io");
+    const risult = await productSchema.findOneAndUpdate({ _id: id }, product, { new: true });
+    risult.save();
+    console.log("done")
+    res.redirect('/admin/product');
+}
+    } catch (error) {
+    console.log(error);
+}
 }
 
 
 
 
 
-// // Validate category existence before creating the product
-// const categoryExists = await Category.findById(requestData.category);
-// if (!categoryExists) {
-//     console.error('Invalid category ID');
-//     // Handle the error appropriately
-//     return res.status(400).send('Invalid category ID');
-// }
+
 
 
 
@@ -204,6 +210,6 @@ module.exports = {
     addproduct,
     addProductspost,
     blockProduct,
-    editproduct,
+    editProduct,
     editProductpost
 }
