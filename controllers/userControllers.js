@@ -277,6 +277,14 @@ const about = async (req, res) => {
         console.log(error);
     }
 }
+//user account
+const useraccount = async (req, res) => {
+    try {
+        res.render('useraccount');
+    } catch (error) {
+        console.log(error);
+    }
+}
 //otp
 const resetpassword = async (req, res) => {
     try {
@@ -334,6 +342,7 @@ module.exports = {
     resetpassword,
     singleproduct,
     resendmailUser,
-    resendEmails
+    resendEmails,
+    useraccount
 
 }

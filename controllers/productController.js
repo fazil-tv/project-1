@@ -199,12 +199,6 @@ if (requestData.quantity > 0 && requestData.price > 0) {
 
 
 
-
-
-
-
-
-
 module.exports = {
     Product,
     addproduct,

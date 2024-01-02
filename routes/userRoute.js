@@ -73,6 +73,9 @@ userRoute.post('/shop', userController.shop);
 //about
 userRoute.get("/about", userController.about);
 userRoute.post('/about', userController.about);
+//useraccount
+userRoute.get("/useraccount", userController.useraccount);
+// userRoute.post('/about', userController.about);
 
 //resetpassword
 userRoute.get(" /resetpassword", userController.resetpassword);
