@@ -25,6 +25,12 @@
     <link rel="stylesheet" href="/css/flaticon.css">
     <link rel="stylesheet" href="/css/icomoon.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/useraccount.css">
+
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 
 
 
@@ -36,7 +42,7 @@
 </head>
 
 <body class="goto-here">
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <nav class="navbar navbar-expand-lg  ftco_navbar ftco-navbar-light" id="ftco-navbar">
         <div class="container">
             <a class="navbar-brand" href="index.html">Minishop</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
@@ -52,7 +58,7 @@
                             aria-haspopup="true" aria-expanded="false">Catalog</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown04">
                             <a class="dropdown-item" href="/shop">Shop</a>
-                            <a class="dropdown-item" href="/singleproduct">Single Product</a>
+                            <!-- <a class="dropdown-item" href="/singleproduct">Single Product</a> -->
                             <a class="dropdown-item" href="/cart">Cart</a>
                             <a class="dropdown-item" href="/checkout">Checkout</a>
                         </div>
@@ -60,19 +66,29 @@
                     <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
                     <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
                     <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
-                    <li class="nav-item cta cta-colored"><a href="/cart" class="nav-link"><span
-                                class="icon-shopping_cart"></span>[0]</a></li>
+                    <!-- <li class="nav-item"><a href="/signup"><i
+								class="fa-regular fa-circle-user user-icon nav-link"></i></a></li> -->
+                    <% console.log("User:", user); %>
+                        <% if (user) { %>
+                            <li class="nav-item"><a href="/useraccount"><i
+                                        class="fa-regular fa-circle-user user-icon nav-link"></i></a></li>
+
+                            <% } else { %>
+                                <li class="nav-item"><a href="/signup"><i
+                                            class="fa-regular fa-circle-user user-icon nav-link"></i></a></li>
+
+                                <% } %>
 
                 </ul>
             </div>
         </div>
     </nav>
-    <!-- END nav -->
+
     <div class="hero-wrap hero-bread" style="background-image: url('images/bg_6.jpg');">
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center">
                 <div class="col-md-9 ftco-animate text-center">
-                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>About</span>
+                    <p class="breadcrumbs"><span class="mr-2">HI <%= user.username %></span>
                     </p>
                     <h1 class="mb-0 bread">MY ACCOUNT</h1>
                 </div>
@@ -80,60 +96,400 @@
         </div>
     </div>
 
-
-    <section>
-        <aside class="navbar-aside" id="offcanvas_aside">
+    <!-- <section class="mb-4 pb-4">
+        <div class="row container-fluid pb-5">
+            <div class="col-lg-4">
                 <ul class="menu-aside">
                     <li class="menu-item active">
-                        <a class="menu-link" href="/admin/index">
+                        <a class="menu-link" href="">
                             <i class="icon material-icons md-home"></i>
-                            <span class="text">Dashboard</span>
-                        </a>
-                    </li>
-                    <!-- users                     -->
-                    <li class="menu-item">
-                        <a class="menu-link" href="/admin/users">
-                            <i class="icon material-icons md-shopping_bag"></i>
-                            <span class="text">users</span>
-                        </a>
-                    </li>
-                    <li class="menu-item ">
-                        <a class="menu-link" href="/admin/category">
-                            <i class="icon material-icons md-shopping_cart"></i>
-                            <span class="text">Category</span>
-                        </a>
-                    </li>
-                    <li class="menu-item ">
-                        <a class="menu-link" href="/admin/product">
-                            <i class="icon material-icons md-add_box"></i>
-                            <span class="text">Add product</span>
+                            <span class="text">user details</span>
                         </a>
                     </li>
 
-                    <li class="menu-item has-submenu">
+                    <li class="menu-item active">
+                        <a class="menu-link" href="">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">orders</span>
+                        </a>
+                    </li>
+                    <li class="menu-item active ">
                         <a class="menu-link" href="#">
                             <i class="icon material-icons md-person"></i>
-                            <span class="text">Account</span>
+                            <span class="text">add new address</span>
                         </a>
-                        <div class="submenu">
-                            <a href="page-account-login.html">User login</a>
-                            <a href="page-account-register.html">User registration</a>
-                            <a href="page-error-404.html">Error 404</a>
-                        </div>
-
-                </ul>
-                <hr />
-                <ul class="menu-aside">
-                    <li class="menu-item">
-                        <a class="menu-link" href="page-blank.html">
-                            <i class="icon material-icons md-local_offer"></i>
-                            <span class="text"> Starter page </span>
+                    </li>
+                    <li class="menu-item active ">
+                        <a class="menu-link" href="#">
+                            <i class="icon material-icons md-person"></i>
+                            <span class="text">log out</span>
                         </a>
                     </li>
                 </ul>
-                <br />
-                <br />
-        </aside>
+            </div>
+            <div class="col-lg-8">
+                <section>
+                    <h1>User Profile</h1>
+
+                    <form id="profileForm">
+                        <div class="form-wrapper">
+                            <div class="validation-form">User Name :</div>
+                            <input type="text" name="username" class="form-control" id="usernameInput"
+                                value="<%= user.username %>" disabled>
+                            <i class="zmdi zmdi-account"></i>
+                        </div>
+
+                        <div class="form-wrapper">
+                            <div class="validation-form">Email Id :</div>
+                            <input type="email" name="email" class="form-control" id="emailInput"
+                                value="<%= user.email %>" disabled>
+                            <i class="zmdi zmdi-email"></i>
+                        </div>
+
+                        <div class="form-wrapper">
+                            <div class="validation-form">Phone :</div>
+                            <input type="text" name="phone" class="form-control" id="phoneInput" value="<%= user.mobilenumber %>" disabled>
+                            <i class="zmdi zmdi-account"></i>
+                        </div>
+
+                        <div class="pt-4 float-md-left">
+                            <button type="button" class="btn btn-primary" onclick="openModal()">
+                                <i class="text-muted material-icons md-post_add"></i>Edit Profile
+                            </button>
+                        </div>
+                        <div class="pt-4 float-md-right">
+                            <button type="button" class="btn btn-primary" onclick="">
+                                <i class="text-muted material-icons md-post_add"></i>Forgot Password
+                            </button>
+                        </div>
+                    </form>
+
+
+                   
+
+                    <script>
+
+
+                        function editProfile() {
+                            document.getElementById('usernameInput').removeAttribute('disabled');
+                            document.getElementById('emailInput').removeAttribute('disabled');
+                            document.getElementById('phoneInput').removeAttribute('disabled');
+                        }
+
+                        function openModal() {
+                            document.getElementById('editProfileModal').style.display = 'block';
+                        }
+                        function closeModal() {
+                            document.getElementById('editProfileModal').style.display = 'none';
+                        }
+                        function saveChanges() {
+
+                            const newUsername = document.getElementById('newUsername').value;
+                            document.getElementById('usernameInput').value = newUsername;
+                            const newMobile = document.getElementById('newMobile').value;
+                            document.getElementById('phoneInput').value = newMobile ;
+
+                            closeModal();
+                        }
+                    </script>
+                    <style>
+                        .modal {
+                            display: none;
+                            position: fixed;
+                            z-index: 1;
+                            left: 30%;
+                            top: 0;
+                            width: 50%;
+                            height: 100%;
+                            overflow: auto;
+                            background-color: black;
+                        }
+
+                        .modal-content {
+                            background-color: #fefefe;
+                            margin: 15% auto;
+                            padding: 20px;
+                            border: 1px solid #888;
+                            width: 80%;
+                        }
+
+                        .close {
+                            color: #aaa;
+                            float: right;
+                            font-size: 28px;
+                            font-weight: bold;
+                        }
+
+                        .close:hover,
+                        .close:focus {
+                            color: black;
+                            text-decoration: none;
+                            cursor: pointer;
+                        }
+                    </style>
+                </section>
+
+            </div>
+
+        </div> -->
+
+
+
+
+    <div class="container light-style flex-grow-1 container-p-y">
+        <h4 class="font-weight-bold py-3 mb-4">
+            Account settings
+        </h4>
+        <div class="card overflow-hidden">
+            <div class="row no-gutters row-bordered row-border-light">
+                <div class="col-md-3 pt-0">
+                    <div class="list-group list-group-flush account-settings-links">
+                        <a class="list-group-item list-group-item-action active" data-toggle="list"
+                            href="#account-general">General</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list"
+                            href="#account-change-password">Change password</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list"
+                            href="#account-info">Info</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list"
+                            href="#account-social-links">Social links</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list"
+                            href="#account-connections">Connections</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list"
+                            href="#account-notifications">Notifications</a>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="account-general">
+
+                            <div class="card-body">
+
+                                <div class="form-wrapper">
+                                    <label class="form-label">Username</label>
+                                    <input type="text" name="username" class="form-control mb-1" id="usernameInput"
+                                        value="<%= user.username %>" disabled>
+                                    <i class="zmdi zmdi-account"></i>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Mobile</label>
+                                    <input type="text" name="phone" class="form-control mb-1" id="phoneInput"
+                                        value="<%= user.mobilenumber %>" disabled>
+                                    <i class="zmdi zmdi-account"></i>
+                                </div>
+
+                                <div class="form-wrapper">
+                                    <label class="form-label">E-mail</label>
+                                    <input type="email" name="email" class="form-control mb-1" id="emailInput"
+                                        value="<%= user.email %>" disabled>
+                                    <i class="zmdi zmdi-email"></i>
+                                </div>
+                                <div class="pt-4 float-md-left">
+                                    <button type="button" class="btn btn-primary edit-btn" onclick="openModal()">
+                                        <i class="text-muted material-icons md-post_add "></i>Edit Profile
+                                    </button>
+                                </div>
+                                <div class="pt-4 pb-4 float-md-right me-2">
+                                    <button type="button" class="btn btn-primary forget-btn" onclick="">
+                                        <i class="text-muted material-icons md-post_add"></i>Forgot Password
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-change-password">
+                            <div class="card-body pb-2">
+                                <div class="form-group">
+                                    <label class="form-label">Current password</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">New password</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Repeat new password</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-info">
+                            <div class="card-body pb-2">
+                                <div class="form-group">
+                                    <label class="form-label">Bio</label>
+                                    <textarea class="form-control"
+                                        rows="5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nunc arcu, dignissim sit amet sollicitudin iaculis, vehicula id urna. Sed luctus urna nunc. Donec fermentum, magna sit amet rutrum pretium, turpis dolor molestie diam, ut lacinia diam risus eleifend sapien. Curabitur ac nibh nulla. Maecenas nec augue placerat, viverra tellus non, pulvinar risus.</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Birthday</label>
+                                    <input type="text" class="form-control" value="May 3, 1995">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Country</label>
+                                    <select class="custom-select">
+                                        <option>USA</option>
+                                        <option selected>Canada</option>
+                                        <option>UK</option>
+                                        <option>Germany</option>
+                                        <option>France</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr class="border-light m-0">
+                            <div class="card-body pb-2">
+                                <h6 class="mb-4">Contacts</h6>
+                                <div class="form-group">
+                                    <label class="form-label">Phone</label>
+                                    <input type="text" class="form-control" value="+0 (123) 456 7891">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Website</label>
+                                    <input type="text" class="form-control" value>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-social-links">
+                            <div class="card-body pb-2">
+                                <div class="form-group">
+                                    <label class="form-label">Twitter</label>
+                                    <input type="text" class="form-control" value="https://twitter.com/user">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Facebook</label>
+                                    <input type="text" class="form-control" value="https://www.facebook.com/user">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Google+</label>
+                                    <input type="text" class="form-control" value>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">LinkedIn</label>
+                                    <input type="text" class="form-control" value>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Instagram</label>
+                                    <input type="text" class="form-control" value="https://www.instagram.com/user">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-connections">
+                            <div class="card-body">
+                                <button type="button" class="btn btn-twitter">Connect to
+                                    <strong>Twitter</strong></button>
+                            </div>
+                            <hr class="border-light m-0">
+                            <div class="card-body">
+                                <h5 class="mb-2">
+                                    <a href="javascript:void(0)" class="float-right text-muted text-tiny"><i
+                                            class="ion ion-md-close"></i> Remove</a>
+                                    <i class="ion ion-logo-google text-google"></i>
+                                    You are connected to Google:
+                                </h5>
+                                <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                                    data-cfemail="f9979498818e9c9595b994989095d79a9694">[email&#160;protected]</a>
+                            </div>
+                            <hr class="border-light m-0">
+                            <div class="card-body">
+                                <button type="button" class="btn btn-facebook">Connect to
+                                    <strong>Facebook</strong></button>
+                            </div>
+                            <hr class="border-light m-0">
+                            <div class="card-body">
+                                <button type="button" class="btn btn-instagram">Connect to
+                                    <strong>Instagram</strong></button>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-notifications">
+                            <div class="card-body pb-2">
+                                <h6 class="mb-4">Activity</h6>
+                                <div class="form-group">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input" checked>
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label">Email me when someone comments on my
+                                            article</span>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input" checked>
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label">Email me when someone answers on my forum
+                                            thread</span>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input">
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label">Email me when someone follows me</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <hr class="border-light m-0">
+                            <div class="card-body pb-2">
+                                <h6 class="mb-4">Application</h6>
+                                <div class="form-group">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input" checked>
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label">News and announcements</span>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input">
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label">Weekly product updates</span>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input" checked>
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label">Weekly blog digest</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+    </div>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+
+    </script>
+
+
+
+
+
 
     </section>
 
@@ -147,8 +503,9 @@
 
 
 
+
     <!-- loader -->
-    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+    <div id="ftco-loader" class="show fullscreen "><svg class="circular" width="48px" height="48px">
             <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
             <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
                 stroke="#F96D00" />
@@ -156,7 +513,7 @@
     <footer class="ftco-footer ftco-section">
         <div class="container">
             <div class="row">
-                <div class="mouse">
+                <div class="mouse ">
                     <a href="#" class="mouse-icon">
                         <div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
                     </a>
@@ -255,9 +612,104 @@
 
 
 
+    <!-- modal -->
+    <section>
+        <div id="editProfileModal" class="modal ">
+            <div class="modal-content">
+                <form action="/edituser" method="post" id="editProfileForm">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <h3 class="modalhead">Edit Profile</h3>
 
+                    <label for="newUsername">New User Name:</label>
+                    <input type="text" id="newUsername" name="editname" class="form-control">
 
+                    <label for="newMobile">New Mobile number:</label>
+                    <input type="number" id="newUserMobile" class="form-control" name="editMobile">
+                    <button type="submit" class="save-btn" class="form-control" onclick="saveChanges()">Save
+                        Changes</button>
+                </form>
+            </div>
+        </div>
+    </section>
 
+    <script>
+
+        function editProfile() {
+            document.getElementById('usernameInput').removeAttribute('disabled');
+            document.getElementById('emailInput').removeAttribute('disabled');
+            document.getElementById('phoneInput').removeAttribute('disabled');
+        }
+
+        function openModal() {
+            document.getElementById('editProfileModal').style.display = 'block';
+        }
+        function closeModal() {
+            document.getElementById('editProfileModal').style.display = 'none';
+        }
+        function saveChanges() {
+
+            const newUsername = document.getElementById('newUsername').value;
+            document.getElementById('usernameInput').value = newUsername;
+            const newMobile = document.getElementById('newMobile').value;
+            document.getElementById('phoneInput').value = newMobile;
+
+            closeModal();
+        }
+    </script>
+    <style>
+        .modal {
+            display: none;
+            z-index: 99999999999;
+            left: 30%;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .forget-btn {}
+
+        .edit-btn {
+            background-color: #dbcc8f !important;
+        }
+
+        .save-btn {
+            background-color: #dbcc8f;
+            border: none;
+            width: 50%;
+            height: 50px;
+            position: relative;
+            left: 24%;
+            margin-top: 20px;
+        }
+
+        .modalhead {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+    </style>
 
 
 
@@ -269,7 +721,7 @@
 
     <script>
 
-        
+
 
 
 

@@ -106,7 +106,7 @@ let sendEmails = async (email, _id) => {
             otp: hashedOTP,
         });
         await newOtp.save();
-        
+
         console.log("Email sent successfully");
     } catch (error) {
         console.error("Error sending email:", error.message);
@@ -131,10 +131,10 @@ const sendmailUser = async (email, id, res) => {
 
 //resend otp
 const resendEmails = async (email, _id) => {
-    try { 
+    try {
         console.log("sdsdsdhg")
         console.log(email);
-        
+
         // Generate a new OTP
         const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
         const mailOptions = {
@@ -157,26 +157,26 @@ const resendEmails = async (email, _id) => {
     }
 };
 
-const resendmailUser = async ( userId,res) => {
-    
+const resendmailUser = async (userId, res) => {
+
     try {
         console.log("hiiiii");
         console.log(userId);
-        const user = await User.findOne({_id:userId});
+        const user = await User.findOne({ _id: userId });
         console.log(user);
         const email = user.email;
-        console.log("email",email);
-        await resendEmails(email,userId);
-        console.log("last user",userId)
+        console.log("email", email);
+        await resendEmails(email, userId);
+        console.log("last user", userId)
         console.log(" resent otp successfully");
-        res.status(200).json({success:true});
+        res.status(200).json({ success: true });
     } catch (error) {
         console.error("Error sending email:", error);
         res.send("Error sending email");
     }
 };
 
- 
+
 
 //otp verification 
 const verifyPost = async (req, res) => {
@@ -197,7 +197,7 @@ const verifyPost = async (req, res) => {
             // const { expiresAt } = userOTPVerificationrecord[0];
             const hashedOTP = userOTPVerificationrecord[0].otp;
 
-           
+
             const validOTP = await bcrypt.compare(otp, hashedOTP);
             if (!validOTP) {
                 res.redirect(`/otp?id=${userId}`)
@@ -238,7 +238,7 @@ const blog = async (req, res) => {
 const indexhome = async (req, res) => {
     try {
 
-        res.render("indexhome");
+        res.render("indexhome", { user: req.session.user_id });
     } catch (error) {
         console.log(error.message);
     }
@@ -280,7 +280,12 @@ const about = async (req, res) => {
 //user account
 const useraccount = async (req, res) => {
     try {
-        res.render('useraccount');
+        const userId = req.session.user_id;
+        console.log(userId);
+        const user = await User.findById(userId);
+        console.log(user);
+        res.render('useraccount', { user });
+
     } catch (error) {
         console.log(error);
     }
@@ -309,7 +314,7 @@ const verifyLogin = async (req, res) => {
             if (passwordMatch && userblock) {
                 req.session.user_id = userData._id;
                 req.session.email = email;
-                res.redirect('/home');
+                res.redirect('/indexhome');
             } else {
                 res.render('login', { message: "Incorrect username or password", type: "error" });
             }
@@ -319,6 +324,39 @@ const verifyLogin = async (req, res) => {
         }
     } catch (error) {
         console.log(error.message);
+    }
+}
+
+
+// user edit
+
+const edituser = async (req, res) => {
+    console.log("hi bhaiiiiii")
+    try {
+
+
+        userData = await User.findById(req.session.user_id);
+        console.log(userData);
+        const updatedUserData = await User.findOneAndUpdate(
+
+            { email: userData.email },
+            {
+                $set: {
+                    username: req.body.editname,
+                    mobilenumber: req.body.editMobile,
+                },
+            },
+            { new: true }
+        );
+
+        console.log(updatedUserData.name);
+        console.log(updatedUserData.mobile);
+        res.redirect('/useraccount')
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Error updating user information')
+
     }
 }
 
@@ -343,6 +381,7 @@ module.exports = {
     singleproduct,
     resendmailUser,
     resendEmails,
-    useraccount
+    useraccount,
+    edituser
 
 }

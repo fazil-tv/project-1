@@ -82,7 +82,8 @@ userRoute.get(" /resetpassword", userController.resetpassword);
 userRoute.post('/resetpassword', userController.resetpassword);
 
 
-
+// edit user
+userRoute.post('/edituser', userController. edituser)
 
 //contact
 userRoute.get("/contact", (req, res) => {
