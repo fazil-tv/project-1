@@ -240,7 +240,10 @@
         <h4 class="font-weight-bold py-3 mb-4">
             Account settings
         </h4>
-        <div class="card overflow-hidden">
+        
+        
+
+        <div class="card overflow-hidden" id="resetdiv">
             <div class="row no-gutters row-bordered row-border-light">
                 <div class="col-md-3 pt-0">
                     <div class="list-group list-group-flush account-settings-links">
@@ -258,12 +261,11 @@
                             href="#account-notifications">Notifications</a>
                     </div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-9" >
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="account-general">
 
                             <div class="card-body">
-
                                 <div class="form-wrapper">
                                     <label class="form-label">Username</label>
                                     <input type="text" name="username" class="form-control mb-1" id="usernameInput"
@@ -316,27 +318,34 @@
                                 </form>
                             </div>
                         </div> -->
-                        <div class="tab-pane fade" id="account-change-password">
-                            <div class="card-body pb-2">
-                                <form id="editProfileForm">
-                                    <div class="form-group">
-                                        <label class="form-label">Current password</label>
-                                        <input type="password" class="form-control" name="currentpassword"
-                                            id="currentpassword">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">New password</label>
-                                        <input type="password" class="form-control" name="newpassword" id="newpassword">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Repeat new password</label>
-                                        <input type="password" class="form-control" name="repeatpassword"
-                                            id="repeatpassword">
-                                    </div>
-                                    <button  class="save-btn" onclick="resetpassword()">Submit</button>
-                                </form>
+                    
+                            <div class="tab-pane fade " id="account-change-password">
+                                <div class="card-body pb-2">
+                                    <form id="editProfileForm">
+                                        <div class="form-group">
+                                            <label class="form-label">Current password</label>
+                                            <input type="password" class="form-control" name="currentpassword"
+                                                id="currentpassword">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">New password</label>
+                                            <input type="password" class="form-control" name="newpassword"
+                                                id="newpassword">
+                                            <span id="newPasswordError" style="color: red;"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Repeat new password</label>
+                                            <input type="password" class="form-control" name="repeatpassword"
+                                                id="repeatpassword">
+                                            <span id="confirmPasswordError" style="color: red;"></span>
+                                        </div>
+                                        <button class="save-btn"
+                                            onclick="resetPasswordvalidation(event)">Submit</button>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
+                       
+
 
 
 
@@ -669,16 +678,54 @@
 
 
 
-        
+        function resetPasswordvalidation(event) {
+            event.preventDefault();
+            console.log("here")
+
+            const newpassword = document.getElementById('newpassword').value;
+            const repeatpassword = document.getElementById('repeatpassword').value;
+
+            document.getElementById('newPasswordError').textContent = '';
+            document.getElementById('confirmPasswordError').textContent = '';
+            
+
+            let isValid = true;
+
+
+            if (newpassword.length < 8) {
+                document.getElementById('newPasswordError').textContent = 'Password must be at least 8 characters';
+                isValid = false;
+            }
+
+            if (repeatpassword.length < 8) {
+                document.getElementById('confirmPasswordError').textContent = 'Password must be at least 8 characters';
+                isValid = false;
+            }
+
+            if (newpassword !== repeatpassword) {
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                isValid = false;
+            }
+
+            if (!isValid) {
+                console.log("your validation failed");
+            } else {
+                resetPassword();
+            }
+
+        }
+
 
 
 
         // fech request for reset password
-        function resetpassword() {
 
+        function resetPassword() {
+            console.log("viliknund")
             const newpassword = document.getElementById('newpassword').value;
             const currentpassword = document.getElementById('currentpassword').value;
             const repeatpassword = document.getElementById('repeatpassword').value;
+            // document.getElementById('resetdiv').textContent = '';
 
             fetch('/resetpassword', {
                 method: 'PUT',
@@ -694,6 +741,11 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.reseted) {
+                        $('#resetdiv').load('/useraccount #resetdiv');
+
+                        // document.getElementById('resetdiv').textContent = 'reset password successfull';
+
+                        // window.relode();
                         // window.location.reload();
                     } else {
                         console.log('Password reset failed');
@@ -701,9 +753,6 @@
                 })
                 .catch(error => console.error('Error resetting password:', error));
         }
-
-
-
 
     </script>
     <style>

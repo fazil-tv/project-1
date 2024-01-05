@@ -361,7 +361,7 @@ const edituser = async (req, res) => {
 
 // const securePassword = async (password) => {
 //     try {
-        
+
 //         return securePass;
 //     } catch (error) {
 //         console.log(error.message)
@@ -377,22 +377,29 @@ const resetpassword = async (req, res) => {
         console.log(repeatpassword);
         console.log(newpassword);
 
-        userData = await User.findById(req.session.user_id);
-        console.log(userData);
-        const passwordMatch = await bcrypt.compare(currentpassword, userData.password);
-        console.log(passwordMatch);
-        const email = userData.email;
-        console.log(email)
 
-        if (!passwordMatch) {
-            return res.json({ reseted: false });
+        if (newpassword == repeatpassword) {
+
+            userData = await User.findById(req.session.user_id);
+            console.log(userData);
+            const passwordMatch = await bcrypt.compare(currentpassword, userData.password);
+            console.log(passwordMatch);
+            const email = userData.email;
+            console.log(email)
+
+            if (!passwordMatch) {
+                return res.json({ reseted: false });
+            }
+            else {
+                // const hashedPassword = await securePassword(Password)
+                const hashedPassword = await bcrypt.hash(newpassword, 10);
+                const hashedconfirmPassword = await bcrypt.hash(repeatpassword, 10);
+                console.log(hashedPassword);
+                await User.findOneAndUpdate({ email: email }, { $set: { password: hashedPassword, confirmPassword: hashedconfirmPassword } });
+            }
         }
         else {
-            // const hashedPassword = await securePassword(Password)
-            const hashedPassword = await bcrypt.hash(newpassword, 10);
-            const hashedconfirmPassword = await bcrypt.hash(repeatpassword, 10);
-            console.log(hashedPassword);
-            await User.findOneAndUpdate({ email: email }, { $set: { password: hashedPassword,confirmPassword:hashedconfirmPassword } });
+            return res.status(400).json({ error: 'Passwords do not match' });
         }
 
         res.json({ reseted: true });
