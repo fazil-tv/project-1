@@ -82,8 +82,7 @@ userRoute.get(" /resetpassword", userController.resetpassword);
 userRoute.post('/resetpassword', userController.resetpassword);
 
 
-// edit user
-userRoute.post('/edituser', userController. edituser)
+
 
 //contact
 userRoute.get("/contact", (req, res) => {
@@ -99,6 +98,16 @@ userRoute.get("/cart", (req, res) => {
 userRoute.get("/checkout", (req, res) => {
     res.render('checkout')
 })
+
+
+// edit user
+userRoute.post('/edituser', userController. edituser);
+
+
+//reset password 
+userRoute.put('/resetpassword', userController. resetpassword)
+
+
 
 
 module.exports = userRoute;

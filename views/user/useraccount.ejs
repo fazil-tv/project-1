@@ -283,34 +283,64 @@
                                         value="<%= user.email %>" disabled>
                                     <i class="zmdi zmdi-email"></i>
                                 </div>
-                                <div class="pt-4 float-md-left">
+                                <div class="pt-2 float-right pb-4 me-1">
                                     <button type="button" class="btn btn-primary edit-btn" onclick="openModal()">
                                         <i class="text-muted material-icons md-post_add "></i>Edit Profile
                                     </button>
                                 </div>
-                                <div class="pt-4 pb-4 float-md-right me-2">
-                                    <button type="button" class="btn btn-primary forget-btn" onclick="">
-                                        <i class="text-muted material-icons md-post_add"></i>Forgot Password
-                                    </button>
-                                </div>
+
                             </div>
                         </div>
+
+                        <!--   changing password    -->
+
+                        <!-- <div class="tab-pane fade" id="account-change-password">
+                            <div class="card-body pb-2">
+                                <form id="editProfileForm">
+                                    <div class="form-group">
+                                        <label class="form-label">Current password</label>
+                                        <input type="password" class="form-control" name="currentpassword"
+                                            id="currentpassword">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">New password</label>
+                                        <input type="password" class="form-control" name="newpassword" id="newpassword">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Repeat new password</label>
+                                        <input type="password" class="form-control" name="repeatpassword"
+                                            id="repeatpassword">
+                                    </div>
+                                    <button type="submit" class="save-btn" class="form-control"
+                                        onclick="resetpassword()">Submit</button>
+                                </form>
+                            </div>
+                        </div> -->
                         <div class="tab-pane fade" id="account-change-password">
                             <div class="card-body pb-2">
-                                <div class="form-group">
-                                    <label class="form-label">Current password</label>
-                                    <input type="password" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">New password</label>
-                                    <input type="password" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Repeat new password</label>
-                                    <input type="password" class="form-control">
-                                </div>
+                                <form id="editProfileForm">
+                                    <div class="form-group">
+                                        <label class="form-label">Current password</label>
+                                        <input type="password" class="form-control" name="currentpassword"
+                                            id="currentpassword">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">New password</label>
+                                        <input type="password" class="form-control" name="newpassword" id="newpassword">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Repeat new password</label>
+                                        <input type="password" class="form-control" name="repeatpassword"
+                                            id="repeatpassword">
+                                    </div>
+                                    <button  class="save-btn" onclick="resetpassword()">Submit</button>
+                                </form>
                             </div>
                         </div>
+
+
+
+
                         <div class="tab-pane fade" id="account-info">
                             <div class="card-body pb-2">
                                 <div class="form-group">
@@ -471,20 +501,8 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
         </div>
     </div>
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript">
-
-    </script>
 
 
 
@@ -591,23 +609,8 @@
     </footer>
 
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery-migrate-3.0.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.easing.1.3.js"></script>
-    <script src="js/jquery.waypoints.min.js"></script>
-    <script src="js/jquery.stellar.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/aos.js"></script>
-    <script src="js/jquery.animateNumber.min.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/scrollax.min.js"></script>
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    <script src="js/google-map.js"></script>
-    <script src="js/main.js"></script>
+
+
 
 
 
@@ -632,7 +635,14 @@
         </div>
     </section>
 
+
+
+
+
+
     <script>
+
+        // edit profile modale
 
         function editProfile() {
             document.getElementById('usernameInput').removeAttribute('disabled');
@@ -655,6 +665,46 @@
 
             closeModal();
         }
+
+
+
+
+        
+
+
+
+        // fech request for reset password
+        function resetpassword() {
+
+            const newpassword = document.getElementById('newpassword').value;
+            const currentpassword = document.getElementById('currentpassword').value;
+            const repeatpassword = document.getElementById('repeatpassword').value;
+
+            fetch('/resetpassword', {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    newpassword: newpassword,
+                    currentpassword: currentpassword,
+                    repeatpassword: repeatpassword
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.reseted) {
+                        // window.location.reload();
+                    } else {
+                        console.log('Password reset failed');
+                    }
+                })
+                .catch(error => console.error('Error resetting password:', error));
+        }
+
+
+
+
     </script>
     <style>
         .modal {
@@ -712,6 +762,31 @@
     </style>
 
 
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+
+    </script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/jquery.animateNumber.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/scrollax.min.js"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="js/google-map.js"></script>
+    <script src="js/main.js"></script>
 
 
 

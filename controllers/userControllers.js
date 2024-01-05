@@ -200,12 +200,18 @@ const verifyPost = async (req, res) => {
 
             const validOTP = await bcrypt.compare(otp, hashedOTP);
             if (!validOTP) {
-                res.redirect(`/otp?id=${userId}`)
+                res.redirect(`/otp?id=${userId}`);
             } else {
                 // await User.updateOne({ _id: userId }, { verfied: true });
+
                 await Otp.deleteOne({ user_id: userId });
 
-                res.redirect(`/home`)
+                //signup verification session
+
+                req.session.user_id = userData._id;
+                req.session.email = email;
+
+                res.redirect(`/indexhome`);
             }
         }
 
@@ -290,14 +296,7 @@ const useraccount = async (req, res) => {
         console.log(error);
     }
 }
-//otp
-const resetpassword = async (req, res) => {
-    try {
-        res.render('resetpassword');
-    } catch (error) {
-        console.log(error);
-    }
-}
+
 
 // Verify_Login
 
@@ -331,10 +330,7 @@ const verifyLogin = async (req, res) => {
 // user edit
 
 const edituser = async (req, res) => {
-    console.log("hi bhaiiiiii")
     try {
-
-
         userData = await User.findById(req.session.user_id);
         console.log(userData);
         const updatedUserData = await User.findOneAndUpdate(
@@ -361,8 +357,50 @@ const edituser = async (req, res) => {
 }
 
 
+// securePassword
 
+// const securePassword = async (password) => {
+//     try {
+        
+//         return securePass;
+//     } catch (error) {
+//         console.log(error.message)
+//     }
+// }
 
+const resetpassword = async (req, res) => {
+    try {
+        const { newpassword, currentpassword, repeatpassword } = req.body;
+        console.log("am here");
+
+        console.log(currentpassword);
+        console.log(repeatpassword);
+        console.log(newpassword);
+
+        userData = await User.findById(req.session.user_id);
+        console.log(userData);
+        const passwordMatch = await bcrypt.compare(currentpassword, userData.password);
+        console.log(passwordMatch);
+        const email = userData.email;
+        console.log(email)
+
+        if (!passwordMatch) {
+            return res.json({ reseted: false });
+        }
+        else {
+            // const hashedPassword = await securePassword(Password)
+            const hashedPassword = await bcrypt.hash(newpassword, 10);
+            const hashedconfirmPassword = await bcrypt.hash(repeatpassword, 10);
+            console.log(hashedPassword);
+            await User.findOneAndUpdate({ email: email }, { $set: { password: hashedPassword,confirmPassword:hashedconfirmPassword } });
+        }
+
+        res.json({ reseted: true });
+
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 module.exports = {
@@ -382,6 +420,6 @@ module.exports = {
     resendmailUser,
     resendEmails,
     useraccount,
-    edituser
-
+    edituser,
+    resetpassword
 }
