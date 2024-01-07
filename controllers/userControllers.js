@@ -7,6 +7,7 @@ const nodemailer = require("nodemailer");
 const Otp = require('../model/userOTPverification')
 const bcrypt = require("bcrypt");
 const productSchema = require("../model/productSchema");
+const addressSchema = require("../model/addressModel")
 const { log } = require("console");
 
 
@@ -287,15 +288,18 @@ const about = async (req, res) => {
 const useraccount = async (req, res) => {
     try {
         const userId = req.session.user_id;
+        const useraddress = await addressSchema.findOne({ user: userId });
         console.log(userId);
+        console.log("ooi", useraddress);
         const user = await User.findById(userId);
         console.log(user);
-        res.render('useraccount', { user });
+        res.render('useraccount', { user, useraddress });
 
     } catch (error) {
         console.log(error);
     }
 }
+
 
 
 // Verify_Login

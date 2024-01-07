@@ -34,6 +34,12 @@
 
 
 
+    <!-- address adding fetch linked -->
+    <script src="/js/fetch.js"></script>
+    <!--  button calling for  -->
+
+
+
 
     <!-- styles -->
     <link rel="stylesheet" href="/assets/css/main.css">
@@ -68,16 +74,7 @@
                     <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
                     <!-- <li class="nav-item"><a href="/signup"><i
 								class="fa-regular fa-circle-user user-icon nav-link"></i></a></li> -->
-                    <% console.log("User:", user); %>
-                        <% if (user) { %>
-                            <li class="nav-item"><a href="/useraccount"><i
-                                        class="fa-regular fa-circle-user user-icon nav-link"></i></a></li>
 
-                            <% } else { %>
-                                <li class="nav-item"><a href="/signup"><i
-                                            class="fa-regular fa-circle-user user-icon nav-link"></i></a></li>
-
-                                <% } %>
 
                 </ul>
             </div>
@@ -96,152 +93,14 @@
         </div>
     </div>
 
-    <!-- <section class="mb-4 pb-4">
-        <div class="row container-fluid pb-5">
-            <div class="col-lg-4">
-                <ul class="menu-aside">
-                    <li class="menu-item active">
-                        <a class="menu-link" href="">
-                            <i class="icon material-icons md-home"></i>
-                            <span class="text">user details</span>
-                        </a>
-                    </li>
-
-                    <li class="menu-item active">
-                        <a class="menu-link" href="">
-                            <i class="icon material-icons md-shopping_bag"></i>
-                            <span class="text">orders</span>
-                        </a>
-                    </li>
-                    <li class="menu-item active ">
-                        <a class="menu-link" href="#">
-                            <i class="icon material-icons md-person"></i>
-                            <span class="text">add new address</span>
-                        </a>
-                    </li>
-                    <li class="menu-item active ">
-                        <a class="menu-link" href="#">
-                            <i class="icon material-icons md-person"></i>
-                            <span class="text">log out</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-8">
-                <section>
-                    <h1>User Profile</h1>
-
-                    <form id="profileForm">
-                        <div class="form-wrapper">
-                            <div class="validation-form">User Name :</div>
-                            <input type="text" name="username" class="form-control" id="usernameInput"
-                                value="<%= user.username %>" disabled>
-                            <i class="zmdi zmdi-account"></i>
-                        </div>
-
-                        <div class="form-wrapper">
-                            <div class="validation-form">Email Id :</div>
-                            <input type="email" name="email" class="form-control" id="emailInput"
-                                value="<%= user.email %>" disabled>
-                            <i class="zmdi zmdi-email"></i>
-                        </div>
-
-                        <div class="form-wrapper">
-                            <div class="validation-form">Phone :</div>
-                            <input type="text" name="phone" class="form-control" id="phoneInput" value="<%= user.mobilenumber %>" disabled>
-                            <i class="zmdi zmdi-account"></i>
-                        </div>
-
-                        <div class="pt-4 float-md-left">
-                            <button type="button" class="btn btn-primary" onclick="openModal()">
-                                <i class="text-muted material-icons md-post_add"></i>Edit Profile
-                            </button>
-                        </div>
-                        <div class="pt-4 float-md-right">
-                            <button type="button" class="btn btn-primary" onclick="">
-                                <i class="text-muted material-icons md-post_add"></i>Forgot Password
-                            </button>
-                        </div>
-                    </form>
-
-
-                   
-
-                    <script>
-
-
-                        function editProfile() {
-                            document.getElementById('usernameInput').removeAttribute('disabled');
-                            document.getElementById('emailInput').removeAttribute('disabled');
-                            document.getElementById('phoneInput').removeAttribute('disabled');
-                        }
-
-                        function openModal() {
-                            document.getElementById('editProfileModal').style.display = 'block';
-                        }
-                        function closeModal() {
-                            document.getElementById('editProfileModal').style.display = 'none';
-                        }
-                        function saveChanges() {
-
-                            const newUsername = document.getElementById('newUsername').value;
-                            document.getElementById('usernameInput').value = newUsername;
-                            const newMobile = document.getElementById('newMobile').value;
-                            document.getElementById('phoneInput').value = newMobile ;
-
-                            closeModal();
-                        }
-                    </script>
-                    <style>
-                        .modal {
-                            display: none;
-                            position: fixed;
-                            z-index: 1;
-                            left: 30%;
-                            top: 0;
-                            width: 50%;
-                            height: 100%;
-                            overflow: auto;
-                            background-color: black;
-                        }
-
-                        .modal-content {
-                            background-color: #fefefe;
-                            margin: 15% auto;
-                            padding: 20px;
-                            border: 1px solid #888;
-                            width: 80%;
-                        }
-
-                        .close {
-                            color: #aaa;
-                            float: right;
-                            font-size: 28px;
-                            font-weight: bold;
-                        }
-
-                        .close:hover,
-                        .close:focus {
-                            color: black;
-                            text-decoration: none;
-                            cursor: pointer;
-                        }
-                    </style>
-                </section>
-
-            </div>
-
-        </div> -->
-
-
-
 
     <div class="container light-style flex-grow-1 container-p-y">
         <h4 class="font-weight-bold py-3 mb-4">
             Account settings
         </h4>
-        
-        
+        <div id="message"></div>
+
+
 
         <div class="card overflow-hidden" id="resetdiv">
             <div class="row no-gutters row-bordered row-border-light">
@@ -261,7 +120,7 @@
                             href="#account-notifications">Notifications</a>
                     </div>
                 </div>
-                <div class="col-md-9" >
+                <div class="col-md-9">
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="account-general">
 
@@ -318,73 +177,97 @@
                                 </form>
                             </div>
                         </div> -->
-                    
-                            <div class="tab-pane fade " id="account-change-password">
-                                <div class="card-body pb-2">
-                                    <form id="editProfileForm">
-                                        <div class="form-group">
-                                            <label class="form-label">Current password</label>
-                                            <input type="password" class="form-control" name="currentpassword"
-                                                id="currentpassword">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">New password</label>
-                                            <input type="password" class="form-control" name="newpassword"
-                                                id="newpassword">
-                                            <span id="newPasswordError" style="color: red;"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Repeat new password</label>
-                                            <input type="password" class="form-control" name="repeatpassword"
-                                                id="repeatpassword">
-                                            <span id="confirmPasswordError" style="color: red;"></span>
-                                        </div>
-                                        <button class="save-btn"
-                                            onclick="resetPasswordvalidation(event)">Submit</button>
-                                    </form>
-                                </div>
-                            </div>
-                       
 
-
-
-
-
-                        <div class="tab-pane fade" id="account-info">
+                        <div class="tab-pane fade " id="account-change-password">
                             <div class="card-body pb-2">
-                                <div class="form-group">
-                                    <label class="form-label">Bio</label>
-                                    <textarea class="form-control"
-                                        rows="5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nunc arcu, dignissim sit amet sollicitudin iaculis, vehicula id urna. Sed luctus urna nunc. Donec fermentum, magna sit amet rutrum pretium, turpis dolor molestie diam, ut lacinia diam risus eleifend sapien. Curabitur ac nibh nulla. Maecenas nec augue placerat, viverra tellus non, pulvinar risus.</textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Birthday</label>
-                                    <input type="text" class="form-control" value="May 3, 1995">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Country</label>
-                                    <select class="custom-select">
-                                        <option>USA</option>
-                                        <option selected>Canada</option>
-                                        <option>UK</option>
-                                        <option>Germany</option>
-                                        <option>France</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <hr class="border-light m-0">
-                            <div class="card-body pb-2">
-                                <h6 class="mb-4">Contacts</h6>
-                                <div class="form-group">
-                                    <label class="form-label">Phone</label>
-                                    <input type="text" class="form-control" value="+0 (123) 456 7891">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Website</label>
-                                    <input type="text" class="form-control" value>
-                                </div>
+                                <form id="editProfileForm">
+                                    <div class="form-group">
+                                        <label class="form-label">Current password</label>
+                                        <input type="password" class="form-control" name="currentpassword"
+                                            id="currentpassword">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">New password</label>
+                                        <input type="password" class="form-control" name="newpassword" id="newpassword">
+                                        <span id="newPasswordError" style="color: red;"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Repeat new password</label>
+                                        <input type="password" class="form-control" name="repeatpassword"
+                                            id="repeatpassword">
+                                        <span id="confirmPasswordError" style="color: red;"></span>
+                                    </div>
+                                    <button class="save-btn" onclick="resetPasswordvalidation(event)">Submit</button>
+                                </form>
                             </div>
                         </div>
+
+
+
+
+
+                        <!-- add address  -->
+
+                        <div class="tab-pane fade" id="account-info">
+                            <div class="row">
+                                <div class="addressdiv col-lg-6 pb-4">
+                                    <% if (useraddress === null || useraddress.address.length === 0) { %>
+                                        <p>No address has been added yet.</p>
+                                    <% } else { %>
+                                        <h3>DEFAULT BILLING ADDRESS</h3>
+                                        <% useraddress.address.slice(0, 1).forEach(function (address) { %>
+                                            <p><%= address.fullname %></p>
+                                            <p><%= address.mobile %></p>
+                                            <p><%= address.email %></p>
+                                            <p><%= address.state %></p>
+                                            <p><%= address.city %></p>
+                                            <p><%= address.houseName %></p>
+                                            <p><%= address.pin %></p>
+                                        <% }) %>
+                                        <button type="button" class="btn btn-primary edit-btn pt-2" onclick=" ">
+                                            <i class="text-muted material-icons md-post_add"></i>
+                                            Edit
+                                        </button>
+                                    <% } %>
+                                </div>
+                                <div class="col-lg-6">
+                                    <% if (useraddress && useraddress.address.length > 1) { %>
+                                        <h3>ADDITIONAL ADDRESS ENTRIES</h3>
+                                        <% useraddress.address.slice(1).forEach(function (address) { %>
+                                            <p><%= address.fullname %></p>
+                                            <p><%= address.mobile %></p>
+                                            <p><%= address.email %></p>
+                                            <p><%= address.state %></p>
+                                            <p><%= address.city %></p>
+                                            <p><%= address.houseName %></p>
+                                            <p><%= address.pin %></p>
+                                        <% }) %>
+                                    <% } else if (useraddress && useraddress.address.length === 1) { %>
+                                        <p>No additional addresses have been added yet.</p>
+                                    <% } %>
+                                </div>
+                            </div>
+                            
+
+
+
+                            
+                            <h3>ADDITIONAL ADDRESS ENTRIES</h3>
+                            <p>You have no other address entries in your address book.</p>
+                            <hr class="border-light m-0">
+                            <div class="card-body pb-2">
+                                <div class=" pb-4 me-1">
+                                    <button type="button" class="btn btn-primary edit-btn"
+                                        onclick=" addressopenmodal()">
+                                        <i class="text-muted material-icons md-post_add "></i>add address
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
                         <div class="tab-pane fade" id="account-social-links">
                             <div class="card-body pb-2">
                                 <div class="form-group">
@@ -513,30 +396,85 @@
         </div>
     </div>
 
+    </section>
 
 
 
+    <!--   add address  modal section    -->
 
+    <section>
+        <div id="addaddressmodal" class="modal">
+            <div class="modal-content  address-modal">
+                <form>
+                    <span class="close" onclick=" addressclosemodal()">&times;</span>
+                    <h6 class="mb-4">Contacts</h6>
 
+                    <div class="form-group">
+                        <label class="form-label">Full name *</label>
+                        <input type="text" id="fullname" class="form-control" name="fullname">
+                        <span id="fullname-error" style="color: red;"></span>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-label">Email *</label>
+                                <input type="text" id="email" class="form-control" name="email">
+                                <span id="email-error" style="color: red;"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">State *</label>
+                                <input type="text" id="state" class="form-control" name="state">
+                                <span id="state-error" style="color: red;"></span>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Pincode *</label>
+                                <input type="text" id="pin" class="form-control" name="pin">
+                                <span id="pin-error" style="color: red;"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-label">Mobile *</label>
+                                <input type="text" id="mobile" class="form-control" name="mobile">
+                                <span id="mobile-error" style="color: red;"></span>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">City *</label>
+                                <input type="text" id="city" class="form-control" name="city">
+                                <span id="city-error" style="color: red;"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">House name *</label>
+                                <input type="text" id="housename" class="form-control" name="housename">
+                                <span id="houseName-error" style="color: red;"></span>
+
+                            </div>
+                        </div>
+                        <div class="pt-2 pb-4 me-1 d-flex justify-content -center">
+                            <button class="btn btn-primary edit-btn" id="addAddressButton">
+                                <i class="text-muted material-icons md-post_add"></i>Save Address
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </section>
 
 
 
 
-
-
-
-
-
-
-
-
     <!-- loader -->
-    <div id="ftco-loader" class="show fullscreen "><svg class="circular" width="48px" height="48px">
+    <div id=" ftco-loader" class="show fullscreen "><svg class="circular" width="48px" height="48px">
             <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
             <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
                 stroke="#F96D00" />
-        </svg></div>
+        </svg>
+    </div>
     <footer class="ftco-footer ftco-section">
         <div class="container">
             <div class="row">
@@ -550,7 +488,8 @@
                 <div class="col-md">
                     <div class="ftco-footer-widget mb-4">
                         <h2 class="ftco-heading-2">Minishop</h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+                        <p>Far far away, behind the word mountains, far from the countries Vokalia
+                            and Consonantia.</p>
                         <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
                             <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
                             <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -591,7 +530,8 @@
                         <h2 class="ftco-heading-2">Have a Questions?</h2>
                         <div class="block-23 mb-3">
                             <ul>
-                                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain
+                                <li><span class="icon icon-map-marker"></span><span class="text">203
+                                        Fake St. Mountain
                                         View, San Francisco, California, USA</span></li>
                                 <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929
                                             210</span></a></li>
@@ -607,19 +547,16 @@
 
                     <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         Copyright &copy;
-                        <script>document.write(new Date().getFullYear());</script> All rights reserved | This template
-                        is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a
-                            href="https://colorlib.com" target="_blank">Colorlib</a>
+                        <script>document.write(new Date().getFullYear());</script> All rights
+                        reserved | This template
+                        is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by
+                        <a href="https://colorlib.com" target="_blank">Colorlib</a>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </p>
                 </div>
             </div>
         </div>
     </footer>
-
-
-
-
 
 
 
@@ -677,6 +614,7 @@
 
 
 
+        // reset password validation
 
         function resetPasswordvalidation(event) {
             event.preventDefault();
@@ -687,7 +625,7 @@
 
             document.getElementById('newPasswordError').textContent = '';
             document.getElementById('confirmPasswordError').textContent = '';
-            
+
 
             let isValid = true;
 
@@ -742,19 +680,50 @@
                 .then(data => {
                     if (data.reseted) {
                         $('#resetdiv').load('/useraccount #resetdiv');
+                        document.getElementById('message').innerHTML = 'reset password completed successfully';
 
-                        // document.getElementById('resetdiv').textContent = 'reset password successfull';
+
 
                         // window.relode();
                         // window.location.reload();
                     } else {
                         console.log('Password reset failed');
+                        document.getElementById('resetdiv').textContent = 'Current password is wrong';
+
                     }
                 })
                 .catch(error => console.error('Error resetting password:', error));
         }
 
+
+
+
+
+        // add addres modal
+        function addressopenmodal() {
+            document.getElementById("addaddressmodal").style.display = "block";
+            document.getElementById("addaddressmodal").style.overflow = "hidden";
+
+        }
+        function addressclosemodal() {
+            document.getElementById('addaddressmodal').style.display = "none";
+        }
+
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById("addAddressButton").addEventListener('click', function (event) {
+                event.preventDefault();
+                addressvalidation();
+            });
+        })
+
+
+
     </script>
+
+
+
     <style>
         .modal {
             display: none;
@@ -807,6 +776,12 @@
         .modalhead {
             text-align: center;
             margin-bottom: 5px;
+        }
+
+        .address-modal {
+            width: 100% !important;
+            overflow: hidden !important;
+            margin-top: 28px !important;
         }
     </style>
 
@@ -887,6 +862,9 @@
 
         });
     </script>
+
+
+
 
 </body>
 

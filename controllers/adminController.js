@@ -87,7 +87,6 @@ const loadUser = async (req, res) => {
 }
 
 
-
 // block user
 const blockUser = async (req, res) => {
 
@@ -122,6 +121,4 @@ module.exports = {
     blockUser,
     unblockUser,
     logout,
-    
-
 }

@@ -6,6 +6,9 @@ const userRoute = express();
 const userController = require("../controllers/userControllers");
 const productController = require('../controllers/productController');
 const User = require("../model/userSchema");
+const addressController = require('../controllers/addressController');
+
+
 
 
 userRoute.set('view engine', 'ejs')
@@ -83,7 +86,6 @@ userRoute.post('/resetpassword', userController.resetpassword);
 
 
 
-
 //contact
 userRoute.get("/contact", (req, res) => {
     res.render('contact')
@@ -108,6 +110,8 @@ userRoute.post('/edituser', userController. edituser);
 userRoute.put('/resetpassword', userController. resetpassword)
 
 
+//adaddress 
+userRoute.post('/adaddress', addressController. adaddress);
 
 
 module.exports = userRoute;
