@@ -21,7 +21,7 @@ const adaddress = async (req, res) => {
         console.log(data);
         console.log(userId);
 
-        
+
         await addressSchema.findOneAndUpdate(
             { user: userId },
             {
@@ -40,20 +40,45 @@ const adaddress = async (req, res) => {
 }
 
 
-// const addressData = await address.save();
-const postaddress = async (req, res) => {
-    try {
 
 
+// edit address
 
-    } catch (err) {
-        console.log(err);
+const editaddress = async (req, res) => {
+
+    try {    
+        const {fullname, email, state, pin, mobile, city, housename, addressId } = req.body;
+        const userId = req.session.user_id;
+        console.log(userId);
+        console.log("editaddressID",addressId);
+        console.log("editfullname",fullname);
+
+        await addressSchema.updateOne({user:userId,'address._id':addressId},{
+            $set:{
+                'address.$.fullname':fullname,
+                'address.$.email':email,
+                'address.$.mobile':mobile,
+                'address.$.state':state,
+                'address.$.pin':pin,
+                'address.$.city':city,
+                'address.$.houseName': housename,
+            }
+        })
+        res.json({status:"editaddress success",editaddress})
+
+
+    } catch (error) {
+        console.log(error);
+
     }
+
 }
 
 
 
 module.exports = {
-    adaddress
+    adaddress,
+    editaddress
+
 
 }

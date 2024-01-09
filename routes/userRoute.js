@@ -113,5 +113,8 @@ userRoute.put('/resetpassword', userController. resetpassword)
 //adaddress 
 userRoute.post('/adaddress', addressController. adaddress);
 
+//editaddress
+userRoute.post('/editaddress',addressController.editaddress);
+
 
 module.exports = userRoute;
