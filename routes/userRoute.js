@@ -8,6 +8,7 @@ const productController = require('../controllers/productController');
 const User = require("../model/userSchema");
 const addressController = require('../controllers/addressController');
 
+const cartController = require('../controllers/cartController');
 
 
 
@@ -15,9 +16,8 @@ userRoute.set('view engine', 'ejs')
 userRoute.set('views', './views/user')
 
 
-userRoute.get("/home", (req, res) => {
-    res.render('indexhome')
-})
+userRoute.get("/indexhome",userController.indexhome)
+
 
 userRoute.get("/login", (req, res) => {
     res.render("login");
@@ -25,7 +25,7 @@ userRoute.get("/login", (req, res) => {
 
 
 userRoute.get("/otp", async (req, res) => {
-    const userId = req.session.user_id = req.query.id
+    const userId = req.session.user_id
     console.log("kitty:",userId);
     const user = await User.findOne({_id:userId});
     const email = user.email;
@@ -92,9 +92,7 @@ userRoute.get("/contact", (req, res) => {
 })
 
 //cart
-userRoute.get("/cart", (req, res) => {
-    res.render('cart')
-})
+userRoute.get('/cart', cartController.cart);
 
 //checkout
 userRoute.get("/checkout", (req, res) => {

@@ -100,68 +100,52 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8 col-lg-10 order-md-last">
-					
-
-
-
 					<section>
+
 						<div class="row">
 							<% product.forEach(product=> { %>
 								<% if (!product.is_blocked) { %>
-									<div class="col-lg-4 col-sm-6">
-										<!-- Single Product Start -->
-										<div class="single-product">
-											<a href="/singleproduct?id=<%=product._id%>" ><img
-													src="/sharpimg/<%= product.images.image1%>" class="w-100" height="303"
-													alt="product" />
-												<p class=" d-flex kkk ">
-													<a href="#" class="add-to-cart text-center py-2 mr-1 pe-s"><span>Add to
+									<div class="col-lg-4 col-sm-6
+									 ftco-animate d-flex">
+										<div class="product d-flex flex-column">
+											<a href="/singleproduct?id=<%=product._id%>" class="img-prod"><img class="img-fluid"
+													src="/sharpimg/<%= product.images.image1%>" alt="Colorlib Template">
+												<span class="status"><%=product.offer%>% Off</span>
+												<div class="overlay"></div>
+											</a>
+											<div class="text py-3 pb-4 px-3">
+												<div class="d-flex">
+													<div class="cat">
+														<span>Lifestyle</span>
+													</div>
+													<div class="rating">
+														<p class="text-right mb-0">
+															<a href="#"><span class="ion-ios-star-outline"></span></a>
+															<a href="#"><span class="ion-ios-star-outline"></span></a>
+															<a href="#"><span class="ion-ios-star-outline"></span></a>
+															<a href="#"><span class="ion-ios-star-outline"></span></a>
+															<a href="#"><span class="ion-ios-star-outline"></span></a>
+														</p>
+													</div>
+												</div>
+												<h3><a href="#"><%= product.name %></a></h3>
+												<div class="pricing">
+													<p class="price"><span class="mr-2 price-dc">$120.00</span><span
+															class="price-sale">₹<%=product.price%></span></p>
+												</div>
+												<p class="bottom-area d-flex px-3">
+													<a href="/cart" class="add-to-cart text-center py-2 mr-1"><span>Add to
 															cart <i class="ion-ios-add ml-1"></i></span></a>
 													<a href="#" class="buy-now text-center py-2">Buy now<span><i
 																class="ion-ios-cart ml-1"></i></span></a>
 												</p>
-											</a>
-											<div class="product-content product-detile">
-												<h6 class="title ">
-													<a class="product-name" href="product-details.html">
-														<%= product.name %>
-													</a>
-
-												</h6>
-												<div class="pb-2 ">
-													<a class="product-category-name" href="product-details.html">
-														<%= product.category ? product.category.name : 'No Category' %>
-													</a>
-
-												</div>
-												<div class="rating">
-													<p class=" mb-0">
-														<a href="#"><span class="ion-ios-star-outline"></span></a>
-														<a href="#"><span class="ion-ios-star-outline"></span></a>
-														<a href="#"><span class="ion-ios-star-outline"></span></a>
-														<a href="#"><span class="ion-ios-star-outline"></span></a>
-														<a href="#"><span class="ion-ios-star-outline"></span></a>
-													</p>
-												</div>
-												<div class="price">
-													<span class="sale-price">₹<%=product.price%></span>
-												</div>
 											</div>
-											<div>
-
-											</div>
-											
 										</div>
 									</div>
 									<%}%>
 										<% }); %>
 						</div>
 					</section>
-
-
-
-
-
 
 
 					<div class="row mt-5">
@@ -180,8 +164,6 @@
 						</div>
 					</div>
 				</div>
-
-
 
 
 
@@ -330,17 +312,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 	<section class="ftco-gallery">
 		<div class="container">
 			<div class="row justify-content-center">
@@ -404,6 +375,13 @@
 			</div>
 		</div>
 	</section>
+
+
+
+
+
+
+
 
 
 	<footer class="ftco-footer ftco-section">

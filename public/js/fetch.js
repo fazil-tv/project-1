@@ -106,15 +106,24 @@ function address() {
         .then(response => response.json())
         .then(data => {
             if (data) {
-                // document.getElementById('#addressdiv').load('/useraccount #addressdiv')
-                // window.location.reload();
+
                 document.getElementById('addaddressmodal').style.display = "none";
                 $('#edit-address-div').load('/useraccount #edit-address-div')
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Add Successful',
+                    text: 'The address has been added successfully!',
+                });
 
 
             }
         }).catch(error => {
-            console.log(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Add Error',
+                text: 'An error occurred during address addition. Please try again.',
+            });
         })
 
 }
@@ -233,16 +242,24 @@ function editaddress() {
         .then(data => {
             if (data) {
                 console.log("now")
-                // const modal = document.getElementById('editmodal');
                 document.getElementById('EditAddressmodal').style.display = "none";
-
-                // modal.style.display = 'none';
                 $('#edit-address-div').load('/useraccount #edit-address-div')
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Edit Successful',
+                    text: 'The address has been edited successfully!',
+                });
+
 
             }
 
         }).catch(error => {
             console.log(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Deletion Error',
+                text: 'An error occurred during editing. Please try again.',
+            });
         })
 }
 
@@ -252,8 +269,8 @@ function editaddress() {
 
 function deletaddress(k) {
     const adderssId = k;
-    console.log("addressid",adderssId);
-    
+    console.log("addressid", adderssId);
+
 
     fetch('/deletaddress', {
         method: 'DELETE',
@@ -264,12 +281,22 @@ function deletaddress(k) {
             addressId: adderssId,
         }),
     })
-    .then(response => response.json())
-    .then(data => {
-        $('#edit-address-div').load('/useraccount #edit-address-div');
-    })
-    .catch(error => {
-        console.log(error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            $('#edit-address-div').load('/useraccount #edit-address-div');
+            Swal.fire({
+                icon: 'success',
+                title: 'Deletion Successful',
+                text: 'The address has been deleted successfully!',
+            });
+        })
+        .catch(error => {
+            console.log(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Deletion Error',
+                text: 'An error occurred during deletion. Please try again.',
+            });
+        });
 }
 

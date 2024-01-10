@@ -120,7 +120,7 @@ const sendmailUser = async (email, id, res) => {
         await sendEmails(email, id);
         console.log(id);
         console.log("Email sent successfully");
-        res.redirect(`/otp?id=${id}`);
+        res.redirect(`/otp`);
     } catch (error) {
         console.error("Error sending email:", error);
         res.send("Error sending email");
@@ -209,10 +209,14 @@ const verifyPost = async (req, res) => {
 
                 //signup verification session
 
-                req.session.user_id = userData._id;
-                req.session.email = email;
+                // req.session.user_id = userData._id;
+                // req.session.email = email;
+                console.log("ok da kitty")
 
+                // const product = await productSchema.find({}).populate('category')
                 res.redirect(`/indexhome`);
+                // const product = await productSchema.find({}).populate('category')
+                // res.redirect(`/indexhome`, { user: req.session.user_id, product: product });
             }
         }
 
@@ -244,8 +248,9 @@ const blog = async (req, res) => {
 // indexhome
 const indexhome = async (req, res) => {
     try {
+        const product = await productSchema.find({}).populate('category')
 
-        res.render("indexhome", { user: req.session.user_id });
+        res.render("indexhome", { user: req.session.user_id, product: product });
     } catch (error) {
         console.log(error.message);
     }
