@@ -114,7 +114,10 @@ userRoute.put('/resetpassword', userController. resetpassword)
 userRoute.post('/adaddress', addressController. adaddress);
 
 //editaddress
-userRoute.post('/editaddress',addressController.editaddress);
+userRoute.patch('/editaddress', addressController.editaddress);
+
+// deletaddress
+userRoute.delete('/deletaddress', addressController.deletaddress);
 
 
 module.exports = userRoute;

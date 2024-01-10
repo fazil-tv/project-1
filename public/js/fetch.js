@@ -1,3 +1,4 @@
+const { response } = require("express");
 
 
 
@@ -64,7 +65,7 @@ function addressvalidation() {
         document.getElementById('pin-error').innerText = 'enter six digits pin code';
         isValid = false;
     }
-    if(!isValid){
+    if (!isValid) {
         return
 
     }
@@ -106,7 +107,11 @@ function address() {
         .then(data => {
             if (data) {
                 // document.getElementById('#addressdiv').load('/useraccount #addressdiv')
-                window.location.reload();
+                // window.location.reload();
+                document.getElementById('addaddressmodal').style.display = "none";
+                $('#edit-address-div').load('/useraccount #edit-address-div')
+
+
             }
         }).catch(error => {
             console.log(error);
@@ -118,8 +123,6 @@ function address() {
 
 
 function editaddressvalidation() {
-    
-
     const fullname = document.getElementById('editfullname').value;
     const mobile = document.getElementById('editmobile').value;
     const email = document.getElementById('editemail').value;
@@ -127,7 +130,7 @@ function editaddressvalidation() {
     const state = document.getElementById('editstate').value;
     const city = document.getElementById('editcity').value;
     const pin = document.getElementById('editpin').value;
-    
+
 
     console.log(email);
 
@@ -187,7 +190,7 @@ function editaddressvalidation() {
         document.getElementById('edit-pin-error').innerText = 'enter six digits pin code';
         isValid = false;
     }
-    if(!isValid){
+    if (!isValid) {
         return
     }
     else {
@@ -211,9 +214,9 @@ function editaddress() {
     // console.log(addressId);
 
     fetch('/editaddress', {
-        method: 'POST',
+        method: 'PATCH',
         headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify({
             fullname: fullname,
@@ -229,14 +232,44 @@ function editaddress() {
         .then(response => response.json())
         .then(data => {
             if (data) {
+                console.log("now")
                 // const modal = document.getElementById('editmodal');
+                document.getElementById('EditAddressmodal').style.display = "none";
+
                 // modal.style.display = 'none';
-                // document.getElementById('#edit-address-div').load('/editaddress #edit-address-div')
-                window.location.reload();
+                $('#edit-address-div').load('/useraccount #edit-address-div')
+
             }
 
         }).catch(error => {
             console.log(error);
         })
+}
+
+
+
+// delete address
+
+function deletaddress(k) {
+    const adderssId = k;
+    console.log("addressid",adderssId);
+    
+
+    fetch('/deletaddress', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            addressId: adderssId,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        $('#edit-address-div').load('/useraccount #edit-address-div');
+    })
+    .catch(error => {
+        console.log(error);
+    });
 }
 

@@ -65,8 +65,6 @@ const editaddress = async (req, res) => {
             }
         })
         res.json({status:"editaddress success",editaddress})
-
-
     } catch (error) {
         console.log(error);
 
@@ -74,11 +72,29 @@ const editaddress = async (req, res) => {
 
 }
 
+const deletaddress = async (req,res)=>{
+    console.log("ok ok brooo");
+    try {
+        const userId = req.session.user_id;
+        const addressId= req.body.addressId;
+
+        console.log("where",userId);
+        console.log("where adderssId",addressId);
+        await addressSchema.updateOne({user:userId},{$pull:{address:{_id:addressId}}})
+        res.json({add:true});
+
+    } catch (error) {
+        
+        console.log(error);
+    }
+}
+
 
 
 module.exports = {
     adaddress,
-    editaddress
+    editaddress,
+    deletaddress
 
 
 }

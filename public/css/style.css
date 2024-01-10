@@ -511,6 +511,13 @@ small,
 
 }
 
+.fa-trash{
+  position: relative;
+  top: 1px;
+  right: 5px;
+}
+
+
 
 .addressdiv {
   background-color: #f8f9fa;
