@@ -91,8 +91,6 @@ userRoute.get("/contact", (req, res) => {
     res.render('contact')
 })
 
-//cart
-userRoute.get('/cart', cartController.cart);
 
 //checkout
 userRoute.get("/checkout", (req, res) => {
@@ -116,6 +114,15 @@ userRoute.patch('/editaddress', addressController.editaddress);
 
 // deletaddress
 userRoute.delete('/deletaddress', addressController.deletaddress);
+
+
+
+//cart
+
+userRoute.get('/cart', cartController.cart);
+
+userRoute.post('/getcart',cartController.getcart);
+
 
 
 module.exports = userRoute;

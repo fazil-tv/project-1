@@ -203,20 +203,11 @@ const verifyPost = async (req, res) => {
             if (!validOTP) {
                 res.redirect(`/otp?id=${userId}`);
             } else {
-                // await User.updateOne({ _id: userId }, { verfied: true });
-
+               
                 await Otp.deleteOne({ user_id: userId });
-
-                //signup verification session
-
-                // req.session.user_id = userData._id;
-                // req.session.email = email;
                 console.log("ok da kitty")
-
-                // const product = await productSchema.find({}).populate('category')
                 res.redirect(`/indexhome`);
-                // const product = await productSchema.find({}).populate('category')
-                // res.redirect(`/indexhome`, { user: req.session.user_id, product: product });
+              
             }
         }
 

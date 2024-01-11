@@ -300,3 +300,65 @@ function deletaddress(k) {
         });
 }
 
+
+
+
+
+//  add to cart
+
+
+function addcart(x) {
+
+    const productId = x;
+    console.log("ha ok ", x);
+
+    fetch('/getcart', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            productId: productId,
+        }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'cart already added') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'cart already added',
+                    text: 'Do you want to see cart?',
+                    confirmButtonText: 'Show Cart',
+                    confirmButtonColor: '#dbcc8f',
+                    timer: 2000,
+                }).then((risult)=>{
+                    if(risult.isConfirmed){
+                        window.location.href ="/cart"
+                    }
+                });
+            } else if (data.success === true) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'cart added Successful',
+                    text: 'Do you want to see cart?',
+                    confirmButtonText: 'Show Cart',
+                    confirmButtonColor: '#dbcc8f',
+                    timer: 3000,
+                }).then((result)=>{
+                    console.log('helooreaxged');
+                    if(result.isConfirmed){
+                        window.location.href ="/cart"
+                    }
+                });
+
+            } else {
+                alert('An error occurred. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.log(error);
+
+        });
+}
+
+

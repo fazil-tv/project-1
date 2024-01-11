@@ -167,6 +167,114 @@ sup {
   top: -.5em;
 }
 
+/* carosil slider */
+.carousel-indicators-{
+  padding: 15px;
+}
+
+.slider-butten {
+  flex: 20%;
+  width: 100% !important;
+  height: 130px;
+  /* background-color: #1d9236 !important; */
+  /* background-color: #1d9236; */
+  /* background-image: url(../images/gallery-1.jpg); */
+  align-items: center !important;
+  background-repeat: no-repeat !important;
+  border: none !important;
+  margin-top: 20px;
+  padding: 10px;
+  margin: 0px 5px;
+  
+
+}
+
+.slider-butten-2 {
+  flex: 20%;
+  width: 100% !important;
+  height: 130px;
+  /* background-color: #1d9236 !important; */
+  /* background-color: #1d9236; */
+  /* background-image: url(../images/gallery-1.jpg); */
+  background-repeat: no-repeat !important;
+  border: none !important;
+  margin-top: 20px;
+  margin: 0px 5px;
+
+}
+
+.slider-butten-3 {
+  flex: 20%;
+  width: 100% !important;
+  height: 130px;
+  /* background-color: #1d9236 !important; */
+  /* background-color: #1d9236; */
+  /* background-image: url(../images/gallery-3.jpg); */
+  background-repeat: no-repeat !important;
+  border: none !important;
+  margin-top: 20px;
+  margin: 0px 5px;
+
+}
+.slider-butten-4 {
+  flex: 20%;
+  width: 100% !important;
+  height: 130px;
+  /* background-color: #1d9236 !important; */
+  /* background-color: #1d9236; */
+  /* background-image: url(../images/gallery-3.jpg); */
+  background-repeat: no-repeat !important;
+  border: none !important;
+  margin-top: 20px;
+  margin: 0px 5px;
+
+}
+
+.slider-butten:hover {
+  border: 1px solid #224229 !important;
+}
+
+.slider-butten-2:hover {
+  border: 1px solid #224229 !important;
+}
+
+.slider-butten-3:hover {
+  border: 1px solid #224229 !important;
+}
+.slider-butten-4:hover {
+  border: 1px solid #224229 !important;
+}
+
+
+
+
+/* cart css */
+
+.empty-cart{
+  text-align: center;
+}
+.empty-head{
+  
+  font-size: 35px;
+  letter-spacing: 2px;
+
+}
+.cart-img{
+  width: 100px;
+  height: 100px;
+}
+.cart-btn{
+  font-size: 20px !important;
+  padding: 10px !important;
+
+  color: #dbcc8f !important;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2) !important;
+}
+
+.img-cart{
+  width: 100px;
+  height: 100px;
+}
 
 
 
@@ -13470,7 +13578,7 @@ h5,
 .table tbody tr td {
   text-align: center !important;
   vertical-align: middle;
-  padding: 40px 10px;
+  padding: 40px 20px;
   border: 1px solid transparent !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
 }

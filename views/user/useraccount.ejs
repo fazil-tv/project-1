@@ -782,7 +782,8 @@
                         // window.location.reload();
                     } else {
                         console.log('Password reset failed');
-                        document.getElementById('resetdiv').textContent = 'Current password is wrong';
+                        // document.getElementById('resetdiv').textContent = 'Current password is wrong';
+                        document.getElementById('message').innerHTML= 'Current password is wrong';
 
                     }
                 })

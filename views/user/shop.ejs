@@ -134,7 +134,7 @@
 															class="price-sale">₹<%=product.price%></span></p>
 												</div>
 												<p class="bottom-area d-flex px-3">
-													<a href="/cart" class="add-to-cart text-center py-2 mr-1"><span>Add to
+													<a onclick="addcart('<%=product._id%>')" class="add-to-cart text-center py-2 mr-1"><span>Add to
 															cart <i class="ion-ios-add ml-1"></i></span></a>
 													<a href="#" class="buy-now text-center py-2">Buy now<span><i
 																class="ion-ios-cart ml-1"></i></span></a>
@@ -492,6 +492,13 @@
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
+
+
+		<!-- address adding fetch linked -->
+		<script src="/js/fetch.js"></script>
+		<!-- swal -->
+
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 
