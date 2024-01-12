@@ -165,7 +165,7 @@
 															<button class="input-btn increase-quantity" onclick="increasequantity('<%=product.productId._id%>','<%=product.productId.price %>')">+</button>
 													</div>
 												</td>
-											<td class="total  cart-totals " id="total<%=product.productId._id%>">'<%=product.productId.price %>'</td>
+											<td class="total  cart-totals " id="total<%=product.productId._id%>">'<%=product.productId.price *  product.productId.quantitiy%>></td>
 											</tr>
 										<% }); %>
 									</tbody>
@@ -176,7 +176,7 @@
 			</div>
 			<% if (cartData.products.length>=1) {%>
 				<div class="row justify-content-start">
-					<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+					<div class="col col-lg-5 col-md-6 mt-5 cart-wrap">
 						<div class="cart-total mb-3">
 							<h3>Cart Totals</h3>
 							<p class="d-flex">

@@ -462,27 +462,34 @@ function updateQuantity(productId,currentQuantity){
 
     
 }
+// document.addEventListener('DOMContentLoaded', function () {
+//     updatesubTottel();
+// });
 
-// function updatesubTottel(){
-//     console.log("hiii")
-//     const totalColumns = document.querySelector('.cart-totals');
-//     const subtotal = document.getElementById('subtotel-amount');
+function updatesubTottel(){
+    console.log("hiii")
+    const totalColumns = document.querySelectorAll('.cart-totals');
+    console.log(totalColumns)
+    const subtotal = document.getElementById('subtotel-amount');
+    
 
-//     // console.log(totalColumns);
-//     console.log(subtotal);
+    // console.log(totalColumns);
+    console.log(subtotal);
 
-//     let sum = 0 ;
-//     totalColumns.forEach(column => {
-//         sum += parseFloat(column.textContent.replace("$", ''));
-//     });
+    let sum = 0 ;
+    
+    totalColumns.forEach((column) => {
+        console.log(column.textContent);
+        sum += parseFloat(column.textContent.replace("$",'') || 0);
+    });
 
-//     console.log(totalColumns)
+    console.log(totalColumns)
 
-//     subtotal.textContent.sum.fixed(2);
-//     document.getElementById('subtotel-amount').innerHTML = document.getElementById('subtotel')
+    subtotal.textContent=sum;
+    document.getElementById('subtotel-amount').innerHTML;
 
 
-// }
+}
 
 
 function updateTottal(productId,currentQuantity,productprice){
@@ -499,6 +506,6 @@ function updateTottal(productId,currentQuantity,productprice){
     const newtottal = price*Quantity;
     tottelelement.innerText = '$' + newtottal.toFixed(2);
 
-    // updatesubTottel()
+    updatesubTottel()
 
 } 
