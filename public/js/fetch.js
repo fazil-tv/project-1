@@ -1,3 +1,5 @@
+const { json } = require("express");
+const { response } = require("../../routes/userRoute");
 
 
 function addressvalidation() {
@@ -384,6 +386,7 @@ function removecart(x) {
             })
             $('#cart-relod-div').load('/cart #cart-relod-div');
             $('#cart-relod-divs').load('/cart #cart-relod-divs');
+            $('#checkout-relode').load('/cart #checkout-relode');
         
             
         }  
@@ -396,14 +399,106 @@ function removecart(x) {
 }
 
 
-function updatecart (){
+
+//
+
+function  decreasequantity(productId,productprice){
+    console.log(productId);
+    console.log(productprice);
+
+    let quantityDisplay = document.getElementById('quantity-display'+productId);
+    let currentQuantity = parseInt(quantityDisplay.value);
+    console.log(currentQuantity);
+    console.log(quantityDisplay);
+    if(currentQuantity >1){
+        quantityDisplay.value = currentQuantity-1;
+        updateTottal(productId,currentQuantity-1,productprice);
+        updateQuantity(productId , currentQuantity-1);
+    }
+
+}
+
+
+function increasequantity(productId,productprice){
+    console.log(productId);
+    console.log(productprice);
+
+    let quantityDisplay = document.getElementById('quantity-display'+productId);
+    let currentQuantity = parseInt(quantityDisplay.value);
+    console.log(currentQuantity);
+    console.log(quantityDisplay);
     
-
-
-
-
+        quantityDisplay.value = currentQuantity+1;
+        updateTottal(productId,currentQuantity+1,productprice);
+        updateQuantity(productId , currentQuantity+1);
 
 }
 
 
 
+// function updateTottal(){
+
+// }
+
+function updateQuantity(productId,currentQuantity){
+
+    console.log(productId);        
+    console.log(currentQuantity);
+
+    fetch("/updatecart", {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            productId,
+            currentQuantity
+        }),
+    }).then(response => response.json)
+    .then(data=>{
+        console.log("hiiii ok");
+
+    })
+
+    
+}
+
+// function updatesubTottel(){
+//     console.log("hiii")
+//     const totalColumns = document.querySelector('.cart-totals');
+//     const subtotal = document.getElementById('subtotel-amount');
+
+//     // console.log(totalColumns);
+//     console.log(subtotal);
+
+//     let sum = 0 ;
+//     totalColumns.forEach(column => {
+//         sum += parseFloat(column.textContent.replace("$", ''));
+//     });
+
+//     console.log(totalColumns)
+
+//     subtotal.textContent.sum.fixed(2);
+//     document.getElementById('subtotel-amount').innerHTML = document.getElementById('subtotel')
+
+
+// }
+
+
+function updateTottal(productId,currentQuantity,productprice){
+
+    const  Id = productId;
+    const Quantity = currentQuantity;
+    const price = productprice;
+ 
+    console.log(Id);
+    console.log(Quantity);
+    console.log(price);
+ 
+    const tottelelement = document.getElementById('total' + Id);
+    const newtottal = price*Quantity;
+    tottelelement.innerText = '$' + newtottal.toFixed(2);
+
+    // updatesubTottel()
+
+} 

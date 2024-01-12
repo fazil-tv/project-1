@@ -97,12 +97,13 @@
 	</div>
 
 	<section class="ftco-section ftco-cart" >
-		<div class="container">
+		<div class="container" id="checkout-relode">
 			<div class="row">
 				<div class="col-md-12 "  id="cart-relod-divs">
 					<% if (cartData===null||cartData.products.length==0) { %>
 						<div class="empty-cart"  >
 							<h5 class="empty-head ">empty cart</h5>
+							
 							<img src="/images/9960436.jpg" alt="" class="cart-img">
 							<p class="mt-3">your cart is empty</p>
 							<a href="/shop" class="btn cart-btn"><span class="">fill your cart</span></a>
@@ -123,7 +124,6 @@
 									</thead>
 									<tbody  >
 										<% cartData.products.forEach(function(product, index) { %>
-
 
 											<tr class="text-center">
 												<td class="product-remove"><a onclick="removecart('<%=product._id %>')"><span
@@ -157,52 +157,55 @@
 
 												<td class="quantity">
 													<div class="input-group mb-3 d-flex">
-														<button class="input-btn">-</button>
-														<input type="number" name="quantity" disabled
-															class="quantity form-control input-number" value="1" min="1"
+														<button class="input-btn decrease-quantity" type="button" onclick=" decreasequantity('<%=product.productId._id %>','<%=product.productId.price %>')">-</button>
+														<input  type="number" name="quantity" disabled 
+															class="quantity form-control input-number" value="<%=product.productId.quantity %>" min="1" id="quantity-display<%=product.productId._id %>"
 															max="100">
-															<button class="input-btn">+</button>
+
+															<button class="input-btn increase-quantity" onclick="increasequantity('<%=product.productId._id%>','<%=product.productId.price %>')">+</button>
 													</div>
 												</td>
-
-												<td class="total">$<%=product.productId.price%></td>
+											<td class="total  cart-totals " id="total<%=product.productId._id%>">'<%=product.productId.price %>'</td>
 											</tr>
-
-
-											<% }); %>
-
+										<% }); %>
 									</tbody>
 								</table>
 							</div>
 							<%}%>
 				</div>
 			</div>
-			<div class="row justify-content-start">
-				<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
-					<div class="cart-total mb-3">
-						<h3>Cart Totals</h3>
-						<p class="d-flex">
-							<span>Subtotal</span>
-							<span>$20.60</span>
-						</p>
-						<p class="d-flex">
-							<span>Delivery</span>
-							<span>$0.00</span>
-						</p>
-						<p class="d-flex">
-							<span>Discount</span>
-							<span>$3.00</span>
-						</p>
-						<hr>
-						<p class="d-flex total-price">
-							<span>Total</span>
-							<span>$17.60</span>
-						</p>
+			<% if (cartData.products.length>=1) {%>
+				<div class="row justify-content-start">
+					<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+						<div class="cart-total mb-3">
+							<h3>Cart Totals</h3>
+							<p class="d-flex">
+								<span>Subtotal</span>
+								<span id="subtotel-amount">0</span>
+							</p>
+							<p class="d-flex">
+								<span>Delivery</span>
+								<span>$0.00</span>
+							</p>
+							<p class="d-flex">
+								<span>Discount</span>
+								<span>$3.00</span>
+							</p>
+							<hr>
+							<p class="d-flex total-price">
+								<span>Total</span>
+								<span>$17.60</span>
+							</p>
+						</div>
+						<p class="text-center"><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to
+								Checkout</a></p>
 					</div>
-					<p class="text-center"><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to
-							Checkout</a></p>
 				</div>
-			</div>
+			<%}else{%>
+				
+
+			<%}%>
+			
 		</div>
 	</section>
 

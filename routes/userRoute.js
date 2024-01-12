@@ -123,7 +123,11 @@ userRoute.get('/cart', cartController.cart);
 
 userRoute.post('/getcart',cartController.getcart);
 
-//user 
+//remove cart
 userRoute.post('/removecarts',cartController.removecarts);
+
+// update quantity
+userRoute.patch('/updatecart',cartController.updatecart);
+
 
 module.exports = userRoute;
