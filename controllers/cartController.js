@@ -29,7 +29,7 @@ const cart = async (req, res) => {
 
     }catch(erorr){
         console.log(error)
-    }
+    } 
 
     // res.render('cart',{cartproduct:cartproduct});
 }
@@ -79,6 +79,50 @@ const getcart = async (req, res) => {
 
 
 
+const removecarts = async (req,res)=>{
+    try{
+        const productId = req.body.productId;
+        console.log( productId);
+        const userId = req.session.user_id;
+        console.log(userId);
+    
+        console.log(("done"));
+
+        // const removecart = await cartSchema.findOneAndUpdate({'user':userId},{$pull:{'products':{
+        //     productId:productId}}},{new:true})
+        const removecart = await cartSchema.findOneAndUpdate(
+            { 'user': userId },
+            { $pull: { 'products': { _id: productId } } },
+            { new: true }
+          );
+
+        console.log("remove cart",removecart)
+
+        if(removecart){
+            res.json({success:true});
+            console.log("done done")
+        }else{
+            res.status(404).json({ error: 'Product not found in the cart' });
+        }
+
+    }catch(error){
+        console.log(error);
+    }
+
+}
+
+
+
+const updatecart = async (req,res)=>{
+    try{
+        
+
+    }catch(error){
+        console.log(error);
+    }
+}
+
+
 
 
 
@@ -93,7 +137,8 @@ const getcart = async (req, res) => {
 
 module.exports = {
     cart,
-    getcart
+    getcart,
+    removecarts
 }
 
 // exports.getCart={

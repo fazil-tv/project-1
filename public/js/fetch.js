@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 
 
 function addressvalidation() {
@@ -360,5 +358,52 @@ function addcart(x) {
 
         });
 }
+
+
+function removecart(x) {
+  
+    const productId = x;
+    console.log("p",productId)
+    fetch("/removecarts", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            productId,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => { 
+        if(data.success===true){
+            Swal.fire({
+                icon: 'success',
+                title: 'cart removed Successful',
+                text: 'Do you want to see cart?',
+                timer: 2000,
+            })
+            $('#cart-relod-div').load('/cart #cart-relod-div');
+            $('#cart-relod-divs').load('/cart #cart-relod-divs');
+        
+            
+        }  
+
+        
+    })
+    .catch(error => {
+        console.log(error);       
+    });
+}
+
+
+function updatecart (){
+    
+
+
+
+
+
+}
+
 
 

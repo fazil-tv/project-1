@@ -13552,7 +13552,13 @@ h5,
 }
 
 .cart-list {
-  overflow-x: scroll;
+  /* overflow-x: scroll; */
+}
+.product-discription{
+  font-size: 12px !important;
+}
+.product-name{
+  margin-bottom: 5px !important;
 }
 
 .table {
@@ -13604,8 +13610,11 @@ h5,
 
 .table tbody tr td.quantity {
   width: 20%;
+  padding: 0px;
 }
-
+.input-btn{
+  width: 25px;
+}
 .table tbody tr td.image-prod .img {
   display: block;
   width: 100px;

@@ -77,7 +77,7 @@
 					<li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
 					<li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
 					<li class="nav-item cta cta-colored"><a href="/cart" class="nav-link"><span
-								class="icon-shopping_cart"></span>[0]</a></li>
+								class="icon-shopping_cart"></span></a></li>
 
 				</ul>
 			</div>
@@ -96,36 +96,37 @@
 		</div>
 	</div>
 
-	<section class="ftco-section ftco-cart">
+	<section class="ftco-section ftco-cart" >
 		<div class="container">
 			<div class="row">
-				<div class="col-md-12 ftco-animate">
+				<div class="col-md-12 "  id="cart-relod-divs">
 					<% if (cartData===null||cartData.products.length==0) { %>
-						<div class="empty-cart">
+						<div class="empty-cart"  >
 							<h5 class="empty-head ">empty cart</h5>
 							<img src="/images/9960436.jpg" alt="" class="cart-img">
 							<p class="mt-3">your cart is empty</p>
 							<a href="/shop" class="btn cart-btn"><span class="">fill your cart</span></a>
 						</div>
-						<%}else{%>
-							<div class="cart-list">
-								<table class="table">
+						<%}else{%> 
+							<div class="cart-list" id="cart-relod-div">
+								<table class="table" >
 									<thead class="thead-primary">
 										<tr class="text-center">
 											<th>&nbsp;</th>
 											<th>&nbsp;</th>
 											<th>Product</th>
+											<th>Stock</th>
 											<th>Price</th>
 											<th>Quantity</th>
 											<th>Total</th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody  >
 										<% cartData.products.forEach(function(product, index) { %>
 
 
 											<tr class="text-center">
-												<td class="product-remove"><a href="#"><span
+												<td class="product-remove"><a onclick="removecart('<%=product._id %>')"><span
 															class="ion-ios-close"></span></a></td>
 
 												<td class="image-prod">
@@ -136,16 +137,31 @@
 
 												<td class="product-name">
 													<h3><%=product.productId.name%></h3>
-													<p><%=product.productId.description%></p>
+													<p class="product-discription"><%=product.productId.description%></p>
 												</td>
-
+												<% if (product.productId.quantity === 0) { %>
+													<td>
+													  <p>Out of Stock</p>
+													</td>
+												  <% } else if (product.productId.quantity > 5) { %>
+													<td>
+													  Only <%= product.productId.quantity %> left
+													</td>
+												  <% } else { %>
+													<td>
+													  <%= product.productId.quantity %> available
+													</td>
+												  <% } %>
+												  
 												<td class="price">$<%=product.productId.price%></td>
 
 												<td class="quantity">
-													<div class="input-group mb-3">
-														<input type="text" name="quantity"
+													<div class="input-group mb-3 d-flex">
+														<button class="input-btn">-</button>
+														<input type="number" name="quantity" disabled
 															class="quantity form-control input-number" value="1" min="1"
 															max="100">
+															<button class="input-btn">+</button>
 													</div>
 												</td>
 
@@ -335,6 +351,12 @@
 
 		});
 	</script>
+
+	<!-- address adding fetch linked -->
+	<script src="/js/fetch.js"></script>
+	<!-- swal -->
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 
