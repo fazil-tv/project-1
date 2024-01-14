@@ -165,7 +165,7 @@
 															<button class="input-btn increase-quantity" onclick="increasequantity('<%=product.productId._id%>','<%=product.productId.price %>')">+</button>
 													</div>
 												</td>
-											<td class="total  cart-totals " id="total<%=product.productId._id%>">'<%=product.productId.price *  product.productId.quantitiy%>></td>
+											<td class="total  cart-totals " id="total<%=product.productId._id%>"><%=product.totalPrice%></td>
 											</tr>
 										<% }); %>
 									</tbody>
@@ -183,21 +183,22 @@
 								<span>Subtotal</span>
 								<span id="subtotel-amount">0</span>
 							</p>
-							<p class="d-flex">
+							<!-- <p class="d-flex">
 								<span>Delivery</span>
 								<span>$0.00</span>
 							</p>
 							<p class="d-flex">
 								<span>Discount</span>
 								<span>$3.00</span>
-							</p>
+							</p> -->
 							<hr>
 							<p class="d-flex total-price">
 								<span>Total</span>
-								<span>$17.60</span>
+								<!-- <span>$17.60</span> -->
+								<span id="subtotel-amount">0</span>
 							</p>
 						</div>
-						<p class="text-center"><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to
+						<p class="text-center"><a href="/checkout" class="btn btn-primary py-3 px-4">Proceed to
 								Checkout</a></p>
 					</div>
 				</div>

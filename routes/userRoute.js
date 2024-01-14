@@ -10,7 +10,9 @@ const addressController = require('../controllers/addressController');
 
 const cartController = require('../controllers/cartController');
 
+const checkoutController = require("../controllers/checkoutController");
 
+const userauth = require ('../middlewares/authUser');
 
 userRoute.set('view engine', 'ejs')
 userRoute.set('views', './views/user')
@@ -19,7 +21,7 @@ userRoute.set('views', './views/user')
 userRoute.get("/indexhome",userController.indexhome)
 
 
-userRoute.get("/login", (req, res) => {
+userRoute.get("/login",userauth.isLogout, (req, res) => {
     res.render("login");
 })
 
@@ -46,14 +48,14 @@ userRoute.post('/resendotp', (req, res) => {
 
 
 // SIGN-UP
-userRoute.get("/signup", userController.signup);
-userRoute.post('/signup', userController.insertUser);
+userRoute.get("/signup",userauth.isLogout, userController.signup);
+userRoute.post('/signup',userauth.isLogout, userController.insertUser);
 
 
 
 // LOGIN
-userRoute.post('/login', userController.verifyLogin);
-userRoute.post('/', userController.verifyLogin);
+userRoute.post('/login',userauth.isLogout, userController .verifyLogin);
+userRoute.post('/',userauth.isLogout, userController.verifyLogin);
 
 
 //indexhome
@@ -77,11 +79,11 @@ userRoute.post('/shop', userController.shop);
 userRoute.get("/about", userController.about);
 userRoute.post('/about', userController.about);
 //useraccount
-userRoute.get("/useraccount", userController.useraccount);
+userRoute.get("/useraccount",userauth.isLogin, userController.useraccount);
 // userRoute.post('/about', userController.about);
 
 //resetpassword
-userRoute.get(" /resetpassword", userController.resetpassword);
+userRoute.get("/resetpassword", userController.resetpassword);
 userRoute.post('/resetpassword', userController.resetpassword);
 
 
@@ -121,13 +123,15 @@ userRoute.delete('/deletaddress', addressController.deletaddress);
 
 userRoute.get('/cart', cartController.cart);
 
-userRoute.post('/getcart',cartController.getcart);
+userRoute.post('/getcart', userauth.isLogin, cartController.getcart);
 
 //remove cart
-userRoute.post('/removecarts',cartController.removecarts);
+userRoute.post('/removecarts', userauth.isLogin,cartController.removecarts);
 
 // update quantity
-userRoute.patch('/updatecart',cartController.updatecart);
+userRoute.post('/updatecart',userauth.isLogin,cartController.updatecart);
 
+// checkout
+userRoute.get('/checkout',userauth.isLogin,checkoutController.checkout)
 
 module.exports = userRoute;

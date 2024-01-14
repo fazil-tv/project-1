@@ -1,5 +1,44 @@
-const { json } = require("express");
-const { response } = require("../../routes/userRoute");
+// const { json } = require("express");
+// const { response } = require("../../routes/userRoute");
+
+// resend otp
+async function fetchOTP(userId, email) {
+
+    event.preventDefault();
+    try {
+        const response = await fetch('/resendotp', {
+            method: 'POST',
+             headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId, email }),
+        });
+
+        if (response.ok) {
+            window.location.reload()
+
+            console.log('Resend OTP request successful');
+            // alert("resent otp successfully");
+
+        } else {
+            console.error('Resend OTP request failed');
+        }
+    } catch (error) {
+        console.error('Error during Resend OTP request:', error);
+    }
+}
+
+
+
+
+// otp timer
+
+
+
+
+
+
+
 
 
 function addressvalidation() {
@@ -74,6 +113,8 @@ function addressvalidation() {
     }
 
 }
+
+
 
 
 
@@ -331,9 +372,9 @@ function addcart(x) {
                     confirmButtonText: 'Show Cart',
                     confirmButtonColor: '#dbcc8f',
                     timer: 2000,
-                }).then((risult)=>{
-                    if(risult.isConfirmed){
-                        window.location.href ="/cart"
+                }).then((risult) => {
+                    if (risult.isConfirmed) {
+                        window.location.href = "/cart"
                     }
                 });
             } else if (data.success === true) {
@@ -344,10 +385,10 @@ function addcart(x) {
                     confirmButtonText: 'Show Cart',
                     confirmButtonColor: '#dbcc8f',
                     timer: 3000,
-                }).then((result)=>{
+                }).then((result) => {
                     console.log('helooreaxged');
-                    if(result.isConfirmed){
-                        window.location.href ="/cart"
+                    if (result.isConfirmed) {
+                        window.location.href = "/cart"
                     }
                 });
 
@@ -363,9 +404,9 @@ function addcart(x) {
 
 
 function removecart(x) {
-  
+
     const productId = x;
-    console.log("p",productId)
+    console.log("p", productId)
     fetch("/removecarts", {
         method: 'POST',
         headers: {
@@ -375,62 +416,62 @@ function removecart(x) {
             productId,
         }),
     })
-    .then(response => response.json())
-    .then(data => { 
-        if(data.success===true){
-            Swal.fire({
-                icon: 'success',
-                title: 'cart removed Successful',
-                text: 'Do you want to see cart?',
-                timer: 2000,
-            })
-            $('#cart-relod-div').load('/cart #cart-relod-div');
-            $('#cart-relod-divs').load('/cart #cart-relod-divs');
-            $('#checkout-relode').load('/cart #checkout-relode');
-        
-            
-        }  
+        .then(response => response.json())
+        .then(data => {
+            if (data.success === true) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'cart removed Successful',
+                    text: 'Do you want to see cart?',
+                    timer: 2000,
+                })
+                $('#cart-relod-div').load('/cart #cart-relod-div');
+                $('#cart-relod-divs').load('/cart #cart-relod-divs');
+                $('#checkout-relode').load('/cart #checkout-relode');
 
-        
-    })
-    .catch(error => {
-        console.log(error);       
-    });
+
+            }
+
+
+        })
+        .catch(error => {
+            console.log(error);
+        });
 }
 
 
 
 //
 
-function  decreasequantity(productId,productprice){
+function decreasequantity(productId, productprice) {
     console.log(productId);
     console.log(productprice);
 
-    let quantityDisplay = document.getElementById('quantity-display'+productId);
+    let quantityDisplay = document.getElementById('quantity-display' + productId);
     let currentQuantity = parseInt(quantityDisplay.value);
     console.log(currentQuantity);
     console.log(quantityDisplay);
-    if(currentQuantity >1){
-        quantityDisplay.value = currentQuantity-1;
-        updateTottal(productId,currentQuantity-1,productprice);
-        updateQuantity(productId , currentQuantity-1);
+    if (currentQuantity > 1) {
+        quantityDisplay.value = currentQuantity - 1;
+        updateTottal(productId, currentQuantity - 1, productprice);
+        updateQuantity(productId, currentQuantity - 1);
     }
 
 }
 
 
-function increasequantity(productId,productprice){
+function increasequantity(productId, productprice) {
     console.log(productId);
     console.log(productprice);
 
-    let quantityDisplay = document.getElementById('quantity-display'+productId);
+    let quantityDisplay = document.getElementById('quantity-display' + productId);
     let currentQuantity = parseInt(quantityDisplay.value);
     console.log(currentQuantity);
     console.log(quantityDisplay);
-    
-        quantityDisplay.value = currentQuantity+1;
-        updateTottal(productId,currentQuantity+1,productprice);
-        updateQuantity(productId , currentQuantity+1);
+
+    quantityDisplay.value = currentQuantity + 1;
+    updateTottal(productId, currentQuantity + 1, productprice);
+    updateQuantity(productId, currentQuantity + 1);
 
 }
 
@@ -440,13 +481,13 @@ function increasequantity(productId,productprice){
 
 // }
 
-function updateQuantity(productId,currentQuantity){
+function updateQuantity(productId, currentQuantity) {
 
-    console.log(productId);        
+    console.log(productId);
     console.log(currentQuantity);
 
     fetch("/updatecart", {
-        method: 'PATCH',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -455,57 +496,139 @@ function updateQuantity(productId,currentQuantity){
             currentQuantity
         }),
     }).then(response => response.json)
-    .then(data=>{
-        console.log("hiiii ok");
+        .then(data => {
+            if (data.success) {
+                window.location.reload()
+                console.log("hiiii ok done");
 
-    })
+            }
 
-    
+        })
+
+
 }
+
 // document.addEventListener('DOMContentLoaded', function () {
 //     updatesubTottel();
 // });
 
-function updatesubTottel(){
+
+function updatesubTottel() {
     console.log("hiii")
     const totalColumns = document.querySelectorAll('.cart-totals');
     console.log(totalColumns)
     const subtotal = document.getElementById('subtotel-amount');
-    
+
 
     // console.log(totalColumns);
     console.log(subtotal);
 
-    let sum = 0 ;
-    
+    let sum = 0;
+
     totalColumns.forEach((column) => {
         console.log(column.textContent);
-        sum += parseFloat(column.textContent.replace("$",'') || 0);
+        sum += parseFloat(column.textContent.replace("$", '') || 0);
     });
 
     console.log(totalColumns)
 
-    subtotal.textContent=sum;
+    subtotal.textContent = sum;
     document.getElementById('subtotel-amount').innerHTML;
 
 
 }
 
 
-function updateTottal(productId,currentQuantity,productprice){
+function updateTottal(productId, currentQuantity, productprice) {
 
-    const  Id = productId;
+    const Id = productId;
     const Quantity = currentQuantity;
     const price = productprice;
- 
+
     console.log(Id);
     console.log(Quantity);
     console.log(price);
- 
+
     const tottelelement = document.getElementById('total' + Id);
-    const newtottal = price*Quantity;
+    const newtottal = price * Quantity;
     tottelelement.innerText = '$' + newtottal.toFixed(2);
 
     updatesubTottel()
 
-} 
+}
+
+
+
+
+
+
+function edituser(event) {
+
+    event.preventDefault();
+    const fullname = document.getElementById('newUsername').value;
+    const mobile = document.getElementById('newUserMobile').value;
+
+    let isValid = true;
+
+    if (!fullname || !mobile) {
+        isValid = false;
+    }
+    if (fullname.trim() === "") {
+        document.getElementById('edit-user-name-error').textContent = "please enter your name"
+
+        isValid = false;
+    }
+    if (mobile.length < 10) {
+        document.getElementById('edit-user-phon-error').textContent = "please enter your valid mobile number";
+        isValid = false;
+    }
+    if (isValid === false) {
+        return console.log('your validation failed')
+    }
+    else {
+        console.log("haa ok")
+        useredit()
+    }
+
+}
+
+
+function useredit() {
+    const fullname = document.getElementById('newUsername').value;
+    const mobile = document.getElementById('newUserMobile').value;
+
+    fetch("/edituser", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            fullname,
+            mobile
+
+        }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'user edit Successful',
+                    text: 'Do you want to see cart?',
+                    timer: 2000,
+                })
+                // window.location.reload();
+                document.getElementById('editProfileModal').style.display = "none";
+                $('#user-profile-relode').load('/useraccount #user-profile-relode');
+                // $('#editProfileModal').load('/useraccount #editProfileModal');
+
+
+
+            }
+
+
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}

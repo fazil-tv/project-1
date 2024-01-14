@@ -23,7 +23,7 @@ const cart = async (req, res) => {
             console.log("ok set", cartData);
             res.render('cart', { cartData });
         } else {
-            console.log('not sesssiojn')
+            console.log('not sesssiojn');
         }
 
 
@@ -119,6 +119,9 @@ const updatecart = async (req, res) => {
         const userId = req.session.user_id
         const productId = req.body.productId;
         const currentQuantity = req.body.currentQuantity;
+        const product = await productSchema.findById(productId);
+        const totttalprice = product.price*currentQuantity;
+
 
         console.log("userId", userId);
         console.log("productId", productId);
@@ -126,9 +129,11 @@ const updatecart = async (req, res) => {
 
         const updateuser = await cartSchema.findOneAndUpdate(
             { user: userId, 'products.productId': productId },
-            { $set: { 'products.$.count': currentQuantity } },
+            { $set: { 'products.$.count': currentQuantity ,"products.$.totalPrice":totttalprice}},
             { new: true }
+
         );
+        res.json({success:true})
         console.log(updateuser);
 
         if (!updateuser) {

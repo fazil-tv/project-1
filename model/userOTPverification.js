@@ -20,6 +20,7 @@ const userOTPverificationSchema = new Schema({
     createAt:{
         type:Date,
         default:Date.now,
+        expires:'1m'
     },
     expiresAt:{
         type:Date,

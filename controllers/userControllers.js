@@ -125,7 +125,7 @@ const sendmailUser = async (email, id, res) => {
         console.error("Error sending email:", error);
         res.send("Error sending email");
     }
-};
+};  
 
 
 
@@ -168,6 +168,7 @@ const resendmailUser = async (userId, res) => {
         const email = user.email;
         console.log("email", email);
         await resendEmails(email, userId);
+        
         console.log("last user", userId)
         console.log(" resent otp successfully");
         res.status(200).json({ success: true });
@@ -181,11 +182,14 @@ const resendmailUser = async (userId, res) => {
 
 //otp verification 
 const verifyPost = async (req, res) => {
-    try {
+    try { 
         const { num1, num2, num3, num4 } = req.body;
-        const otp = `${num1}${num2}${num3}${num4}`;
+         const otp = `${num1}${num2}${num3}${num4}`;
+        
 
         const userId = req.session.user_id;
+        const email = userId.email;
+        console.log("1st email",email);
 
         console.log("Session ID:", userId);
 
@@ -200,14 +204,20 @@ const verifyPost = async (req, res) => {
 
 
             const validOTP = await bcrypt.compare(otp, hashedOTP);
+            
             if (!validOTP) {
-                res.redirect(`/otp?id=${userId}`);
+                console.log("invalid otp");
+                // res.render('otp',{message:'invalid otp',userId});
+                console.log("this",email);
+                console.log("this",userId);
+                // const email = userId.email;
+                res.render('otp', { message: 'invalid otp',userId,email});
             } else {
-               
+
                 await Otp.deleteOne({ user_id: userId });
                 console.log("ok da kitty")
                 res.redirect(`/indexhome`);
-              
+
             }
         }
 
@@ -303,6 +313,7 @@ const useraccount = async (req, res) => {
 const verifyLogin = async (req, res) => {
 
     try {
+        console.log('verify')
         const email = req.body.email;
         const password = req.body.password;
         const userData = await User.findOne({ email: email });
@@ -314,6 +325,7 @@ const verifyLogin = async (req, res) => {
                 req.session.user_id = userData._id;
                 req.session.email = email;
                 res.redirect('/indexhome');
+                console.log(req.session.user_id)
             } else {
                 res.render('login', { message: "Incorrect username or password", type: "error" });
             }
@@ -331,23 +343,32 @@ const verifyLogin = async (req, res) => {
 
 const edituser = async (req, res) => {
     try {
+        console.log("heee")
         userData = await User.findById(req.session.user_id);
         console.log(userData);
+
+        const fullname = req.body.fullname;
+        const mobile = req.body.mobile;
+
+        console.log(fullname);
+        console.log(mobile);
         const updatedUserData = await User.findOneAndUpdate(
 
             { email: userData.email },
             {
                 $set: {
-                    username: req.body.editname,
-                    mobilenumber: req.body.editMobile,
+                    username:fullname,
+                    mobilenumber:mobile
                 },
             },
             { new: true }
         );
 
-        console.log(updatedUserData.name);
+        console.log(updatedUserData.fullname);
         console.log(updatedUserData.mobile);
-        res.redirect('/useraccount')
+
+        res.json({ success: true });
+        // res.redirect('/useraccount')
 
     } catch (err) {
         console.log(err);

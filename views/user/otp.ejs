@@ -13,67 +13,153 @@
   <script src="js/user-otp.js" defer></script>
 </head>
 
-<body>
+<body onload="countdown()">
   <div class="container">
     <header>
       <i class="bx bxs-check-shield"></i>
     </header>
     <h4>Enter OTP Code</h4>
     <div>
-      <%if (typeof message !=='undefined' ){%>
-        <p>
+      <%if (locals.message ){%>
+        <p id="message"> 
           <%=message%>
         </p>
         <%}%>
 
     </div>
-    <form action="" method="post">
+    <form method="post" action="">
       <div class="input-field">
-        <input name="num1" type="number" />
-        <input name="num2" type="number" disabled />
-        <input name="num3" type="number" disabled />
-        <input name="num4" type="number" disabled />
+        <input id="num1" name="num1" type="number" />
+        <input id="num2" name="num2" type="number" disabled />
+        <input id="num3" name="num3" type="number" disabled />
+        <input id="num" name="num4" type="number" disabled />
       </div>
-      <div>
-        <p class="otp-text">Don't receive the OTP <a href="" onclick="fetchOTP('<%= userId %>','<%=email%>')" id="resendButton"
-            style="font-size: 12px; text-decoration: none; color: #0e4bf1">RESEND OTP</a></p>
 
+      <p class="otp-text w-100" id="resend-div" style="display: none;">Not received your code <a href=""
+          onclick="fetchOTP('<%= userId %>','<%=email%>')" id="resendButton"
+          style="font-size: 12px;  text-decoration: none; color: #0e4bf1">RESEND OTP</a></p>
+
+
+      <div class="time-div" id="time-div-id">
+        <p class="otp-text">Not received your code </p>
+        <input id="minutes" class="min-input" type="text" disabled>
+        <font size="3">:</font>
+        <input id="seconds" type="text" class="sec-input" disabled>
       </div>
+
+
       <div style="display: flex;">
         <a href="signup" style="text-decoration: none; color: black;">
           <div class="cancelbtn "><span style="position: relative; bottom: 12px;">cancel</span></div>
         </a>
-        <button type="submit" class="formbutton ">Verify OTP</button>
+        <button type="submit" class="formbutton " id="submitbutton">Verify OTP</button>
       </div>
     </form>
   </div>
 
-
   <script>
-    async function fetchOTP(userId, email) {
-      
-      event.preventDefault();
-      try {
-        const response = await fetch('/resendotp', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ userId, email }),
-        });
+    // function otpverification() {
+    //   // Assuming num1, num2, num3, and num4 are input elements in your HTML form
+    //   const num1 = document.getElementById('num1').value;
+    //   const num2 = document.getElementById('num2').value;
+    //   const num3 = document.getElementById('num3').value;
+    //   const num4 = document.getElementById('num4').value;
 
-        if (response.ok) {
+    //   const otp = `${num1}${num2}${num3}${num4}`;
 
-          console.log('Resend OTP request successful');
+    //   fetch('/verifyPost', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       otp,
+    //     }),
+    //   })
+    //     .then(response => response.json())
+    //     .then(data => {
 
+    //       console.log("ok")
+
+    //       // $('#edit-address-div').load('/useraccount #edit-address-div')
+    //       // Swal.fire({
+    //       //     icon: 'success',
+    //       //     title: 'Edit Successful',
+    //       //     text: 'The address has been edited successfully!',
+    //       // });
+
+
+    //     }).catch(error => {
+    //       console.log(error);
+    //       // Swal.fire({
+    //       //     icon: 'error',
+    //       //     title: 'Deletion Error',
+    //       //     text: 'An error occurred during editing. Please try again.',
+    //       // });
+    //     })
+    // }
+
+    setTimeout(() => {
+      var messageElement = document.getElementById('message');
+      if (messageElement) {
+        messageElement.remove();
+      }
+    }, 5000);
+
+
+    let min = 0.3;
+    let sec = min * 60;
+
+    function countdown() {
+      setTimeout(decrement, 1000);
+    }
+
+    function decrement() {
+      if (document.getElementById) {
+        minutes = document.getElementById('minutes');
+        seconds = document.getElementById('seconds');
+
+        if (sec > 0) {
+          minutes.value = getMinutes();
+          seconds.value = getSeconds();
+          sec--;
+          setTimeout(decrement, 1000);
         } else {
-          console.error('Resend OTP request failed');
+          // document.getElementById('resendButton').style.display='block'
+          document.getElementById('resend-div').style.display = 'block';
+          const buttons = document.getElementById('submitbutton');
+          buttons.disabled = true;
+        
+
+
+          minutes.value = '0';
+          seconds.value = '0';
         }
-      } catch (error) {
-        console.error('Error during Resend OTP request:', error);
+        if (minutes.value == '0' && seconds.value == '0') {
+
+          document.getElementById('time-div-id').style.display = 'none';
+
+
+        }
       }
     }
+
+    function getMinutes() {
+      return Math.floor(sec / 60);
+    }
+
+    function getSeconds() {
+      return sec % 60;
+    }
+
+    window.onload = function () {
+      countdown();
+    };
+
   </script>
+
+
+  <script src="/js/fetch.js"></script>
 </body>
 
 </html>

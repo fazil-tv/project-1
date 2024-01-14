@@ -18,7 +18,7 @@ app.use(session({
   }))
 
 //using morgan middleware for logging HTTp requests
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 
 //connect to mongodb 

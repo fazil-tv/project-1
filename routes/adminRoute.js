@@ -11,6 +11,7 @@ const multer = require("../middlewares/multer");
 const auth = require('../middlewares/authAdmin')
 
 
+
 adminRoute.set('view engine', 'ejs');
 adminRoute.set('views','./views/admin')
 

@@ -116,17 +116,18 @@
                         <a class="list-group-item list-group-item-action" data-toggle="list"
                             href="#account-change-password">Change password</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
-                            href="#account-info">Info</a>
+                            href="#account-info">Address</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
                             href="#account-social-links">Social links</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
                             href="#account-connections">Connections</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
                             href="#account-notifications">Notifications</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="">Logout</a>
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <div class="tab-content">
+                    <div class="tab-content" id="user-profile-relode">
                         <div class="tab-pane fade active show" id="account-general">
 
                             <div class="card-body">
@@ -663,24 +664,25 @@
     <section>
         <div id="editProfileModal" class="modal ">
             <div class="modal-content">
-                <form action="/edituser" method="post" id="editProfileForm">
+                <form id="editProfileForm">
                     <span class="close" onclick="closeModal()">&times;</span>
                     <h3 class="modalhead">Edit Profile</h3>
 
                     <label for="newUsername">New User Name:</label>
                     <input type="text" id="newUsername" name="editname" class="form-control">
+                    <div> <span id="edit-user-name-error" style="color: red;"></span></div>
 
                     <label for="newMobile">New Mobile number:</label>
                     <input type="number" id="newUserMobile" class="form-control" name="editMobile">
-                    <button type="submit" class="save-btn" class="form-control" onclick="saveChanges()">Save
+                    <span id="edit-user-phon-error" style="color: red;"></span>
+                    <button type="submit" class="save-btn" class="form-control" onclick="edituser(event)">Save
                         Changes</button>
                 </form>
             </div>
         </div>
     </section>
 
-
-
+    
 
 
 
@@ -700,13 +702,13 @@
         function closeModal() {
             document.getElementById('editProfileModal').style.display = 'none';
         }
-        function saveChanges() {
-            const newUsername = document.getElementById('newUsername').value;
-            document.getElementById('usernameInput').value = newUsername;
-            const newMobile = document.getElementById('newMobile').value;
-            document.getElementById('phoneInput').value = newMobile;
-            closeModal();
-        }
+        // function saveChanges() {
+        //     const newUsername = document.getElementById('newUsername').value;
+        //     document.getElementById('usernameInput').value = newUsername;
+        //     const newMobile = document.getElementById('newMobile').value;
+        //     document.getElementById('phoneInput').value = newMobile;
+        //     closeModal();
+        // }
 
 
 
@@ -783,7 +785,7 @@
                     } else {
                         console.log('Password reset failed');
                         // document.getElementById('resetdiv').textContent = 'Current password is wrong';
-                        document.getElementById('message').innerHTML= 'Current password is wrong';
+                        document.getElementById('message').innerHTML = 'Current password is wrong';
 
                     }
                 })
@@ -841,7 +843,6 @@
             document.getElementById("EditAddressButton").addEventListener('click', function (event) {
                 event.preventDefault();
                 editaddressvalidation();
-
             });
         })
 
