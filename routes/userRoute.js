@@ -88,6 +88,7 @@ userRoute.post('/resetpassword', userController.resetpassword);
 
 
 
+
 //contact
 userRoute.get("/contact", (req, res) => {
     res.render('contact')
@@ -133,5 +134,30 @@ userRoute.post('/updatecart',userauth.isLogin,cartController.updatecart);
 
 // checkout
 userRoute.get('/checkout',userauth.isLogin,checkoutController.checkout)
+
+
+
+
+
+
+
+//forgotpassword
+userRoute.get("/forgotpassword",userController.forgotpassword)
+userRoute.post('/getemail',userController.getemail)
+
+//forgototp
+userRoute.get("/forgototp",userController.forgototp);
+// userRoute.post("/forgototp",userController.)
+
+
+//
+userRoute.post("/forgototp",userController.otpverification);
+
+
+//
+userRoute.get('/changepasswordform',userController.changepasswordform);
+userRoute.post('/changepasswordform',userController.changepassword);
+
+
 
 module.exports = userRoute;

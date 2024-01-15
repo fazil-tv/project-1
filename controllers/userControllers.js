@@ -125,7 +125,7 @@ const sendmailUser = async (email, id, res) => {
         console.error("Error sending email:", error);
         res.send("Error sending email");
     }
-};  
+};
 
 
 
@@ -168,7 +168,7 @@ const resendmailUser = async (userId, res) => {
         const email = user.email;
         console.log("email", email);
         await resendEmails(email, userId);
-        
+
         console.log("last user", userId)
         console.log(" resent otp successfully");
         res.status(200).json({ success: true });
@@ -182,14 +182,16 @@ const resendmailUser = async (userId, res) => {
 
 //otp verification 
 const verifyPost = async (req, res) => {
-    try { 
+    try {
         const { num1, num2, num3, num4 } = req.body;
-         const otp = `${num1}${num2}${num3}${num4}`;
-        
+        const otp = `${num1}${num2}${num3}${num4}`;
+
 
         const userId = req.session.user_id;
-        const email = userId.email;
-        console.log("1st email",email);
+        const user = await User.findOne({ _id: userId });
+        const email = user.email;
+
+        console.log("1st email", email);
 
         console.log("Session ID:", userId);
 
@@ -204,14 +206,14 @@ const verifyPost = async (req, res) => {
 
 
             const validOTP = await bcrypt.compare(otp, hashedOTP);
-            
+
             if (!validOTP) {
                 console.log("invalid otp");
                 // res.render('otp',{message:'invalid otp',userId});
-                console.log("this",email);
-                console.log("this",userId);
+                console.log("this", email);
+                console.log("this", userId);
                 // const email = userId.email;
-                res.render('otp', { message: 'invalid otp',userId,email});
+                res.render('otp', { message: 'invalid otp', userId, email });
             } else {
 
                 await Otp.deleteOne({ user_id: userId });
@@ -357,8 +359,8 @@ const edituser = async (req, res) => {
             { email: userData.email },
             {
                 $set: {
-                    username:fullname,
-                    mobilenumber:mobile
+                    username: fullname,
+                    mobilenumber: mobile
                 },
             },
             { new: true }
@@ -428,26 +430,234 @@ const resetpassword = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+
+
+
 }
 
 
-module.exports = {
-    signup,
-    sendmailUser,
-    insertUser,
-    verifyPost,
-    login,
-    verifyLogin,
-    sendEmails,
-    blog,
-    indexhome,
-    shop,
-    about,
-    resetpassword,
-    singleproduct,
-    resendmailUser,
-    resendEmails,
-    useraccount,
-    edituser,
-    resetpassword
+
+
+
+
+
+
+
+
+// forget password
+const forgotpassword = async (req, res) => {
+    try {
+        res.render("forgotpassword");
+    } catch (error) {
+        console.error("Error in forgotpassword:", error.message);
+        res.status(500).send("Internal Server Error");
+    }
 }
+
+const forgototp = async (req, res) => {
+    try {
+        res.render("forgototp");
+    } catch (error) {
+        console.error("Error in forgototp:", error.message);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+
+
+
+const getemail = async (req, res) => {
+    console.log("hi");
+    try {
+        req.session.forget_email = req.body.email;
+        console.log(req.body.email);
+        console.log("kkki");
+
+        const userData = await User.findOne({ email: req.body.email });
+        console.log(userData);
+
+        console.log("ioio");
+        const userId = userData._id;
+        const email = userData.email;
+        req.session.user_id = userId;
+
+
+
+        console.log(userId);
+        console.log(email);
+
+        if (userData) {
+
+            await verifysendmail(email, userId, res);
+            res.render('forgototp', { email: req.body.email });
+        } else {
+            res.render('getemail', { error: 'Email not found' });
+        }
+    } catch (error) {
+        // console.error("Error in getemail:", error.message);
+        // res.status(500).send("Internal Server Error");
+        // res.render("getemail");
+        res.render('forgotpassword', { message: 'No users found' });
+    }
+}
+
+
+const verifysendEmails = async (email, _id) => {
+    try {
+
+        const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+        const mailOptions = {
+            from: process.env.NODE_MAILER_EMAIL,
+            to: email,
+            subject: "Verify Your Email",
+            html: `<p>Enter <b>${otp}</b> in the app to verify your email address and complete the signup.</p>
+                   <p>This code <b>expires in 5 minits</b>.</p>`,
+        };
+
+        // Send the email
+        const hashedOTP = await bcrypt.hash(otp, 10);
+
+        await transporter.sendMail(mailOptions);
+        const newOtp = new Otp({
+            user_id: _id,
+            email: email,
+            otp: hashedOTP,
+        });
+        await newOtp.save();
+
+        console.log("Email sent successfully");
+    } catch (error) {
+        console.error("Error sending email:", error.message);
+    }
+};
+
+
+const verifysendmail = async (email, id, res) => {
+    try {
+        await sendEmails(email, id);
+        console.log(id);
+        console.log("Email sent successfully");
+    }
+    catch (error) {
+        console.error("Error sending email:", error);
+        res.send("Error sending email");
+    }
+
+}
+
+const otpverification = async (req, res) => {
+    console.log("jkl");
+    const { num1, num2, num3, num4 } = req.body;
+    const otp = `${num1}${num2}${num3}${num4}`;
+
+
+    const userId = req.session.user_id;
+    const user = await User.findOne({ _id: userId });
+    const email = user.email;
+
+
+    console.log(userId);
+    console.log(user);
+    console.log(email);
+    req.session.email_id = email;
+
+    const userOTPVerificationrecord = await Otp.find({ user_id: userId })
+    console.log(userOTPVerificationrecord);
+
+
+    const hashedOTP = userOTPVerificationrecord[0].otp;
+    const validOTP = await bcrypt.compare(otp, hashedOTP);
+    console.log(validOTP);
+    console.log(hashedOTP);
+
+    if (!validOTP) {
+        console.log("invalid otp");
+        console.log("this", email);
+        console.log("this", userId);
+        res.render('forgototp', { message: 'invalid otp', userId, email });
+    } else {
+        if (req.session.user_id) {
+            res.render('changepasswordform')
+        } else {
+            const userId = req.session.user_id;
+            const user = await User.findOne({ _id: userId });
+            if (user) {
+                res.render('changepasswordform');
+            }
+        }
+    }
+
+
+}
+
+
+const changepasswordform = async (req, res) => {
+    try {
+        res.render("changepasswordform");
+    } catch (error) {
+        console.error("changepasswordform:", error.message);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+
+
+const changepassword = async (req, res) => {
+    try {
+        console.log("hrhr")
+        if (req.session.user_id) {
+            const userId = req.session.user_id;
+            console.log(userId);
+            const sPassword = await bcrypt.hash(req.body.newpassword, 10);
+            await User.findOneAndUpdate({ _id: userId }, { $set: {password: sPassword } })
+           
+            res.render("login",{messages:"please enter your new password"})
+
+        } else {       
+            const sPassword = await bcrypt.hash(req.body.newpassword, 10);
+            await User.findOneAndUpdate({ email: req.session.email_id }, { $set: {password: sPassword } })
+            res.render('login',{messages:"please enter your new password"});
+        }
+
+
+    } catch (error) {
+    console.log(error)
+    }
+
+
+}
+
+
+
+
+
+
+    module.exports = {
+        signup,
+        sendmailUser,
+        insertUser,
+        verifyPost,
+        login,
+        verifyLogin,
+        sendEmails,
+        blog,
+        indexhome,
+        shop,
+        about,
+        resetpassword,
+        singleproduct,
+        resendmailUser,
+        resendEmails,
+        useraccount,
+        edituser,
+        resetpassword,
+        forgotpassword,
+        forgototp,
+        getemail,
+        verifysendEmails,
+        verifysendmail,
+        otpverification,
+        changepasswordform,
+        changepassword
+
+    }

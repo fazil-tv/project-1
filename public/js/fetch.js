@@ -632,3 +632,67 @@ function useredit() {
             console.log(error);
         });
 }
+
+
+
+
+
+
+
+
+
+// function forgotepassword(event) {
+//     console.log("doe done");
+//     event.preventDefault();
+   
+
+//     event.preventDefault();
+//     const email = document.getElementById('forgetemail').value;
+//     console.log(email)
+   
+//     let isValid = true;
+//     const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+//     if (!email || !emailPattern.test(email)) {
+//         document.getElementById('forget-email-error').innerText = 'email is not valid';
+//         isValid = false;
+//         console.log("jk");
+//     } 
+//     else {
+//         document.getElementById('myForms').submit();
+//     }
+
+// }
+
+
+// function forgotpass() {
+//     const email = document.getElementById('forgetemail').value;
+//     console.log(email);
+//     fetch('/getforgotemail', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//             email,           
+//         }),
+//     })
+//         .then(response => response.json())
+//         .then(data => {
+//             // $('#edit-address-div').load('/useraccount #edit-address-div');
+//             // Swal.fire({
+//             //     icon: 'success',
+//             //     title: 'Deletion Successful',
+//             //     text: 'The address has been deleted successfully!',
+//             // });
+//             console.log(data);
+            
+//         })
+//         .catch(error => {
+//             console.log(error);
+//             // Swal.fire({
+//             //     icon: 'error',
+//             //     title: 'Deletion Error',
+//             //     text: 'An error occurred during deletion. Please try again.',
+//             // });
+//         });
+// }

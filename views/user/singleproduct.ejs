@@ -25,22 +25,23 @@
 
 	<link rel="stylesheet" href="/css/flaticon.css">
 	<link rel="stylesheet" href="/css/icomoon.css">
-	
+
 
 	<!-- address adding fetch linked -->
 	<script src="/js/fetch.js"></script>
 
 	<!-- boot strap -->
-	 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> 
-	
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 	<!-- Your custom styles -->
 	<link rel="stylesheet" href="/css/style.css">
-	
+
 
 
 
 </head>
+
 
 <body class="goto-here">
 	<div class="py-1 bg-black">
@@ -125,28 +126,30 @@
 
 										<div class="carousel-inner">
 											<div class="carousel-item active product-img">
-												<!-- <img src="images/choose-1.jpg" class="d-block w-100" alt="..."> -->
 												<a href="/sharpimg/<%= product.images.image1%>"
-													class="image-popup prod-img-bg ">
+													class="image-popup prod-img-bg" id="zoom-container-1"
+													target="_blank">
 													<img src="/sharpimg/<%= product.images.image1%>"
-														class="img-fluid d-block w-100" alt="Colorlib Template"></a>
-
+														class="img-fluid d-block w-100" alt="Colorlib Template">
+												</a>
 											</div>
+											
 											<div class="carousel-item">
 												<!-- <img src="images/choose-3.jpg" class="d-block w-100" alt="..."> -->
 												<a href="/sharpimg/<%= product.images.image2%>"
 													class="image-popup prod-img-bg ">
 													<img src="/sharpimg/<%= product.images.image2%>"
-														class="img-fluid d-block w-100" alt="Colorlib Template"></a>
+														class="img-fluid d-block w-100" alt="Colorlib Template">
+												</a>
 											</div>
-											<div class="carousel-item">
+											<div class="carousel-item" id="">
 												<!-- <img src="images/image_1.jpg" class="d-block w-100" alt="..."> -->
 												<a href="/sharpimg/<%= product.images.image3%>"
 													class="image-popup prod-img-bg">
 													<img src="/sharpimg/<%= product.images.image3%>"
 														class="img-fluid d-block w-100" alt="Colorlib Template"></a>
 											</div>
-											<div class="carousel-item">
+											<div class="carousel-item" id="">
 												<!-- <img src="images/image_1.jpg" class="d-block w-100" alt="..."> -->
 												<a href="/sharpimg/<%= product.images.image4%>"
 													class="image-popup prod-img-bg">
@@ -154,7 +157,7 @@
 														class="img-fluid d-block w-100" alt="Colorlib Template"></a>
 											</div>
 										</div>
-										<button class="carousel-control-prev" type="button"
+										<!-- <button class="carousel-control-prev" type="button"
 											data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
 											<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 											<span class="visually-hidden">Previous</span>
@@ -163,20 +166,30 @@
 											data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
 											<span class="carousel-control-next-icon" aria-hidden="true"></span>
 											<span class="visually-hidden">Next</span>
-										</button>
+										</button> -->
 									</div>
 								</div>
+
+
+
 								<div class="">
 									<div class="carousel-indicators-  d-flex">
 										<button type="button" data-bs-target="#carouselExampleIndicators"
 											data-bs-slide-to="0" class="active slider-butten" aria-current="true"
-											aria-label="Slide 1" ><img src="/sharpimg/<%= product.images.image1%>" alt="" class="w-100 h-100" ></button>
+											aria-label="Slide 1"><img src="/sharpimg/<%= product.images.image1%>" alt=""
+												class="w-100 h-100"></button>
 										<button type="button" data-bs-target="#carouselExampleIndicators"
-											data-bs-slide-to="1" class="slider-butten-2" aria-label="Slide 2" > <img src="/sharpimg/<%= product.images.image2%>" alt="" class="w-100 h-100" ></button>
+											data-bs-slide-to="1" class="slider-butten-2" aria-label="Slide 2"> <img
+												src="/sharpimg/<%= product.images.image2%>" alt=""
+												class="w-100 h-100"></button>
 										<button type="button" data-bs-target="#carouselExampleIndicators"
-											data-bs-slide-to="2" class="slider-butten-3" aria-label="Slide 3"> <img src="/sharpimg/<%= product.images.image3%>" alt="" class="w-100 h-100" ></button>
-											<button type="button" data-bs-target="#carouselExampleIndicators"
-											data-bs-slide-to="2" class="slider-butten-4"  aria-label="Slide 4"><img src="/sharpimg/<%= product.images.image4%>" alt="" class="w-100 h-100" ></button>
+											data-bs-slide-to="2" class="slider-butten-3" aria-label="Slide 3"> <img
+												src="/sharpimg/<%= product.images.image3%>" alt=""
+												class="w-100 h-100"></button>
+										<button type="button" data-bs-target="#carouselExampleIndicators"
+											data-bs-slide-to="2" class="slider-butten-4" aria-label="Slide 4"><img
+												src="/sharpimg/<%= product.images.image4%>" alt=""
+												class="w-100 h-100"></button>
 									</div>
 								</div>
 							</div>
@@ -654,6 +667,27 @@
 		<script src="js/main.js"></script>
 
 		<script>
+			const carouselItems = document.querySelectorAll('.carousel-item');
+
+			carouselItems.forEach((item, index) => {
+				const zoomContainer = item.querySelector('.image-popup');
+				const img = zoomContainer.querySelector('img');
+
+				zoomContainer.addEventListener('mousemove', (e) => {
+					const x = e.clientX - e.target.offsetLeft;
+					const y = e.clientY - e.target.offsetTop;
+
+					img.style.transformOrigin = `${x}px ${y}px`;
+					img.style.transform = 'scale(2)';
+				});
+
+				zoomContainer.addEventListener('mouseleave', () => {
+					img.style.transform = 'scale(1)';
+				});
+			})
+		</script>
+
+		<script>
 			$(document).ready(function () {
 
 				var quantitiy = 0;
@@ -674,14 +708,12 @@
 				});
 
 				$('.quantity-left-minus').click(function (e) {
-					// Stop acting like a button
+
 					e.preventDefault();
-					// Get the field name
+
 					var quantity = parseInt($('#quantity').val());
 
-					// If is not undefined
 
-					// Increment
 					if (quantity > 0) {
 						$('#quantity').val(quantity - 1);
 					}

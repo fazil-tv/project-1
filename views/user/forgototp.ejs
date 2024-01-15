@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forgot OTP Verification</title>
+  <link rel="stylesheet" href="/css/css/forgototp.css" />
+  <!-- Boxicons CSS -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <script src="js/user-otp.js" defer></script>
+
+<body>
+  <div class="container">
+    <header>
+      <i class="bx bxs-check-shield"></i>
+    </header>
+    <h4>Enter OTP Code</h4>
+    <div>
+      <%if (locals.message ){%>
+        <p id="message"> 
+          <%=message%>
+        </p>
+        <%}%>
+
+    </div>
+    <form action="/forgototp" method="post" >
+      <div class="input-field">
+        <input id="num1" name="num1" type="number" />
+        <input id="num2" name="num2" type="number" disabled />
+        <input id="num3" name="num3" type="number" disabled />
+        <input id="num" name="num4" type="number" disabled />
+      </div>
+
+      <div style="display: flex;">
+        <a href="signup" style="text-decoration: none; color: black;">
+          <div class="cancelbtn "><span style="position: relative; bottom: 12px;">cancel</span></div>
+        </a>
+        <button>Verify OTP</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+
+
+
+
+
+
+
+
+
+
+
+    // setTimeout(() => {
+    //   var messageElement = document.getElementById('message');
+    //   if (messageElement) {
+    //     messageElement.remove();
+    //   }
+    // }, 5000);
+
+
+    // let min = 0.5;
+    // let sec = min * 60;
+
+    // function countdown() {
+    //   setTimeout(decrement, 1000);
+    // }
+
+    // function decrement() {
+    //   if (document.getElementById) {
+    //     minutes = document.getElementById('minutes');
+    //     seconds = document.getElementById('seconds');
+
+    //     if (sec > 0) {
+    //       minutes.value = getMinutes();
+    //       seconds.value = getSeconds();
+    //       sec--;
+    //       setTimeout(decrement, 1000);
+    //     } else {
+    //       // document.getElementById('resendButton').style.display='block'
+    //       document.getElementById('resend-div').style.display = 'block';
+    //       const buttons = document.getElementById('submitbutton');
+    //       buttons.disabled = true;
+        
+
+
+    //       minutes.value = '0';
+    //       seconds.value = '0';
+    //     }
+    //     if (minutes.value == '0' && seconds.value == '0') {
+
+    //       document.getElementById('time-div-id').style.display = 'none';
+
+
+    //     }
+    //   }
+    // }
+
+    // function getMinutes() {
+    //   return Math.floor(sec / 60);
+    // }
+
+    // function getSeconds() {
+    //   return sec % 60;
+    // }
+
+    // window.onload = function () {
+    //   countdown();
+    // };
+
+  </script>
+
+
+  <!-- <script src="/js/fetch.js"></script> -->
+</body>
+
+</html>

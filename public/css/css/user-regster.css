@@ -13,7 +13,10 @@
     font-family: "Poppins-Regular";
     color: #333;
     font-size: 13px;
-    margin: 0; }
+    margin: 0;
+    /* overflow-y: hidden; */
+  
+  }
   
   input, textarea, select, button {
     font-family: "Poppins-Regular";
@@ -85,6 +88,7 @@
       right: 0; }
   
   .form-control {
+   
     border: 1px solid #333;
     border-top: none;
     border-right: none;
@@ -120,6 +124,7 @@
       display: none; }
   
   button {
+  
     border: none;
     width: 164px;
     height: 51px;
@@ -212,3 +217,50 @@
   
   /*# sourceMappingURL=style.css.map */
   
+
+
+
+
+  .back-button {
+    margin-top: 90px;
+    border: none;
+    width: 164px;
+    height: 51px;
+    margin: auto;
+    /* margin-top: 40px; */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: #ffffff;
+    font-size: 15px;
+    color: #000000;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s; 
+    border: none;
+    clear: both;
+    border: hidden !important;
+  }
+  .back-button:hover{
+    outline: none;
+  }
+  .back-button:active {
+    outline: none; 
+  }
+  .inpust-div{
+    position: relative;
+    top: 100px;
+  }
+  .button-divs-1{
+    position: relative;
+    left: 80px;
+    margin-top: 30px;
+
+  }
+  .back-button-2{
+    margin-top: 20px;
+  }

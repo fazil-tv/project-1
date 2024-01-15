@@ -52,62 +52,23 @@
         <a href="signup" style="text-decoration: none; color: black;">
           <div class="cancelbtn "><span style="position: relative; bottom: 12px;">cancel</span></div>
         </a>
-        <button type="submit" class="formbutton " id="submitbutton">Verify OTP</button>
+        <button type="submit" class="formbutton" id="submitbutton">Verify OTP</button>
       </div>
     </form>
   </div>
 
   <script>
-    // function otpverification() {
-    //   // Assuming num1, num2, num3, and num4 are input elements in your HTML form
-    //   const num1 = document.getElementById('num1').value;
-    //   const num2 = document.getElementById('num2').value;
-    //   const num3 = document.getElementById('num3').value;
-    //   const num4 = document.getElementById('num4').value;
-
-    //   const otp = `${num1}${num2}${num3}${num4}`;
-
-    //   fetch('/verifyPost', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //       otp,
-    //     }),
-    //   })
-    //     .then(response => response.json())
-    //     .then(data => {
-
-    //       console.log("ok")
-
-    //       // $('#edit-address-div').load('/useraccount #edit-address-div')
-    //       // Swal.fire({
-    //       //     icon: 'success',
-    //       //     title: 'Edit Successful',
-    //       //     text: 'The address has been edited successfully!',
-    //       // });
 
 
-    //     }).catch(error => {
-    //       console.log(error);
-    //       // Swal.fire({
-    //       //     icon: 'error',
-    //       //     title: 'Deletion Error',
-    //       //     text: 'An error occurred during editing. Please try again.',
-    //       // });
-    //     })
-    // }
-
-    setTimeout(() => {
-      var messageElement = document.getElementById('message');
-      if (messageElement) {
-        messageElement.remove();
-      }
-    }, 5000);
+    // setTimeout(() => {
+    //   var messageElement = document.getElementById('message');
+    //   if (messageElement) {
+    //     messageElement.remove();
+    //   }
+    // }, 5000);
 
 
-    let min = 0.3;
+    let min = 0.5;
     let sec = min * 60;
 
     function countdown() {
