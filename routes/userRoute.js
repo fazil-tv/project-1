@@ -158,6 +158,8 @@ userRoute.post("/forgototp",userController.otpverification);
 userRoute.get('/changepasswordform',userController.changepasswordform);
 userRoute.post('/changepasswordform',userController.changepassword);
 
-
+//filter
+userRoute.get('/filter',productController.productfilter);
+userRoute.get('/searching',productController.productsearching)
 
 module.exports = userRoute;

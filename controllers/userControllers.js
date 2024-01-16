@@ -7,8 +7,10 @@ const nodemailer = require("nodemailer");
 const Otp = require('../model/userOTPverification')
 const bcrypt = require("bcrypt");
 const productSchema = require("../model/productSchema");
-const addressSchema = require("../model/addressModel")
+const addressSchema = require("../model/addressModel");
+// const categorySchema =require("../controllers/categoryController");
 const { log } = require("console");
+const categorySchema= require("../model/categoryModel");
 
 
 
@@ -262,9 +264,33 @@ const indexhome = async (req, res) => {
 // shop
 const shop = async (req, res) => {
     try {
-        const product = await productSchema.find({}).populate('category');
-        console.log(product);
-        res.render("shop", { product: product });
+        const category = await categorySchema.find({});
+        console.log(category)
+        
+       
+        const searchQuery = req.query.search || "";
+        const page = req.query.page ? req.query.page : 1;
+        const prevPage = page - 1;
+        const totalDoc = await productSchema.countDocuments();
+        const product = await productSchema.find({}).populate('category').skip(prevPage*4).limit(6)
+
+
+         
+        console.log(totalDoc);
+        res.render("shop", { product: product ,category:category,searchQuery,page,totalDoc});
+
+        // const category = await categorySchema.find({}).sort({ name: 1 })
+        // console.log(category)
+
+        // const searchQuery = req.query.search || "";
+        // const page = req.query.page ? req.query.page : 1;
+        // const totalDoc = await productSchema.countDocuments();
+        // const prevPage = page - 1;
+
+        // const product = await productSchema.find({}).populate('category').
+        //     res.render("shop", { product: product, category: category, searchQuery }).skip(prevPage * 4).limit(4)
+
+
 
     } catch (error) {
         console.log(error.message);

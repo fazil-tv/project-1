@@ -1,6 +1,7 @@
 const productSchema = require("../model/productSchema");
 const userSchema = require("../model/userSchema");
 const categorySchema = require("../model/categoryModel");
+
 const path = require("path")
 
 
@@ -167,36 +168,124 @@ const editProductpost = async (req, res) => {
                     .toFile(`public/sharpimg/${img[i]}`);
             }
         }
-     
 
-if (requestData.quantity > 0 && requestData.price > 0) {
-    console.log("ok");
-    const product = {
 
-        name: requestData.title,
-        quantity: requestData.quantity,
-        category: requestData.category,
-        price: requestData.price,
-        offer: requestData.offer,
-        description: requestData.description,
-        images: {
-            image1: img[0],
-            image2: img[1],
-            image3: img[2],
-            image4: img[3],
-        },
-    }
-    console.log("io io io io");
-    const risult = await productSchema.findOneAndUpdate({ _id: id }, product, { new: true });
-    risult.save();
-    console.log("done")
-    res.redirect('/admin/product');
-}
+        if (requestData.quantity > 0 && requestData.price > 0) {
+            console.log("ok");
+            const product = {
+
+                name: requestData.title,
+                quantity: requestData.quantity,
+                category: requestData.category,
+                price: requestData.price,
+                offer: requestData.offer,
+                description: requestData.description,
+                images: {
+                    image1: img[0],
+                    image2: img[1],
+                    image3: img[2],
+                    image4: img[3],
+                },
+            }
+            console.log("io io io io");
+            const risult = await productSchema.findOneAndUpdate({ _id: id }, product, { new: true });
+            risult.save();
+            console.log("done")
+            res.redirect('/admin/product');
+        }
     } catch (error) {
-    console.log(error);
-}
+        console.log(error);
+    }
 }
 
+
+const productsearching = async (req, res) => {
+    try {
+        const userId = req.session.user_id;
+        const searchQuery = req.query.search || "";
+        const categoryData = await categorySchema.find({});
+        const totalDoc = await productSchema.countDocuments();
+        const category = req.query.category;
+        const page = req.query.page ? req.query.page : 1;
+        const prevPage = page - 1;
+
+
+        console.log(searchQuery);
+        const productData = await productSchema.find({
+            name: { $regex: searchQuery, $options: 'i' },
+        }).skip(prevPage * 4).limit(6);
+
+        if (productData) {
+            res.render('shop', { product: productData, category: categoryData, userId, searchQuery, totalDoc, page, prevPage })
+
+
+        }else{
+            const message = "product not find";
+            res.render('shop', { product: productData, category: categoryData, userId, searchQuery, totalDoc, page, prevPage,message});
+            
+        }
+
+
+
+
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
+
+
+
+const productfilter = async (req, res) => {
+
+    try {
+        const userId = req.session.user_id;
+        const fromprice = req.query.fromprice;
+        const toprice = req.query.toprice;
+        const category = req.query.category;
+        const sort = parseInt(req.query.sort);
+        const searchQuery = req.query.search || "";
+        const page = req.query.page ? req.query.page : 1;
+        const prevPage = page - 1;
+        console.log(searchQuery)
+        const categoryData = await categorySchema.find({});
+        const totalDoc = await productSchema.countDocuments();
+
+        console.log(sort);
+        console.log(fromprice);
+        console.log(toprice);
+        console.log(userId);
+        console.log(category);
+
+        if (category == "all") {
+            console.log(searchQuery);
+            const productData = await productSchema.find({
+
+                name: { $regex: searchQuery, $options: 'i' },
+                price: { $gte: fromprice, $lte: toprice }
+            }).sort({ price: sort === 0 ? 1 : -1 }).skip(prevPage * 4).limit(6);
+
+            res.render('shop', { product: productData, category: categoryData, userId, totalDoc, searchQuery, page, prevPage })
+
+        } else {
+            console.log("me ");
+            const productData = await productSchema.find({
+                name: { $regex: searchQuery, $options: 'i' },
+                price: { $gte: fromprice, $lte: toprice },
+                category: category
+            }).sort({ price: sort === 0 ? 1 : -1 }).skip(prevPage * 4).limit(6);
+            console.log(productData)
+
+            res.render('shop', { product: productData, category: categoryData, userId, totalDoc,searchQuery, page, prevPage })
+        }
+
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
 
 
 
@@ -211,5 +300,7 @@ module.exports = {
     addProductspost,
     blockProduct,
     editProduct,
-    editProductpost
+    editProductpost,
+    productfilter,
+    productsearching
 }
