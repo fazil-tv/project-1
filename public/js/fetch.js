@@ -15,10 +15,13 @@ async function fetchOTP(userId, email) {
         });
 
         if (response.ok) {
+            
             window.location.reload()
+            
+            
 
             console.log('Resend OTP request successful');
-            // alert("resent otp successfully");
+          
 
         } else {
             console.error('Resend OTP request failed');
@@ -439,41 +442,96 @@ function removecart(x) {
         });
 }
 
+// function decreasequantity(productId, productprice) {
+//     console.log(productId);
+//     console.log(productprice);
 
+//     // let quantityDisplay = document.getElementById('quantity-display' + productId);
+//     // let currentQuantity = parseInt(quantityDisplay.value);
+//     // console.log(currentQuantity);
+//     // console.log(quantityDisplay);
+//     // if (currentQuantity > 1) {
+//     //     quantityDisplay.value = currentQuantity - 1;
+//     //     updateTottal(productId, currentQuantity - 1, productprice);
+//     //     updateQuantity(productId, currentQuantity - 1);
+//     // }
+
+// }
+// function increasequantity(productId, productprice) {
+//     console.log(productId);
+//     console.log(productprice);
+
+//     // let quantityDisplay = document.getElementById('quantity-display' + productId);
+//     // let currentQuantity = parseInt(quantityDisplay.value);
+//     // console.log(currentQuantity);
+//     // console.log(quantityDisplay);
+
+//     // quantityDisplay.value = currentQuantity + 1;
+//     // updateTottal(productId, currentQuantity + 1, productprice);
+//     // updateQuantity(productId, currentQuantity + 1);
+
+// }
 
 //
 
-function decreasequantity(productId, productprice) {
-    console.log(productId);
-    console.log(productprice);
 
-    let quantityDisplay = document.getElementById('quantity-display' + productId);
-    let currentQuantity = parseInt(quantityDisplay.value);
-    console.log(currentQuantity);
-    console.log(quantityDisplay);
-    if (currentQuantity > 1) {
-        quantityDisplay.value = currentQuantity - 1;
-        updateTottal(productId, currentQuantity - 1, productprice);
-        updateQuantity(productId, currentQuantity - 1);
-    }
+// let clickcount = 0;
 
-}
+// function increasequantity(productId, productprice,productquantity) {
+//     console.log(productId);
+//     console.log(productprice);
+//     console.log("krkrk",productquantity);
+
+//     if(clickcount <productquantity-1){
+//         // const inputElement = document.getElementById('quantity-display' + productId);
+//         let quantityDisplay = document.getElementById('quantity-display' + productId);
+//         let currentQuantity = parseInt(quantityDisplay.value);
+
+//         quantityDisplay.value = currentQuantity +1;
+       
+//         console.log(currentQuantity);
+//         console.log(quantityDisplay);
+    
+//         // quantityDisplay.value = currentQuantity + 1;
+//         updateTottal(productId, currentQuantity + 1, productprice);
+//         updateQuantity(productId, currentQuantity + 1);
+
+//         clickcount++;
+//     }
+// }
 
 
-function increasequantity(productId, productprice) {
-    console.log(productId);
-    console.log(productprice);
+// function decreasequantity(productId, productprice,productquantity) {
+    
+//     console.log(productId);
+//     console.log(productprice);
+//     const inputElement = document.getElementById('quantity-display' + productId);
 
-    let quantityDisplay = document.getElementById('quantity-display' + productId);
-    let currentQuantity = parseInt(quantityDisplay.value);
-    console.log(currentQuantity);
-    console.log(quantityDisplay);
 
-    quantityDisplay.value = currentQuantity + 1;
-    updateTottal(productId, currentQuantity + 1, productprice);
-    updateQuantity(productId, currentQuantity + 1);
+//     let quantityDisplay = document.getElementById('quantity-display' + productId);
+//     let currentQuantity = parseInt(quantityDisplay.value);
+//     console.log(currentQuantity);
+//     console.log(quantityDisplay);
+//     if (currentQuantity > 1) {
 
-}
+//         if(quantityDisplay.value>1){
+//             quantityDisplay.value=currentQuantity-1;
+
+//         // quantityDisplay.value = currentQuantity - 1;
+//         updateTottal(productId, currentQuantity - 1, productprice);
+//         updateQuantity(productId, currentQuantity - 1);
+
+//         clickcount--;
+//     }
+   
+// }
+
+// }
+
+
+
+
+
 
 
 
@@ -481,10 +539,11 @@ function increasequantity(productId, productprice) {
 
 // }
 
-function updateQuantity(productId, currentQuantity) {
+function updateQuantity(productId,count) {
+    console.log("heiiiii");
 
     console.log(productId);
-    console.log(currentQuantity);
+    console.log(count);
 
     fetch("/updatecart", {
         method: 'POST',
@@ -493,13 +552,24 @@ function updateQuantity(productId, currentQuantity) {
         },
         body: JSON.stringify({
             productId,
-            currentQuantity
+            count
         }),
     }).then(response => response.json)
         .then(data => {
-            if (data.success) {
+            if (data.success===false) {
                 window.location.reload()
                 console.log("hiiii ok done");
+                Swal.fire({
+                    icon: 'success',
+                    title: 'cart added Successful',
+                    text:"data.message",
+                    confirmButtonText: 'Show Cart',
+                    confirmButtonColor: '#dbcc8f',
+                    timer: 3000,
+                })
+
+            }else{
+                console.log("wrong");
 
             }
 
@@ -620,6 +690,7 @@ function useredit() {
                 // window.location.reload();
                 document.getElementById('editProfileModal').style.display = "none";
                 $('#user-profile-relode').load('/useraccount #user-profile-relode');
+                
                 // $('#editProfileModal').load('/useraccount #editProfileModal');
 
 

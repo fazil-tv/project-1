@@ -43,7 +43,7 @@ const addproduct = async (req, res) => {
 const addProductspost = async (req, res) => {
 
     try {
-        const requestData = req.body
+        const requestData = req.body;
         console.log(requestData);
         const uploadedFiles = req.files;
         console.log("check:", uploadedFiles);

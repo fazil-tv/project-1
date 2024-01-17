@@ -96,21 +96,21 @@
 		</div>
 	</div>
 
-	<section class="ftco-section ftco-cart" >
+	<section class="ftco-section ftco-cart">
 		<div class="container" id="checkout-relode">
 			<div class="row">
-				<div class="col-md-12 "  id="cart-relod-divs">
+				<div class="col-md-12 " id="cart-relod-divs">
 					<% if (cartData===null||cartData.products.length==0) { %>
-						<div class="empty-cart"  >
+						<div class="empty-cart">
 							<h5 class="empty-head ">empty cart</h5>
-							
+
 							<img src="/images/9960436.jpg" alt="" class="cart-img">
 							<p class="mt-3">your cart is empty</p>
 							<a href="/shop" class="btn cart-btn"><span class="">fill your cart</span></a>
 						</div>
-						<%}else{%> 
+						<%}else{%>
 							<div class="cart-list" id="cart-relod-div">
-								<table class="table" >
+								<table class="table">
 									<thead class="thead-primary">
 										<tr class="text-center">
 											<th>&nbsp;</th>
@@ -122,52 +122,97 @@
 											<th>Total</th>
 										</tr>
 									</thead>
-									<tbody  >
+									<tbody class="">
 										<% cartData.products.forEach(function(product, index) { %>
 
 											<tr class="text-center">
-												<td class="product-remove"><a onclick="removecart('<%=product._id %>')"><span
-															class="ion-ios-close"></span></a></td>
+												<td class="product-remove"><a
+														onclick="removecart('<%=product._id %>')"><span
+															class="ion-ios-close"></span></a>
+												</td>
 
 												<td class="image-prod">
 													<div class="img-cart">
-														<img src="/sharpimg/<%= product.productId.images.image1%>" alt="" class="w-100 h-100" >
+														<img src="/sharpimg/<%= product.productId.images.image1%>"
+															alt="" class="w-100 h-100">
 													</div>
 												</td>
 
-												<td class="product-name">
-													<h3><%=product.productId.name%></h3>
-													<p class="product-discription"><%=product.productId.description%></p>
+												<td class="product-name w-25">
+													<h3>
+														<%=product.productId.name%>
+													</h3>
+													<p class="product-discription">
+														<%=product.productId.description%>
+													</p>
 												</td>
-												<% if (product.productId.quantity === 0) { %>
+												<% if (product.productId.quantity===0) { %>
 													<td>
-													  <p>Out of Stock</p>
+														<p>Out of Stock</p>
 													</td>
-												  <% } else if (product.productId.quantity > 5) { %>
-													<td>
-													  Only <%= product.productId.quantity %> left
-													</td>
-												  <% } else { %>
-													<td>
-													  <%= product.productId.quantity %> available
-													</td>
-												  <% } %>
-												  
-												<td class="price">$<%=product.productId.price%></td>
+													<% } else if (product.productId.quantity> 5) { %>
+														<td>
+															Only <%= product.productId.quantity %> left
+														</td>
+														<% } else { %>
+															<td>
+																<%= product.productId.quantity %> available
+															</td>
+															<% } %>
 
-												<td class="quantity">
-													<div class="input-group mb-3 d-flex">
-														<button class="input-btn decrease-quantity" type="button" onclick=" decreasequantity('<%=product.productId._id %>','<%=product.productId.price %>')">-</button>
-														<input  type="number" name="quantity" disabled 
-															class="quantity form-control input-number" value="<%=product.productId.quantity %>" min="1" id="quantity-display<%=product.productId._id %>"
-															max="100">
+																<td class="price">$<%=product.productId.price%>
+																</td>
 
-															<button class="input-btn increase-quantity" onclick="increasequantity('<%=product.productId._id%>','<%=product.productId.price %>')">+</button>
-													</div>
-												</td>
-											<td class="total  cart-totals " id="total<%=product.productId._id%>"><%=product.totalPrice%></td>
+																<td class="quantity w-0">
+																	<div class="input-group w-0">
+																		<span class="input-group-btn mr-2">
+																			<button type="button"
+																				class="quantity-left-minus btn decrease-quantity"
+																				onclick=" updateQuantity('<%=product.productId._id %>',-1)">
+																				<i class="ion-ios-remove"></i>
+																			</button>
+																		</span>
+																		<input type="number" name="quantity" readonly
+																			class="quantity form-control input-number"
+																			value="<%= product.count %>" min="1" max="" 
+																			>
+																		<span class="input-group-btn ml-2">
+																			<button type="button"
+																				class="quantity-right-plus btn increase-quantity"
+																				data-type="plus" data-field=""
+																				onclick="updateQuantity('<%=product.productId._id%>',1)">
+																				<i class="ion-ios-add"></i>
+																			</button>
+																		</span>
+																	</div>
+
+																	<!-- <div class="input-group mb-3 d-flex">
+																		<button class="input-btn decrease-quantity" type="button" onclick=" decreasequantity('<%=product.productId._id %>','<%=product.productId.price %>','<%= product.productId.quantity %>')">-</button>
+																		<input  type="number" name="quantity" disabled 
+																			class="quantity form-control input-number" value="1" min="1" maxlength="5" id="quantity-display<%=product.productId._id %>"
+																			max="5">
+				
+																			<button class="input-btn increase-quantity" onclick="increasequantity('<%=product.productId._id%>','<%=product.productId.price %>','<%= product.productId.quantity %>')">+</button>
+																	</div> -->
+
+																	<!-- <div class="input-group mb-3 d-flex">
+																		<button class="input-btn decrease-quantity" type="button" onclick="decreasequantity('<%=product.productId._id %>','<%=product.productId.price %>','<%= product.productId.quantity %>')">-</button>
+																		<input type="number" name="quantity" class="quantity form-control input-number" value="1" min="1" max="<%= product.productId.quantity %>">
+																		<button class="input-btn increase-quantity" type="button"  onclick="increasequantity('<%=product.productId._id%>','<%=product.productId.price %>','<%= product.productId.quantity %>')">+</button>
+																	</div> -->
+
+																</td>
+
+
+
+
+
+																<td class="total  cart-totals "
+																	id="total<%=product.productId._id%>">
+																	<%=product.totalPrice%>
+																</td>
 											</tr>
-										<% }); %>
+											<% }); %>
 									</tbody>
 								</table>
 							</div>
@@ -181,32 +226,27 @@
 							<h3>Cart Totals</h3>
 							<p class="d-flex">
 								<span>Subtotal</span>
-								<span id="subtotel-amount">0</span>
+								<span id="subtotel-amount">
+									<%=cartData.products.price%>0
+								</span>
 							</p>
-							<!-- <p class="d-flex">
-								<span>Delivery</span>
-								<span>$0.00</span>
-							</p>
-							<p class="d-flex">
-								<span>Discount</span>
-								<span>$3.00</span>
-							</p> -->
 							<hr>
+							
 							<p class="d-flex total-price">
 								<span>Total</span>
 								<!-- <span>$17.60</span> -->
-								<span id="subtotel-amount">0</span>
+								<span id="subtotel-amount"><%=cartData.products.price%>0</span>
 							</p>
 						</div>
 						<p class="text-center"><a href="/checkout" class="btn btn-primary py-3 px-4">Proceed to
 								Checkout</a></p>
 					</div>
 				</div>
-			<%}else{%>
-				
+				<%}else{%>
 
-			<%}%>
-			
+
+					<%}%>
+
 		</div>
 	</section>
 
@@ -318,6 +358,27 @@
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<!-- <script>
+		 $(document).ready(function () {
+        $(".decrease-quantity").on("click", function () {
+            var inputField = $(this).siblings(".quantity");
+            var currentValue = parseInt(inputField.val(), 10);
+            if (currentValue > 1) {
+                inputField.val(currentValue - 1);
+            }
+        });
+
+        $(".increase-quantity").on("click", function () {
+            var inputField = $(this).siblings(".quantity");
+            var currentValue = parseInt(inputField.val(), 10);
+            if (currentValue < 5) {
+                inputField.val(currentValue + 1);
+            }
+        });
+    });
+	</script> -->
 
 	<script>
 		$(document).ready(function () {

@@ -23,7 +23,7 @@ const cart = async (req, res) => {
             console.log("ok set", cartData);
             res.render('cart', { cartData });
         } else {
-            console.log('not sesssiojn');
+            console.log('not sesssion');
         }
 
 
@@ -114,36 +114,53 @@ const removecarts = async (req, res) => {
 
 
 const updatecart = async (req, res) => {
+    console.log("ok");
     try {
-
-        const userId = req.session.user_id
+        const userId = req.session.user_id;
         const productId = req.body.productId;
-        const currentQuantity = req.body.currentQuantity;
+        const count = req.body.count;
         const product = await productSchema.findById(productId);
-        const totttalprice = product.price*currentQuantity;
+        const totalprice = product.price * count;
+        const cartData = await cartSchema.findOne({ user: userId });
+        console.log(totalprice);
 
+        if (count === -1) {
+            const currentQuantity = cartData.products.find((p) => p.productId == productId).quantity;
+            if (currentQuantity <= 1) {
+                return res.json({ success: false, message: 'Quantity cannot be decreased further.' });
+            }
+        }
+
+        if (count === 1) {
+            const currentQuantity = cartData.products.find((p) => p.productId == productId).quantity;
+            if (currentQuantity + count > product.quantity) {
+                return res.json({ success: false, message: 'Stock limit reached' });
+            }
+        }
 
         console.log("userId", userId);
         console.log("productId", productId);
-        console.log("curentquantity", currentQuantity);
+        console.log("currentQuantity", count);
 
         const updateuser = await cartSchema.findOneAndUpdate(
             { user: userId, 'products.productId': productId },
-            { $set: { 'products.$.count': currentQuantity ,"products.$.totalPrice":totttalprice}},
+            {
+                $inc: {
+                    'products.$.count': count,
+                    'products.$.totalPrice': totalprice
+                }
+            },
             { new: true }
-
         );
-        res.json({success:true})
-        console.log(updateuser);
 
-        if (!updateuser) {
-            res.status(404).json({ message: "User or product not found in the cart." });
-        }
         res.json({ success: true });
     } catch (error) {
         console.log(error);
+        res.json({ success: false, message: 'An error occurred.' });
     }
-}
+};
+
+
 
 
 
