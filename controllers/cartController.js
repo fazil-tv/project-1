@@ -55,7 +55,7 @@ const getcart = async (req, res) => {
         else {
             const data = {
                 productId: productId,
-                count: productcount,
+                count: 1,
                 price: productprice,
                 totalPrice: productprice
             }
@@ -120,19 +120,23 @@ const updatecart = async (req, res) => {
         const productId = req.body.productId;
         const count = req.body.count;
         const product = await productSchema.findById(productId);
-        const totalprice = product.price * count;
+        const totalprice = product.price*count;
+        console.log("naaah",totalprice)
         const cartData = await cartSchema.findOne({ user: userId });
+        console.log(count)
         console.log(totalprice);
+        console.log("kiki",product.quantity);
+        console.log("productoooo",product);
 
         if (count === -1) {
-            const currentQuantity = cartData.products.find((p) => p.productId == productId).quantity;
+            const currentQuantity = cartData.products.find((p) => p.productId == productId).count;
             if (currentQuantity <= 1) {
                 return res.json({ success: false, message: 'Quantity cannot be decreased further.' });
             }
         }
 
         if (count === 1) {
-            const currentQuantity = cartData.products.find((p) => p.productId == productId).quantity;
+            const currentQuantity = cartData.products.find((p) => p.productId == productId).count;
             if (currentQuantity + count > product.quantity) {
                 return res.json({ success: false, message: 'Stock limit reached' });
             }

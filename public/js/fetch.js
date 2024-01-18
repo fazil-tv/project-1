@@ -554,22 +554,19 @@ function updateQuantity(productId,count) {
             productId,
             count
         }),
-    }).then(response => response.json)
+    }).then(response => response.json())
         .then(data => {
-            if (data.success===false) {
-                window.location.reload()
+            if (data.success===true) {
                 console.log("hiiii ok done");
-                Swal.fire({
-                    icon: 'success',
-                    title: 'cart added Successful',
-                    text:"data.message",
-                    confirmButtonText: 'Show Cart',
-                    confirmButtonColor: '#dbcc8f',
-                    timer: 3000,
-                })
+                
+                $('#checkout-relode').load('/cart #checkout-relode');
 
             }else{
-                console.log("wrong");
+                Swal.fire({
+                    icon: 'faile',
+                    text:data.message,
+                    timer: 2000,
+                })
 
             }
 
@@ -690,7 +687,7 @@ function useredit() {
                 // window.location.reload();
                 document.getElementById('editProfileModal').style.display = "none";
                 $('#user-profile-relode').load('/useraccount #user-profile-relode');
-                
+
                 // $('#editProfileModal').load('/useraccount #editProfileModal');
 
 

@@ -26,6 +26,7 @@
 	<link rel="stylesheet" href="/css/flaticon.css">
 	<link rel="stylesheet" href="/css/icomoon.css">
 	<link rel="stylesheet" href="/css/style.css">
+
 </head>
 
 <body class="goto-here">
@@ -84,6 +85,7 @@
 		</div>
 	</nav>
 	<!-- END nav -->
+
 
 	<div class="hero-wrap hero-bread" style="background-image: url('images/bg_6.jpg');">
 		<div class="container">
@@ -174,8 +176,7 @@
 																		</span>
 																		<input type="number" name="quantity" readonly
 																			class="quantity form-control input-number"
-																			value="<%= product.count %>" min="1" max="" 
-																			>
+																			value="<%=product.count %>">
 																		<span class="input-group-btn ml-2">
 																			<button type="button"
 																				class="quantity-right-plus btn increase-quantity"
@@ -220,28 +221,61 @@
 				</div>
 			</div>
 			<% if (cartData.products.length>=1) {%>
+
 				<div class="row justify-content-start">
-					<div class="col col-lg-5 col-md-6 mt-5 cart-wrap">
+					<div class="col col-lg-3  col-md-6 mt-5 cart-wrap"></div>
+					<div class="col col-lg-6 col-md-6 mt-5 cart-wrap">
 						<div class="cart-total mb-3">
 							<h3>Cart Totals</h3>
 							<p class="d-flex">
 								<span>Subtotal</span>
 								<span id="subtotel-amount">
-									<%=cartData.products.price%>0
+					
+
+									<% let totalpric = 0 %>
+
+									<% for (let j = 0; j < cartData.products.length; j++) { %>
+										<% totalpric += cartData.products[j].totalPrice %>
+									<% } %>
+									
+									$ <%= totalpric %>
+									
+
 								</span>
 							</p>
-							<hr>
 							
+							<p class="d-flex">
+								<span>Delivery</span>
+								<span>$0.00</span>
+							</p>
+							<p class="d-flex">
+								<span>Discount</span>
+								<span>$0.00</span>
+							</p>
+							<hr>
+
 							<p class="d-flex total-price">
 								<span>Total</span>
 								<!-- <span>$17.60</span> -->
-								<span id="subtotel-amount"><%=cartData.products.price%>0</span>
+								<span id="subtotel-amount">
+									
+									<% let totalprice=0 %>
+
+									<% for (let i=0; i < cartData.products.length; i++) { %>
+										<% totalprice += cartData.products[i].totalPrice %>
+											<% } %>
+
+											$ <%= totalprice%>
+								</span>
 							</p>
 						</div>
 						<p class="text-center"><a href="/checkout" class="btn btn-primary py-3 px-4">Proceed to
 								Checkout</a></p>
 					</div>
 				</div>
+				<div class="col col-lg-3  col-md-6 mt-5 cart-wrap"></div>
+
+
 				<%}else{%>
 
 
@@ -249,7 +283,6 @@
 
 		</div>
 	</section>
-
 
 	<footer class="ftco-footer ftco-section">
 		<div class="container">

@@ -261,6 +261,25 @@ const indexhome = async (req, res) => {
     }
 
 }
+
+// logout
+const userLogout = async (req, res) => {
+    console.log("jkl")
+    try {
+        req.session.destroy((err) => {
+            if (err) {
+                console.log("Error destroying session:", err.message);
+            } else {
+                console.log("Session destroyed");
+
+                res.redirect('/signup');
+            }
+        });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 // shop
 const shop = async (req, res) => {
     try {
@@ -684,6 +703,7 @@ const changepassword = async (req, res) => {
         verifysendmail,
         otpverification,
         changepasswordform,
-        changepassword
+        changepassword,
+        userLogout
 
     }

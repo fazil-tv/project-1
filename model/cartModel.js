@@ -16,7 +16,7 @@ const cart = new mongoose.Schema({
         },
         count: {
           type: Number,
-          default: 1,
+          default:1,
         },
         price: {
           type: Number,

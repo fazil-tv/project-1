@@ -66,6 +66,9 @@ userRoute.post('/indexhome', userController.indexhome);
 userRoute.get("/blog", userController.blog);
 userRoute.post('/blog', userController.blog);
 
+//user logout
+userRoute.get('/logout',userController.userLogout);
+
 
 
 //singleproduct
