@@ -57,10 +57,14 @@ const checkoutPost = async (req,res)=>{
         console.log("body here",req.body);
         console.log("selectedaddress",selectedAddress);
         console.log("payment",selectedpayament);
+        // const addressData = await addressSchema.findOne({"address.$._id":selectedAddress})
+        const addressData = await addressSchema.findOne({ "address._id": selectedAddress });
+
+        console.log("noop",addressData )
 
         const order = new orderSchema({
             user:userId,
-            delivery_address:selectedAddress ,
+            delivery_address:addressData ,
             payment:selectedpayament,
             products:cartData.products,
             subtotal:subtotel,
@@ -80,14 +84,7 @@ const checkoutPost = async (req,res)=>{
                 await productSchema.updateOne({_id:product},{$inc:{quantity: -count}})
             }
 
-            
-
-
-            
-
-
-
-
+        
 
             res.json({ status: 'success',message:"product placed succesfully" });
         }
@@ -102,7 +99,23 @@ const checkoutPost = async (req,res)=>{
 
 const  success= async (req, res) => {
     try {
+        // const userId = req.session.user_id;
         res.render("success");
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const  orderstatus= async (req, res) => {
+    try {
+        console.log("mmm");
+     const id =req.query.id;
+    const orders = await orderSchema.findOne({_id:id}).populate('products.productId');
+    
+        console.log(orders);
+
+     
+        res.render('orderstatus',{orders});
     } catch (error) {
         console.log(error.message);
     }
@@ -110,10 +123,9 @@ const  success= async (req, res) => {
 
 
 
-
-
 module.exports = {
     checkout,
     checkoutPost,
-    success
+    success,
+    orderstatus
 }

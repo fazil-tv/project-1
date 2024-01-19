@@ -20,7 +20,7 @@ const orderSchema = new mongoose.Schema({
       products: [{
         productId: {
           type: mongoose.Types.ObjectId,
-          ref: 'Product',
+          ref: 'product',
           required: true
         },
         count: {
@@ -42,8 +42,7 @@ const orderSchema = new mongoose.Schema({
       },
       orderStatus: {
         type: String,
-        default: 'pending',
-        enum: ['pending','placed','returned or cancelled']
+        default: 'pending'
       }
       ,
       orderDate: {

@@ -11,6 +11,7 @@ const addressSchema = require("../model/addressModel");
 // const categorySchema =require("../controllers/categoryController");
 const { log } = require("console");
 const categorySchema= require("../model/categoryModel");
+const orderSchema = require('../model/orderModel');
 
 
 
@@ -342,11 +343,13 @@ const useraccount = async (req, res) => {
     try {
         const userId = req.session.user_id;
         const useraddress = await addressSchema.findOne({ user: userId });
-        console.log(userId);
+        const orders = await orderSchema.find({user:userId});
+        console.log(orders,"orders")
+      
         console.log("ooi", useraddress);
         const user = await User.findById(userId);
         console.log(user);
-        res.render('useraccount', { user, useraddress });
+        res.render('useraccount', { user, useraddress,orders });
 
     } catch (error) {
         console.log(error);

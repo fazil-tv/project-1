@@ -169,5 +169,7 @@ userRoute.post('/checkoutform',orderController.checkoutPost)
 
 userRoute.get('/success',orderController.success );
 
+userRoute.get('/orderstatus',orderController.orderstatus );
+
 
 module.exports = userRoute;
