@@ -1,6 +1,6 @@
 const isLogin = (req,res,next)=>{
     try{
-        
+
         if(req.session.user_id){
             next()
         }
@@ -10,7 +10,6 @@ const isLogin = (req,res,next)=>{
 
     }catch(error){
         console.log(error);
-        res.redirect('/login');
     }
 }
 

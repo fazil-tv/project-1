@@ -152,8 +152,10 @@ function address() {
             if (data) {
 
                 document.getElementById('addaddressmodal').style.display = "none";
-                $('#edit-address-div').load('/useraccount #edit-address-div');
+                // $('#edit-address-div').load('/useraccount #edit-address-div');
                 // $('#editdive').load('/useraccount #editdive');
+                window.location.reload();
+
 
 
                 Swal.fire({

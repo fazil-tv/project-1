@@ -96,22 +96,81 @@
 
     <section class="ftco-section contact-section bg-light">
         <div class="container">
+
             <div class="row d-flex mb-5 contact-info">
                 <div class="w-100"></div>
-                <div class="col-md-5 d-flex">
+
+                <div class="col-md-4 d-flex ">
                     <div class="info bg-white p-4">
-                        <p><span>OrderId:</span> <a class="pr-5"><%=orders.products[0].productId._id%></a></p>
-                        
-                        <p><span>Date:</span> <a class="pr-5"><%=orders.orderDate%></a></p>
+                        <p><span>OrderId:</span> <a class="pr-5">
+                                <%=orders.products[0].productId._id%>
+                            </a></p>
 
-                        <p><span>Payment Methode:</span> <a class="pr-5"><%=orders.payment%></a></p>
+                        <p><span>Date:</span> <a class="pr-5"><%=orders.orderDate.toLocaleDateString('en-US', {
+                                    weekday: 'short' , year: 'numeric' , month: 'short' , day: 'numeric' })%></a></p>
 
-                        <p><span>Address:</span> <a class="pr-5"><%=orders.products[0].productId._id%></a></p>
+
+                        <p><span>Payment Methode:</span> <a class="pr-5">
+                                <%=orders.payment%>
+                            </a></p>
+
+                        <p><span>Address:</span> <a class="pr-5">
+                                <%= userAddress.address[0].fullname %></br>
+                                    <%= userAddress.address[0].email%></br>
+                                        <%= userAddress.address[0].city%>
+                                            <space> pin : <space>
+                                                    <%= userAddress.address[0].pin%>
+                            </a></p>
 
                     </div>
                 </div>
             </div>
-        </div>
+
+<!-- 
+
+            <% if (orders.products.length> 0) { %>
+                <div class="container mt-5">
+                    <h3 class="mb-4">Ordered Products</h3>
+
+                    <% orders.products.forEach(function(product, index) { %>
+                        <div class="card mt-3">
+                            <div class="card-body d-flex justify-content-start">
+                                <div class="product-card d-flex">
+                                    <div class="product-image">
+                                        <a href="/singleproducts?id=<%= product.productId._id %>">
+                                            <% if (product.images && product.images.image1) { %>
+                                                <img src="/sharpimg/<%= product.images.image1 %>" alt="" class="img-thumbnail" style="max-height: 250px; max-width: 230px;">
+                                            <% } else { %>
+                                                
+                                                <p>Image not available</p>
+                                            <% } %>
+                                        </a>
+                                        
+        
+                                    </div>
+                                    
+
+
+
+                                    <% }); %>
+
+
+
+
+
+                                    <% } %> -->
+
+
+
+    </section>
+
+
+    <section>
+
+
+
+
+
 
     </section>
 
