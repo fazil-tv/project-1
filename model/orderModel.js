@@ -23,32 +23,23 @@ const orderSchema = new mongoose.Schema({
           ref: 'Product',
           required: true
         },
-        quantity: {
+        count: {
           type: Number,
           required: true
         },
-        price: {
+        price:{
             type: Number,
             required: true
           },
           totalPrice: {
           type: Number,
           default: 0
-        },
-        productStatus:{
-            type: String,
-            default: 'pending',
-            enum: ['pending','placed', 'delivered', 'cancelled', 'shipped','out-for-delivery','returned']
-          },
-        cancelReason: {
-          type: String
         }
       }],
       subtotal: {
         type: Number,
         required:true
-      }
-      ,
+      },
       orderStatus: {
         type: String,
         default: 'pending',
@@ -59,17 +50,6 @@ const orderSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
         required: true
-      },
-      wallet:{
-        type:Number,
-      },
-      cancelledProduct:{
-        type:Array,
-        default:[]
-      },
-      returnedProduct:{
-        type:Array,
-        default:[]
       }
     })
 

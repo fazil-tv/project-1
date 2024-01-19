@@ -4,6 +4,7 @@ const productSchema = require("../model/productSchema");
 const addressSchema = require("../model/addressModel");
 const cartSchema = require("../model/cartModel");
 const orderSchema = require('../model/orderModel');
+const { json } = require("express");
 
 
 
@@ -34,28 +35,64 @@ const checkoutPost = async (req,res)=>{
 
     try{
        
-        console.log("body here",req.body)
+        
 
         const userId = req.session.user_id;
         const user=await userSchema.findOne({_id:userId})
-
-        let addressObject;
-        const selectedAddress = req.body.selectedAddress;
-        const paymentMethod = req.body.payment;
-
         const cartData = await cartSchema.findOne({ user: userId });
         
-      let status=paymentMethod=="Cash on delivery"?"placed":"pending"
-      const orderItems = [];
+        const {jsonData} = req.body;
+      
+        const selectedAddress = jsonData.selectedAddress
+        const selectedpayament = jsonData.payment
+
+        let status=selectedpayament=="Cash on delivery"?"placed":"pending"
+        const orderItems = [];
+
+        
+        const subtotel = cartData.products.reduce((acc, val) => acc + (val.totalPrice || 0), 0);
+
+        console.log("user",user);
+        console.log("cartdata",cartData);
+        console.log("body here",req.body);
+        console.log("selectedaddress",selectedAddress);
+        console.log("payment",selectedpayament);
+
+        const order = new orderSchema({
+            user:userId,
+            delivery_address:selectedAddress ,
+            payment:selectedpayament,
+            products:cartData.products,
+            subtotal:subtotel,
+            orderStatus:status,
+            orderDate: new Date(), 
+        })
+        await order.save();
+        // const orderId = order._id;
+
+        if(order.orderStatus==="placed"){
+            for(let i = 0 ; i < cartData.products.length ; i++){
+                let product  = cartData.products[i].productId;
+                let count = cartData.products[i].count;
+
+                console.log(product);
+                console.log(count);
+                await productSchema.updateOne({_id:product},{$inc:{quantity: -count}})
+            }
+
+            
 
 
-      console.log("1",userId)
-      console.log("2",user)
-      console.log("3",selectedAddress)
-      console.log("4",paymentMethod)
-      console.log("5",cartData)
+            
 
 
+
+
+
+            res.json({ status: 'success',message:"product placed succesfully" });
+        }
+
+  
 
 
     }catch(err){
@@ -63,10 +100,20 @@ const checkoutPost = async (req,res)=>{
     }
 }
 
+const  success= async (req, res) => {
+    try {
+        res.render("success");
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
 
 
 
 module.exports = {
     checkout,
-    checkoutPost
+    checkoutPost,
+    success
 }

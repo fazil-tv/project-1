@@ -167,4 +167,7 @@ userRoute.get('/searching',productController.productsearching)
 userRoute.get('/checkout',orderController.checkout)
 userRoute.post('/checkoutform',orderController.checkoutPost)
 
+userRoute.get('/success',orderController.success );
+
+
 module.exports = userRoute;

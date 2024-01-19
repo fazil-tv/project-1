@@ -721,11 +721,11 @@ function checkoutaddress() {
     })
         .then(response => response.json())
         .then(data => {
-            
+
             document.getElementById('checkaddaddressmodal').style.display = "none";
             // $('#edit-address-div').load('/checkour #edit-address-div');
-               window.location.reload();
-            
+            window.location.reload();
+
 
             if (data) {
 
@@ -896,16 +896,20 @@ function checkouteditaddress() {
 
 
 
-
-
-
-
-
-
-function checkoutpost(event) {
+function  validateForm(event){
     event.preventDefault();
+    checkoutpost()
+
+}
+
+
+function checkoutpost() {
+   
 
     const formData = $('#myForm').serialize();
+    const params = new URLSearchParams(formData);
+    const jsonData = Object.fromEntries([...params.entries()]);
+
     console.log(formData)
 
     console.log("klkl");
@@ -916,16 +920,16 @@ function checkoutpost(event) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-
-            formData
-
-
+            jsonData
         })
     })
         .then(response => response.json())
         .then(data => {
-            if (data) {
-
+            if (data.status === "success") {
+                console.log("Product placed successfully");
+                window.location.href = "/success";
+            } else {
+                console.log("Oops, something went wrong");
             }
 
         }).catch(error => {
