@@ -294,6 +294,7 @@ const productfilter = async (req, res) => {
 
 
 
+
 module.exports = {
     Product,
     addproduct,
@@ -302,5 +303,5 @@ module.exports = {
     editProduct,
     editProductpost,
     productfilter,
-    productsearching
+    productsearching,
 }

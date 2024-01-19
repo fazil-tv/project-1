@@ -12,6 +12,8 @@ const cartController = require('../controllers/cartController');
 
 const checkoutController = require("../controllers/checkoutController");
 
+const orderController = require('../controllers/orderController');
+
 const userauth = require ('../middlewares/authUser');
 
 userRoute.set('view engine', 'ejs')
@@ -98,11 +100,6 @@ userRoute.get("/contact", (req, res) => {
 })
 
 
-//checkout
-userRoute.get("/checkout", (req, res) => {
-    res.render('checkout')
-})
-
 
 // edit user
 userRoute.post('/edituser', userController. edituser);
@@ -136,7 +133,7 @@ userRoute.post('/removecarts', userauth.isLogin,cartController.removecarts);
 userRoute.post('/updatecart',userauth.isLogin,cartController.updatecart);
 
 // checkout
-userRoute.get('/checkout',userauth.isLogin,checkoutController.checkout)
+
 
 
 
@@ -164,5 +161,10 @@ userRoute.post('/changepasswordform',userController.changepassword);
 //filter
 userRoute.get('/filter',productController.productfilter);
 userRoute.get('/searching',productController.productsearching)
+
+
+//checkout
+userRoute.get('/checkout',orderController.checkout)
+userRoute.post('/checkoutform',orderController.checkoutPost)
 
 module.exports = userRoute;

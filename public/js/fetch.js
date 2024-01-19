@@ -8,20 +8,20 @@ async function fetchOTP(userId, email) {
     try {
         const response = await fetch('/resendotp', {
             method: 'POST',
-             headers: {
+            headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ userId, email }),
         });
 
         if (response.ok) {
-            
+
             window.location.reload()
-            
-            
+
+
 
             console.log('Resend OTP request successful');
-          
+
 
         } else {
             console.error('Resend OTP request failed');
@@ -153,6 +153,8 @@ function address() {
 
                 document.getElementById('addaddressmodal').style.display = "none";
                 $('#edit-address-div').load('/useraccount #edit-address-div');
+                // $('#editdive').load('/useraccount #editdive');
+
 
                 Swal.fire({
                     icon: 'success',
@@ -442,104 +444,9 @@ function removecart(x) {
         });
 }
 
-// function decreasequantity(productId, productprice) {
-//     console.log(productId);
-//     console.log(productprice);
-
-//     // let quantityDisplay = document.getElementById('quantity-display' + productId);
-//     // let currentQuantity = parseInt(quantityDisplay.value);
-//     // console.log(currentQuantity);
-//     // console.log(quantityDisplay);
-//     // if (currentQuantity > 1) {
-//     //     quantityDisplay.value = currentQuantity - 1;
-//     //     updateTottal(productId, currentQuantity - 1, productprice);
-//     //     updateQuantity(productId, currentQuantity - 1);
-//     // }
-
-// }
-// function increasequantity(productId, productprice) {
-//     console.log(productId);
-//     console.log(productprice);
-
-//     // let quantityDisplay = document.getElementById('quantity-display' + productId);
-//     // let currentQuantity = parseInt(quantityDisplay.value);
-//     // console.log(currentQuantity);
-//     // console.log(quantityDisplay);
-
-//     // quantityDisplay.value = currentQuantity + 1;
-//     // updateTottal(productId, currentQuantity + 1, productprice);
-//     // updateQuantity(productId, currentQuantity + 1);
-
-// }
-
-//
 
 
-// let clickcount = 0;
-
-// function increasequantity(productId, productprice,productquantity) {
-//     console.log(productId);
-//     console.log(productprice);
-//     console.log("krkrk",productquantity);
-
-//     if(clickcount <productquantity-1){
-//         // const inputElement = document.getElementById('quantity-display' + productId);
-//         let quantityDisplay = document.getElementById('quantity-display' + productId);
-//         let currentQuantity = parseInt(quantityDisplay.value);
-
-//         quantityDisplay.value = currentQuantity +1;
-       
-//         console.log(currentQuantity);
-//         console.log(quantityDisplay);
-    
-//         // quantityDisplay.value = currentQuantity + 1;
-//         updateTottal(productId, currentQuantity + 1, productprice);
-//         updateQuantity(productId, currentQuantity + 1);
-
-//         clickcount++;
-//     }
-// }
-
-
-// function decreasequantity(productId, productprice,productquantity) {
-    
-//     console.log(productId);
-//     console.log(productprice);
-//     const inputElement = document.getElementById('quantity-display' + productId);
-
-
-//     let quantityDisplay = document.getElementById('quantity-display' + productId);
-//     let currentQuantity = parseInt(quantityDisplay.value);
-//     console.log(currentQuantity);
-//     console.log(quantityDisplay);
-//     if (currentQuantity > 1) {
-
-//         if(quantityDisplay.value>1){
-//             quantityDisplay.value=currentQuantity-1;
-
-//         // quantityDisplay.value = currentQuantity - 1;
-//         updateTottal(productId, currentQuantity - 1, productprice);
-//         updateQuantity(productId, currentQuantity - 1);
-
-//         clickcount--;
-//     }
-   
-// }
-
-// }
-
-
-
-
-
-
-
-
-// function updateTottal(){
-
-// }
-
-function updateQuantity(productId,count) {
+function updateQuantity(productId, count) {
     console.log("heiiiii");
 
     console.log(productId);
@@ -556,15 +463,15 @@ function updateQuantity(productId,count) {
         }),
     }).then(response => response.json())
         .then(data => {
-            if (data.success===true) {
+            if (data.success === true) {
                 console.log("hiiii ok done");
-                
+
                 $('#checkout-relode').load('/cart #checkout-relode');
 
-            }else{
+            } else {
                 Swal.fire({
                     icon: 'faile',
-                    text:data.message,
+                    text: data.message,
                     timer: 2000,
                 })
 
@@ -690,10 +597,7 @@ function useredit() {
 
                 // $('#editProfileModal').load('/useraccount #editProfileModal');
 
-
-
             }
-
 
         })
         .catch(error => {
@@ -709,60 +613,324 @@ function useredit() {
 
 
 
-// function forgotepassword(event) {
-//     console.log("doe done");
-//     event.preventDefault();
-   
-
-//     event.preventDefault();
-//     const email = document.getElementById('forgetemail').value;
-//     console.log(email)
-   
-//     let isValid = true;
-//     const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-//     if (!email || !emailPattern.test(email)) {
-//         document.getElementById('forget-email-error').innerText = 'email is not valid';
-//         isValid = false;
-//         console.log("jk");
-//     } 
-//     else {
-//         document.getElementById('myForms').submit();
-//     }
-
-// }
 
 
-// function forgotpass() {
-//     const email = document.getElementById('forgetemail').value;
-//     console.log(email);
-//     fetch('/getforgotemail', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//             email,           
-//         }),
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             // $('#edit-address-div').load('/useraccount #edit-address-div');
-//             // Swal.fire({
-//             //     icon: 'success',
-//             //     title: 'Deletion Successful',
-//             //     text: 'The address has been deleted successfully!',
-//             // });
-//             console.log(data);
+function checkoutaddressvalidation() {
+    console.log("heiiii");
+
+    const fullname = document.getElementById('fullname').value;
+    const mobile = document.getElementById('mobile').value;
+    const email = document.getElementById('email').value;
+    const houseName = document.getElementById('housename').value;
+    const state = document.getElementById('state').value;
+    const city = document.getElementById('city').value;
+    const pin = document.getElementById('pin').value;
+
+    document.getElementById('fullname-error').innerText = '';
+    document.getElementById('mobile-error').innerText = '';
+    document.getElementById('email-error').innerText = '';
+    document.getElementById('houseName-error').innerText = '';
+    document.getElementById('state-error').innerText = '';
+    document.getElementById('city-error').innerText = '';
+    document.getElementById('pin-error').innerText = '';
+
+
+    let isValid = true;
+
+    if (!fullname || !mobile || !email || !houseName || !state || !city || !pin) {
+        isValid = false;
+    }
+    if (fullname.trim() === "") {
+        document.getElementById('fullname-error').textContent = 'enter your name';
+        isValid = false;
+    }
+    console.log(email)
+    const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+
+    if (!email || !emailPattern.test(email)) {
+        document.getElementById('email-error').innerText = 'email is not valid';
+        isValid = false;
+    }
+
+    const housenameRegex = /^[a-zA-Z\s]+$/;
+    if (!housenameRegex.test(houseName)) {
+        document.getElementById('houseName-error').innerText = 'email is not valid';
+        isValid = false;
+    }
+
+    const cityRegex = /^[a-zA-Z\s]+$/;
+    if (!cityRegex.test(city)) {
+        document.getElementById('city-error').innerText = 'enter a city name';
+        isValid = false;
+    }
+    const stateRegex = /^[a-zA-Z\s]+$/;
+    if (!stateRegex.test(state)) {
+        document.getElementById('state-error').innerText = 'enter valid state';
+        isValid = false;
+    }
+    if (mobile.length < 10) {
+        document.getElementById('mobile-error').innerText = 'enter valid mobile number';
+        isValid = false;
+    }
+    function isValidPIN(pin) {
+        return /^\d{6}$/.test(pin);
+    }
+    if (!isValidPIN(pin)) {
+        document.getElementById('pin-error').innerText = 'enter six digits pin code';
+        isValid = false;
+    }
+    if (!isValid) {
+        return
+
+    }
+    else {
+        checkoutaddress();
+    }
+
+}
+
+
+
+
+
+function checkoutaddress() {
+    console.log("ok");
+
+    const fullname = document.getElementById('fullname').value;
+    const mobile = document.getElementById('mobile').value;
+    const email = document.getElementById('email').value;
+    const houseName = document.getElementById('housename').value;
+    const state = document.getElementById('state').value;
+    const city = document.getElementById('city').value;
+    const pin = document.getElementById('pin').value;
+
+    fetch('/adaddress', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            fullname: fullname,
+            mobile: mobile,
+            email: email,
+            houseName: houseName,
+            state: state,
+            city: city,
+            pin: pin
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
             
-//         })
-//         .catch(error => {
-//             console.log(error);
-//             // Swal.fire({
-//             //     icon: 'error',
-//             //     title: 'Deletion Error',
-//             //     text: 'An error occurred during deletion. Please try again.',
-//             // });
-//         });
-// }
+            document.getElementById('checkaddaddressmodal').style.display = "none";
+            // $('#edit-address-div').load('/checkour #edit-address-div');
+               window.location.reload();
+            
 
+            if (data) {
+
+
+                // $('#editdive').load('/useraccount #editdive');
+
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Add Successful',
+                    text: 'The address has been added successfully!',
+                });
+
+
+            }
+        }).catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Add Error',
+                text: 'An error occurred during address addition. Please try again.',
+            });
+        })
+
+}
+
+
+
+
+
+
+
+
+
+function checkouteditaddressvalidation() {
+    console.log("kkkkkk");
+    const fullname = document.getElementById('editfullname').value;
+    const mobile = document.getElementById('editmobile').value;
+    const email = document.getElementById('editemail').value;
+    const houseName = document.getElementById('edithousename').value;
+    const state = document.getElementById('editstate').value;
+    const city = document.getElementById('editcity').value;
+    const pin = document.getElementById('editpin').value;
+
+
+
+
+    document.getElementById('edit-fullname-error').innerText = '';
+    document.getElementById('edit-mobile-error').innerText = '';
+    document.getElementById('edit-email-error').innerText = '';
+    document.getElementById('edit-houseName-error').innerText = '';
+    document.getElementById('edit-state-error').innerText = '';
+    document.getElementById('edit-city-error').innerText = '';
+    document.getElementById('edit-pin-error').innerText = '';
+
+
+    let isValid = true;
+
+    if (!fullname || !mobile || !email || !houseName || !state || !city || !pin) {
+        isValid = false;
+    }
+
+    if (fullname.trim() === "") {
+        document.getElementById('edit-fullname-error').textContent = 'enter your name';
+        isValid = false;
+    }
+
+
+
+    const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    if (!email || !emailPattern.test(email)) {
+        document.getElementById('edit-email-error').innerText = 'email is not valid';
+        isValid = false;
+    }
+
+
+    const housenameRegex = /^[a-zA-Z\s]+$/;
+    if (!housenameRegex.test(houseName)) {
+        document.getElementById('edit-houseName-error').innerText = 'enter your house name';
+        isValid = false;
+    }
+
+    const cityRegex = /^[a-zA-Z\s]+$/;
+    if (!cityRegex.test(city)) {
+        document.getElementById('edit-city-error').innerText = 'enter a city name';
+        isValid = false;
+    }
+    const stateRegex = /^[a-zA-Z\s]+$/;
+    if (!stateRegex.test(state)) {
+        document.getElementById('edit-state-error').innerText = 'enter valid state';
+        isValid = false;
+    }
+    if (mobile.length < 10) {
+        document.getElementById('edit-mobile-error').innerText = 'enter valid mobile number';
+        isValid = false;
+    }
+    function isValidPIN(pin) {
+        return /^\d{6}$/.test(pin);
+    }
+    if (!isValidPIN(pin)) {
+        document.getElementById('edit-pin-error').innerText = 'enter six digits pin code';
+        isValid = false;
+    }
+    if (!isValid) {
+        return
+    }
+    else {
+        checkouteditaddress();
+    }
+
+}
+
+
+
+function checkouteditaddress() {
+
+    const fullname = document.getElementById('editfullname').value;
+    const mobile = document.getElementById('editmobile').value;
+    const email = document.getElementById('editemail').value;
+    const houseName = document.getElementById('edithousename').value;
+    const state = document.getElementById('editstate').value;
+    const city = document.getElementById('editcity').value;
+    const pin = document.getElementById('editpin').value;
+    const addressId = document.getElementById('editAddressId').value;
+
+    // console.log(addressId);
+
+    fetch('/editaddress', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            fullname: fullname,
+            mobile: mobile,
+            email: email,
+            houseName: houseName,
+            state: state,
+            city: city,
+            pin: pin,
+            addressId: addressId
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+                console.log("now")
+                document.getElementById('checkoutEditAddressmodal').style.display = "none";
+                // $('#edit-address-div').load('/checkout #edit-address-div')
+                window.location.reload();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Edit Successful',
+                    text: 'The address has been edited successfully!',
+                });
+
+
+            }
+
+        }).catch(error => {
+            console.log(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Deletion Error',
+                text: 'An error occurred during editing. Please try again.',
+            });
+        })
+}
+
+
+
+
+
+
+
+
+
+function checkoutpost(event) {
+    event.preventDefault();
+
+    const formData = $('#myForm').serialize();
+    console.log(formData)
+
+    console.log("klkl");
+
+    fetch('/checkoutform', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+
+            formData
+
+
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+
+            }
+
+        }).catch(error => {
+            console.log(error);
+
+        })
+}
 
