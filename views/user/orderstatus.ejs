@@ -126,53 +126,72 @@
                 </div>
             </div>
 
-<!-- 
 
-            <% if (orders.products.length> 0) { %>
-                <div class="container mt-5">
-                    <h3 class="mb-4">Ordered Products</h3>
-
-                    <% orders.products.forEach(function(product, index) { %>
-                        <div class="card mt-3">
-                            <div class="card-body d-flex justify-content-start">
-                                <div class="product-card d-flex">
-                                    <div class="product-image">
-                                        <a href="/singleproducts?id=<%= product.productId._id %>">
-                                            <% if (product.images && product.images.image1) { %>
-                                                <img src="/sharpimg/<%= product.images.image1 %>" alt="" class="img-thumbnail" style="max-height: 250px; max-width: 230px;">
-                                            <% } else { %>
-                                                
-                                                <p>Image not available</p>
-                                            <% } %>
-                                        </a>
-                                        
+            
+        <% if (orders.products.length > 0) { %>
+            <div class="container mt-5">
+                <h3 class="mb-4">Ordered Products</h3>
         
-                                    </div>
+                <% orders.products.forEach(function(product, index) { %>
+                    <%= console.log(product) %>
+                    <div class="card mt-3">
+                        <div class="card-body ">
+                            <div class="product-card d-flex justify-content-between">
+                                <div class="product-image">
+                                    <a href="/singleproduct?id=<%= product.productId._id %>">
+                                        <img src="/sharpimg/<%= product.productId.images.image1 %>"
+                                            class="img-fluid d-block w-100" style="max-height: 250px; max-width: 230px;" alt="Colorlib Template">
+                                    </a>
+                                </div>
+        
+                                <div style="position: relative;
+                                top: 100px;
+                            ">
+                                    <h5 ><%= product.productId.name %></h5>
+   
                                     
+                                </div>
+                                <div  style="position: relative;
+                                top: 100px;
+                            ">
+                                    <h6><%= orders.orderStatus %></h6>
+                                </div>
+                                <div  style="position: relative;
+                                top: 100px;
+                            ">
+                                    <h6><%= product.count %></h6>
 
+                                </div>
+                                <div class="text-center"  style="position: relative;
+                                top: 100px;
+                            ">
+                                    <h6>$ <%= product.price %></h6>
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+            
+            <div class="pt-5 pb-4 me-1 d-flex justify-content-center">
+                <button class="btn btn-primary edit-btn" id="">
+                    <i class="text-muted material-icons md-post_add"></i>cancel Order
+                </button>
+            </div>
+        <% } %>
+        
 
-                                    <% }); %>
-
-
-
-
-
-                                    <% } %> -->
-
-
+           
 
     </section>
 
 
     <section>
+     
 
 
 
-
-
-
-    </section>
 
     <footer class="ftco-footer ftco-section">
         <div class="container">
@@ -253,6 +272,14 @@
             </div>
         </div>
     </footer>
+
+    <style>
+         .edit-btn{
+            width: 30% !important;
+            background-color: rgb(226, 140, 140) !important;
+            height: 50px !important;
+         }
+    </style>
 
 
 

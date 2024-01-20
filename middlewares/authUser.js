@@ -1,27 +1,34 @@
-const isLogin = (req,res,next)=>{
-    try{
+ const User = require('../model/userSchema');
 
-        if(req.session.user_id){
+ 
+ 
+  
+  
+  
+  const isLogin = (req, res, next) => {
+    try {
+
+        if (req.session.user_id) {
             next()
         }
-        else{
+        else {
             res.redirect('/login');
         }
 
-    }catch(error){
+    } catch (error) {
         console.log(error);
     }
 }
 
 
-const isLogout = (req,res,next)=>{
+const isLogout = (req, res, next) => {
     try {
-        console.log(req.session.user_id,req.session.email)
-        if(req.session.user_id){
+        // console.log(req.session.user_id, req.session.email)
+        if (req.session.user_id) {
             console.log('hi')
             res.redirect('/indexhome');
 
-        }else{
+        } else {
             console.log('hielll')
             next();
         }
@@ -33,7 +40,36 @@ const isLogout = (req,res,next)=>{
 
 
 
-module.exports={
+
+
+
+const adminblock = async (req,res,next) => {
+   
+    
+    try {
+
+        const user_id = req.session.user_id;
+        const user = await User.findOne({_id:user_id});
+        
+
+
+        if (!user) {
+            next();
+        }else{
+            if(user.is_blocked){
+                res.redirect('/login');
+            }
+
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+
+module.exports = {
     isLogin,
-    isLogout
+    isLogout,
+    adminblock
 }

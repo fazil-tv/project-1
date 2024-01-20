@@ -37,7 +37,7 @@ userRoute.get("/otp", async (req, res) => {
     res.render("otp", { userId ,email});
 
 });
-userRoute.post('/otp', userController.verifyPost)
+userRoute.post('/otp',userauth.isLogout, userController.verifyPost)
 
 
 userRoute.post('/resendotp', (req, res) => {
@@ -119,7 +119,7 @@ userRoute.patch('/editaddress', addressController.editaddress);
 userRoute.delete('/deletaddress', addressController.deletaddress);
 
 
-
+    
 //cart
 
 userRoute.get('/cart', cartController.cart);
