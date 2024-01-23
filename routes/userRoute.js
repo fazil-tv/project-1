@@ -78,8 +78,8 @@ userRoute.get("/singleproduct", userController.singleproduct);
 userRoute.post('/singleproduct', userController.singleproduct);
 
 //shop
-userRoute.get("/shop", userController.shop);
-userRoute.post('/shop', userController.shop);
+userRoute.get("/shop",userauth.adminblock, userController.shop);
+userRoute.post('/shop',userauth.adminblock, userController.shop);
 //about
 userRoute.get("/about", userController.about);
 userRoute.post('/about', userController.about);
@@ -119,10 +119,10 @@ userRoute.patch('/editaddress', addressController.editaddress);
 userRoute.delete('/deletaddress', addressController.deletaddress);
 
 
-    
+
 //cart
 
-userRoute.get('/cart', cartController.cart);
+userRoute.get('/cart', userauth.isLogin,cartController.cart);
 
 userRoute.post('/getcart', userauth.isLogin, cartController.getcart);
 
@@ -170,6 +170,11 @@ userRoute.post('/checkoutform',orderController.checkoutPost)
 userRoute.get('/success',orderController.success );
 
 userRoute.get('/orderstatus',orderController.orderstatus );
+userRoute.delete('/orderstatus',orderController.cancelorder);
+
+
+
+
 
 
 module.exports = userRoute;

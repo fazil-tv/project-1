@@ -56,5 +56,9 @@ adminRoute.put('/unblockCategory',auth.isLogin,categoryController.unblockCategor
 //block product
 adminRoute.put('/blockProduct/:id',auth.isLogin,productController.blockProduct);
 
+// orders
+adminRoute.get("/orders",adminController.orders);
+
+
 
 module.exports = adminRoute;

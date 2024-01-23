@@ -1,5 +1,8 @@
 require('dotenv').config();
-const userModal = require('../model/userSchema')
+const userModal = require('../model/userSchema');
+const cartSchema = require('../model/cartModel');
+const productSchema = require('../model/categoryModel');
+const orderSchema = require('../model/orderModel');
 
 
 // signup
@@ -26,6 +29,8 @@ const logout = async (req, res) => {
 
 
 
+
+
 // users
 const users = async (req, res) => {
     try {
@@ -34,6 +39,19 @@ const users = async (req, res) => {
         console.log(error.message);
     }
 }
+
+// users
+const orders = async (req, res) => {
+    try {
+        
+        const  cartData =await orderSchema.find({}).populate('products.productId');
+        console.log(cartData);
+        res.render("orders",{cartData});
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 
 
 
@@ -121,4 +139,5 @@ module.exports = {
     blockUser,
     unblockUser,
     logout,
+    orders 
 }

@@ -92,11 +92,11 @@
 
 
 
-						<%if (address[0].address.length>0 ){%>
+						<%if (address && address.address && address.address.length>0 ){%>
 							<section id="edit-address-div">
 
 								<div class="row ">
-									<% address[0].address.forEach(function (address,index) { %>
+									<% address.address.forEach(function (address,index) { %>
 										<%console.log(address._id,'asdfghjk')%>
 										<div class="addressdiv col-lg-5 pb-4 mt-4 justify-content-between mr-4">
 											<input type="radio" id="selectedAddress" name="selectedAddress" value="<%= address._id %>" <% if
@@ -166,7 +166,6 @@
 								</div>
 								<%}%>
 									<div class=" mt-5">
-										<%if (address[0].address.length>0 ){%>
 
 											<button type="button" class="btn btn-primary edit-btn ml-4"
 											onclick=" addressopenmodal()">
@@ -174,7 +173,6 @@
 											address
 										</button>
 
-											<%}%>
 
 									</div>
 

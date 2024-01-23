@@ -218,11 +218,11 @@
                                                 onclick="cancelImage('imageinput1', 'displayimg1')"><i
                                                     class="fa-solid fa-circle-xmark"></i></a>
 
-                                            <img class="img-display" id="displayimg1" src="/images/upload-img.svg"
+                                            <img class="img-display" id="displayimg1" src="/sharpimg/<%= product.images.image1%>"
                                                 alt="" />
-                                            <label for="imageinput1">
+                                            <label for="imageinput1"  >
                                                 <input class="form-control img-inputs" name="image1" type="file"
-                                                    id="imageinput1" accept="image/*" required>
+                                                    id="imageinput1" accept="image/*">
                                             </label>
 
 
@@ -232,7 +232,7 @@
                                                 <a style="display: none;" class="closbutton"
                                                 onclick="cancelImage('imageinput2', 'displayimg2')"><i
                                                     class="fa-solid fa-circle-xmark"></i></a>
-                                                <img src="/images/upload-img.svg" id="displayimg2" class="img-display"
+                                                <img src="/sharpimg/<%= product.images.image2%>" id="displayimg2" class="img-display"
                                                     alt="" required>
                                                 <label for="imageinput2">
                                                     <input class="form-control img-inputs" name="image2"
@@ -245,7 +245,7 @@
                                                 <a style="display: none;" class="closbutton"
                                                     onclick="cancelImage('imageinput3', 'displayimg3')"><i
                                                         class="fa-solid fa-circle-xmark"></i></a>
-                                                <img src="/images/upload-img.svg" alt="" id="displayimg3"
+                                                <img src="/sharpimg/<%= product.images.image3%>" alt="" id="displayimg3"
                                                     class="img-display" />
                                                 <label for="imageinput3">
                                                     <input class="form-control" name="image3" type="file"
@@ -258,7 +258,7 @@
                                                 <a style="display: none;" class="closbutton"
                                                     onclick="cancelImage('imageinput4', 'displayimg4')"><i
                                                         class="fa-solid fa-circle-xmark"></i></a>
-                                                <img src="/images/upload-img.svg" alt="" id="displayimg4"
+                                                <img src="/sharpimg/<%= product.images.image4%>" alt="" id="displayimg4"
                                                     class="img-display" />
                                                 <label for="imageinput4">
                                                     <input class="form-control" name="image4" type="file"
@@ -288,8 +288,14 @@
                 </div>
             </div>
         </footer>
+
+
+       
     </main>
     <script>
+
+
+
 
 
 
@@ -303,8 +309,11 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    const imageElement = document.getElementById(displayId);
+                    const imageElement = document.getElementById(displayId)
                     imageElement.src = e.target.result;
+                    
+                    
+
 
                     const cancelButton = document.querySelector(`[onclick="cancelImage('${inputId}', '${displayId}')"]`);
                     cancelButton.style.display = 'inline-block';
@@ -312,7 +321,18 @@
                 reader.readAsDataURL(file);
             }
 
+            
+
+
+            
+
         }
+
+
+
+
+
+
         function cancelImage(inputId, displayId) {
             const fileInput = document.getElementById(inputId);
             fileInput.value = '';
@@ -322,12 +342,18 @@
             const cancelButton = document.querySelector(`[onclick="cancelImage('${inputId}', '${displayId}')"]`);
             cancelButton.style.display = 'none';
 
+
         }
+
+
 
         document.getElementById('imageinput1').addEventListener('change', function (event) {
             displayimg('imageinput1', 'displayimg1');
-
         })
+
+
+
+
         document.getElementById('imageinput2').addEventListener('change', function (event) {
             displayimg('imageinput2', 'displayimg2');
         })
@@ -337,6 +363,11 @@
         document.getElementById('imageinput4').addEventListener('change', function (event) {
             displayimg('imageinput4', 'displayimg4');
         })
+
+        
+
+
+        
 
 
     </script>

@@ -105,7 +105,6 @@
 					<% if (cartData===null||cartData.products.length==0) { %>
 						<div class="empty-cart">
 							<h5 class="empty-head ">empty cart</h5>
-
 							<img src="/images/9960436.jpg" alt="" class="cart-img">
 							<p class="mt-3">your cart is empty</p>
 							<a href="/shop" class="btn cart-btn"><span class="">fill your cart</span></a>
@@ -217,10 +216,9 @@
 									</tbody>
 								</table>
 							</div>
-							<%}%>
+							
 				</div>
 			</div>
-			<% if (cartData.products.length>=1) {%>
 
 				<div class="row justify-content-start">
 					<div class="col col-lg-3  col-md-6 mt-5 cart-wrap"></div>
@@ -275,10 +273,7 @@
 				<div class="col col-lg-3  col-md-6 mt-5 cart-wrap"></div>
 
 
-				<%}else{%>
-
-
-					<%}%>
+				<%}%>
 
 		</div>
 	</section>

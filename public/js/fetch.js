@@ -898,7 +898,7 @@ function checkouteditaddress() {
 
 
 
-function  validateForm(event){
+function validateForm(event) {
     event.preventDefault();
     checkoutpost()
 
@@ -906,7 +906,7 @@ function  validateForm(event){
 
 
 function checkoutpost() {
-   
+
 
     const formData = $('#myForm').serialize();
     const params = new URLSearchParams(formData);
@@ -933,6 +933,48 @@ function checkoutpost() {
             } else {
                 console.log("Oops, something went wrong");
             }
+
+        }).catch(error => {
+            console.log(error);
+
+        })
+}
+
+
+
+function cancelorder(x) {
+    const orderId = x;
+    console.log(orderId);
+    fetch('/orderstatus', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            orderId
+
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+          
+
+
+
+
+
+            if (data.status === "success") {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Order Cancelled',
+                   
+                });
+            }
+            
+            window.location.reload();
+                    
+
+
 
         }).catch(error => {
             console.log(error);

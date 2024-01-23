@@ -169,8 +169,11 @@ sup {
 
 /* carosil slider */
 .carousel-indicators-{
-  padding: 15px;
+  padding: 16px;
   
+}
+.address-p{
+  font-size: 15px;
 }
 
 

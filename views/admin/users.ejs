@@ -63,6 +63,12 @@
                         <span class="text">Add product</span>
                     </a>
                 </li>
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/orders">
+                        <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Orders</span>
+                    </a>
+                </li>
                 <li class="menu-item has-submenu">
                     <a class="menu-link" href="#">
                         <i class="icon material-icons md-person"></i>
@@ -324,7 +330,7 @@
             function confirmBlockUser() {
 
                 const userId = $('#confirmationModal').data('userId');
-                console.log(userId)
+                console.log(userId);
                 blockUser(userId)
 
                 $('#confirmationModal').modal('hide');

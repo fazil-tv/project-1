@@ -71,7 +71,7 @@
                             <a class="dropdown-item" href="/shop">Shop</a>
                             <!-- <a class="dropdown-item" href="/singleproduct">Single Product</a> -->
                             <a class="dropdown-item" href="/cart">Cart</a>
-                            <a class="dropdown-item" href="/checkout">Checkout</a>
+                            <!-- <a class="dropdown-item" href="/checkout">Checkout</a> -->
                         </div>
                     </li>
                     <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
@@ -310,6 +310,7 @@
                                                 <th class="total">Amount</th>
                                                 <th class="Payment">Payment</th>
                                                 <th class="Payment">Status</th>
+                                                <th class="Payment"></th>
                     
                                             </tr>
                                         </thead>
@@ -330,6 +331,10 @@
                                                     </td>
                                                     <td>
                                                         <%= orders[i].payment %>
+                                                    </td>
+                                                    <td>
+                                                        <%= orders[i].
+                                                        orderStatus %>
                                                     </td>
                                                     <td>
                                               <a href="/orderstatus?id=<%=orders[i]._id%>" style="color: black; font-size: 14px; text-decoration: none;">Details</a>
