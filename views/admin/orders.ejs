@@ -33,7 +33,7 @@
         </div>
         <nav>
             <ul class="menu-aside">
-                <li class="menu-item active">
+                <li class="menu-item ">
                     <a class="menu-link" href="/admin/index">
                         <i class="icon material-icons md-home"></i>
                         <span class="text">Dashboard</span>
@@ -58,7 +58,7 @@
                         <span class="text">Add product</span>
                     </a>
                 </li>
-                <li class="menu-item ">
+                <li class="menu-item  active">
                     <a class="menu-link" href="/admin/orders">
                         <i class="icon material-icons md-shopping_cart"></i>
                         <span class="text">Orders</span>
@@ -217,10 +217,6 @@
                                 <tbody>
                                   
                                      
-                                          
-                                      
-                                 
-                                    
                                     
                                     <% for (let i=0; i < cartData.length; i++) { %>
                                         <% for (let j = 0; j < cartData[i].products.length; j++) { %>
@@ -237,23 +233,22 @@
                                             <td>
                                             <%=cartData[i].orderDate.toLocaleDateString('en-US', {
                                                 weekday: 'short' , year: 'numeric' , month: 'short' , day: 'numeric' })%></td>
-                                                <td><span class="badge rounded-pill alert-warning">Pending</span></td>
+                                               
 
                                     
-                                           
+                                                
+
+                                                <% if (cartData[i].orderStatus === "canceled") { %>
+                                                    <td><span class="badge rounded-pill alert-danger">Canceled</span></td>
+                                                    <% } else { %>
+                                                    <!-- <td><span class="badge rounded-pill alert-warning">Pending</span></td>   -->
+                                                    <td><span class="badge rounded-pill alert-success">Received</span></td>
+                                                    <% } %>
+                                                
+                                                
                                             <td class="text-end">
-                                                <a href="#" class="btn btn-md rounded font-sm">Detail</a>
-                                                <!-- <div class="dropdown">
-                                                    <a href="#" data-bs-toggle="dropdown"
-                                                        class="btn btn-light rounded btn-sm font-sm"> <i
-                                                            class="material-icons md-more_horiz"></i> </a>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="#">View detail</a>
-                                                        <a class="dropdown-item" href="#">Edit info</a>
-                                                        <a class="dropdown-item text-danger" href="#">Delete</a>
-                                                    </div>
-                                                </div> -->
-                                                <!-- dropdown //end -->
+                                                <a href="orderdetailes?id=<%=cartData[i]._id%>" class="btn btn-md rounded font-sm">Detail</a>
+                                                
                                             </td>
                                           
                                     </tr>

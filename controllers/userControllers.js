@@ -504,6 +504,7 @@ const forgotpassword = async (req, res) => {
 
 const forgototp = async (req, res) => {
     try {
+        
         res.render("forgototp");
     } catch (error) {
         console.error("Error in forgototp:", error.message);
@@ -537,7 +538,12 @@ const getemail = async (req, res) => {
         if (userData) {
 
             await verifysendmail(email, userId, res);
-            res.render('forgototp', { email: req.body.email });
+            const mail = req.body.email;
+            const usrid = await User.findOne({email:mail});
+
+            console.log(usrid) 
+
+            res.render('forgototp', { email: req.body.email ,usrid});
         } else {
             res.render('getemail', { error: 'Email not found' });
         }

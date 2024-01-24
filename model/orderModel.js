@@ -9,8 +9,9 @@ const orderSchema = new mongoose.Schema({
         required: true
     },
     delivery_address:{
-        type:Object,
-        required:true
+       type:mongoose.Types.ObjectId,
+       ref:'address',
+       required:true
       },
       payment: {
         type: String,

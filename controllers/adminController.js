@@ -3,6 +3,10 @@ const userModal = require('../model/userSchema');
 const cartSchema = require('../model/cartModel');
 const productSchema = require('../model/categoryModel');
 const orderSchema = require('../model/orderModel');
+const mongoose = require('mongoose');
+const { ObjectId } = require('mongodb');
+const addressSchema = require('../model/addressModel');
+
 
 
 // signup
@@ -18,10 +22,10 @@ const signup = async (req, res) => {
 //logout
 const logout = async (req, res) => {
     try {
-            req.session.admin_email=null;
-             res.redirect('/admin/login')
+        req.session.admin_email = null;
+        res.redirect('/admin/login')
 
-    }catch(error){
+    } catch (error) {
         console.log(error.message)
     }
 }
@@ -43,15 +47,41 @@ const users = async (req, res) => {
 // users
 const orders = async (req, res) => {
     try {
-        
-        const  cartData =await orderSchema.find({}).populate('products.productId');
-        console.log(cartData);
-        res.render("orders",{cartData});
+
+        const cartData = await orderSchema.find({}).populate('products.productId');
+        console.log(cartData, 'hghfg');
+        res.render("orders", { cartData });
     } catch (error) {
         console.log(error.message);
     }
 }
 
+
+// Order detail
+const orderdetaile = async (req, res) => {
+    try {
+        const id = req.query.id;
+        console.log(id);
+        
+        const orders = await orderSchema.findOne({ _id: id }).populate('products.productId');
+
+        console.log(orders);
+        const deliveryAddressObjectId = new mongoose.Types.ObjectId(orders.delivery_address);
+        console.log(deliveryAddressObjectId);
+        const userAddress = await addressSchema.findOne(
+            { 'address._id': deliveryAddressObjectId },
+            { 'address.$': 1 }
+        );
+        console.log(userAddress);
+
+        console.log(orders);
+        console.log(userAddress);
+
+        res.render("detaile",{userAddress,orders});
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 
 
@@ -139,5 +169,6 @@ module.exports = {
     blockUser,
     unblockUser,
     logout,
-    orders 
+    orders,
+    orderdetaile
 }

@@ -6,6 +6,7 @@ const cartSchema = require("../model/cartModel");
 const orderSchema = require('../model/orderModel');
 const { json } = require("express");
 const mongoose = require('mongoose');
+const { ObjectId } = require('mongodb');
 
 
 
@@ -43,8 +44,8 @@ const checkoutPost = async (req, res) => {
         const { jsonData } = req.body;
 
         const selectedAddress = jsonData.selectedAddress
-        const deliveryAddressObjectId = new mongoose.Types.ObjectId(selectedAddress);
-        console.log(deliveryAddressObjectId, 'jkjk')
+        const deliveryAddressObjectId =new ObjectId(selectedAddress);
+        console.log(deliveryAddressObjectId, 'jkjk************************')
         const userAddress = await addressSchema.findOne(
             { 'address._id': deliveryAddressObjectId },
             { 'address.$': 1 }
@@ -65,10 +66,10 @@ const checkoutPost = async (req, res) => {
         console.log("selectedaddress", selectedAddress);
         console.log("payment", selectedpayament);
 
-
+     
         const order = new orderSchema({
             user: userId,
-            delivery_address: deliveryAddressObjectId,
+            delivery_address: selectedAddress,
             payment: selectedpayament,
             products: cartData.products,
             subtotal: subtotel,

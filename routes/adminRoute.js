@@ -61,4 +61,7 @@ adminRoute.get("/orders",adminController.orders);
 
 
 
+// orderdetaile
+adminRoute.get("/orderdetailes",adminController.orderdetaile);
+
 module.exports = adminRoute;
