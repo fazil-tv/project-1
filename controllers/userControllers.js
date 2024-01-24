@@ -505,6 +505,7 @@ const forgotpassword = async (req, res) => {
 const forgototp = async (req, res) => {
     try {
         
+
         res.render("forgototp");
     } catch (error) {
         console.error("Error in forgototp:", error.message);

@@ -1,7 +1,37 @@
 // const { json } = require("express");
 // const { response } = require("../../routes/userRoute");
 
+
+
+// function forgototp(evet){
+//     event.preventDefault();
+
+
+//     otpsending(req, res) 
+
+// }
+
+// async function otpsending(req, res) {
+//    console.log("mmmmmm")
+//     try {
+//         fetch('/getemail', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({ 
+            
+//             }),
+//         });
+
+//     } catch (error) {
+//         console.error('Error during Resend OTP request:', error);
+//     }
+// }
+
+
 // resend otp
+
 async function fetchOTP(userId, email) {
 
     event.preventDefault();
@@ -30,6 +60,36 @@ async function fetchOTP(userId, email) {
         console.error('Error during Resend OTP request:', error);
     }
 }
+
+async function forgotfetchOTP(userId, email) {
+
+    event.preventDefault();
+    try {
+        const response = await fetch('/resendotp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId, email }),
+        });
+
+        if (response.ok) {
+
+            window.location.reload()
+
+
+
+            console.log('Resend OTP request successful');
+
+
+        } else {
+            console.error('Resend OTP request failed');
+        }
+    } catch (error) {
+        console.error('Error during Resend OTP request:', error);
+    }
+}
+
 
 
 

@@ -29,6 +29,7 @@ userRoute.get("/login",userauth.isLogout, (req, res) => {
 
 
 userRoute.get("/otp", async (req, res) => {
+   
     const userId = req.session.user_id
     console.log("kitty:",userId);
     const user = await User.findOne({_id:userId});
@@ -37,6 +38,7 @@ userRoute.get("/otp", async (req, res) => {
     res.render("otp", { userId ,email});
 
 });
+
 userRoute.post('/otp',userauth.isLogout, userController.verifyPost)
 
 
@@ -131,13 +133,6 @@ userRoute.post('/removecarts', userauth.isLogin,cartController.removecarts);
 
 // update quantity
 userRoute.post('/updatecart',userauth.isLogin,cartController.updatecart);
-
-// checkout
-
-
-
-
-
 
 
 
