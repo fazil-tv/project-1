@@ -10,7 +10,7 @@ const productSchema = require("../model/productSchema");
 const addressSchema = require("../model/addressModel");
 // const categorySchema =require("../controllers/categoryController");
 const { log } = require("console");
-const categorySchema= require("../model/categoryModel");
+const categorySchema = require("../model/categoryModel");
 const orderSchema = require('../model/orderModel');
 
 
@@ -286,18 +286,18 @@ const shop = async (req, res) => {
     try {
         const category = await categorySchema.find({});
         console.log(category)
-        
-       
+
+
         const searchQuery = req.query.search || "";
         const page = req.query.page ? req.query.page : 1;
         const prevPage = page - 1;
         const totalDoc = await productSchema.countDocuments();
-        const product = await productSchema.find({}).populate('category').skip(prevPage*4).limit(6)
+        const product = await productSchema.find({}).populate('category').skip(prevPage * 4).limit(6)
 
 
-         
+
         console.log(totalDoc);
-        res.render("shop", { product: product ,category:category,searchQuery,page,totalDoc});
+        res.render("shop", { product: product, category: category, searchQuery, page, totalDoc });
 
         // const category = await categorySchema.find({}).sort({ name: 1 })
         // console.log(category)
@@ -343,13 +343,13 @@ const useraccount = async (req, res) => {
     try {
         const userId = req.session.user_id;
         const useraddress = await addressSchema.findOne({ user: userId });
-        const orders = await orderSchema.find({user:userId});
-        console.log(orders,"orders")
-      
+        const orders = await orderSchema.find({ user: userId });
+        console.log(orders, "orders")
+
         console.log("ooi", useraddress);
         const user = await User.findById(userId);
         console.log(user);
-        res.render('useraccount', { user, useraddress,orders });
+        res.render('useraccount', { user, useraddress, orders });
 
     } catch (error) {
         console.log(error);
@@ -504,7 +504,7 @@ const forgotpassword = async (req, res) => {
 
 const forgototp = async (req, res) => {
     try {
-        
+
 
         res.render("forgototp");
     } catch (error) {
@@ -540,11 +540,12 @@ const getemail = async (req, res) => {
 
             await verifysendmail(email, userId, res);
             const mail = req.body.email;
-            const usrid = await User.findOne({email:mail});
+            const userData = await User.findOne({ email: mail });
+            const usrid = userData._id;
 
-            console.log(usrid) 
+            console.log(usrid)
 
-            res.render('forgototp', { email: req.body.email ,usrid});
+            res.render('forgototp', {  usrid,mail });
         } else {
             res.render('getemail', { error: 'Email not found' });
         }
@@ -601,45 +602,62 @@ const verifysendmail = async (email, id, res) => {
 }
 
 const otpverification = async (req, res) => {
-    console.log("jkl");
-    const { num1, num2, num3, num4 } = req.body;
-    const otp = `${num1}${num2}${num3}${num4}`;
+
+    try {
+        console.log("meow");
+        console.log("jkl");
+        const { num1, num2, num3, num4 } = req.body;
+        const otp = `${num1}${num2}${num3}${num4}`;
+
+        console.log(otp,"otp");
+       
 
 
-    const userId = req.session.user_id;
-    const user = await User.findOne({ _id: userId });
-    const email = user.email;
+        const userId = req.session.user_id;
+        const user = await User.findOne({ _id: userId });
+        const email = user.email;
+        
 
 
-    console.log(userId);
-    console.log(user);
-    console.log(email);
-    req.session.email_id = email;
+        console.log(userId);
+        console.log(user);
+        console.log(email);
+        req.session.email_id = email;
 
-    const userOTPVerificationrecord = await Otp.find({ user_id: userId })
-    console.log(userOTPVerificationrecord);
+        const userOTPVerificationrecord = await Otp.find({ user_id: userId })
+        console.log(userOTPVerificationrecord);
 
 
-    const hashedOTP = userOTPVerificationrecord[0].otp;
-    const validOTP = await bcrypt.compare(otp, hashedOTP);
-    console.log(validOTP);
-    console.log(hashedOTP);
+        const hashedOTP = userOTPVerificationrecord[0].otp;
+        const validOTP = await bcrypt.compare(otp, hashedOTP);
+        console.log(validOTP);
+        console.log(hashedOTP);
 
-    if (!validOTP) {
-        console.log("invalid otp");
-        console.log("this", email);
-        console.log("this", userId);
-        res.render('forgototp', { message: 'invalid otp', userId, email });
-    } else {
-        if (req.session.user_id) {
-            res.render('changepasswordform')
+        if (!validOTP) {
+            console.log("invalid otp");
+            console.log("this", email);
+            console.log("this", userId);
+          
+            return res.json({ success: false, message: 'invalid otp' });
+
+
+            // res.render('forgototp', { message: 'invalid otp', userId, email });
         } else {
-            const userId = req.session.user_id;
-            const user = await User.findOne({ _id: userId });
-            if (user) {
-                res.render('changepasswordform');
+            console.log("hmmmmm")
+            if (req.session.user_id) {
+                // res.render('changepasswordform')
+                 return res.json({ success: true, message: 'done' });
+            } else {
+                const userId = req.session.user_id;
+                const user = await User.findOne({ _id: userId });
+                if (user) {
+                    // res.render('changepasswordform');
+                    return res.json({ success: true, message: 'done' });
+                }
             }
         }
+    } catch (error) {
+        console.log(error);
     }
 
 
@@ -664,19 +682,19 @@ const changepassword = async (req, res) => {
             const userId = req.session.user_id;
             console.log(userId);
             const sPassword = await bcrypt.hash(req.body.newpassword, 10);
-            await User.findOneAndUpdate({ _id: userId }, { $set: {password: sPassword } })
-           
-            res.render("login",{messages:"please enter your new password"})
+            await User.findOneAndUpdate({ _id: userId }, { $set: { password: sPassword } })
 
-        } else {       
+            res.render("login", { messages: "please enter your new password" })
+
+        } else {
             const sPassword = await bcrypt.hash(req.body.newpassword, 10);
-            await User.findOneAndUpdate({ email: req.session.email_id }, { $set: {password: sPassword } })
-            res.render('login',{messages:"please enter your new password"});
+            await User.findOneAndUpdate({ email: req.session.email_id }, { $set: { password: sPassword } })
+            res.render('login', { messages: "please enter your new password" });
         }
 
 
     } catch (error) {
-    console.log(error)
+        console.log(error)
     }
 
 
@@ -687,33 +705,33 @@ const changepassword = async (req, res) => {
 
 
 
-    module.exports = {
-        signup,
-        sendmailUser,
-        insertUser,
-        verifyPost,
-        login,
-        verifyLogin,
-        sendEmails,
-        blog,
-        indexhome,
-        shop,
-        about,
-        resetpassword,
-        singleproduct,
-        resendmailUser,
-        resendEmails,
-        useraccount,
-        edituser,
-        resetpassword,
-        forgotpassword,
-        forgototp,
-        getemail,
-        verifysendEmails,
-        verifysendmail,
-        otpverification,
-        changepasswordform,
-        changepassword,
-        userLogout
+module.exports = {
+    signup,
+    sendmailUser,
+    insertUser,
+    verifyPost,
+    login,
+    verifyLogin,
+    sendEmails,
+    blog,
+    indexhome,
+    shop,
+    about,
+    resetpassword,
+    singleproduct,
+    resendmailUser,
+    resendEmails,
+    useraccount,
+    edituser,
+    resetpassword,
+    forgotpassword,
+    forgototp,
+    getemail,
+    verifysendEmails,
+    verifysendmail,
+    otpverification,
+    changepasswordform,
+    changepassword,
+    userLogout
 
-    }
+}

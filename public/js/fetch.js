@@ -1,3 +1,4 @@
+
 // const { json } = require("express");
 // const { response } = require("../../routes/userRoute");
 
@@ -64,35 +65,39 @@ async function fetchOTP(userId, email) {
     }
 }
 
-async function forgotfetchOTP(userId, email) {
-
-    event.preventDefault();
-    try {
-        const response = await fetch('/resendotp', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ userId, email }),
-        });
-
-        if (response.ok) {
-
-            window.location.reload()
 
 
 
-            console.log('Resend OTP request successful');
+//forget resend otp
+
+// async function forgetOTP(userId, email) {
+
+//     event.preventDefault();
+//     try {
+//         const response = await fetch('/resendotp', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({ userId, email }),
+//         });
+
+//         if (response.ok) {
+
+//             window.location.reload()
 
 
-        } else {
-            console.error('Resend OTP request failed');
-        }
-    } catch (error) {
-        console.error('Error during Resend OTP request:', error);
-    }
-}
 
+//             console.log('Resend OTP request successful');
+
+
+//         } else {
+//             console.error('Resend OTP request failed');
+//         }
+//     } catch (error) {
+//         console.error('Error during Resend OTP request:', error);
+//     }
+// }
 
 
 
