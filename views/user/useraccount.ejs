@@ -151,7 +151,7 @@
                                     <i class="zmdi zmdi-email"></i>
                                 </div>
                                 <div class="pt-2 float-right pb-4 me-1">
-                                    <button type="button" class="btn btn-primary edit-btn" onclick="openModal()">
+                                    <button type="button" class="btn btn-primary edit-btn" onclick="openModal('<%= user.username %>','<%= user.mobilenumber %>')">
                                         <i class="text-muted material-icons md-post_add "></i>Edit Profile
                                     </button>
                                 </div>
@@ -741,7 +741,13 @@
             document.getElementById('phoneInput').removeAttribute('disabled');
         }
 
-        function openModal() {
+        function openModal(name,number) {
+            console.log(name);
+            console.log(number);
+            
+            document.querySelector('[name="editname"]').value = name;
+            document.querySelector('[name="editMobile"]').value =number;
+
             document.getElementById('editProfileModal').style.display = 'block';
         }
         function closeModal() {
@@ -759,7 +765,7 @@
 
         // reset password validation
 
-        function resetPasswordvalidation(event){
+        function resetPasswordvalidation(event) {
             event.preventDefault();
             console.log("here")
 
