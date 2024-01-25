@@ -3,6 +3,9 @@
 
 
 
+
+
+
 // function forgototp(evet){
 //     event.preventDefault();
 
@@ -20,7 +23,7 @@
 //                 'Content-Type': 'application/json',
 //             },
 //             body: JSON.stringify({ 
-            
+
 //             }),
 //         });
 
@@ -468,6 +471,7 @@ function addcart(x) {
 
         });
 }
+
 
 
 function removecart(x) {
@@ -987,11 +991,76 @@ function checkoutpost() {
     })
         .then(response => response.json())
         .then(data => {
+            console.log(data)
             if (data.status === "success") {
                 console.log("Product placed successfully");
                 window.location.href = "/success";
+            } else if (data.status === "false") {
+
+                console.log(data.order, "***********")
+                console.log(data.subtotel, "***********")
+                razerpay(data.order, data.subtotel)
             } else {
-                console.log("Oops, something went wrong");
+
+            }
+        }).catch(error => {
+            console.log(error);
+
+        })
+}
+
+function razerpay(order, subtotel) {
+    console.log(order, "#######")
+    console.log(subtotel, "######")
+
+
+    var options = {
+        "key": "rzp_test_Iss6UqTyR8v6so",
+        "amount": subtotel,
+        "currency": "INR",
+        "name": "Mini Shop",
+        "description": "Test Transaction",
+        "image": "https://example.com/your_logo",
+        "order_id": order.id,
+        "handler": function (responce) {
+            verifyPayment(responce, order);
+
+        },
+        "prefill": {
+            "name": "Gaurav Kumar",
+            "email": "gaurav.kumar@example.com",
+            "contact": "9000090000"
+        },
+        "notes": {
+            "address": "Razorpay Corporate Office"
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    }
+    let raz = new Razorpay(options);
+    raz.open();
+
+}
+
+function verifyPayment(responce, order) {
+
+
+    fetch('/verifyPayments', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            responce,
+            order
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if(data.status==="success"){
+                console.log("Product placed successfully");
+                window.location.href = "/success";
             }
 
         }).catch(error => {
@@ -999,6 +1068,11 @@ function checkoutpost() {
 
         })
 }
+
+
+
+
+
 
 
 
@@ -1017,22 +1091,18 @@ function cancelorder(x) {
     })
         .then(response => response.json())
         .then(data => {
-          
-
-
-
 
 
             if (data.status === "success") {
                 Swal.fire({
                     icon: 'success',
                     title: 'Order Cancelled',
-                   
+
                 });
             }
-            
+
             window.location.reload();
-                    
+
 
 
 

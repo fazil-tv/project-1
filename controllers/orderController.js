@@ -7,6 +7,16 @@ const orderSchema = require('../model/orderModel');
 const { json } = require("express");
 const mongoose = require('mongoose');
 const { ObjectId } = require('mongodb');
+const Razorpay = require('razorpay');
+const { config } = require("dotenv");
+require('dotenv').config();
+const crypto = require("crypto")
+
+
+const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY,
+    key_secret: process.env.RAZORPAY_SCRETKEY
+})
 
 
 
@@ -44,8 +54,8 @@ const checkoutPost = async (req, res) => {
         const { jsonData } = req.body;
 
         const selectedAddress = jsonData.selectedAddress
-        const deliveryAddressObjectId =new ObjectId(selectedAddress);
-        console.log(deliveryAddressObjectId, 'jkjk************************')
+        const deliveryAddressObjectId = new ObjectId(selectedAddress);
+        console.log(deliveryAddressObjectId)
         const userAddress = await addressSchema.findOne(
             { 'address._id': deliveryAddressObjectId },
             { 'address.$': 1 }
@@ -66,7 +76,7 @@ const checkoutPost = async (req, res) => {
         console.log("selectedaddress", selectedAddress);
         console.log("payment", selectedpayament);
 
-     
+
         const order = new orderSchema({
             user: userId,
             delivery_address: selectedAddress,
@@ -77,7 +87,10 @@ const checkoutPost = async (req, res) => {
             orderDate: new Date(),
         })
         await order.save();
-        // const orderId = order._id;
+        console.log(order);
+
+        const orderId = order._id;
+        console.log(orderId);
 
         if (order.orderStatus === "placed") {
             for (let i = 0; i < cartData.products.length; i++) {
@@ -88,15 +101,25 @@ const checkoutPost = async (req, res) => {
                 console.log(count);
                 await productSchema.updateOne({ _id: product }, { $inc: { quantity: -count } })
             }
-
-
-
             res.json({ status: 'success', message: "product placed succesfully" });
+        } else {
+
+            const options = {
+                amount: subtotel * 100,
+                currency: 'INR',
+                receipt: "" + orderId,
+            };
+
+            razorpay.orders.create(options, function (err, order) {
+                if (err) {
+                    console.log(err);
+                }
+                console.log("errorrr", order);
+                console.log("klklklkl");
+                res.json({ status: "false", message: "product placed succesfully", order, subtotel });
+            });
+
         }
-
-
-
-
     } catch (err) {
         console.log(err);
     }
@@ -115,13 +138,8 @@ const orderstatus = async (req, res) => {
     try {
         console.log("mmm");
         const id = req.query.id;
-
         const orders = await orderSchema.findOne({ _id: id }).populate('products.productId');
-
-
         console.log(orders, "klklklk");
-
-
         const deliveryAddressObjectId = new mongoose.Types.ObjectId(orders.delivery_address);
         console.log(deliveryAddressObjectId, 'jkjk')
         const userAddress = await addressSchema.findOne(
@@ -129,9 +147,6 @@ const orderstatus = async (req, res) => {
             { 'address.$': 1 }
         );
         console.log(userAddress);
-
-
-
 
         res.render('orderstatus', { orders, userAddress });
     } catch (error) {
@@ -144,27 +159,27 @@ const orderstatus = async (req, res) => {
 const cancelorder = async (req, res) => {
     console.log("hiiii");
     const orderId = req.body.orderId;
-    console.log("here ",orderId);
+    console.log("here ", orderId);
 
     try {
         const userId = req.session.user_id;
         console.log(userId);
 
 
-        const orderdata = await orderSchema.findOneAndUpdate({ _id:orderId}, { orderStatus: "canceled" });
-        console.log("orderd data",orderdata);
+        const orderdata = await orderSchema.findOneAndUpdate({ _id: orderId }, { orderStatus: "canceled" });
+        console.log("orderd data", orderdata);
 
 
 
         for (let i = 0; i < orderdata.products.length; i++) {
-        
-                let product = orderdata.products[i].productId;
-                let count = orderdata.products[i].count;
 
-                console.log(orderdata);
-                console.log(count);
-                await productSchema.updateOne({ _id: product }, { $inc: { quantity: count } })
-            
+            let product = orderdata.products[i].productId;
+            let count = orderdata.products[i].count;
+
+            console.log(orderdata);
+            console.log(count);
+            await productSchema.updateOne({ _id: product }, { $inc: { quantity: count } })
+
 
         }
         res.json({ status: "success" });
@@ -177,11 +192,62 @@ const cancelorder = async (req, res) => {
 }
 
 
+const verifyPayment = async (req, res) => {
+
+    try {
+        const responce = req.body.responce;
+        const order = req.body.order;
+
+        const userId = req.session.user_id;
+
+        const user = await userSchema.findOne({ _id: userId });
+        console.log(user, "userssssss");
+
+        const orderData = await cartSchema.findOne({ user: userId })
+        console.log(orderData, "oderDatas")
+
+
+        console.log(responce, "responce");
+        console.log(order, "order");
+
+
+        const cartData = await cartSchema.findOne({ user: userId })
+        console.log(cartData);
+
+        const hmac = crypto.createHmac("sha256", process.env.RAZORPAY_SCRETKEY);
+        hmac.update(responce.razorpay_order_id + "|" + responce.razorpay_payment_id);
+        const hmacValue = hmac.digest("hex");
+
+        if (hmacValue == responce.razorpay_signature) {
+
+            for (let i = 0; i < cartData.products.length; i++) {
+                let product = cartData.products[i].productId;
+                let count = cartData.products[i].count;
+
+                console.log(product);
+                console.log(count);
+                await productSchema.updateOne({ _id: product }, { $inc: { quantity: -count } })
+            }
+
+            const addressStatus = await orderSchema.updateOne({ _id: order.receipt }, { $set: { orderStatus: "placed" } });
+            console.log(addressStatus, "heeeyyyyy");
+
+            
+            await   cartSchema.deleteOne({ user: userId });
+            res.json({ status: 'success', message: "product placed succesfully" });
+
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 module.exports = {
     checkout,
     checkoutPost,
     success,
     orderstatus,
-    cancelorder
+    cancelorder,
+    verifyPayment
+
 }

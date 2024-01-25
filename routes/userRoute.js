@@ -168,6 +168,10 @@ userRoute.get('/orderstatus',orderController.orderstatus );
 userRoute.delete('/orderstatus',orderController.cancelorder);
 
 
+userRoute.post('/verifyPayments',orderController.verifyPayment );
+
+
+
 
 
 
