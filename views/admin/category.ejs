@@ -290,11 +290,15 @@
                                                     <label for="product_name" class="form-label">Category name</label>
                                                     <input type="text" placeholder="Type here" name="editname"
                                                         class="form-control " id="editcategoryname" />
+                                                    <span id="edit-category-name" style="color: red;"></span>
+
                                                 </div>
                                                 <div class="mb-4">
                                                     <label class="form-label">Full description</label>
                                                     <input type="text" name="editdiscription" placeholder="Type here"
                                                         class="form-control " id="editcategorydescription" />
+                                                    <span id="edit-category-desc" style="color: red;"></span>
+
                                                 </div>
 
                                             </form>
@@ -313,16 +317,27 @@
             <script>
 
                 // edit category validation 
-                
+
                 function editcategoryvalidation() {
                     event.preventDefault();
                     const categoryname = document.getElementById('editcategoryname').value;
                     console.log(categoryname);
                     const editdiscription = document.getElementById('editcategorydescription').value;
 
+                    // document.getElementById('edit-category-name').textContent = '';
+                    // document.getElementById('edit-category-desc').textContent = '';
+
+                    // let isValid = true;
+
+                    // if(!categoryName || !editdiscription){
+                    //     isValid = false;
+                    // }else{
+                        
+                    // }
+
                     const validateCategoryName = (categoryName, editdiscription) => {
                         if (categoryName && editdiscription) {
-                            console.log("krt");
+
                             const categoryRegex = /^[a-zA-Z0-9]+\s*[a-zA-Z0-9]*$/;
 
                             const isValid = categoryRegex.test(categoryName);
@@ -332,7 +347,7 @@
                             }
                         }
                     };
-                    const isvalidatae = validateCategoryName(categoryname, editdiscription); // Pass both parameters
+                    const isvalidatae = validateCategoryName(categoryname, editdiscription); 
                     if (isvalidatae) {
                         console.log("category name is valid");
                     } else {

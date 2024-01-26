@@ -28,19 +28,29 @@ const addcategory = async (req, res) => {
 
 
 const addCategoryPost = async (req, res) => {
+   
     try {
-        const name = req.body.name;
-        const discription = req.body.discription;
-        const validData = await categorySchema.findOne({ name: name });
+        const  name= req.body.categoryname;
+        const discription = req.body.description;
+
+        console.log(name);
+        console.log(discription);
+        const nameRegex = new RegExp(`^${name}$`, 'i'); 
+
+        const validData = await categorySchema.findOne({ name: nameRegex });
         if (validData) {
-            res.render('addcategory', { message: "this category is already added", })
+
+            res.json({status:"failed"})
+            // res.render('addcategory', { message: "this category is already added", })
         } else {
             const NewCategory = new categorySchema({
                 name: name,
                 discription: discription
             })
-            await NewCategory.save()
-            res.redirect('/admin/category',)
+            await NewCategory.save();
+
+            res.json({status:"this category is already added"});
+            // res.redirect('/admin/category',)
         }
     } catch (error) {
         console.log(error.message)
@@ -89,7 +99,7 @@ const editcategory = async (req, res) => {
         console.log(editname);
         console.log(editcategorydesc);
 
-        const existingCategory = await categorySchema.findOne({ name: editname});
+        const existingCategory = await categorySchema.findOne({ name: editname });
         if (existingCategory) {
             return res.status(400).json({ status: "error", message: "Category with the same name already exists." });
         }

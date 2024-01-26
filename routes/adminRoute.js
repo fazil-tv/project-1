@@ -46,7 +46,7 @@ adminRoute.post('/editproduct', multer.uploadProduct, productController.editProd
 adminRoute.get('/category',auth.isLogin,categoryController.category);
 //addcategory
 adminRoute.get('/addcategory',auth.isLogin,categoryController.addcategory);
-adminRoute.post('/addcategory',auth.isLogin,categoryController.addCategoryPost);
+adminRoute.post('/addcategory', auth.isLogin, categoryController.addCategoryPost);
 
 //edit category
 adminRoute.put('/editcategory/:categoryId',auth.isLogin, categoryController.editcategory);

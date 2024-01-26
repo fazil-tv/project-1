@@ -173,7 +173,12 @@
                                 <h4>Basic</h4>
                             </div>
                             <div class="card-body">
-                                <form id="mycard" method="post">
+
+                                <p id="added" style="text-align: center; color: red; display: none;">this category is
+                                    already added</p>
+
+                                    <p id="invalid" style="text-align: center; color: red; display: none;">Invalid category name or empty description</p>
+                                <form>
                                     <div class="mb-4">
                                         <label for="product_name" class="form-label">Category name</label>
                                         <input type="text" placeholder="Type here" name="name" class="form-control "
@@ -210,7 +215,6 @@
 </body>
 <script>
     function addCategoryValidation() {
-        alert('hi')
         event.preventDefault();
         const categoryname = document.getElementById('product_name').value;
         console.log(categoryname);
@@ -221,17 +225,80 @@
             return categoryRegex.test(categoryname);
         };
 
+
+
         const isCategoryValid = validateCategoryName(categoryname);
 
         if (isCategoryValid && description) {
-            $('#mycard').submit();
-            return console.log("Category name is valid");
-            
+
+            // $('#mycard').submit();
+            // return console.log("Category name is valid");
+            console.log(categoryname, "######", description);
+            document.getElementById('invalid').style.display="none"
+
+
+            addcategory(categoryname, description);
+
         } else {
+            document.getElementById('invalid').style.display="block"
             console.log("Invalid category name or empty description");
         }
-       
+
     }
+
+
+
+
+
+
+
+    function addcategory(categoryname, description) {
+        console.log("$$$$$", categoryname, "%%%%%", description);
+
+        fetch('/admin/addcategory', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                categoryname,
+                description
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "failed") {
+
+                    document.getElementById("added").style.display = "block";
+
+                
+
+                    // window.location.href = "/addcategory";
+                    console.log("this category is already added");
+                } else {
+                    window.location.href = "/admin/category";
+                }
+
+
+            }).catch(error => {
+                console.log(error);
+
+            })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </script>
 
