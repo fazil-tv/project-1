@@ -186,7 +186,8 @@
                                         <div class="col-lg-3 justify-content-center p-3">
 
 
-                                            <div class="product-image " style="border: 1px solid; width: 75px; float: left;">
+                                            <div class="product-image "
+                                                style="border: 1px solid; width: 75px; float: left;">
                                                 <a href="/singleproduct?id=<%= product.productId._id %>" class="w-100">
                                                     <img src="/sharpimg/<%= product.productId.images.image1 %>"
                                                         class="img-fluid d-block  w-100" alt="Colorlib Template">
@@ -195,20 +196,20 @@
 
                                             <div class="text-center ">
                                                 <%= product.productId.name %>
-                                               
-                                           
-                                               
-                                    
+
+
+
+
                                             </div>
                                             <div class="text-center ">
                                                 Quantity :<%= product.count %>
                                             </div>
-                                
-                                               
 
-                                                   
 
-                                            
+
+
+
+
                                             <div class="text-center ">
                                                 <h6 class="rates">$ <%= product.price %>
                                                 </h6>
@@ -218,39 +219,91 @@
 
                                         </div>
                                         <div class="col-lg-6 p-3">
-                                            
+
 
 
                                         </div>
-                                        
+
                                         <div class="col-lg-3 p-3">
                                             <div style=" ">
                                                 <h6 style="">
-                                                    <% if (orders.orderStatus==="canceled" ) { %>
+                                                    <% if (product.productstatus==="canceled" ) { %>
                                                         <div class="status-icon-cancelde"></div>
-                                                        <%= orders.orderStatus %>
+                                                        <%= product.productstatus %>
 
                                                             <p class="para">As per your request, your item has been
                                                                 cancelled</p>
 
-                                                            <% }else if(orders.orderStatus==="placed" ){ %>
+                                                            <% }else if(product.productstatus==="placed"){ %>
                                                                 <div class="status-icon"></div>
-                                                                <%= orders.orderStatus %>
-                                                                    <p class="para">Your item has been delivered</p>
-                                                                    <%}%>
+                                                                <%=product.productstatus%>
+                                                                    <p class="para">Your Order has been Placed</p>
+                                                                    <div class="justify-content-center">
+                                                                        <button class="btn edit-btn" id=""
+                                                                            onclick="cancelorder('<%= product._id %>')">
+                                                                            <i class="text-muted material-icons md-post_add"></i><i
+                                                                                class="fa-solid fa-circle-xmark pr-2"></i>cancel Order
+                                                                        </button>
+                                                                    </div>
+                                                                    <%}else if( product.productstatus==="Shipped"){%>
+                                                                        <div class="status-icon-shiped"></div>
+
+                                                                        <%= product.productstatus %>
+                                                                        <div class="justify-content-center">
+                                                                            <button class="btn edit-btn" id=""
+                                                                                onclick="cancelorder('<%= product._id %>')">
+                                                                                <i class="text-muted material-icons md-post_add"></i><i
+                                                                                    class="fa-solid fa-circle-xmark pr-2"></i>cancel Order
+                                                                            </button>
+                                                                        </div>
+                                                                        <% }else if(product.productstatus==="Delivered" ){ %>
+                                                                            <div class="status-icon-deliverd"></div>
+                                                                            <%=product.productstatus%>
+                        
+                                                                            <div class="justify-content-center">
+                                                                                <button class="btn edit-btn" id=""
+                                                                                    onclick="returnorder('<%= product._id %>')">
+                                                                                    <i class="text-muted material-icons md-post_add"></i><i class="fa-solid fa-truck-arrow-right pr-2"></i>Return Order
+                                                                                </button>
+                                                                            </div>
+                        
+                                                                            <% }else if(product.productstatus==="return"){ %>
+                                                                                <div class="status-icon-return"></div>
+                                                                                <%=product.productstatus%>
+
+                                                                                <p>no actions</p>
+                                                                                
+                                                                            <%}else{ %>
+                                                                                <div class="status-icon-out"></div>
+                                                                                <%=product.productstatus%>
+
+                                                                                <p>no actions</p>
+                                                                                
+                                                                            <%}%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                                                 </h6>
                                                 <!-- <p><i class="fa-solid fa-star"></i> <a href="" class="rate">Rate &
                                                         Review Product</a></p> -->
 
                                             </div>
-                                            <div class="justify-content-center">
-                                                <button class="btn edit-btn" id="" onclick="cancelorder('<%=orders._id%>')">
-                                                    <i class="text-muted material-icons md-post_add"></i><i class="fa-solid fa-circle-xmark pr-2"></i>cancel Order
-                                                </button>
-                                            </div>
+                                          
 
                                         </div>
+
 
 
 
@@ -265,11 +318,7 @@
 
                     <%}else{%>
 
-                        <div class="pt-5 pb-4 me-1 d-flex justify-content-center">
-                            <button class="btn btn-primary edit-btn" id="" onclick="cancelorder('<%=orders._id%>')">
-                                <i class="text-muted material-icons md-post_add"></i><i class="fa-solid fa-circle-xmark"></i>cancel Order
-                            </button>
-                        </div>
+
                         <% } %>
                             <% } %>
 
@@ -280,10 +329,6 @@
 
 
     <section>
-
-
-
-
 
         <footer class="ftco-footer ftco-section">
             <div class="container">

@@ -167,6 +167,10 @@ userRoute.get('/success',orderController.success );
 userRoute.get('/orderstatus',orderController.orderstatus );
 userRoute.delete('/orderstatus',orderController.cancelorder);
 
+//return order
+userRoute.delete('/returnorder',orderController.returnorders);
+
+
 
 userRoute.post('/verifyPayments',orderController.verifyPayment );
 

@@ -227,6 +227,56 @@ sup {
   margin-right: 5px;
   margin-left: 3px;
 }
+.status-icon-deliverd{
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: none;
+  border: 2px solid #4a87ff;
+  display: inline-block;
+  margin-right: 5px;
+  margin-left: 3px;
+}
+.status-icon-shiped{
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: none;
+  border: 2px solid #c3c000;
+  display: inline-block;
+  margin-right: 5px;
+  margin-left: 3px;
+}
+.status-icon-out{
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: none;
+  border: 2px solid #09daa9;
+  display: inline-block;
+  margin-right: 5px;
+  margin-left: 3px;
+}
+.status-icon-return{
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: none;
+  border: 2px solid #6d0000;
+  display: inline-block;
+  margin-right: 5px;
+  margin-left: 3px;
+}
+
+
+
+
+
+
+
+
+
+
 .para{
   font-size: 13px;
   margin-top: 7px;

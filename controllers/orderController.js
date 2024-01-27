@@ -52,16 +52,16 @@ const checkoutPost = async (req, res) => {
         const user = await userSchema.findOne({ _id: userId })
         const cartData = await cartSchema.findOne({ user: userId });
 
-        console.log(cartData.products,"llllllllllll");
+        console.log(cartData.products, "llllllllllll");
 
         // const cartData = await cartSchema.updateOne(
         //     { user: userId },
         //     { $set: { "cartData.products.$[].productStatus": "placed" } }
         // );
 
-       
 
-       
+
+
         console.log(cartData, "kmmmmm");
 
         const { jsonData } = req.body;
@@ -104,8 +104,8 @@ const checkoutPost = async (req, res) => {
             count: product.count,
             price: product.price,
             totalPrice: product.totalPrice,
-            productstatus : (status === "pending") ? "pending" : "placed"
-          }));
+            productstatus: (status === "pending") ? "pending" : "placed"
+        }));
 
 
         const order = new orderSchema({
@@ -197,18 +197,19 @@ const cancelorder = async (req, res) => {
         console.log(userId);
 
 
-        const orderdata = await orderSchema.findOneAndUpdate({ _id: orderId }, { orderStatus: "canceled" });
-        console.log("orderd data", orderdata);
-
-
+        const orderdata = await orderSchema.findOne({ 'products._id': orderId });
+        const index = orderdata.products.findIndex((item) => {
+            return item._id.toString() === orderId ;
+        });
+        orderdata.products[index].productstatus="canceled";
+        await orderdata.save();
 
         for (let i = 0; i < orderdata.products.length; i++) {
 
             let product = orderdata.products[i].productId;
             let count = orderdata.products[i].count;
 
-            console.log(orderdata);
-            console.log(count);
+       
             await productSchema.updateOne({ _id: product }, { $inc: { quantity: count } })
 
 
@@ -221,6 +222,46 @@ const cancelorder = async (req, res) => {
     }
 
 }
+
+
+const returnorders = async (req, res) => {
+
+    console.log("hiiii");
+    const orderId = req.body.orderId;
+    console.log("here ", orderId);
+
+    try {
+        const userId = req.session.user_id;
+        console.log(userId);
+
+
+        const orderdata = await orderSchema.findOne({ 'products._id': orderId });
+        const index = orderdata.products.findIndex((item) => {
+            return item._id.toString() === orderId ;
+        });
+        orderdata.products[index].productstatus="return";
+        await orderdata.save();
+
+        for (let i = 0; i < orderdata.products.length; i++) {
+
+            let product = orderdata.products[i].productId;
+            let count = orderdata.products[i].count;
+
+       
+            await productSchema.updateOne({ _id: product }, { $inc: { quantity: count } })
+
+
+        }
+        res.json({ status: "success" });
+
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+
 
 
 const verifyPayment = async (req, res) => {
@@ -279,6 +320,7 @@ module.exports = {
     success,
     orderstatus,
     cancelorder,
-    verifyPayment
+    verifyPayment,
+    returnorders 
 
 }

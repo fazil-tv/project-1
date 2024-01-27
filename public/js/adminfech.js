@@ -47,3 +47,42 @@ function changeProductStatus(orderId, productId) {
 
 
 }
+
+
+
+            function cancelorder(x) {
+                const orderId = x;
+                console.log(orderId);
+                fetch('/orderstatus', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        orderId
+
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+
+
+                        if (data.status === "success") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Order Cancelled',
+
+                            });
+                        }
+
+                        window.location.reload();
+
+
+
+
+                    }).catch(error => {
+                        console.log(error);
+
+                    })
+            }
+

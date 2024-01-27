@@ -178,8 +178,6 @@ const updatestatus = async (req, res) => {
 
         await order.save();
         res.json({success:true});
-
-
     } catch (err) {
         console.log(err);
     }

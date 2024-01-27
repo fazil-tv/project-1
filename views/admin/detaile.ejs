@@ -294,7 +294,7 @@
                                                     <td class="">$<%= product.productId.price %>
                                                     </td>
 
-                                                    <%=console.log(product.productstatus,"hmmmmmmmmmk")%>
+                                                    
 
                                                     <% if (product.productstatus==="canceled" ) { %>
                                                         <td><span
@@ -318,9 +318,13 @@
                                                                    
 
 
-                                                                    <%}else{ %>
+                                                                    <%}else if(product.productstatus==="return"){ %>
                                                                         <td><span
-                                                                            class="badge rounded-pill alert-primary ">Placed</span>
+                                                                            class="badge rounded-pill alert-dark ">Return</span>
+                                                                    </td>
+                                                                    <%}else { %>
+                                                                        <td><span
+                                                                            class="badge rounded-pill alert-info ">Placed</span>
                                                                     </td>
                                                                     <%}%>
 
