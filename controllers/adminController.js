@@ -62,13 +62,13 @@ const orderdetaile = async (req, res) => {
     try {
         const id = req.query.id;
         console.log(id);
-        
+
         const orders = await orderSchema.findOne({ _id: id }).populate('products.productId');
 
         console.log(orders);
         const deliveryAddressObjectId = new mongoose.Types.ObjectId(orders.delivery_address);
         console.log(deliveryAddressObjectId);
-        const userAddress = await addressSchema.findOne(
+        const userAddress = await addressSchema.find(
             { 'address._id': deliveryAddressObjectId },
             { 'address.$': 1 }
         );
@@ -77,7 +77,7 @@ const orderdetaile = async (req, res) => {
         console.log(orders);
         console.log(userAddress);
 
-        res.render("detaile",{userAddress,orders});
+        res.render("detaile", { userAddress, orders });
     } catch (error) {
         console.log(error.message);
     }
@@ -160,6 +160,32 @@ const unblockUser = async (req, res) => {
 };
 
 
+const updatestatus = async (req, res) => {
+    try {
+        const orderId = req.body.orderId;
+        const productId = req.body.productId;
+        const newstatus = req.body.newstatus;
+
+        console.log("newstatus ", newstatus);
+        console.log("orderId", orderId);
+        console.log(" productId ", productId)
+
+        const order = await orderSchema.findOne({ _id: orderId });
+        const index = order.products.findIndex((item) => {
+            return item._id.toString() === productId;
+        });
+        order.products[index].productstatus =req.body.newstatus;
+
+        await order.save();
+        res.json({success:true});
+
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+
 module.exports = {
     adminverifyLogin,
     signup,
@@ -170,5 +196,6 @@ module.exports = {
     unblockUser,
     logout,
     orders,
-    orderdetaile
+    orderdetaile,
+    updatestatus
 }

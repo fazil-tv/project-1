@@ -61,6 +61,13 @@ adminRoute.get("/orders",adminController.orders);
 
 
 
+//updatestatus
+adminRoute.post('/updatestatus',adminController.updatestatus);
+
+
+
+
+
 // orderdetaile
 adminRoute.get("/orderdetailes",adminController.orderdetaile);
 

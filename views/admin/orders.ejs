@@ -202,41 +202,32 @@
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
-                                    <tr>
+                                    <tr class="text-center">
                                         <th>NO</th>
                                         <th scope="col">Id</th>
-                                        <th scope="col">Name</th>
+                                        <th scope="col">payment methode</th>
                                        
-                                        <th scope="col">Total</th>
+                    
                                         <th scope="col">Date</th>
                                         <th scope="col">Status</th>
                                     
                                         <th scope="col" class="text-end">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                  
-                                     
-                                    
+                                <tbody class="text-center">
                                     <% for (let i=0; i < cartData.length; i++) { %>
-                                        <% for (let j = 0; j < cartData[i].products.length; j++) { %>
+        
                                         <% console.log(cartData[i].products)%>
-                                    <tr>
-                                        
-                                            
+                                    <tr>        
                                             <td><b><%=i+1%></b></td>
                                             <td><%=cartData[i]._id%></td>
-                                            <td><%= cartData[i].products[j].productId.name %></td>
-                                            <td><%= cartData[i].products[j].productId.price %></td>
-                                         
-                                           
+                                            <td><%= cartData[i].payment%></td>
                                             <td>
-                                            <%=cartData[i].orderDate.toLocaleDateString('en-US', {
-                                                weekday: 'short' , year: 'numeric' , month: 'short' , day: 'numeric' })%></td>
-                                               
-
-                                    
-                                                
+                                                <%=cartData[i].orderDate.toLocaleDateString('en-US', {
+                                                    weekday: 'short' , year: 'numeric' , month: 'short' , day: 'numeric' })%>
+                                                </td>
+                                     
+                         
 
                                                 <% if (cartData[i].orderStatus === "canceled") { %>
                                                     <td><span class="badge rounded-pill alert-danger">Canceled</span></td>
@@ -253,7 +244,7 @@
                                           
                                     </tr>
                                     <%}%>
-                                    <%}%>
+                            
 
 
 

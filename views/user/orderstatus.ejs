@@ -23,6 +23,9 @@
     <!-- <link rel="stylesheet" href="/css/"> -->
 
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
     <link rel="stylesheet" href="/css/flaticon.css">
     <link rel="stylesheet" href="/css/icomoon.css">
     <link rel="stylesheet" href="/css/style.css">
@@ -178,41 +181,79 @@
                     <% orders.products.forEach(function(product, index) { %>
                         <%= console.log(product) %>
                             <div class="card mt-3">
-                                <div class="card-body ">
-                                    <div class="product-card d-flex justify-content-between">
-                                        <div class="product-image" style="border: 1px solid; width: 75px;">
-                                            <a href="/singleproduct?id=<%= product.productId._id %>" class="w-100">
-                                                <img src="/sharpimg/<%= product.productId.images.image1 %>"
-                                                    class="img-fluid d-block  w-100"
-                                                    
-                                                    alt="Colorlib Template">
-                                            </a>
-                                        </div>
+                                <div class="card-body pb-0">
+                                    <div class="product-card row">
+                                        <div class="col-lg-3 justify-content-center p-3">
 
-                                        <div>
-                                            <h5 style="position: relative ; top: 45%;">
 
+                                            <div class="product-image " style="border: 1px solid; width: 75px; float: left;">
+                                                <a href="/singleproduct?id=<%= product.productId._id %>" class="w-100">
+                                                    <img src="/sharpimg/<%= product.productId.images.image1 %>"
+                                                        class="img-fluid d-block  w-100" alt="Colorlib Template">
+                                                </a>
+                                            </div>
+
+                                            <div class="text-center ">
                                                 <%= product.productId.name %>
-                                            </h5>
+                                               
+                                           
+                                               
+                                    
+                                            </div>
+                                            <div class="text-center ">
+                                                Quantity :<%= product.count %>
+                                            </div>
+                                
+                                               
+
+                                                   
+
+                                            
+                                            <div class="text-center ">
+                                                <h6 class="rates">$ <%= product.price %>
+                                                </h6>
+
+                                            </div>
 
 
                                         </div>
-                                        <div style=" ">
-                                            <h6 style="position: relative ; top: 45%;">
-                                                <%= orders.orderStatus %>
-                                            </h6>
-                                        </div>
-                                        <div style="">
-                                            <h6 style="position: relative ; top: 45%;">
-                                                <%= product.count %>
-                                            </h6>
+                                        <div class="col-lg-6 p-3">
+                                            
+
 
                                         </div>
-                                        <div class="text-center ">
-                                            <h6 style="position: relative ; top: 45%;">$ <%= product.price %>
-                                            </h6>
+                                        
+                                        <div class="col-lg-3 p-3">
+                                            <div style=" ">
+                                                <h6 style="">
+                                                    <% if (orders.orderStatus==="canceled" ) { %>
+                                                        <div class="status-icon-cancelde"></div>
+                                                        <%= orders.orderStatus %>
+
+                                                            <p class="para">As per your request, your item has been
+                                                                cancelled</p>
+
+                                                            <% }else if(orders.orderStatus==="placed" ){ %>
+                                                                <div class="status-icon"></div>
+                                                                <%= orders.orderStatus %>
+                                                                    <p class="para">Your item has been delivered</p>
+                                                                    <%}%>
+
+                                                </h6>
+                                                <!-- <p><i class="fa-solid fa-star"></i> <a href="" class="rate">Rate &
+                                                        Review Product</a></p> -->
+
+                                            </div>
+                                            <div class="justify-content-center">
+                                                <button class="btn edit-btn" id="" onclick="cancelorder('<%=orders._id%>')">
+                                                    <i class="text-muted material-icons md-post_add"></i><i class="fa-solid fa-circle-xmark pr-2"></i>cancel Order
+                                                </button>
+                                            </div>
 
                                         </div>
+
+
+
                                     </div>
                                 </div>
                             </div>
@@ -226,7 +267,7 @@
 
                         <div class="pt-5 pb-4 me-1 d-flex justify-content-center">
                             <button class="btn btn-primary edit-btn" id="" onclick="cancelorder('<%=orders._id%>')">
-                                <i class="text-muted material-icons md-post_add"></i>cancel Order
+                                <i class="text-muted material-icons md-post_add"></i><i class="fa-solid fa-circle-xmark"></i>cancel Order
                             </button>
                         </div>
                         <% } %>
@@ -329,9 +370,11 @@
 
         <style>
             .edit-btn {
-                width: 30% !important;
+                padding: 5px;
+                /* width: 30% !important;
                 background-color: rgb(226, 140, 140) !important;
-                height: 50px !important;
+                height: 50px !important; */
+                color: rgb(29, 29, 217);
             }
         </style>
 

@@ -24,6 +24,10 @@ const orderSchema = new mongoose.Schema({
           ref: 'product',
           required: true
         },
+        productstatus:{
+          type:String,
+          required:true
+        },
         count: {
           type: Number,
           required: true

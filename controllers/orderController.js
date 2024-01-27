@@ -48,8 +48,21 @@ const checkoutPost = async (req, res) => {
     try {
 
         const userId = req.session.user_id;
+        console.log(userId, 'userr');
         const user = await userSchema.findOne({ _id: userId })
         const cartData = await cartSchema.findOne({ user: userId });
+
+        console.log(cartData.products,"llllllllllll");
+
+        // const cartData = await cartSchema.updateOne(
+        //     { user: userId },
+        //     { $set: { "cartData.products.$[].productStatus": "placed" } }
+        // );
+
+       
+
+       
+        console.log(cartData, "kmmmmm");
 
         const { jsonData } = req.body;
 
@@ -76,12 +89,30 @@ const checkoutPost = async (req, res) => {
         console.log("selectedaddress", selectedAddress);
         console.log("payment", selectedpayament);
 
+        // const products = cartData.products.map((val) => val.productStatus ==="placed");
+
+        // const products = cartData.products.forEach(product => {
+        //     product.productStatus = "placed";
+        // });
+
+        // const products = cartData.products.map(product => {
+        //     return { ..productStatus: "placed" };
+        // });
+
+        const orderItems = cartData.products.map((product) => ({
+            productId: product.productId,
+            count: product.count,
+            price: product.price,
+            totalPrice: product.totalPrice,
+            productstatus : (status === "pending") ? "pending" : "placed"
+          }));
+
 
         const order = new orderSchema({
             user: userId,
             delivery_address: selectedAddress,
             payment: selectedpayament,
-            products: cartData.products,
+            products: orderItems,
             subtotal: subtotel,
             orderStatus: status,
             orderDate: new Date(),
@@ -232,8 +263,8 @@ const verifyPayment = async (req, res) => {
             const addressStatus = await orderSchema.updateOne({ _id: order.receipt }, { $set: { orderStatus: "placed" } });
             console.log(addressStatus, "heeeyyyyy");
 
-            
-            await   cartSchema.deleteOne({ user: userId });
+
+            await cartSchema.deleteOne({ user: userId });
             res.json({ status: 'success', message: "product placed succesfully" });
 
         }

@@ -205,6 +205,48 @@ sup {
 }
 
 
+.status-icon{
+  height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: none;
+    border: 2px solid #26a541;
+    display: inline-block;
+    margin-right: 5px;
+    margin-left: 3px;
+   
+
+}
+.status-icon-cancelde{
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: none;
+  border: 2px solid #ff4d00;
+  display: inline-block;
+  margin-right: 5px;
+  margin-left: 3px;
+}
+.para{
+  font-size: 13px;
+  margin-top: 7px;
+  margin-bottom: 0;
+}
+.rates{
+  color: black;
+  font-size: 15px;
+}
+
+
+.fa-star{
+  color: rgb(10, 47, 156);
+  margin-right: 5px;
+}
+.rate{
+  color: blue !important;
+  font-size: 13px;
+}
+
 
 
 

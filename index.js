@@ -46,11 +46,7 @@ app.use(express.urlencoded({extended:true}))
 const userRoute = require('./routes/userRoute')
 app.use('/',userRoute)
 
-
 const adminRoute = require('./routes/adminRoute')
 app.use('/admin',adminRoute)
-
-
-
 
 app.listen(PORT,()=>console.log("server started http://localhost:5000"));
