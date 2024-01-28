@@ -92,6 +92,13 @@ const orderdetaile = async (req, res) => {
 
 
 
+
+
+
+
+
+
+
 //admin password verification
 const adminverifyLogin = async (req, res) => {
 
@@ -195,5 +202,5 @@ module.exports = {
     logout,
     orders,
     orderdetaile,
-    updatestatus
+    updatestatus,
 }

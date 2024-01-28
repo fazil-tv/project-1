@@ -218,7 +218,114 @@
 
 
                                         </div>
-                                        <div class="col-lg-6 p-3">
+                                        <div class="col-lg-6">
+
+                                            <!-- <div class="progress-track">
+                                                <ul id="progressbar">
+                                                    <li class="step0 active " id="step1">Ordered</li>
+                                                    <li class="step0 active text-center" id="step2">Shipped</li>
+                                                    <li class="step0 active text-right" id="step3">On the way</li>
+                                                    <li class="step0 text-right" id="step4">Delivered</li>
+                                                </ul>
+                                            </div> -->
+
+
+
+
+
+                                            <% if (product.productstatus==="canceled" ) { %>
+                                                <div class="progress-track">
+                                                    <ul id="progressbar">
+                                                        <li class="step0 active " id="step1">Ordered</li>
+                                                        <li class="step0 active " id="step2"></li>
+                                                        <li class="step0 active " id="step3"></li>
+                                                        <li class="step0 active  text-right" id="step4">Canceled</li>
+                                                    </ul>
+                                                </div>
+
+
+                                                <% }else if(product.productstatus==="placed" ){ %>
+                                                    <div class="progress-track">
+                                                        <ul id="progressbar">
+                                                            <li class="step0 active " id="step1">Ordered</li>
+                                                            <li class="step0  text-center" id="step2">Shipped</li>
+                                                            <li class="step0  text-right" id="step3">On the way
+                                                            </li>
+                                                            <li class="step0 text-right" id="step4">Delivered</li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <%}else if( product.productstatus==="Shipped" ){%>
+                                                        <div class="progress-track">
+                                                            <ul id="progressbar">
+                                                                <li class="step0 active " id="step1">Ordered</li>
+                                                                <li class="step0 active text-center" id="step2">Shipped
+                                                                </li>
+                                                                <li class="step0  text-right" id="step3">On the
+                                                                    way</li>
+                                                                <li class="step0 text-right" id="step4">Delivered</li>
+                                                            </ul>
+                                                        </div>
+
+                                                        <% }else if(product.productstatus==="Delivered" ){ %>
+
+                                                            <div class="progress-track">
+                                                                <ul id="progressbar">
+                                                                    <li class="step0 active " id="step1">Ordered</li>
+                                                                    <li class="step0 active text-center" id="step2">
+                                                                        Shipped</li>
+                                                                    <li class="step0 active text-right" id="step3">On
+                                                                        the way</li>
+                                                                    <li class="step0 active text-right" id="step4">Delivered
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <% }else if(product.productstatus==="return" ){ %>
+                                                                <div class="progress-track">
+                                                                    <ul id="progressbar">
+                                                                        <li class="step0 active " id="step1">Ordered</li>
+                                                                        <li class="step0 active text-center" id="step2">
+                                                                            Shipped</li>
+                                                                        <li class="step0 active text-right" id="step3">On
+                                                                            the way</li>
+                                                                        <li class="step0 active text-right" id="step4">Delivered
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+
+                                                                <%}else{ %>
+                                                                    <div class="progress-track">
+                                                                        <ul id="progressbar">
+                                                                            <li class="step0 active " id="step1">Ordered
+                                                                            </li>
+                                                                            <li class="step0 active text-center"
+                                                                                id="step2">Shipped</li>
+                                                                            <li class="step0 active text-right"
+                                                                                id="step3">On the way</li>
+                                                                            <li class="step0 text-right" id="step4">
+                                                                                Delivered</li>
+                                                                        </ul>
+                                                                    </div>
+
+                                                                    <%}%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -234,52 +341,67 @@
                                                             <p class="para">As per your request, your item has been
                                                                 cancelled</p>
 
-                                                            <% }else if(product.productstatus==="placed"){ %>
+                                                            <% }else if(product.productstatus==="placed" ){ %>
                                                                 <div class="status-icon"></div>
                                                                 <%=product.productstatus%>
                                                                     <p class="para">Your Order has been Placed</p>
                                                                     <div class="justify-content-center">
                                                                         <button class="btn edit-btn" id=""
                                                                             onclick="cancelorder('<%= product._id %>')">
-                                                                            <i class="text-muted material-icons md-post_add"></i><i
-                                                                                class="fa-solid fa-circle-xmark pr-2"></i>cancel Order
+                                                                            <i
+                                                                                class="text-muted material-icons md-post_add"></i><i
+                                                                                class="fa-solid fa-circle-xmark pr-2"></i>cancel
+                                                                            Order
                                                                         </button>
                                                                     </div>
-                                                                    <%}else if( product.productstatus==="Shipped"){%>
+                                                                    <%}else if( product.productstatus==="Shipped" ){%>
                                                                         <div class="status-icon-shiped"></div>
 
                                                                         <%= product.productstatus %>
-                                                                        <div class="justify-content-center">
-                                                                            <button class="btn edit-btn" id=""
-                                                                                onclick="cancelorder('<%= product._id %>')">
-                                                                                <i class="text-muted material-icons md-post_add"></i><i
-                                                                                    class="fa-solid fa-circle-xmark pr-2"></i>cancel Order
-                                                                            </button>
-                                                                        </div>
-                                                                        <% }else if(product.productstatus==="Delivered" ){ %>
-                                                                            <div class="status-icon-deliverd"></div>
-                                                                            <%=product.productstatus%>
-                        
                                                                             <div class="justify-content-center">
                                                                                 <button class="btn edit-btn" id=""
-                                                                                    onclick="returnorder('<%= product._id %>')">
-                                                                                    <i class="text-muted material-icons md-post_add"></i><i class="fa-solid fa-truck-arrow-right pr-2"></i>Return Order
+                                                                                    onclick="cancelorder('<%= product._id %>')">
+                                                                                    <i
+                                                                                        class="text-muted material-icons md-post_add"></i><i
+                                                                                        class="fa-solid fa-circle-xmark pr-2"></i>cancel
+                                                                                    Order
                                                                                 </button>
                                                                             </div>
-                        
-                                                                            <% }else if(product.productstatus==="return"){ %>
-                                                                                <div class="status-icon-return"></div>
+                                                                            <% }else
+                                                                                if(product.productstatus==="Delivered"
+                                                                                ){ %>
+                                                                                <div class="status-icon-deliverd"></div>
                                                                                 <%=product.productstatus%>
 
-                                                                                <p>no actions</p>
-                                                                                
-                                                                            <%}else{ %>
-                                                                                <div class="status-icon-out"></div>
-                                                                                <%=product.productstatus%>
+                                                                                    <div class="justify-content-center">
+                                                                                        <button class="btn edit-btn"
+                                                                                            id=""
+                                                                                            onclick="returnorder('<%= product._id %>')">
+                                                                                            <i
+                                                                                                class="text-muted material-icons md-post_add"></i><i
+                                                                                                class="fa-solid fa-truck-arrow-right pr-2"></i>Return
+                                                                                            Order
+                                                                                        </button>
+                                                                                    </div>
 
-                                                                                <p>no actions</p>
-                                                                                
-                                                                            <%}%>
+                                                                                    <% }else
+                                                                                        if(product.productstatus==="return"
+                                                                                        ){ %>
+                                                                                        <div class="status-icon-return">
+                                                                                        </div>
+                                                                                        <%=product.productstatus%>
+
+                                                                                            <p>no actions</p>
+
+                                                                                            <%}else{ %>
+                                                                                                <div
+                                                                                                    class="status-icon-out">
+                                                                                                </div>
+                                                                                                <%=product.productstatus%>
+
+                                                                                                    <p>no actions</p>
+
+                                                                                                    <%}%>
 
 
 
@@ -300,7 +422,7 @@
                                                         Review Product</a></p> -->
 
                                             </div>
-                                          
+
 
                                         </div>
 

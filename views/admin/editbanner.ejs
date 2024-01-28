@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Add Banner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/imgs/theme/favicon.svg" />
+    <!-- Template CSS -->
+    <!-- <link href="/assets/css/main.css" rel="stylesheet" type="text/css" /> -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <!-- font awsome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <div class="screen-overlay"></div>
+    <aside class="navbar-aside" id="offcanvas_aside">
+        <div class="aside-top">
+            <a href="index.html" class="brand-wrap">
+                <img src="/images/shous-logo.png" class="logo" alt="Nest Dashboard" />
+            </a>
+            <div>
+                <button class="btn btn-icon btn-aside-minimize"><i
+                        class="text-muted material-icons md-menu_open"></i></button>
+            </div>
+        </div>
+        <nav>
+            <ul class="menu-aside">
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/index">
+                        <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <!-- users                     -->
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/users">
+                        <i class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">users</span>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/category">
+                        <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">Category</span>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/product">
+                        <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Add product</span>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/orders">
+                        <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">Orders</span>
+                    </a>
+                </li>
+                <li class="menu-item active">
+                    <a class="menu-link" href="/admin/addbanner">
+                        <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">Banner</span>
+                    </a>
+                </li>
+
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="#">
+                        <i class="icon material-icons md-person"></i>
+                        <span class="text">Account</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="page-account-login.html">User login</a>
+                        <a href="page-account-register.html">User registration</a>
+                        <a href="page-error-404.html">Error 404</a>
+                    </div>
+
+            </ul>
+            <hr />
+            <ul class="menu-aside">
+                <li class="menu-item">
+                    <a class="menu-link" href="page-blank.html">
+                        <i class="icon material-icons md-local_offer"></i>
+                        <span class="text"> Starter page </span>
+                    </a>
+                </li>
+            </ul>
+            <br />
+            <br />
+        </nav>
+    </aside>
+    <main class="main-wrap">
+        <header class="main-header navbar">
+            <div class="col-search">
+                <form class="searchform">
+                    <div class="input-group">
+                        <input list="search_terms" type="text" class="form-control" placeholder="Search term" />
+                        <button class="btn btn-light bg" type="button"><i class="material-icons md-search"></i></button>
+                    </div>
+                    <datalist id="search_terms">
+                        <option value="Products"></option>
+                        <option value="New orders"></option>
+                        <option value="Apple iphone"></option>
+                        <option value="Ahmed Hassan"></option>
+                    </datalist>
+                </form>
+            </div>
+            <div class="col-nav">
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"><i
+                        class="material-icons md-apps"></i></button>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon" href="#">
+                            <i class="material-icons md-notifications animation-shake"></i>
+                            <span class="badge rounded-pill">3</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="requestfullscreen nav-link btn-icon"><i
+                                class="material-icons md-cast"></i></a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage"
+                            aria-expanded="false"><i class="material-icons md-public"></i></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
+                            <a class="dropdown-item text-brand" href="#"><img src="assets/imgs/theme/flag-us.png"
+                                    alt="English" />English</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-fr.png"
+                                    alt="Français" />Français</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-jp.png"
+                                    alt="Français" />日本語</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-cn.png"
+                                    alt="Français" />中国人</a>
+                        </div>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount"
+                            aria-expanded="false"> <img class="img-xs rounded-circle"
+                                src="assets/imgs/people/avatar-2.png" alt="User" /></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit
+                                Profile</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account
+                                Settings</a>
+                            <a class="dropdown-item" href="#"><i
+                                    class="material-icons md-account_balance_wallet"></i>Wallet</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help
+                                center</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="#"><i
+                                    class="material-icons md-exit_to_app"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <section class="content-main">
+            <div class="row">
+                <div class="col-9">
+                    <div class="content-header">
+                        <h2 class="content-title">Add Banner</h2>
+                    </div>
+                </div>
+            </div>
+            <section>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h4>Basic</h4>
+                            </div>
+                            <div class="card-body">
+                                <form enctype="multipart/form-data" action="/admin/addbanner" method="post">
+                                    <div class="form-group">
+                                        <label for="title">Banner Title</label>
+                                        <input type="text" class="form-control" id="title" name="title" value="<%=bannerData.title%>"
+                                            placeholder="Enter banner title" required >
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description">Banner Description</label>
+                                        <input type="text" class="form-control" id="description" name="description" value="<%=bannerData.description%>"
+                                            placeholder="Enter banner description" required   >
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="targeturl">Target URL</label>
+                                        <input type="text" class="form-control" id="targeturl" name="targeturl" value="<%=bannerData.targeturl%>"
+                                            placeholder="Enter target URL" required>
+                                    </div>
+                                    <div class="card-body row">
+                                        
+                                        <div class="input-upload col-lg-3">
+                                            <div class="form-group">
+                                                <h5>image 1</h5>
+                                                <a style="display: none;" class="closbutton"
+                                                    onclick="cancelImage('imageinput1', 'displayimg1')"><i
+                                                        class="fa-solid fa-circle-xmark"></i></a>
+                                                <img class="img-display" id="displayimg1" src="/assets/images/banner/<%= bannerData.images %>"
+                                                    alt="" />
+                                                <label for="imageinput1"></label>
+                                                <input type="file" class="form-control" id="imageinput1" name="image"
+                                                    accept="image/*">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <a href="/admin/banner" class="btn btn-primary">
+                                            <span class="text">Back</span>
+                                        </a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <script>
+
+
+
+
+
+
+            function displayimg(inputId, displayId) {
+                const fileInput = document.getElementById(inputId);
+                const file = fileInput.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const imageElement = document.getElementById(displayId);
+                        imageElement.src = e.target.result;
+
+                        const cancelButton = document.querySelector(`[onclick="cancelImage('${inputId}', '${displayId}')"]`);
+                        cancelButton.style.display = 'inline-block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+
+            }
+            function cancelImage(inputId, displayId) {
+                const fileInput = document.getElementById(inputId);
+                fileInput.value = '';
+                const imageElement = document.getElementById(displayId);
+                imageElement.src = '/images/upload-img.svg';
+
+                const cancelButton = document.querySelector(`[onclick="cancelImage('${inputId}', '${displayId}')"]`);
+                cancelButton.style.display = 'none';
+
+            }
+
+            document.getElementById('imageinput1').addEventListener('change', function (event) {
+                displayimg('imageinput1', 'displayimg1');
+
+            })
+            document.getElementById('imageinput2').addEventListener('change', function (event) {
+                displayimg('imageinput2', 'displayimg2');
+            })
+            document.getElementById('imageinput3').addEventListener('change', function (event) {
+                displayimg('imageinput3', 'displayimg3');
+            })
+            document.getElementById('imageinput4').addEventListener('change', function (event) {
+                displayimg('imageinput4', 'displayimg4');
+            })
+
+
+        </script>
+
+        <!-- content-main end// -->
+        <footer class="main-footer font-xs">
+            <div class="row pb-30 pt-15">
+                <div class="col-sm-6">
+                    <div class="text-sm-end">All rights reserved</div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+</body>
+
+<script src="/js/adminfech.js"></script>
+
+
+</html>

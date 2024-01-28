@@ -6,9 +6,11 @@ const adminRoute = express();
 const adminController = require("../controllers/adminController");
 const productController = require('../controllers/productController')
 const categoryController = require('../controllers/categoryController');
+const bannerController = require('../controllers/bannerController');
 
 const multer = require("../middlewares/multer");
 const auth = require('../middlewares/authAdmin')
+
 
 
 
@@ -70,5 +72,22 @@ adminRoute.post('/updatestatus',adminController.updatestatus);
 
 // orderdetaile
 adminRoute.get("/orderdetailes",adminController.orderdetaile);
+
+
+// banner lode
+adminRoute.get('/banner',auth.isLogin,bannerController.banner);
+
+
+// add banner
+adminRoute.get('/addbanner',auth.isLogin,bannerController.addbanner);
+adminRoute.post('/addbanner',multer.uploadBanner.single('image'),bannerController.addbannerpost);
+
+// edit banner
+adminRoute.get('/editbanner',auth.isLogin,bannerController.editbanner);
+adminRoute.post('/editbanner',auth.isLogin,bannerController.editbannerpost);
+
+
+
+
 
 module.exports = adminRoute;
