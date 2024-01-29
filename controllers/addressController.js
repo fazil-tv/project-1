@@ -84,7 +84,6 @@ const deletaddress = async (req,res)=>{
         res.json({add:true});
 
     } catch (error) {
-        
         console.log(error);
     }
 }

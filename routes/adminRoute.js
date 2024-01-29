@@ -84,9 +84,10 @@ adminRoute.post('/addbanner',multer.uploadBanner.single('image'),bannerControlle
 
 // edit banner
 adminRoute.get('/editbanner',auth.isLogin,bannerController.editbanner);
-adminRoute.post('/editbanner',auth.isLogin,bannerController.editbannerpost);
+adminRoute.post('/editbanner',multer.uploadBanner.single('image'),auth.isLogin,bannerController.editbannerpost);
 
 
+adminRoute.patch('/listbanner',auth.isLogin,bannerController.listbanner);
 
 
 

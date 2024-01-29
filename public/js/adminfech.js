@@ -81,53 +81,44 @@ function cancelorder(x) {
 
 
 
-// function addbanner() {
-//     try {
+function blockButton(bannerId){
+    try {
 
-//         const title = document.getElementById("title").value;
-//         const description = document.getElementById("description").value;
-//         const targeturl = document.getElementById("targeturl").value;
-//         const image1 = document.getElementById("imageinput1").value;
-//         const image2 = document.getElementById("imageinput2").value;
+        // const title = document.getElementById("title").value;
+        // const description = document.getElementById("description").value;
+        // const targeturl = document.getElementById("targeturl").value;
+        // const image1 = document.getElementById("imageinput1").value;
+        // const image2 = document.getElementById("imageinput2").value;
 
-//         // const title = req.body.title;
-//         // const description = req.body.description;
-//         // // image: req.file.originalname
-//         // const targeturl = req.body.targeturl;
+        // const title = req.body.title;
+        // const description = req.body.description;
+        // // image: req.file.originalname
+        // const targeturl = req.body.targeturl;
 
-//         console.log(title, description, targeturl,image1,image2);
 
-//         fetch('/admin/addbanner', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({
-//                 title,
-//                 description,
-//                 targeturl,
-//                 image1,
-//                 image2
-//             })
-//         })
-//             .then(response => response.json())
-//             .then(data => {
+        fetch('/admin/listbanner', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+               bannerId 
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
 
-//                 if (data.status === "success") {
-//                     Swal.fire({
-//                         icon: 'success',
-//                         title: 'Order Cancelled',
+                if (data.status === true) {
+                 
+                window.location.reload();
+                }
 
-//                     });
-//                 }
 
-//                 window.location.reload();
+            }).catch(error => {
+                console.log(error);
 
-//             }).catch(error => {
-//                 console.log(error);
+            })
+    } catch (error) {
 
-//             })
-//     } catch (error) {
-
-//     }
-// }
+    }
+}
