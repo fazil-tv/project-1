@@ -81,36 +81,25 @@ function cancelorder(x) {
 
 
 
-function blockButton(bannerId){
+function blockButton(bannerId) {
     try {
-
-        // const title = document.getElementById("title").value;
-        // const description = document.getElementById("description").value;
-        // const targeturl = document.getElementById("targeturl").value;
-        // const image1 = document.getElementById("imageinput1").value;
-        // const image2 = document.getElementById("imageinput2").value;
-
-        // const title = req.body.title;
-        // const description = req.body.description;
-        // // image: req.file.originalname
-        // const targeturl = req.body.targeturl;
-
-
         fetch('/admin/listbanner', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-               bannerId 
+                bannerId
             })
         })
             .then(response => response.json())
             .then(data => {
 
-                if (data.status === true) {
-                 
-                window.location.reload();
+                if (data.status === true || data.status === false) {
+
+                    window.location.reload();
+                    // $('#relode-div').load('/detaile #relode-div');
+
                 }
 
 

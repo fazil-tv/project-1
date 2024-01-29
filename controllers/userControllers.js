@@ -12,6 +12,7 @@ const addressSchema = require("../model/addressModel");
 const { log } = require("console");
 const categorySchema = require("../model/categoryModel");
 const orderSchema = require('../model/orderModel');
+const bannerSchema = require("../model/bannerModel");
 
 
 
@@ -256,7 +257,9 @@ const indexhome = async (req, res) => {
     try {
         const product = await productSchema.find({}).populate('category')
 
-        res.render("indexhome", { user: req.session.user_id, product: product });
+        const bannerData = await bannerSchema.find({});
+
+        res.render("indexhome", { user: req.session.user_id, product: product ,  bannerData});
     } catch (error) {
         console.log(error.message);
     }

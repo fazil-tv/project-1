@@ -79,53 +79,59 @@
 	<!-- END nav -->
 
 	<section id="home-section" class="hero">
-		<div class="home-slider owl-carousel">
-			<div class="slider-item js-fullheight">
-				<div class="overlay"></div>
-				<div class="container-fluid p-0">
-					<div class="row d-md-flex no-gutters slider-text align-items-center justify-content-end"
-						data-scrollax-parent="true">
-						<img class="one-third order-md-last img-fluid" src="images/bg_1.png" alt="">
-						<div class="one-forth d-flex align-items-center ftco-animate"
-							data-scrollax=" properties: { translateY: '70%' }">
-							<div class="text">
-								<span class="subheading">#New Arrival</span>
-								<div class="horizontal">
-									<h1 class="mb-4 mt-3">Shoes Collection 2019</h1>
-									<p class="mb-4">A small river named Duden flows by their place and supplies it with
-										the necessary regelialia. It is a paradisematic country.</p>
+		<% for (let i=0; i < bannerData.length; i++) { %>
 
-									<p><a href="#" class="btn-custom">Discover Now</a></p>
+			<%if (bannerData[i].is_blocked) { %>
+				<div class="home-slider owl-carousel">
+					<div class="slider-item js-fullheight">
+						<div class="overlay"></div>
+						<div class="container-fluid p-0">
+							<div class="row d-md-flex no-gutters slider-text align-items-center justify-content-end"
+								data-scrollax-parent="true">
+								<img class="one-third order-md-last img-fluid" src="/assets/images/banner/<%= bannerData[i].images %>" alt="">
+								<div class="one-forth d-flex align-items-center ftco-animate"
+									data-scrollax=" properties: { translateY: '70%' }">
+									<div class="text">
+										<span class="subheading">#New Arrival</span>
+										<div class="horizontal">
+											<h1 class="mb-4 mt-3"><%=bannerData[i].title%></h1>
+											<p class="mb-4"><%=bannerData[i]. description%></p>
+
+											<p><a href="<%=bannerData[i].targeturl%>" class="btn-custom">Discover Now</a></p>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
+					<%}%>
+						<%}%>
 
-			<div class="slider-item js-fullheight">
-				<div class="overlay"></div>
-				<div class="container-fluid p-0">
-					<div class="row d-flex no-gutters slider-text align-items-center justify-content-end"
-						data-scrollax-parent="true">
-						<img class="one-third order-md-last img-fluid" src="images/bg_2.png" alt="">
-						<div class="one-forth d-flex align-items-center ftco-animate"
-							data-scrollax=" properties: { translateY: '70%' }">
-							<div class="text">
-								<span class="subheading">#New Arrival</span>
-								<div class="horizontal">
-									<h1 class="mb-4 mt-3">New Shoes Winter Collection</h1>
-									<p class="mb-4">A small river named Duden flows by their place and supplies it with
-										the necessary regelialia. It is a paradisematic country.</p>
+							<!-- <div class="slider-item js-fullheight">
+								<div class="overlay"></div>
+								<div class="container-fluid p-0">
+									<div class="row d-flex no-gutters slider-text align-items-center justify-content-end"
+										data-scrollax-parent="true">
+										<img class="one-third order-md-last img-fluid" src="images/bg_2.png" alt="">
+										<div class="one-forth d-flex align-items-center ftco-animate"
+											data-scrollax=" properties: { translateY: '70%' }">
+											<div class="text">
+												<span class="subheading">#New Arrival</span>
+												<div class="horizontal">
+													<h1 class="mb-4 mt-3">New Shoes Winter Collection</h1>
+													<p class="mb-4">A small river named Duden flows by their place and
+														supplies
+														it with
+														the necessary regelialia. It is a paradisematic country.</p>
 
-									<p><a href="#" class="btn-custom">Discover Now</a></p>
+													<p><a href="#" class="btn-custom">Discover Now</a></p>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
-							</div>
-						</div>
-					</div>
+							</div> -->
 				</div>
-			</div>
-		</div>
 	</section>
 
 	<section class="ftco-section ftco-no-pt ftco-no-pb">
@@ -192,7 +198,9 @@
 							<div class="product d-flex flex-column">
 								<a href="/singleproduct?id=<%=product._id%>" class="img-prod"><img class="img-fluid"
 										src="/sharpimg/<%= product.images.image1%>" alt="Colorlib Template">
-									<span class="status"><%=product.offer%>% Off</span>
+									<span class="status">
+										<%=product.offer%>% Off
+									</span>
 									<div class="overlay"></div>
 								</a>
 								<div class="text py-3 pb-4 px-3">
@@ -210,7 +218,9 @@
 											</p>
 										</div>
 									</div>
-									<h3><a href="#"><%= product.name %></a></h3>
+									<h3><a href="#">
+											<%= product.name %>
+										</a></h3>
 									<div class="pricing">
 										<p class="price"><span class="mr-2 price-dc">$120.00</span><span
 												class="price-sale">₹<%=product.price%></span></p>
@@ -227,8 +237,8 @@
 						<%}%>
 							<% }); %>
 
-				
-		</div>
+
+			</div>
 	</section>
 
 

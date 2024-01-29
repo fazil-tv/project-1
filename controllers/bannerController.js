@@ -110,13 +110,15 @@ const listbanner = async (req, res) => {
         bannerDatas.is_blocked = false;
         console.log(bannerDatas);
 
-        
+        res.json({ status: false });
+
 
 
     } else {
         bannerDatas.is_blocked = true;
         console.log(bannerDatas);
-
+        
+        res.json({ status: true });
 
     }
     await bannerDatas.save()
