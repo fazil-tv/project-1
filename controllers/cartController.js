@@ -46,7 +46,7 @@ const getcart = async (req, res) => {
         const productdata = await productSchema.findById(productId);
         const cartproduct = await cartSchema.findOne({ user: userId, 'products.productId': productId });
         const productprice = productdata.price;
-        const productcount = productdata.quantity
+        const productcount = productdata.quantity;
         console.log(cartproduct);
 
         if (cartproduct) {

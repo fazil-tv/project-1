@@ -1151,3 +1151,98 @@ function returnorder(x) {
         })
 }
 
+
+
+function addwishlist(productId){
+    try {
+        fetch('/getwishlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                productId
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+
+                if(data.status){
+                    console.log("failed")
+                    Swal.fire({
+                        icon: 'removed',
+                    });
+                     window.location.reload();
+
+
+
+                }else{
+                    console.log("added")
+                    Swal.fire({
+                        icon: 'success',
+                    });
+                     window.location.reload();                
+
+                }
+
+                    // window.location.reload();
+                    // $('#relode-div').load('/detaile #relode-div');
+
+                
+            }).catch(error => {
+                console.log(error);
+
+            })
+    } catch (error) {
+
+    }
+}
+
+
+function removewishlist(productId){
+    try {
+        fetch('/removewishlist', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                productId
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+
+                if(data.status){
+                    console.log("failed")
+                    Swal.fire({
+                        icon: 'removed',
+                    });
+                     window.location.reload();
+
+
+
+                }else{
+                    console.log("added")
+                    Swal.fire({
+                        icon: 'success',
+                    });
+                     window.location.reload();                
+
+                }
+
+                    // window.location.reload();
+                    // $('#relode-div').load('/detaile #relode-div');
+
+                
+            }).catch(error => {
+                console.log(error);
+
+            })
+    } catch (error) {
+
+    }
+}
+
+
+

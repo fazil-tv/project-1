@@ -14,7 +14,11 @@ const checkoutController = require("../controllers/checkoutController");
 
 const orderController = require('../controllers/orderController');
 
+const wishlistController = require('../controllers/wishlistController');
+
+
 const userauth = require ('../middlewares/authUser');
+
 
 userRoute.set('view engine', 'ejs')
 userRoute.set('views', './views/user')
@@ -170,14 +174,15 @@ userRoute.delete('/orderstatus',orderController.cancelorder);
 //return order
 userRoute.delete('/returnorder',orderController.returnorders);
 
-
-
 userRoute.post('/verifyPayments',orderController.verifyPayment );
 
+// wish list
+userRoute.get('/wishlist', userauth.isLogin,wishlistController.wishlist);
 
+userRoute.post('/getwishlist', userauth.isLogin, wishlistController.getwishlist);
 
-
-
+// remove wishlist
+userRoute.patch('/removewishlist', userauth.isLogin, wishlistController.removewishlist);
 
 
 module.exports = userRoute;

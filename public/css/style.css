@@ -13278,6 +13278,31 @@ h5,
   font-size: 12px;
   z-index: 1;
 }
+.statuswishlist{
+  padding: 10px 1px;
+  color: #000000;
+  font-weight: 400;
+  /* background: #dbcc8f; */
+  /* -webkit-writing-mode: vertical-lr;
+  -ms-writing-mode: tb-lr;
+  writing-mode: vertical-lr;
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg); */
+  /* text-orientation: sideways; */
+  text-align: end;
+  text-orientation: sideways;
+  margin: 0rem;
+  position: absolute;
+  top: 0;
+  left: 90%;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 20px;
+  z-index: 1;
+}
+
+
 
 .product .img-prod img {
   -webkit-transform: scale(1);

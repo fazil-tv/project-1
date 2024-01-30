@@ -30,29 +30,6 @@
 </head>
 
 <body class="goto-here">
-	<div class="py-1 bg-black">
-		<div class="container">
-			<div class="row no-gutters d-flex align-items-start align-items-center px-md-0">
-				<div class="col-lg-12 d-block">
-					<div class="row d-flex">
-						<div class="col-md pr-4 d-flex topper align-items-center">
-							<div class="icon mr-2 d-flex justify-content-center align-items-center"><span
-									class="icon-phone2"></span></div>
-							<span class="text">+ 1235 2355 98</span>
-						</div>
-						<div class="col-md pr-4 d-flex topper align-items-center">
-							<div class="icon mr-2 d-flex justify-content-center align-items-center"><span
-									class="icon-paper-plane"></span></div>
-							<span class="text">youremail@email.com</span>
-						</div>
-						<div class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right">
-							<span class="text">3-5 Business days delivery &amp; Free Returns</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
 			<a class="navbar-brand" href="index.html">Minishop</a>
@@ -87,7 +64,7 @@
 	<!-- END nav -->
 
 
-	<div class="hero-wrap hero-bread" style="background-image: url('images/bg_6.jpg');">
+	<div class="hero-wrap hero-bread" style="background-image: url('/images/about-heading.webp');">
 		<div class="container">
 			<div class="row no-gutters slider-text align-items-center justify-content-center">
 				<div class="col-md-9 ftco-animate text-center">
@@ -102,7 +79,7 @@
 		<div class="container" id="checkout-relode">
 			<div class="row">
 				<div class="col-md-12 " id="cart-relod-divs">
-					<% if (cartData===null||cartData.products.length==0) { %>
+					<% if (wishlist===null||wishlist.product.length==0) { %>
 						<div class="empty-cart">
 							<h5 class="empty-head ">empty cart</h5>
 							<img src="/images/9960436.jpg" alt="" class="cart-img">
@@ -119,22 +96,22 @@
 											<th>Product</th>
 											<th>Stock</th>
 											<th>Price</th>
-											<th>Quantity</th>
-											<th>Total</th>
+											<th></th>
+											
 										</tr>
 									</thead>
 									<tbody class="">
-										<% cartData.products.forEach(function(product, index) { %>
+										<% wishlist.product.forEach(function(product, index) { %>
 
 											<tr class="text-center">
 												<td class="product-remove"><a
-														onclick="removecart('<%=product._id %>')"><span
+														onclick="removewishlist('<%=product._id %>')"><span
 															class="ion-ios-close"></span></a>
 												</td>
 
 												<td class="image-prod">
 													<div class="img-cart">
-														
+		
 														<img src="/sharpimg/<%= product.productId.images.image1%>"
 															alt="" class="w-100 h-100">
 													</div>
@@ -165,117 +142,24 @@
 																<td class="price">$<%=product.productId.price%>
 																</td>
 
-																<td class="quantity w-0">
-																	<div class="input-group w-0">
-																		<span class="input-group-btn mr-2">
-																			<button type="button"
-																				class="quantity-left-minus btn decrease-quantity"
-																				onclick=" updateQuantity('<%=product.productId._id %>',-1)">
-																				<i class="ion-ios-remove"></i>
-																			</button>
-																		</span>
-																		<input type="number" name="quantity" readonly
-																			class="quantity form-control input-number"
-																			value="<%=product.count %>">
-																		<span class="input-group-btn ml-2">
-																			<button type="button"
-																				class="quantity-right-plus btn increase-quantity"
-																				data-type="plus" data-field=""
-																				onclick="updateQuantity('<%=product.productId._id%>',1)">
-																				<i class="ion-ios-add"></i>
-																			</button>
-																		</span>
-																	</div>
-
-																	<!-- <div class="input-group mb-3 d-flex">
-																		<button class="input-btn decrease-quantity" type="button" onclick=" decreasequantity('<%=product.productId._id %>','<%=product.productId.price %>','<%= product.productId.quantity %>')">-</button>
-																		<input  type="number" name="quantity" disabled 
-																			class="quantity form-control input-number" value="1" min="1" maxlength="5" id="quantity-display<%=product.productId._id %>"
-																			max="5">
-				
-																			<button class="input-btn increase-quantity" onclick="increasequantity('<%=product.productId._id%>','<%=product.productId.price %>','<%= product.productId.quantity %>')">+</button>
-																	</div> -->
-
-																	<!-- <div class="input-group mb-3 d-flex">
-																		<button class="input-btn decrease-quantity" type="button" onclick="decreasequantity('<%=product.productId._id %>','<%=product.productId.price %>','<%= product.productId.quantity %>')">-</button>
-																		<input type="number" name="quantity" class="quantity form-control input-number" value="1" min="1" max="<%= product.productId.quantity %>">
-																		<button class="input-btn increase-quantity" type="button"  onclick="increasequantity('<%=product.productId._id%>','<%=product.productId.price %>','<%= product.productId.quantity %>')">+</button>
-																	</div> -->
-
+																<td>
+																	<%=console.log("kkkkkkkkkkkkk",product.
+																	productId._id,"jjjjjjjjjjjjjjk")%>
+																	<p class="bottom-area d-flex px-3">
+																		<a type="button" class="add-to-cart text-center py-2 mr-1" onclick="addcart('<%=product.productId._id%>')"><span>Add to
+																				cart <i class="ion-ios-add ml-1"></i></span></a>
+																				</p>
 																</td>
 
-
-
-
-
-																<td class="total  cart-totals "
-																	id="total<%=product.productId._id%>">
-																	<%=product.totalPrice%>
-																</td>
+																
 											</tr>
 											<% }); %>
 									</tbody>
 								</table>
 							</div>
-							
+							<% }; %>
 				</div>
 			</div>
-
-				<div class="row justify-content-start">
-					<div class="col col-lg-3  col-md-6 mt-5 cart-wrap"></div>
-					<div class="col col-lg-6 col-md-6 mt-5 cart-wrap">
-						<div class="cart-total mb-3">
-							<h3>Cart Totals</h3>
-							<p class="d-flex">
-								<span>Subtotal</span>
-								<span id="subtotel-amount">
-			
-									<% let subtotel = 0 %>
-
-									<% for (let j = 0; j < cartData.products.length; j++) { %>
-										<% subtotel += cartData.products[j].totalPrice %>
-									<% } %>
-									
-									$ <%= subtotel %>
-									
-
-								</span>
-							</p>
-							
-							<p class="d-flex">
-								<span>Delivery</span>
-								<span>$0.00</span>
-							</p>
-							<p class="d-flex">
-								<span>Discount</span>
-								<span>$0.00</span>
-							</p>
-							<hr>
-
-							<p class="d-flex total-price">
-								<span>Total</span>
-								<!-- <span>$17.60</span> -->
-								<span id="subtotel-amount">
-									
-									<% let totalprice=0 %>
-
-									<% for (let i=0; i < cartData.products.length; i++) { %>
-										<% totalprice += cartData.products[i].totalPrice %>
-											<% } %>
-
-											$ <%= totalprice%>
-								</span>
-							</p>
-						</div>
-						<p class="text-center"><a href="/checkout" class="btn btn-primary py-3 px-4">Proceed to
-								Checkout</a></p>
-					</div>
-				</div>
-				<div class="col col-lg-3  col-md-6 mt-5 cart-wrap"></div>
-
-
-				<%}%>
-
 		</div>
 	</section>
 
