@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>AddCategory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/imgs/theme/favicon.svg" />
+    <!-- Template CSS -->
+    <!-- <link href="/assets/css/main.css" rel="stylesheet" type="text/css" /> -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="screen-overlay"></div>
+    <aside class="navbar-aside" id="offcanvas_aside">
+        <div class="aside-top">
+            <a href="index.html" class="brand-wrap">
+                <img src="assets/imgs/theme/logo.svg" class="logo" alt="Nest Dashboard" />
+            </a>
+            <div>
+                <button class="btn btn-icon btn-aside-minimize"><i
+                        class="text-muted material-icons md-menu_open"></i></button>
+            </div>
+        </div>
+        <nav>
+            <ul class="menu-aside">
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/index">
+                        <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="/admin/users">
+                        <i class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">users</span>
+                    </a>
+
+                </li>
+                <li class="menu-item has-submenu active">
+                    <a class="menu-link" href="/admin/category">
+                        <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">Category</span>
+                    </a>
+                </li>
+
+                <li class="menu-item has-submenu ">
+                    <a class="menu-link" href="/admin/product">
+                        <i class="icon material-icons md-add_box"></i>
+                        <span class="text">product</span>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/orders">
+                        <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Orders</span>
+                    </a>
+                </li>
+
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="#">
+                        <i class="icon material-icons md-person"></i>
+                        <span class="text">Account</span>
+                    </a>
+                </li>
+
+            </ul>
+            <hr />
+            <ul class="menu-aside">
+                <li class="menu-item">
+                    <a class="menu-link" href="page-blank.html">
+                        <i class="icon material-icons md-local_offer"></i>
+                        <span class="text"> Starter page </span>
+                    </a>
+                </li>
+            </ul>
+            <br />
+            <br />
+        </nav>
+    </aside>
+    <main class="main-wrap">
+        <header class="main-header navbar">
+            <div class="col-search">
+                <form class="searchform">
+                    <div class="input-group">
+                        <input list="search_terms" type="text" class="form-control" placeholder="Search term" />
+                        <button class="btn btn-light bg" type="button"><i class="material-icons md-search"></i></button>
+                    </div>
+                    <datalist id="search_terms">
+                        <option value="Products"></option>
+                        <option value="New orders"></option>
+                        <option value="Apple iphone"></option>
+                        <option value="Ahmed Hassan"></option>
+                    </datalist>
+                </form>
+            </div>
+            <div class="col-nav">
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"><i
+                        class="material-icons md-apps"></i></button>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon" href="#">
+                            <i class="material-icons md-notifications animation-shake"></i>
+                            <span class="badge rounded-pill">3</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="requestfullscreen nav-link btn-icon"><i
+                                class="material-icons md-cast"></i></a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage"
+                            aria-expanded="false"><i class="material-icons md-public"></i></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
+                            <a class="dropdown-item text-brand" href="#"><img src="assets/imgs/theme/flag-us.png"
+                                    alt="English" />English</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-fr.png"
+                                    alt="Français" />Français</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-jp.png"
+                                    alt="Français" />日本語</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-cn.png"
+                                    alt="Français" />中国人</a>
+                        </div>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount"
+                            aria-expanded="false"> <img class="img-xs rounded-circle"
+                                src="assets/imgs/people/avatar-2.png" alt="User" /></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit
+                                Profile</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account
+                                Settings</a>
+                            <a class="dropdown-item" href="#"><i
+                                    class="material-icons md-account_balance_wallet"></i>Wallet</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help
+                                center</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="#"><i
+                                    class="material-icons md-exit_to_app"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <section class="content-main">
+            <div class="row">
+                <div class="col-9">
+                    <div class="content-header">
+                        <h2 class="content-title">AddCoupon</h2>
+                    </div>
+                </div>
+            </div>
+            <section>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h4>Basic</h4>
+                            </div>
+                            <p id="error-messages" style="text-align: center; color: red; margin-top: 5px;" ></p>
+
+                            <div class="card-body">
+
+                                <p id="added" style="text-align: center; color: red;"></p>
+
+                                <p id="invalid" style="text-align: center; color: red; "></p>
+                                <form class="row">
+                                    <div class="mb-4 col-lg-6">
+                                        <label for="product_name" class="form-label">Coupon name</label>
+                                        <input type="text" placeholder="Type here" name="couponname"
+                                            class="form-control " id="couponname" />
+                                        <p id="couponname-e" style="text-align: center; color: red;"></p>
+
+                                    </div>
+                                    <div class="mb-4 col-lg-6">
+                                        <label class="form-label" id="labelu">Coupon code</label>
+                                        <input type="text" name="couponCode" placeholder="Type here"
+                                            class="form-control " id="couponCode" />
+                                        <p id="couponCode-e" style="text-align: center; color: red;"></p>
+
+                                    </div>
+                                    <div class="mb-4 col-lg-6">
+                                        <label class="form-label" id="labelu">Discount Percentage</label>
+                                        <input type="text" name="DiscountPercentage" placeholder="Type here"
+                                            class="form-control " id="DiscountPercentage" />
+                                        <p id="DiscountPercentage-e" style="text-align: center; color: red;"></p>
+
+
+                                    </div>
+                                    <div class="mb-4 col-lg-6">
+                                        <label class="form-label" id="labelu">Max Discount</label>
+                                        <input type="text" name="MaxDiscount" placeholder="Type here"
+                                            class="form-control " id="MaxDiscount" />
+                                        <p id="MaxDiscount-e" style="text-align: center; color: red;">
+                                        </p>
+
+                                    </div>
+                                    <div class="mb-4 col-lg-6">
+                                        <label class="form-label" id="labelu">Activate Date</label>
+                                        <input type="date" name="ActivateDate" placeholder="Type here"
+                                            class="form-control " id="ActivateDate" />
+                                            <p id="ExpiryDate-e" style="text-align: center; color: red;"></p>
+                                        </p>
+
+                                    </div>
+                                    <div class="mb-4 col-lg-6">
+                                        <label class="form-label" id="labelu">Expiry Date</label>
+                                        <input type="date" min="new Date()" name="ExpiryDate" placeholder="Type here"
+                                            class="form-control " id="ExpiryDate" />
+                                            <p id="ActivateDate-e" style="text-align: center; color: red">
+
+                                       
+
+                                    </div>
+                                    <div class="mb-4 col-lg-6">
+                                        <label class="form-label" id="labelu">Criteria-Amount</label>
+                                        <input type="text" name="CriteriaAmount" placeholder="Type here"
+                                            class="form-control " id="CriteriaAmount" />
+                                        <p id="CriteriaAmount-e" style="text-align: center; color: red;">
+                                        </p>
+
+                                    </div>
+                                    <div class="pt-4 d-flex justify-content-center">
+                                        <button type="button" class="btn btn-primary" onclick="addCouponValidation()">
+                                            <i class="text-muted material-icons md-post_add"></i>submit
+                                        </button>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- content-main end// -->
+        <footer class="main-footer font-xs">
+            <div class="row pb-30 pt-15">
+                <div class="col-sm-6">
+                    <div class="text-sm-end">All rights reserved</div>
+                </div>
+            </div>
+        </footer>
+    </main>
+</body>
+<script>
+
+    function addCouponValidation() {
+        event.preventDefault();
+        const couponname = document.getElementById('couponname').value;
+        const couponCode = document.getElementById('couponCode').value;
+        const DiscountPercentage = parseFloat(document.getElementById('DiscountPercentage').value);
+        const MaxDiscount = parseFloat(document.getElementById('MaxDiscount').value);
+        const ActivateDate = document.getElementById('ActivateDate').value;
+        const ExpiryDate = document.getElementById('ExpiryDate').value;
+        const CriteriaAmount = parseFloat(document.getElementById('CriteriaAmount').value);
+
+        document.getElementById('error-messages').innerText = '';
+        document.getElementById('couponname-e').innerText = '';
+        document.getElementById('couponCode-e').innerText = '';
+        document.getElementById('DiscountPercentage-e').innerText = '';
+        document.getElementById('MaxDiscount-e').innerText = '';
+        document.getElementById('ActivateDate-e').innerText = '';
+        document.getElementById('CriteriaAmount-e').innerText = '';
+        document.getElementById('ExpiryDate-e').innerText = '';
+
+
+        let isValid = true;
+
+        if (!couponname || !couponCode || isNaN(DiscountPercentage) || isNaN(MaxDiscount) || !ActivateDate || !ExpiryDate || isNaN(CriteriaAmount)) {
+            isValid = false;
+            document.getElementById('error-messages').innerText = 'Please fill in all required fields.';
+            return isValid;
+        }
+
+        const regex = /^[a-zA-Z0-9]{8}$/;
+        if (!regex.test(couponCode)) {
+            document.getElementById('couponCode-e').textContent = 'Coupon code must be 8 characters long and alphanumeric';
+            isValid = false;
+        }
+
+        if (DiscountPercentage < 0 || DiscountPercentage > 100) {
+            document.getElementById('DiscountPercentage-e').innerText = 'Discount percentage must be between 0 and 100';
+            isValid = false;
+        }
+        if (CriteriaAmount < 0) {
+            document.getElementById('CriteriaAmount-e').textContent = 'Criteria amount cannot be negative';
+            isValid = false;
+        }
+
+        const activateDate = new Date(ActivateDate);
+        const expiryDate = new Date(ExpiryDate);
+        if (isNaN(activateDate) || isNaN(expiryDate)) {
+            document.getElementById('ActivateDate-e').innerText = 'Invalid date format';
+            document.getElementById('ExpiryDate-e').innerText = 'Invalid date format';
+            isValid = false;
+        } else if (expiryDate <= activateDate) {
+            document.getElementById('ActivateDate-e').innerText = 'Expiry date must be after activate date';
+            isValid = false;
+        }
+        if (!isValid) {
+            return
+
+        }
+        else {
+            alert("kkkkkk")
+            addcoupon()
+
+
+        }
+    }
+
+    function addcoupon() {
+    const couponname = document.getElementById('couponname').value;
+    const couponCode = document.getElementById('couponCode').value;
+    const DiscountPercentage = parseFloat(document.getElementById('DiscountPercentage').value);
+    const MaxDiscount = parseFloat(document.getElementById('MaxDiscount').value);
+    const ActivateDate = document.getElementById('ActivateDate').value;
+    const ExpiryDate = document.getElementById('ExpiryDate').value;
+    const CriteriaAmount = parseFloat(document.getElementById('CriteriaAmount').value);
+
+    const data = {
+        couponname,
+        couponCode,
+        DiscountPercentage,
+        MaxDiscount,
+        ActivateDate,
+        ExpiryDate,
+        CriteriaAmount
+    };
+    const x = 's';
+
+    console.log(data);
+
+    fetch('/admin/addcoupon', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data,{x})
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status) {
+            Swal.fire({
+                    icon: 'success',
+                    
+                });
+            window.location.href = "/admin/coupon";
+           
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Coupon is already added' , 
+            });
+            
+            
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+	<!-- swal -->
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</html>

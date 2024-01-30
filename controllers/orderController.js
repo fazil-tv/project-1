@@ -60,8 +60,6 @@ const checkoutPost = async (req, res) => {
         // );
 
 
-
-
         console.log(cartData, "kmmmmm");
 
         const { jsonData } = req.body;
@@ -77,7 +75,7 @@ const checkoutPost = async (req, res) => {
 
         const selectedpayament = jsonData.payment
 
-        let status = selectedpayament == "Cash on delivery" ? "placed" : "pending"
+        let status = selectedpayament == "Cash on delivery" ? "placed" : "placed"
 
 
 

@@ -113,3 +113,33 @@ function blockButton(bannerId) {
 }
 
 
+function addwishlist(){
+    try {
+        fetch('/admin/getwishlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                bannerId
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+
+                if (data.status === true || data.status === false) {
+
+                    window.location.reload();
+                    // $('#relode-div').load('/detaile #relode-div');
+
+                }
+            }).catch(error => {
+                console.log(error);
+
+            })
+    } catch (error) {
+
+    }
+}
+
+

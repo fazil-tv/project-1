@@ -7,6 +7,7 @@ const adminController = require("../controllers/adminController");
 const productController = require('../controllers/productController')
 const categoryController = require('../controllers/categoryController');
 const bannerController = require('../controllers/bannerController');
+const couponController = require("../controllers/couponController");
 
 const multer = require("../middlewares/multer");
 const auth = require('../middlewares/authAdmin')
@@ -85,9 +86,20 @@ adminRoute.post('/addbanner',multer.uploadBanner.single('image'),bannerControlle
 // edit banner
 adminRoute.get('/editbanner',auth.isLogin,bannerController.editbanner);
 adminRoute.post('/editbanner',multer.uploadBanner.single('image'),auth.isLogin,bannerController.editbannerpost);
-
-
 adminRoute.patch('/listbanner',auth.isLogin,bannerController.listbanner);
+
+// coupon
+adminRoute.get('/coupon',auth.isLogin,couponController.coupon);
+// addcoupon
+adminRoute.get('/addcoupon',auth.isLogin,couponController.addcoupon);
+adminRoute.post('/addcoupon',auth.isLogin,couponController.addcouponpost);
+adminRoute.delete('/removecoupon',auth.isLogin,couponController.deletcoupon);
+
+
+
+
+
+
 
 
 
