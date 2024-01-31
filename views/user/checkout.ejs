@@ -58,7 +58,7 @@
 					<li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
 					<li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
 					<li class="nav-item cta cta-colored"><a href="/cart" class="nav-link"><span
-								class="icon-shopping_cart"></span>[0]</a></li>
+								class="icon-shopping_cart"></span></a></li>
 
 				</ul>
 			</div>
@@ -169,8 +169,7 @@
 									<section>
 										<div class=" mt-5">
 
-											<button class="addaddressbutton"
-												onclick=" addressopenmodal()">
+											<button class="addaddressbutton" onclick=" addressopenmodal()">
 												add
 												address
 											</button>
@@ -180,8 +179,8 @@
 											</a>
 
 
-											<div class="card-section mt-5" id="cardSection" >
-												<div class="row"  id="relodedives">
+											<div class="card-section mt-5" id="cardSection">
+												<div class="row" id="relodedives">
 													<% for (let i=0; i < coupon.length; i++) { %>
 														<div class="col-lg-6 pb-2">
 															<div
@@ -232,7 +231,7 @@
 
 
 
-									<div class="row mt-5 pt-3 d-flex">
+									<div class="row mt-5 pt-3 d-flex" id="checkrelodedives">
 										<div class="col-md-6 d-flex">
 											<div class="cart-detail cart-total bg-light p-3 p-md-4">
 												<h3 class="billing-heading mb-4">Cart Total</h3>
@@ -244,17 +243,43 @@
 												</p>
 												<p class="d-flex">
 													<span>Delivery</span>
-													<span>$0.00</span>
+													<span>₹0.00</span>
 												</p>
 												<p class="d-flex">
 													<span>Discount</span>
-													<span>$3.00</span>
+													<span><%=coupondiscount%></span>
 												</p>
 												<hr>
-												<p class="d-flex total-price">
-													<span>Total</span>
-													<span>$<%=subtotel%></span>
+
+												<p class="d-flex">
+													<span>Original Amount:  </span>
+													<span>
+														<% if (discountamount !==subtotel ) { %>
+															<del>
+																<%= subtotel %>
+															</del> <br>
+														
+													</span>
 												</p>
+
+												<p class="d-flex">
+
+													<span>Discounted Amount:₹</span>
+													<span>
+														<%= discountamount %>
+															<% } else { %>
+																₹<%= subtotel %>
+																	<% } %>
+													</span>
+
+
+
+												</p>
+
+
+
+
+
 											</div>
 
 										</div>

@@ -32,18 +32,27 @@ const checkout = async (req, res) => {
         console.log(userData);
         const address = await addressSchema.findOne({ user: userId });
         console.log(address, 'adresssss');
-        const cartData = await cartSchema.findOne({ user: userId }).populate('products');
+        const cartData = await cartSchema.findOne({ user: userId }).populate('products').populate('couponDiscount')
 
         const currentDate = new Date();
         const coupon = await couponSchema.find({ expiryDate: { $gte: currentDate }, is_blocked: false });
 
-        console.log(coupon);
+        // const coupondiscount = cartData.couponDiscount ? cartData.couponDiscount.discountPercentage : 0;
+        let coupondiscount = 0; 
+        if (cartData.couponDiscount) { 
+            coupondiscount = cartData.couponDiscount.discountPercentage;
+        }
 
-        console.log(cartData);
+        // console.log(coupondiscount, "$$$$$$%%%%%%$$$$", cartData.couponDiscount.discountPercentage)
 
         const subtotel = cartData.products.reduce((acc, val) => acc + (val.totalPrice || 0), 0);
         console.log(subtotel, "rrt");
-        res.render('checkout', { address, cartData, subtotel ,coupon});
+
+        const discountamount = subtotel - coupondiscount;
+        console.log("######", discountamount)
+        console.log(coupon);
+        console.log(cartData);
+        res.render('checkout', { address, cartData, subtotel, coupon, discountamount,coupondiscount  });
     } catch (error) {
         console.log(error);
     }
@@ -204,9 +213,9 @@ const cancelorder = async (req, res) => {
 
         const orderdata = await orderSchema.findOne({ 'products._id': orderId });
         const index = orderdata.products.findIndex((item) => {
-            return item._id.toString() === orderId ;
+            return item._id.toString() === orderId;
         });
-        orderdata.products[index].productstatus="canceled";
+        orderdata.products[index].productstatus = "canceled";
         await orderdata.save();
 
         for (let i = 0; i < orderdata.products.length; i++) {
@@ -214,7 +223,7 @@ const cancelorder = async (req, res) => {
             let product = orderdata.products[i].productId;
             let count = orderdata.products[i].count;
 
-       
+
             await productSchema.updateOne({ _id: product }, { $inc: { quantity: count } })
 
 
@@ -242,9 +251,9 @@ const returnorders = async (req, res) => {
 
         const orderdata = await orderSchema.findOne({ 'products._id': orderId });
         const index = orderdata.products.findIndex((item) => {
-            return item._id.toString() === orderId ;
+            return item._id.toString() === orderId;
         });
-        orderdata.products[index].productstatus="return";
+        orderdata.products[index].productstatus = "return";
         await orderdata.save();
 
         for (let i = 0; i < orderdata.products.length; i++) {
@@ -252,7 +261,7 @@ const returnorders = async (req, res) => {
             let product = orderdata.products[i].productId;
             let count = orderdata.products[i].count;
 
-       
+
             await productSchema.updateOne({ _id: product }, { $inc: { quantity: count } })
 
 
@@ -326,6 +335,6 @@ module.exports = {
     orderstatus,
     cancelorder,
     verifyPayment,
-    returnorders 
+    returnorders
 
 }

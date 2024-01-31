@@ -1273,6 +1273,8 @@ function couponapply(x) {
 
                 });
                 $('#relodedives').load('/checkout #relodedives');
+                $('#checkrelodedives').load('/checkout #checkrelodedives');
+
 
             } else if (data.status === 'alreadyused') {
 
@@ -1333,12 +1335,15 @@ function removecoupon(x) {
 
                 $('#relodedives').load('/checkout #relodedives');
 
+                $('#checkrelodedives').load('/checkout #checkrelodedives');
+
             } else {
                 Swal.fire({
                     title: "Error removing coupon",
                     icon: "error",
                     confirmButtonText: "OK",
                 });
+
 
 
 
