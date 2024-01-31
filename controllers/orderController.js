@@ -38,8 +38,8 @@ const checkout = async (req, res) => {
         const coupon = await couponSchema.find({ expiryDate: { $gte: currentDate }, is_blocked: false });
 
         // const coupondiscount = cartData.couponDiscount ? cartData.couponDiscount.discountPercentage : 0;
-        let coupondiscount = 0; 
-        if (cartData.couponDiscount) { 
+        let coupondiscount = 0;
+        if (cartData.couponDiscount) {
             coupondiscount = cartData.couponDiscount.discountPercentage;
         }
 
@@ -52,7 +52,7 @@ const checkout = async (req, res) => {
         console.log("######", discountamount)
         console.log(coupon);
         console.log(cartData);
-        res.render('checkout', { address, cartData, subtotel, coupon, discountamount,coupondiscount  });
+        res.render('checkout', { address, cartData, subtotel, coupon, discountamount, coupondiscount });
     } catch (error) {
         console.log(error);
     }
@@ -70,10 +70,7 @@ const checkoutPost = async (req, res) => {
 
         console.log(cartData.products, "llllllllllll");
 
-        // const cartData = await cartSchema.updateOne(
-        //     { user: userId },
-        //     { $set: { "cartData.products.$[].productStatus": "placed" } }
-        // );
+
 
 
         console.log(cartData, "kmmmmm");
@@ -91,7 +88,7 @@ const checkoutPost = async (req, res) => {
 
         const selectedpayament = jsonData.payment
 
-        let status = selectedpayament == "Cash on delivery" ? "placed" : "placed"
+        let status = selectedpayament == "Cash on delivery" ? "placed" : "pending"
 
 
 
@@ -103,15 +100,8 @@ const checkoutPost = async (req, res) => {
         console.log("selectedaddress", selectedAddress);
         console.log("payment", selectedpayament);
 
-        // const products = cartData.products.map((val) => val.productStatus ==="placed");
 
-        // const products = cartData.products.forEach(product => {
-        //     product.productStatus = "placed";
-        // });
 
-        // const products = cartData.products.map(product => {
-        //     return { ..productStatus: "placed" };
-        // });
 
         const orderItems = cartData.products.map((product) => ({
             productId: product.productId,
@@ -122,12 +112,30 @@ const checkoutPost = async (req, res) => {
         }));
 
 
+        const cartDatas = await cartSchema.findOne({ user: userId }).populate('products').populate('couponDiscount')
+        let coupondiscount = 0;
+        if (cartDatas.couponDiscount) {
+            coupondiscount = cartDatas.couponDiscount.discountPercentage;
+        }
+        const subtotelamount = cartDatas.products.reduce((acc, val) => acc + (val.totalPrice || 0), 0);
+        console.log(subtotel, "rrt");
+
+        const discountamount = subtotelamount - coupondiscount;
+
+        console.log("******", discountamount);
+
+
+
+
+
+
+
         const order = new orderSchema({
             user: userId,
             delivery_address: selectedAddress,
             payment: selectedpayament,
             products: orderItems,
-            subtotal: subtotel,
+            subtotal: discountamount,
             orderStatus: status,
             orderDate: new Date(),
         })
@@ -146,11 +154,12 @@ const checkoutPost = async (req, res) => {
                 console.log(count);
                 await productSchema.updateOne({ _id: product }, { $inc: { quantity: -count } })
             }
+            await cartSchema.deleteOne({ user: userId });
             res.json({ status: 'success', message: "product placed succesfully" });
         } else {
 
             const options = {
-                amount: subtotel * 100,
+                amount: discountamount * 100,
                 currency: 'INR',
                 receipt: "" + orderId,
             };
@@ -315,8 +324,11 @@ const verifyPayment = async (req, res) => {
                 await productSchema.updateOne({ _id: product }, { $inc: { quantity: -count } })
             }
 
-            const addressStatus = await orderSchema.updateOne({ _id: order.receipt }, { $set: { orderStatus: "placed" } });
+            const addressStatus = await orderSchema.findByIdAndUpdate({ _id: order.receipt }, { $set: { orderStatus: "placed" } });
             console.log(addressStatus, "heeeyyyyy");
+
+
+
 
 
             await cartSchema.deleteOne({ user: userId });

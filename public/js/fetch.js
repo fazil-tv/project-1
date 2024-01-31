@@ -1262,7 +1262,6 @@ function couponapply(x) {
         .then(response => response.json())
         .then(data => {
 
-
             if (data.status) {
 
                 Swal.fire({
@@ -1272,8 +1271,13 @@ function couponapply(x) {
                     confirmButtonText: "OK",
 
                 });
+
                 $('#relodedives').load('/checkout #relodedives');
                 $('#checkrelodedives').load('/checkout #checkrelodedives');
+                
+
+             
+
 
 
             } else if (data.status === 'alreadyused') {

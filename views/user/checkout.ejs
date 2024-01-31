@@ -181,46 +181,56 @@
 
 											<div class="card-section mt-5" id="cardSection">
 												<div class="row" id="relodedives">
-													<% for (let i=0; i < coupon.length; i++) { %>
-														<div class="col-lg-6 pb-2">
-															<div
-																class="cart-detail cart-total bg-light p-md-4  couponcard">
-																<p class="offer-t">
-																	<%= coupon[i].discountPercentage %>
-																</p>
-																<p class="coupon-name">
-																	<%= coupon[i].name %>
-																</p>
-																<p class="coupon-code">
-																	<a class="">
-																		<%= coupon[i].couponCode %>
-																	</a>
-																</p>
-																<p class="mb-0 couun-date">
-																	Validity Period :
-																	<%= coupon[i].expiryDate.toLocaleDateString('en-US',
-																		{ weekday: 'short' , year: 'numeric' ,
-																		month: 'short' , day: 'numeric' }) %>
+												
+														<% for (let i=0; i < coupon.length; i++) { %>
+															<div class="col-lg-6 pb-2">
+																<div
+																	class="cart-detail cart-total bg-light p-md-4  couponcard">
+																	<p class="offer-t">
+																		<%= coupon[i].discountPercentage %>
+																	</p>
+																	<p class="coupon-name">
+																		<%= coupon[i].name %>
+																	</p>
+																	<p class="coupon-code">
+																		<a class="">
+																			<%= coupon[i].couponCode %>
+																		</a>
+																	</p>
+																	<p class="mb-0 couun-date">
+																		Validity Period :
+																		<%= coupon[i].expiryDate.toLocaleDateString('en-US',
+																			{ weekday: 'short' , year: 'numeric' ,
+																			month: 'short' , day: 'numeric' }) %>
 
-																		<% if (coupon[i]._id.toString()
-																			!==(cartData.couponDiscount ?
-																			cartData.couponDiscount._id.toString() :
-																			null)) { %>
 
-																			<a class="coupon-button"
-																				onclick="couponapply('<%= coupon[i]._id %>')">Use
-																				It</a>
-																			<% } else if (cartData.couponDiscount &&
-																				coupon[i]._id.toString()===(cartData.couponDiscount._id
-																				? cartData.couponDiscount._id.toString()
-																				: null)) { %>
+																			<% if(subtotel>coupon[i].criteriaValue) {%>
+
+																			<% if (coupon[i]._id.toString()
+																				!==(cartData.couponDiscount ?
+																				cartData.couponDiscount._id.toString() :
+																				null)) { %>
+
 																				<a class="coupon-button"
-																					onclick="removecoupon('<%= coupon[i]._id %>')">Remove</a>
-																				<% } %>
-																</p>
+																					onclick="couponapply('<%= coupon[i]._id %>')">Use
+																					It</a>
+																				<% } else if (cartData.couponDiscount &&
+																					coupon[i]._id.toString()===(cartData.couponDiscount._id
+																					?
+																					cartData.couponDiscount._id.toString()
+																					: null)) { %>
+																					<a class="coupon-button"
+																						onclick="removecoupon('<%= coupon[i]._id %>')">Remove</a>
+																					<% } %>
+
+																			<%}else{%>
+
+																				<span class="badge not-applicable">Not Applicable</span>
+																			<%}%>
+																	</p>
+																</div>
 															</div>
-														</div>
-														<% } %>
+															<% } %>
 												</div>
 											</div>
 
@@ -247,18 +257,20 @@
 												</p>
 												<p class="d-flex">
 													<span>Discount</span>
-													<span><%=coupondiscount%></span>
+													<span>
+														<%=coupondiscount%>
+													</span>
 												</p>
 												<hr>
 
 												<p class="d-flex">
-													<span>Original Amount:  </span>
+													<span>Original Amount: </span>
 													<span>
 														<% if (discountamount !==subtotel ) { %>
 															<del>
 																<%= subtotel %>
 															</del> <br>
-														
+
 													</span>
 												</p>
 
