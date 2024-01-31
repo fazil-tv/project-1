@@ -12,6 +12,8 @@ const { config } = require("dotenv");
 require('dotenv').config();
 const crypto = require("crypto")
 
+const couponSchema = require("../model/couponModel");
+
 
 const razorpay = new Razorpay({
     key_id: process.env.RAZORPAY_KEY,
@@ -32,11 +34,16 @@ const checkout = async (req, res) => {
         console.log(address, 'adresssss');
         const cartData = await cartSchema.findOne({ user: userId }).populate('products');
 
+        const currentDate = new Date();
+        const coupon = await couponSchema.find({ expiryDate: { $gte: currentDate }, is_blocked: false });
+
+        console.log(coupon);
+
         console.log(cartData);
 
         const subtotel = cartData.products.reduce((acc, val) => acc + (val.totalPrice || 0), 0);
         console.log(subtotel, "rrt");
-        res.render('checkout', { address, cartData, subtotel });
+        res.render('checkout', { address, cartData, subtotel ,coupon});
     } catch (error) {
         console.log(error);
     }

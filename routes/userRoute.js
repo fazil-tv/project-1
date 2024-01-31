@@ -16,6 +16,8 @@ const orderController = require('../controllers/orderController');
 
 const wishlistController = require('../controllers/wishlistController');
 
+const couponController = require("../controllers/couponController");
+
 
 const userauth = require ('../middlewares/authUser');
 
@@ -183,6 +185,13 @@ userRoute.post('/getwishlist', userauth.isLogin, wishlistController.getwishlist)
 
 // remove wishlist
 userRoute.patch('/removewishlist', userauth.isLogin, wishlistController.removewishlist);
+
+
+userRoute.post('/applycoupons', userauth.isLogin, couponController.applycoupon);
+// remove coupon
+userRoute.delete('/removecoupons', userauth.isLogin, couponController.removecoupon);
+
+
 
 
 module.exports = userRoute;

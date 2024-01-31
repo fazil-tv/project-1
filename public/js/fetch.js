@@ -1063,7 +1063,7 @@ function verifyPayment(responce, order) {
     })
         .then(response => response.json())
         .then(data => {
-            if(data.status==="success"){
+            if (data.status === "success") {
                 console.log("Product placed successfully");
                 window.location.href = "/success";
             }
@@ -1153,7 +1153,7 @@ function returnorder(x) {
 
 
 
-function addwishlist(productId){
+function addwishlist(productId) {
     try {
         fetch('/getwishlist', {
             method: 'POST',
@@ -1167,28 +1167,28 @@ function addwishlist(productId){
             .then(response => response.json())
             .then(data => {
 
-                if(data.status){
+                if (data.status) {
                     console.log("failed")
                     Swal.fire({
                         icon: 'removed',
                     });
-                     window.location.reload();
+                    window.location.reload();
 
 
 
-                }else{
+                } else {
                     console.log("added")
                     Swal.fire({
                         icon: 'success',
                     });
-                     window.location.reload();                
+                    window.location.reload();
 
                 }
 
-                    // window.location.reload();
-                    // $('#relode-div').load('/detaile #relode-div');
+                // window.location.reload();
+                // $('#relode-div').load('/detaile #relode-div');
 
-                
+
             }).catch(error => {
                 console.log(error);
 
@@ -1199,7 +1199,7 @@ function addwishlist(productId){
 }
 
 
-function removewishlist(productId){
+function removewishlist(productId) {
     try {
         fetch('/removewishlist', {
             method: 'PATCH',
@@ -1213,28 +1213,28 @@ function removewishlist(productId){
             .then(response => response.json())
             .then(data => {
 
-                if(data.status){
+                if (data.status) {
                     console.log("failed")
                     Swal.fire({
                         icon: 'removed',
                     });
-                     window.location.reload();
+                    window.location.reload();
 
 
 
-                }else{
+                } else {
                     console.log("added")
                     Swal.fire({
                         icon: 'success',
                     });
-                     window.location.reload();                
+                    window.location.reload();
 
                 }
 
-                    // window.location.reload();
-                    // $('#relode-div').load('/detaile #relode-div');
+                // window.location.reload();
+                // $('#relode-div').load('/detaile #relode-div');
 
-                
+
             }).catch(error => {
                 console.log(error);
 
@@ -1243,6 +1243,121 @@ function removewishlist(productId){
 
     }
 }
+
+
+
+function couponapply(x) {
+    const couponId = x;
+    console.log(couponId);
+    fetch('/applycoupons', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            couponId
+
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+
+
+            if (data.status) {
+
+                Swal.fire({
+                    title: "Success",
+                    text: "Coupon added successfully!",
+                    icon: "success",
+                    confirmButtonText: "OK",
+
+                });
+                $('#relodedives').load('/checkout #relodedives');
+
+            } else if (data.status === 'alreadyused') {
+
+                Swal.fire({
+                    title: "You already used this coupon",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                });
+                $('#relodedives').load('/checkout #relodedives');
+
+
+            }
+            else {
+                Swal.fire({
+                    title: "One coupon is already Active",
+                    icon: "info",
+                    confirmButtonText: "OK",
+                });
+                $('#relodedives').load('/checkout #relodedives');
+
+
+
+            }
+
+            // window.location.reload();
+
+        }).catch(error => {
+            console.log(error);
+
+        })
+}
+
+function removecoupon(x) {
+    const couponId = x;
+    console.log(couponId);
+    fetch('/removecoupons', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            couponId
+
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+
+
+            if (data.status) {
+
+                Swal.fire({
+                    title: "Coupon removed",
+                    icon: "success",
+                    confirmButtonText: "OK",
+
+                })
+
+                $('#relodedives').load('/checkout #relodedives');
+
+            } else {
+                Swal.fire({
+                    title: "Error removing coupon",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                });
+
+
+
+            }
+
+            // window.location.reload();
+
+
+
+
+        }).catch(error => {
+            console.log(error);
+
+        })
+}
+
+
+
+
 
 
 

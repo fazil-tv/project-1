@@ -16,7 +16,7 @@ const crypto = require("crypto");
 const coupon = async (req, res) => {
     try {
         const coupon = await couponSchema.find({})
-        res.render('coupon',{coupon});
+        res.render('coupon', { coupon });
     } catch (error) {
         console.log(error);
     }
@@ -72,18 +72,74 @@ const deletcoupon = async (req, res) => {
         const couponId = req.body.couponId;
         console.log(couponId);
         const couponremoved = await couponSchema.deleteOne({ _id: couponId });
-        res.json({status:true});
+        res.json({ status: true });
     } catch (error) {
         console.log(error);
     }
 }
 
 
+const applycoupon = async (req, res) => {
+    try {
+        const couponId = req.body.couponId
+        const userId = req.session.user_id;
+        console.log(couponId)
+        console.log(userId)
+
+        const currentDate = new Date();
+        const couponDatas = await couponSchema.findOne({ _id: couponId, expiryDate: { $gte: currentDate }, is_blocked: false });
+        console.log(couponDatas);
+        const couponexists = couponDatas.usedUsers.includes(userId);
+
+        if (!couponexists) {
+
+            const existingCart = await cartSchema.findOne({ user: userId });
+
+
+
+            if (existingCart && existingCart.couponDiscount == null) {
+                await couponSchema.findOneAndUpdate({ _id: couponId }, { $push: { usedUsers: userId } });
+                await cartSchema.findOneAndUpdate({ user: userId }, { $set: { couponDiscount: couponDatas._id } });
+                res.json({ status: true });
+            } else {
+                res.json({ status: false });
+            }
+        } else {
+            res.json({ status: false });
+        }
+
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const removecoupon = async (req, res) => {
+    try {
+
+        const couponId = req.body.couponId
+        const userId = req.session.user_id;
+
+        console.log(couponId, "kkkkkk")
+        console.log(userId);
+        const couponData = await couponSchema.findOneAndUpdate({ _id: couponId }, { $pull: { usedUsers: userId } });
+        const cartData = await cartSchema.findOneAndUpdate({ user: userId }, { $set: { couponDiscount: null } });
+        res.json({ status: true })
+    } catch (error) {
+
+        res.json({ status:"alreadyused"})
+        console.log(error);
+    }
+
+}
+
 module.exports = {
     coupon,
     addcoupon,
     addcouponpost,
-    deletcoupon
+    deletcoupon,
+    applycoupon,
+    removecoupon 
 }
 
 

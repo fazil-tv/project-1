@@ -12,6 +12,7 @@ const addressSchema = require("../model/addressModel");
 const { log } = require("console");
 const categorySchema = require("../model/categoryModel");
 const orderSchema = require('../model/orderModel');
+const couponSchema = require("../model/couponModel")
 const bannerSchema = require("../model/bannerModel");
 const wishlistSchema = require("../model/wishlistModel");
 
@@ -261,6 +262,7 @@ const indexhome = async (req, res) => {
         const bannerData = await bannerSchema.find({});
 
         const Wishlist = await wishlistSchema.find({});
+
 
         res.render("indexhome", { user: req.session.user_id, product: product ,  bannerData , Wishlist});
     } catch (error) {

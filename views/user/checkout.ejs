@@ -98,53 +98,54 @@
 								<div class="row ">
 									<% address.address.forEach(function (address,index) { %>
 										<%console.log(address._id,'asdfghjk')%>
-										<div class="addressdiv col-lg-5 pb-4 mt-4 justify-content-between mr-4">
-											<input type="radio" id="selectedAddress" name="selectedAddress" value="<%= address._id %>" <% if
-												(index===0) { %>checked<% } %> required>
-												<h5 class="edit-add-head">
-													address<%=index+1%>
-												</h5>
-												<p>
-													name :
-													<%= address.fullname %>
-												</p>
-												<p>
-													Mobile :
-													<%= address.mobile %>
-												</p>
-												<p>
-													email :
-													<%= address.email %>
-												</p>
-												<p>
-													State :
-													<%= address.state %>
-												</p>
-												<p>
-													City :
-													<%= address.city %>
-												</p>
-												<p>
-													House name :
-													<%= address.houseName %>
-												</p>
-												<p>
-													pin :
-													<%= address.pin %>
-												</p>
-												<div class="pt-2">
-													<button type="button"
-														class="btn btn-primary edit-btn pt-2 edit-btn-add "
-														onclick="checkouteditaddressopenmodal('<%= address.fullname %>','<%= address.mobile %>',' <%= address.email %>',' <%= address.state %>','<%= address.city %>','<%= address.houseName %>','<%= address.pin %>','<%= address._id %>')">
-														<i class="text-muted material-icons md-post_add"></i>
-														Edit
-													</button>
+											<div class="addressdiv col-lg-5 pb-4 mt-4 justify-content-between mr-4">
+												<input type="radio" id="selectedAddress" name="selectedAddress"
+													value="<%= address._id %>" <% if (index===0) { %>checked<% } %>
+													required>
+													<h5 class="edit-add-head">
+														address<%=index+1%>
+													</h5>
+													<p>
+														name :
+														<%= address.fullname %>
+													</p>
+													<p>
+														Mobile :
+														<%= address.mobile %>
+													</p>
+													<p>
+														email :
+														<%= address.email %>
+													</p>
+													<p>
+														State :
+														<%= address.state %>
+													</p>
+													<p>
+														City :
+														<%= address.city %>
+													</p>
+													<p>
+														House name :
+														<%= address.houseName %>
+													</p>
+													<p>
+														pin :
+														<%= address.pin %>
+													</p>
+													<div class="pt-2">
+														<button type="button"
+															class="btn btn-primary edit-btn pt-2 edit-btn-add "
+															onclick="checkouteditaddressopenmodal('<%= address.fullname %>','<%= address.mobile %>',' <%= address.email %>',' <%= address.state %>','<%= address.city %>','<%= address.houseName %>','<%= address.pin %>','<%= address._id %>')">
+															<i class="text-muted material-icons md-post_add"></i>
+															Edit
+														</button>
 
-												</div>
-										</div>
+													</div>
+											</div>
 
 
-										<% }) %>
+											<% }) %>
 								</div>
 							</section>
 
@@ -165,21 +166,67 @@
 									</div>
 								</div>
 								<%}%>
-									<div class=" mt-5">
+									<section>
+										<div class=" mt-5">
 
-											<button type="button" class="btn btn-primary edit-btn ml-4"
-											onclick=" addressopenmodal()">
-											<i class="text-muted material-icons md-post_add "></i>add
-											address
-										</button>
+											<button class="addaddressbutton"
+												onclick=" addressopenmodal()">
+												add
+												address
+											</button>
+
+											<a type="button" id="showHideButton" class="applycoupon">
+												Apply Coupon
+											</a>
 
 
-									</div>
+											<div class="card-section mt-5" id="cardSection" >
+												<div class="row"  id="relodedives">
+													<% for (let i=0; i < coupon.length; i++) { %>
+														<div class="col-lg-6 pb-2">
+															<div
+																class="cart-detail cart-total bg-light p-md-4  couponcard">
+																<p class="offer-t">
+																	<%= coupon[i].discountPercentage %>
+																</p>
+																<p class="coupon-name">
+																	<%= coupon[i].name %>
+																</p>
+																<p class="coupon-code">
+																	<a class="">
+																		<%= coupon[i].couponCode %>
+																	</a>
+																</p>
+																<p class="mb-0 couun-date">
+																	Validity Period :
+																	<%= coupon[i].expiryDate.toLocaleDateString('en-US',
+																		{ weekday: 'short' , year: 'numeric' ,
+																		month: 'short' , day: 'numeric' }) %>
 
+																		<% if (coupon[i]._id.toString()
+																			!==(cartData.couponDiscount ?
+																			cartData.couponDiscount._id.toString() :
+																			null)) { %>
 
+																			<a class="coupon-button"
+																				onclick="couponapply('<%= coupon[i]._id %>')">Use
+																				It</a>
+																			<% } else if (cartData.couponDiscount &&
+																				coupon[i]._id.toString()===(cartData.couponDiscount._id
+																				? cartData.couponDiscount._id.toString()
+																				: null)) { %>
+																				<a class="coupon-button"
+																					onclick="removecoupon('<%= coupon[i]._id %>')">Remove</a>
+																				<% } %>
+																</p>
+															</div>
+														</div>
+														<% } %>
+												</div>
+											</div>
 
-
-
+										</div>
+									</section>
 
 									<!-- END -->
 
@@ -191,7 +238,9 @@
 												<h3 class="billing-heading mb-4">Cart Total</h3>
 												<p class="d-flex">
 													<span>Subtotal</span>
-													<span><%=subtotel%></span>
+													<span>
+														<%=subtotel%>
+													</span>
 												</p>
 												<p class="d-flex">
 													<span>Delivery</span>
@@ -354,7 +403,8 @@
 			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
 			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
 				stroke="#F96D00" />
-		</svg></div>
+		</svg>
+	</div>
 
 
 
@@ -547,6 +597,18 @@
 		})
 
 
+		// card hidden script
+		document.getElementById('showHideButton').addEventListener('click', function () {
+			event.preventDefault();
+			let cardSection = document.getElementById('cardSection');
+			if (cardSection.style.display === 'none') {
+				cardSection.style.display = 'block';
+			} else {
+				cardSection.style.display = 'none';
+			}
+		});
+
+
 	</script>
 
 	<style>
@@ -607,6 +669,86 @@
 			width: 100% !important;
 			overflow: hidden !important;
 			margin-top: 28px !important;
+		}
+
+		.addaddressbutton {
+			background-color: black;
+			color: white;
+			border: none;
+			border-radius: 3px;
+			padding: 10px;
+		}
+
+		.applycoupon {
+			background-color: #dbcc8f;
+			color: white;
+			border: none;
+			border-radius: 3px;
+			padding: 10px;
+		}
+
+		.couponcard {
+			background-image: url(/images/couponimg-1.jpg) !important;
+			background-size: cover !important;
+		}
+
+		.couponcard-2 {
+			background-image: url(/images/coupon-2.jpg) !important;
+			background-size: cover !important;
+		}
+
+		.offer-t {
+			margin-bottom: 0;
+			position: relative;
+			top: -12px !important;
+			font-size: 50px;
+			font-weight: bold;
+			color: black;
+			left: -4px;
+		}
+
+		.coupon-name {
+			margin-bottom: 0px;
+			color: black;
+			font-size: 17px;
+			position: relative;
+			text-align: justify;
+			top: -18px;
+		}
+
+		.coupon-code {
+			margin-bottom: 0px;
+			color: black;
+			font-size: 17px;
+			position: relative;
+			text-align: justify;
+			top: -9px;
+		}
+
+		.coupon-button {
+			background-color: white;
+
+			border: none;
+			border-radius: 5px;
+			float: right;
+			position: relative;
+			left: 0px;
+			text-align: center;
+			top: -14px;
+			padding: 2px;
+			width: 108px;
+			color: black;
+
+		}
+
+		.couun-date {
+
+			color: black;
+
+		}
+
+		.card-section {
+			display: none;
 		}
 	</style>
 
