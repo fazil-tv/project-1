@@ -264,6 +264,9 @@ const indexhome = async (req, res) => {
         const Wishlist = await wishlistSchema.find({});
 
 
+
+
+
         res.render("indexhome", { user: req.session.user_id, product: product ,  bannerData , Wishlist});
     } catch (error) {
         console.log(error.message);

@@ -1079,17 +1079,24 @@ function verifyPayment(responce, order) {
 
 
 
-function cancelorder(x) {
-    const orderId = x;
-    console.log(orderId);
+function cancelorder(x,ids,order_id) {
+    // const orderId = x;
+
+    const productId = x;
+    const id = ids;
+    const orderId = order_id;
+    console.log(productId);
+    console.log( id );
+    console.log(orderId );
     fetch('/orderstatus', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+            productId,
+            id ,
             orderId
-
         })
     })
         .then(response => response.json())
@@ -1115,15 +1122,22 @@ function cancelorder(x) {
         })
 }
 
-function returnorder(x) {
-    const orderId = x;
-    console.log(orderId);
+function returnorder(x,y,z) {
+    const productId = x;
+    const id = y;
+    const orderId = z;
+    console.log("productId",productId )
+    console.log("id",id)
+    console.log("orderId",orderId)
+
     fetch('/returnorder', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+            productId,
+            id,
             orderId
 
         })
