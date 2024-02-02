@@ -371,12 +371,12 @@
                                         <div class="row">
                                             <div class="col">
 
-                                                <h3 class="card-text">$<%=user.wallet%>
+                                                <h3 class="card-text " style="color: #6B8E23;">$<%=user.wallet%>
                                                 </h3>
                                             </div>
                                             <div class="col">
                                                 <h4 class="card-text">Currency</h4>
-                                                <h5 class="card-text">$5000</h5>
+                                                <h5 class="card-text">INR</h5>
                                             </div>
                                             <div class="col">
                                                 <h4 class="card-text">Status</h4>
@@ -407,13 +407,20 @@
                                                             <%=walletdata.date.toISOString().split('T')[0]%>
                                                         </td>
 
-                                                        <td>$<%=walletdata.amount%>
-                                                        </td>
+                                                     
+                                                            <% if(walletdata.amount> 0 ) {%>
+                                                                <td style="color: #6B8E23;"><%=walletdata.amount%></td>
+                                                                <% }else{ %>
+                                                                    <td style="color: #CB192C;"><%=walletdata.amount%></td>
+                                                                    <%}%>
+                                                                       
+                                                                       
+                                             
 
                                                         <% if(walletdata.amount> 0 ) {%>
-                                                            <td style="background: rgb(255, 246, 124);">Credited</td>
+                                                            <td style="color: #6B8E23;">Credited</td>
                                                             <% }else{ %>
-                                                                <td style="background: red;">Debited</td>
+                                                                <td style="color: #CB192C;">Debited</td>
                                                                 <%}%>
                                                                    
                                                                     <%})%>

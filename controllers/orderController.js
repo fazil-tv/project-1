@@ -52,7 +52,7 @@ const checkout = async (req, res) => {
         console.log("######", discountamount)
         console.log(coupon);
         console.log(cartData);
-        res.render('checkout', { address, cartData, subtotel, coupon, discountamount, coupondiscount });
+        res.render('checkout', { address, cartData, subtotel, coupon, discountamount, coupondiscount ,userData});
     } catch (error) {
         console.log(error);
     }
@@ -145,6 +145,9 @@ const checkoutPost = async (req, res) => {
         const orderId = order._id;
         console.log(orderId);
 
+
+        
+
         if (order.orderStatus === "placed") {
             for (let i = 0; i < cartData.products.length; i++) {
                 let product = cartData.products[i].productId;
@@ -156,8 +159,28 @@ const checkoutPost = async (req, res) => {
             }
             await cartSchema.deleteOne({ user: userId });
             res.json({ status: 'success', message: "product placed succesfully" });
-        } else {
+        }else if(selectedpayament=="Wallet"){
 
+
+            const data = {
+                amount: -discountamount,
+                date: Date.now(),
+            }
+            await userSchema.findOneAndUpdate({ _id: userId }, { $inc: { wallet: -discountamount }, $push: { walletHistory: data } })
+            for (let i = 0; i < cartData.products.length; i++) {
+                let product = cartData.products[i].productId;
+                let count = cartData.products[i].count;
+
+                console.log(product);
+                console.log(count);
+                await productSchema.updateOne({ _id: product }, { $inc: { quantity: -count } })
+            }
+            await cartSchema.deleteOne({ user: userId });
+            res.json({ status: 'success', message: "product placed succesfully" });
+            
+
+
+        } else {
             const options = {
                 amount: discountamount * 100,
                 currency: 'INR',
@@ -241,7 +264,8 @@ const cancelorder = async (req, res) => {
         await orderdata.save();
 
 
-        const updatedOrders = await orderSchema.findById(orderId)
+       
+        pdatedOrders = await orderSchema.findById(orderId)
 
         console.log(updatedOrders,"%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%****");
         if (updatedOrders.payment !== 'Cash on delivery') {
