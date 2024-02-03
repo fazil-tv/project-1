@@ -122,8 +122,106 @@ const adminverifyLogin = async (req, res) => {
 }
 
 const loaddashbord = async (req, res) => {
+
+    const totalproducts = await productSchema.countDocuments();
+    console.log(totalproducts / 2, "%%%%%%okd")
+
+
+    const totalorers = await orderSchema.countDocuments();
+
+    const revenue = await orderSchema.aggregate([
+        {
+            $unwind: "$products"
+        },
+        {
+            $group: {
+                _id: null,
+                revenue: { $sum: "$products.totalPrice" }
+            }
+        }
+    ]);
+
+
+    const currentDate = new Date();
+    const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+
+    endOfMonth.setMilliseconds(0);
+    endOfMonth.setSeconds(0);
+    endOfMonth.setMinutes(59);
+    endOfMonth.setHours(23);
+
+    const currentMonthName = new Date().toLocaleString('default', { month: 'long' });
+
+
+    // const montlyrevenue = await orderSchema.aggregate([
+    //     {
+    //         $unwind: "$products"
+    //     },
+    //     {
+    //         $match: {
+    //             "orderDate": { $gte: startOfMonth, $lt: endOfMonth }
+    //         }
+    //     },
+    //     {
+    //         $group: {
+    //             _id: null,
+    //             monthlyrevenue: {
+    //                 $sum: "$products.totalPrice"
+    //             }
+    //         }
+    //     }
+    // ]);
+    const montlyrevenue = await orderSchema.aggregate([
+        {
+            $match: {
+                "orderDate": { $gte: startOfMonth, $lt: endOfMonth }
+            }
+        },
+        {
+            $unwind: "$products"
+        },
+        {
+            $group: {
+                _id: { $month: "$orderDate" }, 
+                monthlyrevenue: {
+                    $sum: "$products.totalPrice"
+                }
+            }
+        }
+    ]);
+
+
+    console.log("monthly revenue", montlyrevenue);
+
+    const graphValue = Array(12).fill(0);
+
+    montlyrevenue.forEach(entry => {
+        const monthIndex = entry._id - 1; // MongoDB months are 1-indexed
+        graphValue[monthIndex] = entry.monthlyrevenue;
+    });
+
+    console.log(graphValue, "ooooor");
+
+    const cashondelivery  =await orderSchema.countDocuments({"payment":"Cash on delivery"})
+    console.log("TOTTEL",cashondelivery)
+    const Wallet  =await orderSchema.countDocuments({"payment":"Wallet"})
+    console.log("TOTTEL",cashondelivery)
+    Razorpay  =await orderSchema.countDocuments({"payment":"Razorpay"})
+
+
+
+    
+   
+
+
+
+
+
+
     try {
-        res.render("index");
+        console.log("t", totalproducts, "or", totalorers, "re", revenue, "cur", currentMonthName, "mo", montlyrevenue)
+        res.render("index", { totalproducts, totalorers, revenue: revenue[0].revenue, currentMonthName, montlyrevenue: montlyrevenue[0].monthlyrevenue, graphValue ,Wallet,cashondelivery,Razorpay});
     } catch (error) {
         console.log(error);
     }
@@ -181,10 +279,10 @@ const updatestatus = async (req, res) => {
         const index = order.products.findIndex((item) => {
             return item._id.toString() === productId;
         });
-        order.products[index].productstatus =req.body.newstatus;
+        order.products[index].productstatus = req.body.newstatus;
 
         await order.save();
-        res.json({success:true});
+        res.json({ success: true });
     } catch (err) {
         console.log(err);
     }

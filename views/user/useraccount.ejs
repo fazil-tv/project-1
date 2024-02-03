@@ -99,70 +99,71 @@
     </div>
 
 
-    <div class="container light-style flex-grow-1 container-p-y">
-        <h4 class="font-weight-bold py-3 mb-4">
-            Account settings
-        </h4>
-        <div id="message"></div>
+    <div class="light-style flex-grow-1 container-p-y">
+        <div class="container">
+            <h4 class="font-weight-bold py-3 mb-4">
+                Account settings
+            </h4>
+            <div id="message"></div>
 
 
 
-        <div class="card overflow-hidden" id="resetdiv">
-            <div class="row no-gutters row-bordered row-border-light">
-                <div class="col-md-3 pt-0">
-                    <div class="list-group list-group-flush account-settings-links">
-                        <a class="list-group-item list-group-item-action active" data-toggle="list"
-                            href="#account-general">General</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list"
-                            href="#account-change-password">Change password</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list"
-                            href="#account-info">Address</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list"
-                            href="#account-social-links">Orders</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#mywallet">My
-                            Wallet</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list"
-                            href="#account-notifications">Notifications</a>
-                        <a class="list-group-item list-group-item-action" href="/logout">Logout</a>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="tab-content" id="user-profile-relode">
-                        <div class="tab-pane fade active show" id="account-general">
-
-                            <div class="card-body">
-                                <div class="form-wrapper">
-                                    <label class="form-label">Username</label>
-                                    <input type="text" name="username" class="form-control mb-1" id="usernameInput"
-                                        value="<%= user.username %>" disabled>
-                                    <i class="zmdi zmdi-account"></i>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Mobile</label>
-                                    <input type="text" name="phone" class="form-control mb-1" id="phoneInput"
-                                        value="<%= user.mobilenumber %>" disabled>
-                                    <i class="zmdi zmdi-account"></i>
-                                </div>
-
-                                <div class="form-wrapper">
-                                    <label class="form-label">E-mail</label>
-                                    <input type="email" name="email" class="form-control mb-1" id="emailInput"
-                                        value="<%= user.email %>" disabled>
-                                    <i class="zmdi zmdi-email"></i>
-                                </div>
-                                <div class="pt-2 float-right pb-4 me-1">
-                                    <button type="button" class="btn btn-primary edit-btn"
-                                        onclick="openModal('<%= user.username %>','<%= user.mobilenumber %>')">
-                                        <i class="text-muted material-icons md-post_add "></i>Edit Profile
-                                    </button>
-                                </div>
-
-                            </div>
+            <div class="card overflow-hidden" id="resetdiv">
+                <div class="row no-gutters row-bordered row-border-light">
+                    <div class="col-md-3 pt-0">
+                        <div class="list-group list-group-flush account-settings-links">
+                            <a class="list-group-item list-group-item-action active" data-toggle="list"
+                                href="#account-general">General</a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list"
+                                href="#account-change-password">Change password</a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list"
+                                href="#account-info">Address</a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list"
+                                href="#account-social-links">Orders</a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#mywallet">My
+                                Wallet</a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list"
+                                href="#account-notifications">Notifications</a>
+                            <a class="list-group-item list-group-item-action" href="/logout">Logout</a>
                         </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="tab-content" id="user-profile-relode">
+                            <div class="tab-pane fade active show" id="account-general">
 
-                        <!--   changing password    -->
+                                <div class="card-body">
+                                    <div class="form-wrapper">
+                                        <label class="form-label">Username</label>
+                                        <input type="text" name="username" class="form-control mb-1" id="usernameInput"
+                                            value="<%= user.username %>" disabled>
+                                        <i class="zmdi zmdi-account"></i>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Mobile</label>
+                                        <input type="text" name="phone" class="form-control mb-1" id="phoneInput"
+                                            value="<%= user.mobilenumber %>" disabled>
+                                        <i class="zmdi zmdi-account"></i>
+                                    </div>
 
-                        <!-- <div class="tab-pane fade" id="account-change-password">
+                                    <div class="form-wrapper">
+                                        <label class="form-label">E-mail</label>
+                                        <input type="email" name="email" class="form-control mb-1" id="emailInput"
+                                            value="<%= user.email %>" disabled>
+                                        <i class="zmdi zmdi-email"></i>
+                                    </div>
+                                    <div class="pt-2 float-right pb-4 me-1">
+                                        <button type="button" class="btn btn-primary edit-btn"
+                                            onclick="openModal('<%= user.username %>','<%= user.mobilenumber %>')">
+                                            <i class="text-muted material-icons md-post_add "></i>Edit Profile
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!--   changing password    -->
+
+                            <!-- <div class="tab-pane fade" id="account-change-password">
                             <div class="card-body pb-2">
                                 <form id="editProfileForm">
                                     <div class="form-group">
@@ -185,399 +186,411 @@
                             </div>
                         </div> -->
 
-                        <div class="tab-pane fade " id="account-change-password">
-                            <div class="card-body pb-2">
-                                <form id="editProfileForm">
-                                    <div class="form-group">
-                                        <label class="form-label">Current password</label>
-                                        <input type="password" class="form-control" name="currentpassword"
-                                            id="currentpassword">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">New password</label>
-                                        <input type="password" class="form-control" name="newpassword" id="newpassword">
-                                        <span id="newPasswordError" style="color: red;"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Repeat new password</label>
-                                        <input type="password" class="form-control" name="repeatpassword"
-                                            id="repeatpassword">
-                                        <span id="confirmPasswordError" style="color: red;"></span>
-                                    </div>
-                                    <button class="save-btn" onclick="resetPasswordvalidation(event)">Submit</button>
-                                </form>
+                            <div class="tab-pane fade " id="account-change-password">
+                                <div class="card-body pb-2">
+                                    <form id="editProfileForm">
+                                        <div class="form-group">
+                                            <label class="form-label">Current password</label>
+                                            <input type="password" class="form-control" name="currentpassword"
+                                                id="currentpassword">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">New password</label>
+                                            <input type="password" class="form-control" name="newpassword"
+                                                id="newpassword">
+                                            <span id="newPasswordError" style="color: red;"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Repeat new password</label>
+                                            <input type="password" class="form-control" name="repeatpassword"
+                                                id="repeatpassword">
+                                            <span id="confirmPasswordError" style="color: red;"></span>
+                                        </div>
+                                        <button class="save-btn"
+                                            onclick="resetPasswordvalidation(event)">Submit</button>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
 
 
 
 
-                        <!-- add address  -->
+                            <!-- add address  -->
 
 
-                        <div class="tab-pane fade" id="account-info">
-                            <% if (useraddress===null || useraddress.address.length===0) { %>
-                                <p>No address has been added yet.</p>
+                            <div class="tab-pane fade" id="account-info">
+                                <% if (useraddress===null || useraddress.address.length===0) { %>
+                                    <p>No address has been added yet.</p>
 
-                                <% } else { %>
-                                    <h4 class="pb-4 ">DEFAULT BILLING ADDRESS</h4>
-                                    <div class="row pl-3 " id="edit-address-div">
-                                        <% useraddress.address.forEach(function (address,index) { %>
+                                    <% } else { %>
+                                        <h4 class="pb-4 ">DEFAULT BILLING ADDRESS</h4>
+                                        <div class="row pl-3 " id="edit-address-div">
+                                            <% useraddress.address.forEach(function (address,index) { %>
 
-                                            <div class="addressdiv col-lg-5 pb-4 mt-4 justify-content-between mr-4">
-                                                <h5 class="edit-add-head">
-                                                    address<%=index+1%>
-                                                </h5>
-                                                <p>
-                                                    name :
-                                                    <%= address.fullname %>
-                                                </p>
-                                                <p>
-                                                    Mobile :
-                                                    <%= address.mobile %>
-                                                </p>
-                                                <p>
-                                                    email :
-                                                    <%= address.email %>
-                                                </p>
-                                                <p>
-                                                    State :
-                                                    <%= address.state %>
-                                                </p>
-                                                <p>
-                                                    City :
-                                                    <%= address.city %>
-                                                </p>
-                                                <p>
-                                                    House name :
-                                                    <%= address.houseName %>
-                                                </p>
-                                                <p>
-                                                    pin :
-                                                    <%= address.pin %>
-                                                </p>
-                                                <div class="pt-2">
-                                                    <button type="button"
-                                                        class="btn btn-primary edit-btn pt-2 edit-btn-add"
-                                                        onclick="editaddressopenmodal('<%= address.fullname %>','<%= address.mobile %>',' <%= address.email %>',' <%= address.state %>','<%= address.city %>','<%= address.houseName %>','<%= address.pin %>','<%= address._id %>')">
-                                                        <i class="text-muted material-icons md-post_add"></i>
-                                                        Edit
-                                                    </button>
-                                                    <button type="button"
-                                                        class="btn btn-primary edit-btn pt-2 edit-btn-add"
-                                                        onclick="deletaddress('<%= address._id %>')">
-                                                        <i class="fa-solid fa-trash"></i>
-                                                        Delete
+                                                <div class="addressdiv col-lg-5 pb-4 mt-4 justify-content-between mr-4">
+                                                    <h5 class="edit-add-head">
+                                                        address<%=index+1%>
+                                                    </h5>
+                                                    <p>
+                                                        name :
+                                                        <%= address.fullname %>
+                                                    </p>
+                                                    <p>
+                                                        Mobile :
+                                                        <%= address.mobile %>
+                                                    </p>
+                                                    <p>
+                                                        email :
+                                                        <%= address.email %>
+                                                    </p>
+                                                    <p>
+                                                        State :
+                                                        <%= address.state %>
+                                                    </p>
+                                                    <p>
+                                                        City :
+                                                        <%= address.city %>
+                                                    </p>
+                                                    <p>
+                                                        House name :
+                                                        <%= address.houseName %>
+                                                    </p>
+                                                    <p>
+                                                        pin :
+                                                        <%= address.pin %>
+                                                    </p>
+                                                    <div class="pt-2">
+                                                        <button type="button"
+                                                            class="btn btn-primary edit-btn pt-2 edit-btn-add"
+                                                            onclick="editaddressopenmodal('<%= address.fullname %>','<%= address.mobile %>',' <%= address.email %>',' <%= address.state %>','<%= address.city %>','<%= address.houseName %>','<%= address.pin %>','<%= address._id %>')">
+                                                            <i class="text-muted material-icons md-post_add"></i>
+                                                            Edit
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-primary edit-btn pt-2 edit-btn-add"
+                                                            onclick="deletaddress('<%= address._id %>')">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                            Delete
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+
+                                                <% }) %>
+                                        </div>
+
+                                        <% } %>
+
+                                            <h3 class="pt-3">ADDITIONAL ADDRESS ENTRIES</h3>
+                                            <p>You have no other address entries in your address book.</p>
+                                            <hr class="border-light m-0">
+                                            <div class="card-body pb-2">
+                                                <div class=" pb-4 me-1">
+                                                    <button type="button" class="btn btn-primary edit-btn"
+                                                        onclick=" addressopenmodal()">
+                                                        <i class="text-muted material-icons md-post_add "></i>add
+                                                        address
                                                     </button>
                                                 </div>
                                             </div>
 
-
-                                            <% }) %>
-                                    </div>
-
-                                    <% } %>
-
-                                        <h3 class="pt-3">ADDITIONAL ADDRESS ENTRIES</h3>
-                                        <p>You have no other address entries in your address book.</p>
-                                        <hr class="border-light m-0">
-                                        <div class="card-body pb-2">
-                                            <div class=" pb-4 me-1">
-                                                <button type="button" class="btn btn-primary edit-btn"
-                                                    onclick=" addressopenmodal()">
-                                                    <i class="text-muted material-icons md-post_add "></i>add
-                                                    address
-                                                </button>
-                                            </div>
-                                        </div>
-
-                        </div>
-
-
-                        <!--      orders      -->
-
-
-                        <div class="tab-pane fade" id="account-social-links">
-
-
-
-                            <div class="" style="position: relative; top: -15px; text-align: center;">
-                                <% if (orders && orders.length> 0) { %>
-                                    <table class="table">
-                                        <thead class="">
-                                            <tr>
-                                                <th class="no ">No</th>
-                                                <th class="date ">Date</th>
-                                                <th class="total">Amount</th>
-                                                <th class="Payment">Payment</th>
-                                                <th class="Payment">Status</th>
-                                                <th class="Payment"></th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            <% for (let i=0; i < orders.length; i++) { %>
-                                                <tr>
-                                                    <td class="pl-2">
-                                                        <%= i + 1 %>
-                                                    </td>
-                                                    <td>
-                                                        <%= orders[i].orderDate.toLocaleDateString('en-US', {
-                                                            weekday: 'short' , year: 'numeric' , month: 'short' ,
-                                                            day: 'numeric' }) %>
-                                                    </td>
-                                                    <td>
-                                                        <%= orders[i].subtotal %>
-                                                    </td>
-                                                    <td>
-                                                        <%= orders[i].payment %>
-                                                    </td>
-                                                    <td>
-                                                        <%= orders[i]. orderStatus %>
-                                                    </td>
-                                                    <td>
-                                                        <a href="/orderstatus?id=<%=orders[i]._id%>"
-                                                            style="color: black; font-size: 14px; text-decoration: none;">Details</a>
-                                                    </td>
-
-                                                </tr>
-                                                <% } %>
-                                        </tbody>
-                                    </table>
-                                    <% } else { %>
-
-                                        <p>No orders yet.</p>
-                                        <% } %>
                             </div>
 
 
+                            <!--      orders      -->
+
+
+                            <div class="tab-pane fade" id="account-social-links">
 
 
 
-                        </div>
+                                <div class="" style="position: relative; top: -15px; text-align: center;">
+                                    <% if (orders && orders.length> 0) { %>
+                                        <table class="table">
+                                            <thead class="">
+                                                <tr>
+                                                    <th class="no ">No</th>
+                                                    <th class="date ">Date</th>
+                                                    <th class="total">Amount</th>
+                                                    <th class="Payment">Payment</th>
+                                                    <th class="Payment">Status</th>
+                                                    <th class="Payment"></th>
 
-                        <!-- my wallet -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <% for (let i=0; i < orders.length; i++) { %>
+                                                    <tr>
+                                                        <td class="pl-2">
+                                                            <%= i + 1 %>
+                                                        </td>
+                                                        <td>
+                                                            <%= orders[i].orderDate.toLocaleDateString('en-US', {
+                                                                weekday: 'short' , year: 'numeric' , month: 'short' ,
+                                                                day: 'numeric' }) %>
+                                                        </td>
+                                                        <td>
+                                                            <%= orders[i].subtotal %>
+                                                        </td>
+                                                        <td>
+                                                            <%= orders[i].payment %>
+                                                        </td>
+                                                        <td>
+                                                            <%= orders[i]. orderStatus %>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/orderstatus?id=<%=orders[i]._id%>"
+                                                                style="color: black; font-size: 14px; text-decoration: none;">Details</a>
+                                                        </td>
+
+                                                    </tr>
+                                                    <% } %>
+                                            </tbody>
+                                        </table>
+                                        <% } else { %>
+
+                                            <p>No orders yet.</p>
+                                            <% } %>
+                                </div>
 
 
 
-                        <div class="tab-pane fade" id="mywallet">
-                            <div class="card-body pb-2">
-                                <h4 class="mb-4">My wallet</h4>
 
-                                <div class="card w-50 p-3">
-                                    <div class="card-body">
-                                        <h5 class="card-title mb-3">My Balance</h5>
-                                        <div class="row">
-                                            <div class="col">
 
-                                                <h3 class="card-text " style="color: #6B8E23;">$<%=user.wallet%>
-                                                </h3>
-                                            </div>
-                                            <div class="col">
-                                                <h4 class="card-text">Currency</h4>
-                                                <h5 class="card-text">INR</h5>
-                                            </div>
-                                            <div class="col">
-                                                <h4 class="card-text">Status</h4>
-                                                <h5 class="card-text">Active</h5>
+                            </div>
+
+                            <!-- my wallet -->
+
+
+
+                            <div class="tab-pane fade" id="mywallet">
+                                <div class="card-body pb-2">
+                                    <h4 class="mb-4">My wallet</h4>
+
+                                    <div class="card w-50 p-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title mb-3">My Balance</h5>
+                                            <div class="row">
+                                                <div class="col">
+
+                                                    <h3 class="card-text " style="color: #6B8E23;">$<%=user.wallet%>
+                                                    </h3>
+                                                </div>
+                                                <div class="col">
+                                                    <h4 class="card-text">Currency</h4>
+                                                    <h5 class="card-text">INR</h5>
+                                                </div>
+                                                <div class="col">
+                                                    <h4 class="card-text">Status</h4>
+                                                    <h5 class="card-text">Active</h5>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="table-responsive border card w-100 text-center">
-                                    <table class="table ">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Date</th>
+                                    <div class="table-responsive border card w-100 text-center">
+                                        <table class="table ">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Date</th>
 
-                                                <th scope="col">Amount</th>
-                                                <th scope="col">Type</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <% if (user.walletHistory && user.walletHistory.length> 0) { %>
-                                                <% user.walletHistory.forEach(function(walletdata,index) { %>
+                                                    <th scope="col">Amount</th>
+                                                    <th scope="col">Type</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% if (user.walletHistory && user.walletHistory.length> 0) { %>
+                                                    <% user.walletHistory.forEach(function(walletdata,index) { %>
 
-                                                    <tr>
-                                                        <th scope="row"><%=1+index%></th>
-                                                        <td>
-                                                            <%=walletdata.date.toISOString().split('T')[0]%>
-                                                        </td>
+                                                        <tr>
+                                                            <th scope="row">
+                                                                <%=1+index%>
+                                                            </th>
+                                                            <td>
+                                                                <%=walletdata.date.toISOString().split('T')[0]%>
+                                                            </td>
 
-                                                     
+
                                                             <% if(walletdata.amount> 0 ) {%>
-                                                                <td style="color: #6B8E23;"><%=walletdata.amount%></td>
+                                                                <td style="color: #6B8E23;">
+                                                                    <%=walletdata.amount%>
+                                                                </td>
                                                                 <% }else{ %>
-                                                                    <td style="color: #CB192C;"><%=walletdata.amount%></td>
+                                                                    <td style="color: #CB192C;">
+                                                                        <%=walletdata.amount%>
+                                                                    </td>
                                                                     <%}%>
-                                                                       
-                                                                       
-                                             
 
-                                                        <% if(walletdata.amount> 0 ) {%>
-                                                            <td style="color: #6B8E23;">Credited</td>
-                                                            <% }else{ %>
-                                                                <td style="color: #CB192C;">Debited</td>
-                                                                <%}%>
-                                                                   
-                                                                    <%})%>
 
-                                                    </tr>
 
-                                                    <%}%>
-                                        </tbody>
-                                    </table>
+
+                                                                        <% if(walletdata.amount> 0 ) {%>
+                                                                            <td
+                                                                                style="color: #6B8E23; font-weight: 900;">
+                                                                                Credited</td>
+                                                                            <% }else{ %>
+                                                                                <td
+                                                                                    style="color: #CB192C; font-weight: 700;">
+                                                                                    Debited</td>
+                                                                                <%}%>
+
+                                                                                    <%})%>
+
+                                                        </tr>
+
+                                                        <%}%>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+
                                 </div>
-
-
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        </section>
-
+            </section>
 
 
-        <!--   add address  modal section    -->
 
-        <section>
-            <div id="addaddressmodal" class="modal">
-                <div class="modal-content  address-modal">
-                    <form>
-                        <span class="close" onclick=" addressclosemodal()">&times;</span>
-                        <h6 class="mb-4">Contacts</h6>
+            <!--   add address  modal section    -->
 
-                        <div class="form-group">
-                            <label class="form-label"> Full name *</label>
-                            <input type="text" id="fullname" class="form-control" name="fullname">
-                            <span id="fullname-error" style="color: red;"></span>
+            <section>
+                <div id="addaddressmodal" class="modal">
+                    <div class="modal-content  address-modal">
+                        <form>
+                            <span class="close" onclick=" addressclosemodal()">&times;</span>
+                            <h6 class="mb-4">Contacts</h6>
 
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-label">Email *</label>
-                                    <input type="text" id="email" class="form-control" name="email">
-                                    <span id="email-error" style="color: red;"></span>
+                            <div class="form-group">
+                                <label class="form-label"> Full name *</label>
+                                <input type="text" id="fullname" class="form-control" name="fullname">
+                                <span id="fullname-error" style="color: red;"></span>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Email *</label>
+                                        <input type="text" id="email" class="form-control" name="email">
+                                        <span id="email-error" style="color: red;"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">State *</label>
+                                        <input type="text" id="state" class="form-control" name="state">
+                                        <span id="state-error" style="color: red;"></span>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Pincode *</label>
+                                        <input type="text" id="pin" class="form-control" name="pin">
+                                        <span id="pin-error" style="color: red;"></span>
+
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="form-label">State *</label>
-                                    <input type="text" id="state" class="form-control" name="state">
-                                    <span id="state-error" style="color: red;"></span>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Mobile *</label>
+                                        <input type="text" id="mobile" class="form-control" name="mobile">
+                                        <span id="mobile-error" style="color: red;"></span>
 
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">City *</label>
+                                        <input type="text" id="city" class="form-control" name="city">
+                                        <span id="city-error" style="color: red;"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">House name *</label>
+                                        <input type="text" id="housename" class="form-control" name="housename">
+                                        <span id="houseName-error" style="color: red;"></span>
+
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="form-label">Pincode *</label>
-                                    <input type="text" id="pin" class="form-control" name="pin">
-                                    <span id="pin-error" style="color: red;"></span>
-
+                                <div class="pt-2 pb-4 me-1 d-flex justify-content -center">
+                                    <button class="btn btn-primary edit-btn" id="addAddressButton">
+                                        <i class="text-muted material-icons md-post_add"></i>Save Address
+                                    </button>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-label">Mobile *</label>
-                                    <input type="text" id="mobile" class="form-control" name="mobile">
-                                    <span id="mobile-error" style="color: red;"></span>
-
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">City *</label>
-                                    <input type="text" id="city" class="form-control" name="city">
-                                    <span id="city-error" style="color: red;"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">House name *</label>
-                                    <input type="text" id="housename" class="form-control" name="housename">
-                                    <span id="houseName-error" style="color: red;"></span>
-
-                                </div>
-                            </div>
-                            <div class="pt-2 pb-4 me-1 d-flex justify-content -center">
-                                <button class="btn btn-primary edit-btn" id="addAddressButton">
-                                    <i class="text-muted material-icons md-post_add"></i>Save Address
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
 
-        <!-- edit modal -->
+            <!-- edit modal -->
 
-        <section>
-            <div id="EditAddressmodal" class="modal" id="editmodal">
-                <div class="modal-content  address-modal">
-                    <form>
-                        <span class="close" onclick="editaddressclosemodal()">&times;</span>
-                        <h6 class="mb-4">Contacts</h6>
+            <section>
+                <div id="EditAddressmodal" class="modal" id="editmodal">
+                    <div class="modal-content  address-modal">
+                        <form>
+                            <span class="close" onclick="editaddressclosemodal()">&times;</span>
+                            <h6 class="mb-4">Contacts</h6>
 
-                        <div class="form-group">
-                            <label class="form-label">Full Name *</label>
-                            <input type="text" id="editfullname" class="form-control" name="editfullname">
-                            <span id="edit-fullname-error" style="color: red;"></span>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-label">Email *</label>
-                                    <input type="email" id="editemail" class="form-control" name="editemail">
-                                    <span id="edit-email-error" style="color: red;"></span>
+                            <div class="form-group">
+                                <label class="form-label">Full Name *</label>
+                                <input type="text" id="editfullname" class="form-control" name="editfullname">
+                                <span id="edit-fullname-error" style="color: red;"></span>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Email *</label>
+                                        <input type="email" id="editemail" class="form-control" name="editemail">
+                                        <span id="edit-email-error" style="color: red;"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">State *</label>
+                                        <input type="text" id="editstate" class="form-control" name="editstate">
+                                        <span id="edit-state-error" style="color: red;"></span>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Pincode *</label>
+                                        <input type="text" id="editpin" class="form-control" name="editpin">
+                                        <span id="edit-pin-error" style="color: red;"></span>
+
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="form-label">State *</label>
-                                    <input type="text" id="editstate" class="form-control" name="editstate">
-                                    <span id="edit-state-error" style="color: red;"></span>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Mobile *</label>
+                                        <input type="text" id="editmobile" class="form-control" name="editmobile">
+                                        <span id="edit-mobile-error" style="color: red;"></span>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">City *</label>
+                                        <input type="text" id="editcity" class="form-control" name="editcity">
+                                        <span id="edit-city-error" style="color: red;"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">House name *</label>
+                                        <input type="text" id="edithousename" class="form-control" name="edithousename">
+                                        <span id="edit-houseName-error" style="color: red;"></span>
+
+                                    </div>
+
+                                    <!-- Add hidden input for address ID -->
+                                    <input type="hidden" name="editAddressId" id="editAddressId" />
 
                                 </div>
-                                <div class="form-group">
-                                    <label class="form-label">Pincode *</label>
-                                    <input type="text" id="editpin" class="form-control" name="editpin">
-                                    <span id="edit-pin-error" style="color: red;"></span>
-
+                                <div class="pt-2 pb-4 me-1 d-flex justify-content -center">
+                                    <button class="btn btn-primary edit-btn" id="EditAddressButton">
+                                        <i class="text-muted material-icons md-post_add"></i>Save Address
+                                    </button>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-label">Mobile *</label>
-                                    <input type="text" id="editmobile" class="form-control" name="editmobile">
-                                    <span id="edit-mobile-error" style="color: red;"></span>
-
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">City *</label>
-                                    <input type="text" id="editcity" class="form-control" name="editcity">
-                                    <span id="edit-city-error" style="color: red;"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">House name *</label>
-                                    <input type="text" id="edithousename" class="form-control" name="edithousename">
-                                    <span id="edit-houseName-error" style="color: red;"></span>
-
-                                </div>
-
-                                <!-- Add hidden input for address ID -->
-                                <input type="hidden" name="editAddressId" id="editAddressId" />
-
-                            </div>
-                            <div class="pt-2 pb-4 me-1 d-flex justify-content -center">
-                                <button class="btn btn-primary edit-btn" id="EditAddressButton">
-                                    <i class="text-muted material-icons md-post_add"></i>Save Address
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
 
 
@@ -588,13 +601,281 @@
 
 
 
-        <!-- loader -->
-        <div id=" ftco-loader" class="show fullscreen "><svg class="circular" width="48px" height="48px">
+            <!-- loader -->
+            <!-- <div id=" ftco-loader" class="show fullscreen "><svg class="circular" width="48px" height="48px">
                 <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
                 <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
                     stroke="#F96D00" />
             </svg>
+        </div> -->
+
+
+
+
+
+            <!-- modal -->
+            <section>
+                <div id="editProfileModal" class="modal ">
+                    <div class="modal-content">
+                        <form id="editProfileForm">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3 class="modalhead">Edit Profile</h3>
+
+                            <label for="newUsername">New User Name:</label>
+                            <input type="text" id="newUsername" name="editname" class="form-control">
+                            <div> <span id="edit-user-name-error" style="color: red;"></span></div>
+
+                            <label for="newMobile">New Mobile number:</label>
+                            <input type="number" id="newUserMobile" class="form-control" name="editMobile">
+                            <span id="edit-user-phon-error" style="color: red;"></span>
+                            <button type="submit" class="save-btn" class="form-control" onclick="edituser(event)">Save
+                                Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+
+
+
+
+            <script>
+
+                // edit profile modale
+
+                function editProfile() {
+                    document.getElementById('usernameInput').removeAttribute('disabled');
+                    document.getElementById('emailInput').removeAttribute('disabled');
+                    document.getElementById('phoneInput').removeAttribute('disabled');
+                }
+
+                function openModal(name, number) {
+                    console.log(name);
+                    console.log(number);
+
+                    document.querySelector('[name="editname"]').value = name;
+                    document.querySelector('[name="editMobile"]').value = number;
+
+                    document.getElementById('editProfileModal').style.display = 'block';
+                }
+                function closeModal() {
+                    document.getElementById('editProfileModal').style.display = 'none';
+                }
+                // function saveChanges() {
+                //     const newUsername = document.getElementById('newUsername').value;
+                //     document.getElementById('usernameInput').value = newUsername;
+                //     const newMobile = document.getElementById('newMobile').value;
+                //     document.getElementById('phoneInput').value = newMobile;
+                //     closeModal();
+                // }
+
+
+
+                // reset password validation
+
+                function resetPasswordvalidation(event) {
+                    event.preventDefault();
+                    console.log("here")
+
+                    const newpassword = document.getElementById('newpassword').value;
+                    const repeatpassword = document.getElementById('repeatpassword').value;
+
+                    document.getElementById('newPasswordError').textContent = '';
+                    document.getElementById('confirmPasswordError').textContent = '';
+
+
+                    let isValid = true;
+
+
+                    if (newpassword.length < 8) {
+                        document.getElementById('newPasswordError').textContent = 'Password must be at least 8 characters';
+                        isValid = false;
+                    }
+
+                    if (repeatpassword.length < 8) {
+                        document.getElementById('confirmPasswordError').textContent = 'Password must be at least 8 characters';
+                        isValid = false;
+                    }
+
+                    if (newpassword !== repeatpassword) {
+                        document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                        isValid = false;
+                    }
+
+                    if (!isValid) {
+                        console.log("your validation failed");
+                    } else {
+                        resetPassword();
+                    }
+
+                }
+
+
+
+
+                // fech request for reset password
+
+                function resetPassword() {
+                    console.log("viliknund")
+                    const newpassword = document.getElementById('newpassword').value;
+                    const currentpassword = document.getElementById('currentpassword').value;
+                    const repeatpassword = document.getElementById('repeatpassword').value;
+                    // document.getElementById('resetdiv').textContent = '';
+
+                    fetch('/resetpassword', {
+                        method: 'PUT',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            newpassword: newpassword,
+                            currentpassword: currentpassword,
+                            repeatpassword: repeatpassword
+                        }),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.reseted) {
+                                $('#resetdiv').load('/useraccount #resetdiv');
+                                document.getElementById('message').innerHTML = 'reset password completed successfully';
+
+                                // window.relode();
+                                // window.location.reload();
+                            } else {
+                                console.log('Password reset failed');
+                                // document.getElementById('resetdiv').textContent = 'Current password is wrong';
+                                document.getElementById('message').innerHTML = 'Current password is wrong';
+
+                            }
+                        })
+                        .catch(error => console.error('Error resetting password:', error));
+                }
+
+
+                // add addres modal
+
+                function addressopenmodal() {
+                    document.getElementById("addaddressmodal").style.display = "block";
+                    document.getElementById("addaddressmodal").style.overflow = "hidden";
+
+                }
+                function addressclosemodal() {
+                    document.getElementById('addaddressmodal').style.display = "none";
+                }
+
+                // add address validation 
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    document.getElementById("addAddressButton").addEventListener('click', function (event) {
+                        event.preventDefault();
+                        addressvalidation();
+                    });
+                })
+
+                // edit addres modal
+
+                function editaddressopenmodal(fullname, mobile, email, state, city, houseName, pin, addressId) {
+                    console.log("ty", fullname);
+                    console.log("ok", addressId)
+
+                    document.querySelector('[name="editfullname"]').value = fullname;
+                    document.querySelector('[name="editmobile"]').value = mobile;
+                    document.querySelector('[name="editemail"]').value = email;
+
+                    document.querySelector('[name="editstate"]').value = state;
+                    document.querySelector('[name="editcity"]').value = city;
+                    document.querySelector('[name="edithousename"]').value = houseName;
+                    document.querySelector('[name="editpin"]').value = pin;
+
+                    document.getElementById('editAddressId').value = addressId;
+
+                    document.getElementById("EditAddressmodal").style.display = "block";
+                    document.getElementById("EditAddressmodal").style.overflow = "hidden";
+
+
+                }
+                function editaddressclosemodal() {
+                    document.getElementById('EditAddressmodal').style.display = "none";
+                }
+                // edit address validation 
+                document.addEventListener('DOMContentLoaded', function () {
+                    document.getElementById("EditAddressButton").addEventListener('click', function (event) {
+                        event.preventDefault();
+                        editaddressvalidation();
+                    });
+                })
+
+
+
+
+            </script>
+
+
+
+            <style>
+                .modal {
+                    display: none;
+                    z-index: 99999999999;
+                    left: 30%;
+                    top: 0;
+                    width: 50%;
+                    height: 100%;
+                    overflow: auto;
+                }
+
+                .modal-content {
+                    background-color: #fefefe;
+                    margin: 15% auto;
+                    padding: 20px;
+                    border: 1px solid #888;
+                    width: 80%;
+                }
+
+                .close {
+                    color: #aaa;
+                    float: right;
+                    font-size: 28px;
+                    font-weight: bold;
+                }
+
+                .close:hover,
+                .close:focus {
+                    color: black;
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+
+                .forget-btn {}
+
+                .edit-btn {
+                    background-color: #dbcc8f !important;
+                }
+
+                .save-btn {
+                    background-color: #dbcc8f;
+                    border: none;
+                    width: 50%;
+                    height: 50px;
+                    position: relative;
+                    left: 24%;
+                    margin-top: 20px;
+                }
+
+                .modalhead {
+                    text-align: center;
+                    margin-bottom: 5px;
+                }
+
+                .address-modal {
+                    width: 100% !important;
+                    overflow: hidden !important;
+                    margin-top: 28px !important;
+                }
+            </style>
         </div>
+
+
+
         <footer class="ftco-footer ftco-section">
             <div class="container">
                 <div class="row">
@@ -677,269 +958,6 @@
                 </div>
             </div>
         </footer>
-
-
-
-
-        <!-- modal -->
-        <section>
-            <div id="editProfileModal" class="modal ">
-                <div class="modal-content">
-                    <form id="editProfileForm">
-                        <span class="close" onclick="closeModal()">&times;</span>
-                        <h3 class="modalhead">Edit Profile</h3>
-
-                        <label for="newUsername">New User Name:</label>
-                        <input type="text" id="newUsername" name="editname" class="form-control">
-                        <div> <span id="edit-user-name-error" style="color: red;"></span></div>
-
-                        <label for="newMobile">New Mobile number:</label>
-                        <input type="number" id="newUserMobile" class="form-control" name="editMobile">
-                        <span id="edit-user-phon-error" style="color: red;"></span>
-                        <button type="submit" class="save-btn" class="form-control" onclick="edituser(event)">Save
-                            Changes</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-
-
-
-
-        <script>
-
-            // edit profile modale
-
-            function editProfile() {
-                document.getElementById('usernameInput').removeAttribute('disabled');
-                document.getElementById('emailInput').removeAttribute('disabled');
-                document.getElementById('phoneInput').removeAttribute('disabled');
-            }
-
-            function openModal(name, number) {
-                console.log(name);
-                console.log(number);
-
-                document.querySelector('[name="editname"]').value = name;
-                document.querySelector('[name="editMobile"]').value = number;
-
-                document.getElementById('editProfileModal').style.display = 'block';
-            }
-            function closeModal() {
-                document.getElementById('editProfileModal').style.display = 'none';
-            }
-            // function saveChanges() {
-            //     const newUsername = document.getElementById('newUsername').value;
-            //     document.getElementById('usernameInput').value = newUsername;
-            //     const newMobile = document.getElementById('newMobile').value;
-            //     document.getElementById('phoneInput').value = newMobile;
-            //     closeModal();
-            // }
-
-
-
-            // reset password validation
-
-            function resetPasswordvalidation(event) {
-                event.preventDefault();
-                console.log("here")
-
-                const newpassword = document.getElementById('newpassword').value;
-                const repeatpassword = document.getElementById('repeatpassword').value;
-
-                document.getElementById('newPasswordError').textContent = '';
-                document.getElementById('confirmPasswordError').textContent = '';
-
-
-                let isValid = true;
-
-
-                if (newpassword.length < 8) {
-                    document.getElementById('newPasswordError').textContent = 'Password must be at least 8 characters';
-                    isValid = false;
-                }
-
-                if (repeatpassword.length < 8) {
-                    document.getElementById('confirmPasswordError').textContent = 'Password must be at least 8 characters';
-                    isValid = false;
-                }
-
-                if (newpassword !== repeatpassword) {
-                    document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
-                    isValid = false;
-                }
-
-                if (!isValid) {
-                    console.log("your validation failed");
-                } else {
-                    resetPassword();
-                }
-
-            }
-
-
-
-
-            // fech request for reset password
-
-            function resetPassword() {
-                console.log("viliknund")
-                const newpassword = document.getElementById('newpassword').value;
-                const currentpassword = document.getElementById('currentpassword').value;
-                const repeatpassword = document.getElementById('repeatpassword').value;
-                // document.getElementById('resetdiv').textContent = '';
-
-                fetch('/resetpassword', {
-                    method: 'PUT',
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        newpassword: newpassword,
-                        currentpassword: currentpassword,
-                        repeatpassword: repeatpassword
-                    }),
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.reseted) {
-                            $('#resetdiv').load('/useraccount #resetdiv');
-                            document.getElementById('message').innerHTML = 'reset password completed successfully';
-
-                            // window.relode();
-                            // window.location.reload();
-                        } else {
-                            console.log('Password reset failed');
-                            // document.getElementById('resetdiv').textContent = 'Current password is wrong';
-                            document.getElementById('message').innerHTML = 'Current password is wrong';
-
-                        }
-                    })
-                    .catch(error => console.error('Error resetting password:', error));
-            }
-
-
-            // add addres modal
-
-            function addressopenmodal() {
-                document.getElementById("addaddressmodal").style.display = "block";
-                document.getElementById("addaddressmodal").style.overflow = "hidden";
-
-            }
-            function addressclosemodal() {
-                document.getElementById('addaddressmodal').style.display = "none";
-            }
-
-            // add address validation 
-
-            document.addEventListener('DOMContentLoaded', function () {
-                document.getElementById("addAddressButton").addEventListener('click', function (event) {
-                    event.preventDefault();
-                    addressvalidation();
-                });
-            })
-
-            // edit addres modal
-
-            function editaddressopenmodal(fullname, mobile, email, state, city, houseName, pin, addressId) {
-                console.log("ty", fullname);
-                console.log("ok", addressId)
-
-                document.querySelector('[name="editfullname"]').value = fullname;
-                document.querySelector('[name="editmobile"]').value = mobile;
-                document.querySelector('[name="editemail"]').value = email;
-
-                document.querySelector('[name="editstate"]').value = state;
-                document.querySelector('[name="editcity"]').value = city;
-                document.querySelector('[name="edithousename"]').value = houseName;
-                document.querySelector('[name="editpin"]').value = pin;
-
-                document.getElementById('editAddressId').value = addressId;
-
-                document.getElementById("EditAddressmodal").style.display = "block";
-                document.getElementById("EditAddressmodal").style.overflow = "hidden";
-
-
-            }
-            function editaddressclosemodal() {
-                document.getElementById('EditAddressmodal').style.display = "none";
-            }
-            // edit address validation 
-            document.addEventListener('DOMContentLoaded', function () {
-                document.getElementById("EditAddressButton").addEventListener('click', function (event) {
-                    event.preventDefault();
-                    editaddressvalidation();
-                });
-            })
-
-
-
-
-        </script>
-
-
-
-        <style>
-            .modal {
-                display: none;
-                z-index: 99999999999;
-                left: 30%;
-                top: 0;
-                width: 50%;
-                height: 100%;
-                overflow: auto;
-            }
-
-            .modal-content {
-                background-color: #fefefe;
-                margin: 15% auto;
-                padding: 20px;
-                border: 1px solid #888;
-                width: 80%;
-            }
-
-            .close {
-                color: #aaa;
-                float: right;
-                font-size: 28px;
-                font-weight: bold;
-            }
-
-            .close:hover,
-            .close:focus {
-                color: black;
-                text-decoration: none;
-                cursor: pointer;
-            }
-
-            .forget-btn {}
-
-            .edit-btn {
-                background-color: #dbcc8f !important;
-            }
-
-            .save-btn {
-                background-color: #dbcc8f;
-                border: none;
-                width: 50%;
-                height: 50px;
-                position: relative;
-                left: 24%;
-                margin-top: 20px;
-            }
-
-            .modalhead {
-                text-align: center;
-                margin-bottom: 5px;
-            }
-
-            .address-modal {
-                width: 100% !important;
-                overflow: hidden !important;
-                margin-top: 28px !important;
-            }
-        </style>
 
 
 
