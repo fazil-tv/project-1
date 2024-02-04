@@ -113,7 +113,7 @@ function blockButton(bannerId) {
 }
 
 
-function addwishlist(){
+function addwishlist() {
     try {
         fetch('/admin/getwishlist', {
             method: 'POST',
@@ -140,6 +140,49 @@ function addwishlist(){
     } catch (error) {
 
     }
+}
+
+
+function applyfilter() {
+    const selectedvalue = document.getElementById("selectoption").value;
+    console.log(selectedvalue);
+
+    try {
+        fetch('/admin/salesfilter', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                selectedvalue
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.orderData) {
+
+                    const tableBody = document.getElementById('table-body');
+                    tableBody.innerHTML = '';
+
+
+
+                    data.orderData.forEach((order,index) => {
+                        order.index = index
+                        appendOrderToTable(order);
+                    });
+                }
+            }).catch(error => {
+                console.log(error);
+
+            })
+    } catch (error) {
+
+    }
+
+
+
+
+
 }
 
 

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Nest Dashboard</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:title" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/theme/favicon.svg" />
+    <!-- Template CSS -->
+    <!-- <link href="assets/css/main.css?v=1.1" rel="stylesheet" type="text/css" /> -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body>
+    <div class="screen-overlay"></div>
+    <aside class="navbar-aside" id="offcanvas_aside">
+        <div class="aside-top">
+            <a href="index.html" class="brand-wrap">
+                <img src="/images/shous-logo.png" class="logo" alt="Nest Dashboard" />
+            </a>
+            <div>
+                <button class="btn btn-icon btn-aside-minimize"><i
+                        class="text-muted material-icons md-menu_open"></i></button>
+            </div>
+        </div>
+        <nav>
+            <ul class="menu-aside">
+                <li class="menu-item active">
+                    <a class="menu-link" href="/admin/index">
+                        <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <!-- users                     -->
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/users">
+                        <i class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">users</span>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/category">
+                        <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">Category</span>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/product">
+                        <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Add product</span>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/orders">
+                        <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">Orders</span>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/coupon">
+                        <!-- <i class="icon material-icons md-shopping_cart"></i> -->
+                        <!-- <i class=" fa-solid fa-ticket"></i> -->
+
+                        <i class="icon fa-solid fa-ticket"></i>
+                        <span class="text">Coupon</span>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/banner">
+                        <!-- <i class="icon material-icons md-shopping_cart"></i> -->
+                        <!-- <i class="fa-solid fa-ticket"></i> -->
+                        <i class="icon fa-solid fa-square"></i>
+                        <span class="text">Banner</span>
+                    </a>
+                </li>
+
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="#">
+                        <i class="icon material-icons md-person"></i>
+                        <span class="text">Account</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="page-account-login.html">User login</a>
+                        <a href="page-account-register.html">User registration</a>
+                        <a href="page-error-404.html">Error 404</a>
+                    </div>
+
+            </ul>
+            <hr />
+            <ul class="menu-aside">
+                <li class="menu-item">
+                    <a class="menu-link" href="page-blank.html">
+                        <i class="icon material-icons md-local_offer"></i>
+                        <span class="text"> Starter page </span>
+                    </a>
+                </li>
+            </ul>
+            <br />
+
+            <hr />
+            <ul class="menu-aside">
+                <li class="menu-item">
+                    <a class="menu-link" href="page-blank.html">
+                        <i class="icon material-icons md-local_offer"></i>
+                        <span class="text"> Starter page </span>
+                    </a>
+                </li>
+            </ul>
+            <br />
+            <br />
+        </nav>
+    </aside>
+    <main class="main-wrap">
+        <header class="main-header navbar">
+            <div class="col-search">
+                <form class="searchform">
+                    <div class="input-group">
+                        <input list="search_terms" type="text" class="form-control" placeholder="Search term" />
+                        <button class="btn btn-light bg" type="button"><i class="material-icons md-search"></i></button>
+                    </div>
+                    <datalist id="search_terms">
+                        <option value="Products"></option>
+                        <option value="New orders"></option>
+                        <option value="Apple iphone"></option>
+                        <option value="Ahmed Hassan"></option>
+                    </datalist>
+                </form>
+            </div>
+            <div class="col-nav">
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"><i
+                        class="material-icons md-apps"></i></button>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon" href="#">
+                            <i class="material-icons md-notifications animation-shake"></i>
+                            <span class="badge rounded-pill">3</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="requestfullscreen nav-link btn-icon"><i
+                                class="material-icons md-cast"></i></a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage"
+                            aria-expanded="false"><i class="material-icons md-public"></i></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
+                            <a class="dropdown-item text-brand" href="#"><img src="assets/imgs/theme/flag-us.png"
+                                    alt="English" />English</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-fr.png"
+                                    alt="Français" />Français</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-jp.png"
+                                    alt="Français" />日本語</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-cn.png"
+                                    alt="Français" />中国人</a>
+                        </div>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount"
+                            aria-expanded="false"> <img class="img-xs rounded-circle"
+                                src="assets/imgs/people/avatar-2.png" alt="User" /></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit
+                                Profile</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account
+                                Settings</a>
+                            <a class="dropdown-item" href="#"><i
+                                    class="material-icons md-account_balance_wallet"></i>Wallet</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help
+                                center</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="#"><i
+                                    class="material-icons md-exit_to_app"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <section class="content-main">
+            <div class="card">
+                <header class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-lg-4 col-md-6 mb-lg-0 mb-15">
+                            <span> <i class="material-icons md-calendar_today"></i>
+
+                        </div>
+                        <div class="col-lg-8 col-md-6 ms-auto text-md-end">
+                            <select class="form-select d-inline-block mb-lg-0 mr-5 mw-200" id="selectoption">
+                                <option selected>ALL</option>
+                                <option>Daily</option>
+                                <option>Weekly</option>
+                                <option>Monthly</option>
+                                <option>Yearly</option>
+
+                            </select>
+                            <a class="btn btn-primary" onclick="applyfilter()">Apply Filter</a>
+                            <a class="btn btn-secondary print ms-2" href="#"><i
+                                    class="icon material-icons md-print"></i></a>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="pagination-area  mb-50">
+
+                    <table id="tablePagination" class="table table-hover">
+                        <thead style="background-color: #3BB77E; text-align: center;">
+                            <tr>
+                                <th scope="col" class="th-header">NO</th>
+                                <th scope="col" class="th-header">ID</th>
+                                <th scope="col" class="th-header">Product Name</th>
+                                <th scope="col" class="th-header">Quantity Sold</th>
+
+                                <th scope="col" class="th-header">Price</th>
+
+                                <th scope="col" class="th-header">Total Sales</th>
+                                <th scope="col" class="th-header">Order Date</th>
+                                <th scope="col" class="th-header">Customer</th>
+                                <th scope="col" class="th-header">Payment Methode</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body" style="text-align: center;">
+                            <% if (orderData) { %>
+                                <% orderData.forEach((data, index)=> { %>
+                                    <tr>
+                                        <td scope="col">
+                                            <p>
+                                                <%= index+1%>
+                                            </p>
+                                        </td>
+                                        <td scope="col">
+                                            <p>
+                                                <%= data._id.toString().slice(-4) %>
+
+                                            </p>
+                                        </td>
+                                        <td scope="col">
+                                            <p>
+                                                <%= data.productData[0].name%>
+                                            </p>
+                                        </td>
+                                        <td scope="col">
+                                            <p>
+                                                <%= data.products.count%>
+                                            </p>
+                                        </td>
+
+
+
+                                        <td scope="col">
+                                            <p>
+                                                <%= data.products.price %>
+                                            </p>
+                                        </td>
+                                        <td scope="col">
+                                            <p>
+                                                <%= data.products.totalPrice%>
+                                            </p>
+                                        </td>
+
+                                        <td scope="col">
+                                            <p> <%=data.orderDate.toLocaleDateString('en-US', { weekday: 'short' ,
+                                                    year: 'numeric' , month: 'short' , day: 'numeric' })%></p>
+                                        </td>
+                                        <td scope="col">
+                                            <p>
+                                                <%= data.userData[0].email%>
+                                            </p>
+                                        </td>
+                                        <td scope="col">
+                                            <p>
+                                                <%= data.payment %>
+                                            </p>
+                                        </td>
+
+
+
+                                    </tr>
+                                    <% }); %>
+                                        <% } %>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <!-- content-main end// -->
+        <footer class="main-footer font-xs">
+            <div class="row pb-30 pt-15">
+                <div class="col-sm-6">
+                    <script>
+                        document.write(new Date().getFullYear());
+                    </script>
+                    &copy; Nest - HTML Ecommerce Template .
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end">All rights reserved</div>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+   
+
+    <script>
+        
+
+        function appendOrderToTable(order) {
+            console.log(order.orderDate,"hmmmmmmm");
+            const tableBody = document.getElementById('table-body');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+        <td>${order.index+1}</td>    
+        <td>${order._id.toString().slice(-4)}</td>
+        <td>${order.productData[0] ? order.productData[0].name : ''}</td>
+        <td>${order.products ? order.products.count : ''}</td>
+        <td>${order.products ? order.products.price : ''}</td>
+        <td>${order.products ? order.products.totalPrice : ''}</td>
+        <td>${order.orderDate.toString().slice(-4)? order.orderDate.toString().slice(0,10): ''}</td>
+        <td>${order.userData[0] ? order.userData[0].email : ''}</td>
+        <td>${order.payment}</td>
+    `;
+            tableBody.appendChild(row);
+        }
+
+    </script>
+    <script src="assets/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/vendors/select2.min.js"></script>
+    <script src="assets/js/vendors/perfect-scrollbar.js"></script>
+    <script src="assets/js/vendors/jquery.fullscreen.min.js"></script>
+    <!-- Main Script -->
+    <script src="assets/js/main.js?v=1.1" type="text/javascript"></script>
+
+    <script src="/js/adminfech.js"></script>
+</body>
+
+</html>

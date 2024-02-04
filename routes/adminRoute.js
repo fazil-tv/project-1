@@ -95,6 +95,11 @@ adminRoute.get('/addcoupon',auth.isLogin,couponController.addcoupon);
 adminRoute.post('/addcoupon',auth.isLogin,couponController.addcouponpost);
 adminRoute.delete('/removecoupon',auth.isLogin,couponController.deletcoupon);
 
+// sales
+adminRoute.get('/sales',auth.isLogin,adminController.sales);
+adminRoute.post('/salesfilter',auth.isLogin,adminController.sales);
+
+
 
 
 

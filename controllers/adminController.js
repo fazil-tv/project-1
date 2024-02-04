@@ -47,7 +47,6 @@ const users = async (req, res) => {
 // users
 const orders = async (req, res) => {
     try {
-
         const cartData = await orderSchema.find({}).populate('products.productId');
         console.log(cartData, 'hghfg');
         res.render("orders", { cartData });
@@ -183,7 +182,7 @@ const loaddashbord = async (req, res) => {
         },
         {
             $group: {
-                _id: { $month: "$orderDate" }, 
+                _id: { $month: "$orderDate" },
                 monthlyrevenue: {
                     $sum: "$products.totalPrice"
                 }
@@ -203,25 +202,15 @@ const loaddashbord = async (req, res) => {
 
     console.log(graphValue, "ooooor");
 
-    const cashondelivery  =await orderSchema.countDocuments({"payment":"Cash on delivery"})
-    console.log("TOTTEL",cashondelivery)
-    const Wallet  =await orderSchema.countDocuments({"payment":"Wallet"})
-    console.log("TOTTEL",cashondelivery)
-    Razorpay  =await orderSchema.countDocuments({"payment":"Razorpay"})
-
-
-
-    
-   
-
-
-
-
-
+    const cashondelivery = await orderSchema.countDocuments({ "payment": "Cash on delivery" })
+    console.log("TOTTEL", cashondelivery)
+    const Wallet = await orderSchema.countDocuments({ "payment": "Wallet" })
+    console.log("TOTTEL", cashondelivery)
+    Razorpay = await orderSchema.countDocuments({ "payment": "Razorpay" })
 
     try {
         console.log("t", totalproducts, "or", totalorers, "re", revenue, "cur", currentMonthName, "mo", montlyrevenue)
-        res.render("index", { totalproducts, totalorers, revenue: revenue[0].revenue, currentMonthName, montlyrevenue: montlyrevenue[0].monthlyrevenue, graphValue ,Wallet,cashondelivery,Razorpay});
+        res.render("index", { totalproducts, totalorers, revenue: revenue[0].revenue, currentMonthName, montlyrevenue: montlyrevenue[0].monthlyrevenue, graphValue, Wallet, cashondelivery, Razorpay });
     } catch (error) {
         console.log(error);
     }
@@ -289,6 +278,270 @@ const updatestatus = async (req, res) => {
 }
 
 
+
+// sales
+const sales = async (req, res) => {
+    const selectedvalue = req.body.selectedvalue;
+    console.log(selectedvalue);
+
+    try {
+
+        if (selectedvalue === "Daily") {
+
+            console.log("dailyyyyy");
+            const orderData = await orderSchema.aggregate([
+                {
+                    $match: {
+                        orderStatus: 'placed',
+                        $expr: {
+                            $eq: [
+                                {
+                                    $dateToString: {
+                                        format: '%Y-%m-%d',
+                                        date: '$orderDate',
+                                    },
+                                },
+                                {
+                                    $dateToString: {
+                                        format: '%Y-%m-%d',
+                                        date: new Date(),
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    $lookup: {
+                        from: "users",
+                        localField: "user",
+                        foreignField: "_id",
+                        as: "userData"
+                    }
+                },
+                {
+                    $unwind: "$products"
+                },
+                {
+                    $lookup: {
+                        from: "products",
+                        localField: "products.productId",
+                        foreignField: "_id",
+                        as: "productData"
+                    }
+                }
+            ]);
+
+            res.json({ orderData })
+
+
+        } else if (selectedvalue === "Weekly") {
+            console.log("wekleeeee");
+            const orderData = await orderSchema.aggregate([
+                {
+                    $match: {
+                        orderStatus: 'placed',
+                        $expr: {
+                            $gte: [
+                                {
+                                    $dateToString: {
+
+                                        date: '$orderDate',
+                                    },
+                                },
+                                {
+                                    $dateToString: {
+                                        format: '%Y-%m-%d',
+                                        date: new Date(new Date().getTime - 86400000 * 6),
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    $lookup: {
+                        from: "users",
+                        localField: "user",
+                        foreignField: "_id",
+                        as: "userData"
+                    }
+                },
+                {
+                    $unwind: "$products"
+                },
+                {
+                    $lookup: {
+                        from: "products",
+                        localField: "products.productId",
+                        foreignField: "_id",
+                        as: "productData"
+                    }
+                }
+            ]);
+            res.json({ orderData })
+
+        } else if (selectedvalue === "Monthly") {
+            console.log("montlyyyyy");
+            const orderData = await orderSchema.aggregate([
+                {
+                    $match: {
+                        orderStatus: 'placed',
+                        $expr: {
+                            $eq: [
+                                {
+                                    $month: "$orderDate"
+                                },
+                                {
+                                    $month: new Date(),
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    $lookup: {
+                        from: "users",
+                        localField: "user",
+                        foreignField: "_id",
+                        as: "userData"
+                    }
+                },
+                {
+                    $unwind: "$products"
+                },
+                {
+                    $lookup: {
+                        from: "products",
+                        localField: "products.productId",
+                        foreignField: "_id",
+                        as: "productData"
+                    }
+                }
+            ]);
+
+            res.json({ orderData })
+
+
+
+
+        } else if (selectedvalue === "Yearly") {
+            console.log("yearlyyyyy");
+            const orderData = await orderSchema.aggregate([
+                {
+                    $match: {
+                        orderStatus: 'placed',
+                        $expr: {
+                            $eq: [
+                                {
+                                    $year: "$orderDate"
+                                },
+                                {
+                                    $year: new Date(),
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    $lookup: {
+                        from: "users",
+                        localField: "user",
+                        foreignField: "_id",
+                        as: "userData"
+                    }
+                },
+                {
+                    $unwind: "$products"
+                },
+                {
+                    $lookup: {
+                        from: "products",
+                        localField: "products.productId",
+                        foreignField: "_id",
+                        as: "productData"
+                    }
+                }
+            ]);
+            res.json({ orderData })
+
+        } else if (selectedvalue === "ALL") {
+
+
+
+            const orderData = await orderSchema.aggregate([
+                {
+                    $match: {
+                        orderStatus: 'placed',
+                    },
+                },
+                {
+                    $lookup: {
+                        from: "users",
+                        localField: "user",
+                        foreignField: "_id",
+                        as: "userData"
+                    }
+                },
+                {
+                    $unwind: "$products"
+                },
+                {
+                    $lookup: {
+                        from: "products",
+                        localField: "products.productId",
+                        foreignField: "_id",
+                        as: "productData"
+                    }
+                }
+            ]);
+
+            console.log('oooooooooo',orderData);
+            res.json({ orderData })
+
+
+
+        }
+        else {
+
+            const orderData = await orderSchema.aggregate([
+                {
+                    $match: {
+                        orderStatus: 'placed',
+                    },
+                },
+                {
+                    $lookup: {
+                        from: "users",
+                        localField: "user",
+                        foreignField: "_id",
+                        as: "userData"
+                    }
+                },
+                {
+                    $unwind: "$products"
+                },
+                {
+                    $lookup: {
+                        from: "products",
+                        localField: "products.productId",
+                        foreignField: "_id",
+                        as: "productData"
+                    }
+                }
+            ]);
+
+            res.render("sales", { orderData });
+
+        }
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+
 module.exports = {
     adminverifyLogin,
     signup,
@@ -301,4 +554,6 @@ module.exports = {
     orders,
     orderdetaile,
     updatestatus,
+    sales,
+
 }
