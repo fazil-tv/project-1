@@ -99,6 +99,8 @@ adminRoute.delete('/removecoupon',auth.isLogin,couponController.deletcoupon);
 adminRoute.get('/sales',auth.isLogin,adminController.sales);
 adminRoute.post('/salesfilter',auth.isLogin,adminController.sales);
 
+adminRoute.post('/salesreport',auth.isLogin,adminController.salesreport);
+
 
 
 

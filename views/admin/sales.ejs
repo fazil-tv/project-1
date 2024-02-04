@@ -202,7 +202,8 @@
                         </div>
                         <div class="col-lg-8 col-md-6 ms-auto text-md-end">
                             <select class="form-select d-inline-block mb-lg-0 mr-5 mw-200" id="selectoption">
-                                <option selected>ALL</option>
+                                <option selected disabled>select</option>
+                                <option>ALL</option>
                                 <option>Daily</option>
                                 <option>Weekly</option>
                                 <option>Monthly</option>
@@ -210,8 +211,8 @@
 
                             </select>
                             <a class="btn btn-primary" onclick="applyfilter()">Apply Filter</a>
-                            <a class="btn btn-secondary print ms-2" href="#"><i
-                                    class="icon material-icons md-print"></i></a>
+                            <a class="btn btn-secondary print ms-2" onclick="downlode()">
+                                <i class="icon fa-solid fa-download" style="font-size: 25px;"></i></a>
                         </div>
                     </div>
                 </header>
@@ -288,8 +289,6 @@
                                             </p>
                                         </td>
 
-
-
                                     </tr>
                                     <% }); %>
                                         <% } %>
@@ -312,33 +311,97 @@
                     <div class="text-sm-end">All rights reserved</div>
                 </div>
             </div>
+
+
+
         </footer>
 
     </main>
-   
 
     <script>
+
+    </script>
+
+
+
+    <script>
+
+        let data = [];
         
 
-        function appendOrderToTable(order) {
-            console.log(order.orderDate,"hmmmmmmm");
+        function appendOrderToTable(order,index) {
+            if(index === 0)data = [];
+            data.push(order);
+
+            console.log(order.orderDate, "hmmmmmmm");
             const tableBody = document.getElementById('table-body');
             const row = document.createElement('tr');
             row.innerHTML = `
-        <td>${order.index+1}</td>    
-        <td>${order._id.toString().slice(-4)}</td>
-        <td>${order.productData[0] ? order.productData[0].name : ''}</td>
-        <td>${order.products ? order.products.count : ''}</td>
-        <td>${order.products ? order.products.price : ''}</td>
-        <td>${order.products ? order.products.totalPrice : ''}</td>
-        <td>${order.orderDate.toString().slice(-4)? order.orderDate.toString().slice(0,10): ''}</td>
-        <td>${order.userData[0] ? order.userData[0].email : ''}</td>
-        <td>${order.payment}</td>
-    `;
+            <td>${order.index + 1}</td>    
+            <td>${order._id.toString().slice(-4)}</td>
+            <td>${order.productData[0] ? order.productData[0].name : ''}</td>
+            <td>${order.products ? order.products.count : ''}</td>
+            <td>${order.products ? order.products.price : ''}</td>
+            <td>${order.products ? order.products.totalPrice : ''}</td>
+            <td>${order.orderDate.toString().slice(-4) ? order.orderDate.toString().slice(0, 10) : ''}</td>
+            <td>${order.userData[0] ? order.userData[0].email : ''}</td>
+            <td>${order.payment}</td>`;
             tableBody.appendChild(row);
+
+            // return order
+
+
+
         }
 
+        function downlode() {
+            console.log(data, "globslll");
+            const datas = data;
+            console.log("oo%%%ok", datas);
+
+            try {
+                fetch('/admin/salesreport', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        datas
+                    })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to generate PDF');
+                        }
+                        return response.blob();
+                    })
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'invoice.pdf';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(url);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+
+
+
+
+
+
+
     </script>
+
     <script src="assets/js/vendors/jquery-3.6.0.min.js"></script>
     <script src="assets/js/vendors/bootstrap.bundle.min.js"></script>
     <script src="assets/js/vendors/select2.min.js"></script>

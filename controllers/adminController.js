@@ -6,6 +6,11 @@ const orderSchema = require('../model/orderModel');
 const mongoose = require('mongoose');
 const { ObjectId } = require('mongodb');
 const addressSchema = require('../model/addressModel');
+const puppeteer = require('puppeteer')
+const path = require("path");
+const ejs = require("ejs");
+const puppeteerpdf = require("pdf-puppeteer");
+
 
 
 
@@ -332,6 +337,8 @@ const sales = async (req, res) => {
                 }
             ]);
 
+            console.log( orderData,"11111111");
+
             res.json({ orderData })
 
 
@@ -425,6 +432,8 @@ const sales = async (req, res) => {
 
 
 
+
+
         } else if (selectedvalue === "Yearly") {
             console.log("yearlyyyyy");
             const orderData = await orderSchema.aggregate([
@@ -496,7 +505,7 @@ const sales = async (req, res) => {
                 }
             ]);
 
-            console.log('oooooooooo',orderData);
+            console.log('oooooooooo', orderData);
             res.json({ orderData })
 
 
@@ -541,6 +550,25 @@ const sales = async (req, res) => {
 }
 
 
+const salesreport = async (req, res) => {
+    const orderData= req.body.datas;
+    console.log("orderData",orderData)
+
+    const ejsPagePath = path.join(__dirname, '../views/admin/report.ejs');
+    const ejsPage = await ejs.renderFile(ejsPagePath, { orderData });
+
+    const browser = await puppeteer.launch({ headless: "new" });
+    const page = await browser.newPage();
+    await page.setContent(ejsPage);
+    const pdfBuffer = await page.pdf();
+    await browser.close();
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=invoice.pdf');
+    res.send(pdfBuffer);
+
+}
+
 
 module.exports = {
     adminverifyLogin,
@@ -555,5 +583,5 @@ module.exports = {
     orderdetaile,
     updatestatus,
     sales,
-
+    salesreport
 }

@@ -168,7 +168,8 @@ function applyfilter() {
 
                     data.orderData.forEach((order,index) => {
                         order.index = index
-                        appendOrderToTable(order);
+                        appendOrderToTable(order,index);
+
                     });
                 }
             }).catch(error => {
@@ -176,6 +177,7 @@ function applyfilter() {
 
             })
     } catch (error) {
+        console.log(error)
 
     }
 

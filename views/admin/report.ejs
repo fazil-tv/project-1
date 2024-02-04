@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>report</title>
+</head>
+
+<body>
+    
+
+        <div>
+            <h2 style="text-align: center;">Minishop</h2>
+        </div>
+
+        <div class="pagination-area  mb-50">
+
+            <table id="tablePagination" class="table table-hover">
+                <thead style="background-color: #3BB77E; text-align: center;">
+                    <tr>
+                        <th scope="col" class="th-header">NO</th>
+                        <th scope="col" class="th-header">ID</th>
+                        <th scope="col" class="th-header">Product Name</th>
+                        <th scope="col" class="th-header">Quantity Sold</th>
+
+                        <th scope="col" class="th-header">Price</th>
+
+                        <th scope="col" class="th-header">Total Sales</th>
+                        <th scope="col" class="th-header">Order Date</th>
+                        <th scope="col" class="th-header">Customer</th>
+                        <th scope="col" class="th-header">Payment Methode</th>
+                    </tr>
+                </thead>
+
+
+
+
+
+
+
+
+                <tbody id="table-body" style="text-align: center;">
+                   
+                        <% if (orderData) { %>
+                            <% orderData.forEach((data, index)=> { %>
+                                <tr>
+                                    <td scope="col">
+                                        <p>
+                                            <%= index+1%>
+                                        </p>
+                                    </td>
+                                    <td scope="col">
+                                        <p>
+                                            <%= data._id.toString().slice(-4) %>
+
+                                        </p>
+                                    </td>
+                                    <td scope="col">
+                                        <p>
+                                            <%= data.productData[0].name%>
+                                        </p>
+                                    </td>
+                                    <td scope="col">
+                                        <p>
+                                            <%= data.products.count%>
+                                        </p>
+                                    </td>
+
+
+
+                                    <td scope="col">
+                                        <p>
+                                            <%= data.products.price %>
+                                        </p>
+                                    </td>
+                                    <td scope="col">
+                                        <p>
+                                            <%= data.products.totalPrice%>
+                                        </p>
+                                    </td>
+
+                                    <td scope="col">
+                                        <p> <%=data.orderDate.toString().slice(-4) ? data.orderDate.toString().slice(0, 10) : ''%></p>
+                                                
+                                    </td>
+                                    <td scope="col">
+                                        <p>
+                                            <%= data.userData[0].email%>
+                                        </p>
+                                    </td>
+                                    <td scope="col">
+                                        <p>
+                                            <%= data.payment %>
+                                        </p>
+                                    </td>
+
+                                </tr>
+                                <% }); %>
+                                    <% } %>
+                    
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
