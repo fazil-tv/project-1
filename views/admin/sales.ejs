@@ -211,16 +211,16 @@
 
                         </div>
                         <div class="col-lg-8 col-md-6 ms-auto text-md-end">
-                            <select class="form-select d-inline-block mb-lg-0 mr-5 mw-200" id="selectoption">
-                                <option selected disabled>select</option>
-                                <option>ALL</option>
-                                <option>Daily</option>
+                            <select class="form-select d-inline-block mb-lg-0 mr-5 mw-200" id="selectoption" onchange="applyfilter()">
+                               
+                                <option selected>ALL</option>
+                                <option onclick="applyfilter()">Daily</option>
                                 <option>Weekly</option>
                                 <option>Monthly</option>
                                 <option>Yearly</option>
 
                             </select>
-                            <a class="btn btn-primary" onclick="applyfilter()">Apply Filter</a>
+                            <!-- <a class="btn btn-primary" onclick="applyfilter()">Apply Filter</a> -->
                             <a class="btn btn-secondary print ms-2" onclick="downlode()">
                                 <i class="icon fa-solid fa-download" style="font-size: 25px;"></i></a>
                         </div>

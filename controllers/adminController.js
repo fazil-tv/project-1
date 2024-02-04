@@ -337,7 +337,7 @@ const sales = async (req, res) => {
                 }
             ]);
 
-            console.log( orderData,"11111111");
+            console.log(orderData, "11111111");
 
             res.json({ orderData })
 
@@ -551,8 +551,48 @@ const sales = async (req, res) => {
 
 
 const salesreport = async (req, res) => {
-    const orderData= req.body.datas;
-    console.log("orderData",orderData)
+
+    const orderDatas = await orderSchema.aggregate([
+        {
+            $match: {
+                orderStatus: 'placed',
+            },
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "user",
+                foreignField: "_id",
+                as: "userData"
+            }
+        },
+        {
+            $unwind: "$products"
+        },
+        {
+            $lookup: {
+                from: "products",
+                localField: "products.productId",
+                foreignField: "_id",
+                as: "productData"
+            }
+        }
+    ]);
+
+
+
+    console.log(orderDatas,"OOOOOI");
+
+
+
+
+
+
+
+    // const orderData = req.body.datas
+    const orderData = req.body.datas !== undefined && req.body.datas.length !== 0 ? req.body.datas : orderDatas;
+
+    console.log("orderData", orderData)
 
     const ejsPagePath = path.join(__dirname, '../views/admin/report.ejs');
     const ejsPage = await ejs.renderFile(ejsPagePath, { orderData });
