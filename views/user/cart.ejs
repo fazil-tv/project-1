@@ -162,7 +162,7 @@
 															</td>
 															<% } %>
 
-																<td class="price">$<%=product.productId.price%>
+																<td class="price">₹<%=product.productId.price%>
 																</td>
 
 																<td class="quantity w-0">
@@ -236,7 +236,7 @@
 										<% subtotel += cartData.products[j].totalPrice %>
 									<% } %>
 									
-									$ <%= subtotel %>
+									₹ <%= subtotel %>
 									
 
 								</span>
@@ -244,11 +244,11 @@
 							
 							<p class="d-flex">
 								<span>Delivery</span>
-								<span>$0.00</span>
+								<span>₹0.00</span>
 							</p>
 							<p class="d-flex">
 								<span>Discount</span>
-								<span>$0.00</span>
+								<span>₹0.00</span>
 							</p>
 							<hr>
 
@@ -263,7 +263,7 @@
 										<% totalprice += cartData.products[i].totalPrice %>
 											<% } %>
 
-											$ <%= totalprice%>
+											₹<%= totalprice%>
 								</span>
 							</p>
 						</div>

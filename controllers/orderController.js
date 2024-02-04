@@ -48,7 +48,16 @@ const checkout = async (req, res) => {
         const subtotel = cartData.products.reduce((acc, val) => acc + (val.totalPrice || 0), 0);
         console.log(subtotel, "rrt");
 
-        const discountamount = subtotel - coupondiscount;
+
+        
+        // const discountamount = subtotel - coupondiscount;
+         let discountamount;
+        if(cartData.couponDiscount){
+             discountamount =  (coupondiscount / 100) * subtotel ;
+        }else{
+             discountamount =  subtotel
+        }
+
         console.log("######", discountamount)
         console.log(coupon);
         console.log(cartData);
@@ -116,11 +125,20 @@ const checkoutPost = async (req, res) => {
         let coupondiscount = 0;
         if (cartDatas.couponDiscount) {
             coupondiscount = cartDatas.couponDiscount.discountPercentage;
+          
+
         }
         const subtotelamount = cartDatas.products.reduce((acc, val) => acc + (val.totalPrice || 0), 0);
         console.log(subtotel, "rrt");
 
-        const discountamount = subtotelamount - coupondiscount;
+       
+        // const discountAmount = (coupondiscount / 100) * subtotelamount;
+
+
+
+        // const discountamount = subtotelamount - coupondiscount;
+        const discountamount =(coupondiscount / 100) * subtotelamount;
+       
 
         console.log("******", discountamount);
 
@@ -159,6 +177,8 @@ const checkoutPost = async (req, res) => {
             }
             await cartSchema.deleteOne({ user: userId });
             res.json({ status: 'success', message: "product placed succesfully" });
+
+
         }else if(selectedpayament=="Wallet"){
 
 
@@ -176,6 +196,24 @@ const checkoutPost = async (req, res) => {
                 await productSchema.updateOne({ _id: product }, { $inc: { quantity: -count } })
             }
             await cartSchema.deleteOne({ user: userId });
+
+ 
+            const addressStatus = await orderSchema.findByIdAndUpdate(
+                { _id:orderId },
+                {
+                    $set: {
+                        orderStatus: "placed",
+                        "products.$[].productstatus": "placed"
+                    }
+                },
+                { new: true }
+            );
+
+
+
+
+
+
             res.json({ status: 'success', message: "product placed succesfully" });
             
 

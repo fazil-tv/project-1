@@ -248,17 +248,17 @@
 												<p class="d-flex">
 													<span>Subtotal</span>
 													<span>
-														<%=subtotel%>
+														₹	<%=subtotel%>
 													</span>
 												</p>
 												<p class="d-flex">
 													<span>Delivery</span>
-													<span>₹0.00</span>
+													<span>₹    0.00</span>
 												</p>
 												<p class="d-flex">
 													<span>Discount</span>
 													<span>
-														<%=coupondiscount%>
+														%     <%=coupondiscount%>
 													</span>
 												</p>
 												<hr>
@@ -268,17 +268,18 @@
 													<span>
 														<% if (discountamount !==subtotel ) { %>
 															<del>
-																<%= subtotel %>
-															</del> <br>
+																₹       <%= subtotel %>
+															</del> 
+															<br>
 
 													</span>
 												</p>
 
 												<p class="d-flex">
 
-													<span>Discounted Amount:₹</span>
+													<span>Discounted Amount:</span>
 													<span>
-														<%= discountamount %>
+														₹<%= discountamount %>
 															<% } else { %>
 																₹<%= subtotel %>
 																	<% } %>
