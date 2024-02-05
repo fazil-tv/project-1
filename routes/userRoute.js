@@ -45,7 +45,7 @@ userRoute.get("/otp", async (req, res) => {
 
 });
 
-userRoute.post('/otp',userauth.isLogout, userController.verifyPost)
+userRoute.post('/otp', userController.verifyPost)
 
 
 userRoute.post('/resendotp', (req, res) => {

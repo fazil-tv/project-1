@@ -49,19 +49,19 @@ const checkout = async (req, res) => {
         console.log(subtotel, "rrt");
 
 
-        
+
         // const discountamount = subtotel - coupondiscount;
-         let discountamount;
-        if(cartData.couponDiscount){
-             discountamount =  (coupondiscount / 100) * subtotel ;
-        }else{
-             discountamount =  subtotel
+        let discountamount;
+        if (cartData.couponDiscount) {
+            discountamount = (coupondiscount / 100) * subtotel;
+        } else {
+            discountamount = subtotel
         }
 
         console.log("######", discountamount)
         console.log(coupon);
         console.log(cartData);
-        res.render('checkout', { address, cartData, subtotel, coupon, discountamount, coupondiscount ,userData});
+        res.render('checkout', { address, cartData, subtotel, coupon, discountamount, coupondiscount, userData });
     } catch (error) {
         console.log(error);
     }
@@ -125,20 +125,20 @@ const checkoutPost = async (req, res) => {
         let coupondiscount = 0;
         if (cartDatas.couponDiscount) {
             coupondiscount = cartDatas.couponDiscount.discountPercentage;
-          
+
 
         }
         const subtotelamount = cartDatas.products.reduce((acc, val) => acc + (val.totalPrice || 0), 0);
         console.log(subtotel, "rrt");
 
-       
+
         // const discountAmount = (coupondiscount / 100) * subtotelamount;
 
 
 
         // const discountamount = subtotelamount - coupondiscount;
-        const discountamount =(coupondiscount / 100) * subtotelamount;
-       
+        const discountamount = (coupondiscount / 100) * subtotelamount;
+
 
         console.log("******", discountamount);
 
@@ -164,7 +164,7 @@ const checkoutPost = async (req, res) => {
         console.log(orderId);
 
 
-        
+
 
         if (order.orderStatus === "placed") {
             for (let i = 0; i < cartData.products.length; i++) {
@@ -179,7 +179,7 @@ const checkoutPost = async (req, res) => {
             res.json({ status: 'success', message: "product placed succesfully" });
 
 
-        }else if(selectedpayament=="Wallet"){
+        } else if (selectedpayament == "Wallet") {
 
 
             const data = {
@@ -197,9 +197,9 @@ const checkoutPost = async (req, res) => {
             }
             await cartSchema.deleteOne({ user: userId });
 
- 
+
             const addressStatus = await orderSchema.findByIdAndUpdate(
-                { _id:orderId },
+                { _id: orderId },
                 {
                     $set: {
                         orderStatus: "placed",
@@ -215,7 +215,7 @@ const checkoutPost = async (req, res) => {
 
 
             res.json({ status: 'success', message: "product placed succesfully" });
-            
+
 
 
         } else {
@@ -242,7 +242,7 @@ const checkoutPost = async (req, res) => {
 
 const success = async (req, res) => {
     try {
-        
+
         res.render("success");
     } catch (error) {
         console.log(error.message);
@@ -279,9 +279,9 @@ const cancelorder = async (req, res) => {
     const id = req.body.id;
     const orderId = req.body.orderId;
 
-    console.log("p",productId)
-    console.log("i",id)
-    console.log("o",orderId)
+    console.log("p", productId)
+    console.log("i", id)
+    console.log("o", orderId)
 
 
 
@@ -302,18 +302,20 @@ const cancelorder = async (req, res) => {
         await orderdata.save();
 
 
-       
-        pdatedOrders = await orderSchema.findById(orderId)
 
-        console.log(updatedOrders,"%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%****");
+        const updatedOrders = await orderSchema.findById(orderId)
+
+        console.log(updatedOrders, "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%****");
         if (updatedOrders.payment !== 'Cash on delivery') {
 
             const product = updatedOrders.products.find((products) => products.productId.toString() === id);
+
             const walletamount = product.totalPrice;
             const data = {
                 amount: walletamount,
                 date: Date.now(),
             }
+            // await orderSchema.findById(orderId)
             await userSchema.findOneAndUpdate({ _id: userId }, { $inc: { wallet: walletamount }, $push: { walletHistory: data } })
 
         }
@@ -448,7 +450,7 @@ const verifyPayment = async (req, res) => {
 
             console.log(addressStatus, "heeeyyyyy");
 
-            
+
 
             await cartSchema.deleteOne({ user: userId });
             res.json({ status: 'success', message: "product placed succesfully" });

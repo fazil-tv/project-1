@@ -148,11 +148,11 @@
 														<%=product.productId.description%>
 													</p>
 												</td>
-												<% if (product.productId.quantity===0) { %>
+												<% if (product.productId.quantity<0) { %>
 													<td>
 														<p>Out of Stock</p>
 													</td>
-													<% } else if (product.productId.quantity> 5) { %>
+													<% } else if (product.productId.quantity<5) { %>
 														<td>
 															Only <%= product.productId.quantity %> left
 														</td>
@@ -174,7 +174,7 @@
 																				<i class="ion-ios-remove"></i>
 																			</button>
 																		</span>
-																		<input type="number" name="quantity" readonly
+																		<input type="number" name="quantity" readonly 
 																			class="quantity form-control input-number"
 																			value="<%=product.count %>">
 																		<span class="input-group-btn ml-2">
@@ -186,6 +186,8 @@
 																			</button>
 																		</span>
 																	</div>
+
+																	
 
 																	<!-- <div class="input-group mb-3 d-flex">
 																		<button class="input-btn decrease-quantity" type="button" onclick=" decreasequantity('<%=product.productId._id %>','<%=product.productId.price %>','<%= product.productId.quantity %>')">-</button>
@@ -229,6 +231,8 @@
 							<p class="d-flex">
 								<span>Subtotal</span>
 								<span id="subtotel-amount">
+
+									
 			
 									<% let subtotel = 0 %>
 
