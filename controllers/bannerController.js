@@ -60,7 +60,10 @@ const addbannerpost = async (req, res) => {
 
 
 const editbannerpost = async (req, res) => {
-    const uploadedFiles1 = req.file.originalname
+    const bannerIds = req.query.id;
+    const bannerdata = await bannerSchema.find({_id: bannerIds })
+    console.log("oooooo",bannerdata);
+    const uploadedFiles1 = req.file?.originalname ?? bannerdata.images;
     console.log(uploadedFiles1);
     try {
 
@@ -75,7 +78,6 @@ const editbannerpost = async (req, res) => {
         if (req.file && req.file.originalname) {
             image = req.file.originalname;
             imagePathOriginal = `public/assets/images/banner/${bannerData.images}`;
-            // await fs.promises.unlink(imagePathOriginal);
         } else {
             image = bannerData.images;
         }

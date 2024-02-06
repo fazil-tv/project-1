@@ -93,7 +93,7 @@ const checkoutPost = async (req, res) => {
             { 'address._id': deliveryAddressObjectId },
             { 'address.$': 1 }
         );
-        console.log("lockone", userAddress)
+        console.log("lockone", userAddress);
 
         const selectedpayament = jsonData.payment
 
@@ -137,16 +137,17 @@ const checkoutPost = async (req, res) => {
 
 
         // const discountamount = subtotelamount - coupondiscount;
-        const discountamount = (coupondiscount / 100) * subtotelamount;
+        let discountamount;
+        if(cartDatas.couponDiscount){
+             discountamount = (coupondiscount / 100) * subtotelamount;
+            //  discountamount = ((subtotelamount - coupondiscount) / subtotelamount) * 100;
+
+        }else{
+            discountamount = subtotelamount
+        }
 
 
         console.log("******", discountamount);
-
-
-
-
-
-
 
         const order = new orderSchema({
             user: userId,
@@ -162,9 +163,6 @@ const checkoutPost = async (req, res) => {
 
         const orderId = order._id;
         console.log(orderId);
-
-
-
 
         if (order.orderStatus === "placed") {
             for (let i = 0; i < cartData.products.length; i++) {

@@ -1184,16 +1184,18 @@ function addwishlist(productId) {
                 if (data.status) {
                     console.log("failed")
                     Swal.fire({
-                        icon: 'removed',
+                        icon: 'error',
+                        title: 'removed',
+
                     });
                     window.location.reload();
-
 
 
                 } else {
                     console.log("added")
                     Swal.fire({
                         icon: 'success',
+                        title: 'Adedd',
                     });
                     window.location.reload();
 
@@ -1230,7 +1232,9 @@ function removewishlist(productId) {
                 if (data.status) {
                     console.log("failed")
                     Swal.fire({
-                        icon: 'removed',
+                        icon: 'error',
+                        title: 'removed',
+
                     });
                     window.location.reload();
 
@@ -1289,10 +1293,6 @@ function couponapply(x) {
                 $('#relodedives').load('/checkout #relodedives');
                 $('#checkrelodedives').load('/checkout #checkrelodedives');
                 
-
-             
-
-
 
             } else if (data.status === 'alreadyused') {
 

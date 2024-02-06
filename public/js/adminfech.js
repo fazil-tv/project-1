@@ -1,4 +1,5 @@
 function changeProductStatus(orderId, productId) {
+    console.log('ethiiii');
     const statusElementId = `${orderId}${productId}`;
     const newstatus = document.getElementById(statusElementId).value;
 
