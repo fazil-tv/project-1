@@ -83,14 +83,14 @@
                 </li>
                 <li class="menu-item ">
                     <a class="menu-link" href="/admin/banner">
-                       
+
                         <i class="icon fa-regular fa-object-group"></i>
                         <span class="text">Banner</span>
                     </a>
                 </li>
                 <li class="menu-item active">
                     <a class="menu-link" href="/admin/sales">
-                        
+
                         <i class="icon fa-solid fa-border-all"></i>
                         <span class="text">Sales</span>
                     </a>
@@ -127,21 +127,21 @@
                 <div class="content-header mt-2 mb-0">
                     <h2 class="content-title">Sales</h2>
                 </div>
-                
+
             </div>
             <div class="col-nav">
                 <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"><i
                         class="material-icons md-apps"></i></button>
                 <ul class="nav">
-                    
-                    
-                    
+
+
+
                     <li class="dropdown nav-item">
                         <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount"
                             aria-expanded="false"> <img class="img-xs rounded-circle"
                                 src="/assets/imgs/people/avatar-2.png" alt="User" /></a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
-                            
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-danger" href="/admin/logout"><i
                                     class="material-icons md-exit_to_app"></i>Logout</a>
@@ -155,13 +155,14 @@
             <div class="card">
                 <header class="card-header">
                     <div class="row align-items-center">
-                        <div class="col-lg-4 col-md-6 mb-lg-0 mb-15">
+                        <div class="col-lg-3 col-md-6 mb-lg-0 mb-15">
                             <span> <i class="material-icons md-calendar_today"></i>
 
                         </div>
-                        <div class="col-lg-8 col-md-6 ms-auto text-md-end">
-                            <select class="form-select d-inline-block mb-lg-0 mr-5 mw-200" id="selectoption" onchange="applyfilter()">
-                               
+                        <div class="col-lg-9 col-md-6 ms-auto text-md-end">
+                            <select class="form-select d-inline-block mb-lg-0 mr-5 mw-200" id="selectoption"
+                                onchange="applyfilter()">
+
                                 <option selected>ALL</option>
                                 <option onclick="applyfilter()">Daily</option>
                                 <option>Weekly</option>
@@ -170,8 +171,17 @@
 
                             </select>
                             <!-- <a class="btn btn-primary" onclick="applyfilter()">Apply Filter</a> -->
-                            <a class="btn btn-secondary print ms-2" onclick="downlode()">
-                                <i class="icon fa-solid fa-download" style="font-size: 25px;"></i></a>
+
+                            <!-- <a class="btn btn-secondary print ms-2" onclick="downlode()">
+                                <i class="icon fa-solid fa-download" style="font-size: 25px;"></i>
+                            </a> -->
+
+                            <select class="form-select d-inline-block mb-lg-0 mr-5 mw-200" id="selectformat"
+                                onchange="downlode()">
+                                <option selected disabled>--DOWNLODE SALESRIPORT--</option>
+                                <option>Download PDF</option>
+                                <option>Download EXCEL</option>
+                            </select>
                         </div>
                     </div>
                 </header>
@@ -205,7 +215,7 @@
                                         </td>
                                         <td scope="col">
                                             <p>
-                                                <%= data._id.toString().slice(-4) %>
+                                                <%= data.orderId %>
 
                                             </p>
                                         </td>
@@ -291,7 +301,7 @@
             const row = document.createElement('tr');
             row.innerHTML = `
             <td>${order.index + 1}</td>    
-            <td>${order._id.toString().slice(-4)}</td>
+            <td>${order.orderId}</td>
             <td>${order.productData[0] ? order.productData[0].name : ''}</td>
             <td>${order.products ? order.products.count : ''}</td>
             <td>${order.products ? order.products.price : ''}</td>
@@ -308,6 +318,8 @@
         }
 
         function downlode() {
+            const selectedformat = document.getElementById("selectformat").value;
+            console.log("%", selectedformat);
             console.log(data, "globslll");
             const datas = data;
             console.log("oo%%%ok", datas);
@@ -319,7 +331,8 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        datas
+                        datas,
+                        selectedformat
                     })
                 })
                     .then(response => {
@@ -329,14 +342,41 @@
                         return response.blob();
                     })
                     .then(blob => {
+
+
+
+
+                        // if (selectedformat === 'PDF') {
+                        //     a.download = 'invoice.pdf';
+                        // } else if (selectedformat === 'Excel') {
+                        //     a.download = 'sales_report.xlsx';
+                        // }
+
+
+
+                        // const url = window.URL.createObjectURL(blob);
+                        // const a = document.createElement('a');
+                        // a.href = url;
+                        // // a.download = 'invoice.pdf';
+                        // document.body.appendChild(a);
+                        // a.click();
+                        // document.body.removeChild(a);
+                        // window.URL.revokeObjectURL(url);
+
                         const url = window.URL.createObjectURL(blob);
                         const a = document.createElement('a');
+                        if (selectedformat === 'PDF') {
+                            a.download = 'invoice.pdf';
+                        } else if (selectedformat === 'Excel') {
+                            a.download = 'sales_report.xlsx';
+                        }
                         a.href = url;
-                        a.download = 'invoice.pdf';
                         document.body.appendChild(a);
                         a.click();
                         document.body.removeChild(a);
                         window.URL.revokeObjectURL(url);
+
+
                     })
                     .catch(error => {
                         console.log(error);

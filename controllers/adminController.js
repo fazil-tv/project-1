@@ -10,6 +10,8 @@ const puppeteer = require('puppeteer')
 const path = require("path");
 const ejs = require("ejs");
 const puppeteerpdf = require("pdf-puppeteer");
+let express = require('express');
+const ExcelJS = require('exceljs');
 
 
 
@@ -56,7 +58,7 @@ const orders = async (req, res) => {
         // const id = 1000;
         // const orderId = await orderSchema.countDocuments() + id;
         console.log(cartData, 'hghfg');
-        res.render("orders", { cartData});
+        res.render("orders", { cartData });
     } catch (error) {
         console.log(error.message);
     }
@@ -577,31 +579,79 @@ const salesreport = async (req, res) => {
 
 
 
-    console.log(orderDatas,"OOOOOI");
+    console.log(orderDatas, "OOOOOI");
+    const selectedformat = req.body.selectedformat;
+    console.log(selectedformat, "hoiiiiiii")
+
+
+    if (selectedformat === "PDF") {
+
+        try {
+            // const orderData = req.body.datas
+            const orderData = req.body.datas !== undefined && req.body.datas.length !== 0 ? req.body.datas : orderDatas;
+
+            console.log("orderData", orderData)
+
+            const ejsPagePath = path.join(__dirname, '../views/admin/report.ejs');
+            const ejsPage = await ejs.renderFile(ejsPagePath, { orderData });
+
+            const browser = await puppeteer.launch({ headless: "new" });
+            const page = await browser.newPage();
+            await page.setContent(ejsPage);
+            const pdfBuffer = await page.pdf();
+            await browser.close();
+
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', 'attachment; filename=invoice.pdf');
+            res.send(pdfBuffer);
+
+        } catch (error) {
+            console.log(error);
+
+        }
+
+    } else {
+
+        try {
+            const orderData = req.body.datas !== undefined && req.body.datas.length !== 0 ? req.body.datas : orderDatas;
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet('Sales Report');
+
+            worksheet.addRow(["NO", "ID", "PRODUCT NAME", "QUANTITY SOLD", "PRICE", "TOTTEL SALES", "ORDER DATE", "CUSTOMER", "PAYMENT METHODE"]);
+
+            console.log(orderData, "*********");
+
+            orderData.forEach((order, index) => {
+                worksheet.addRow([
+                    index + 1,
+                    order.orderId,
+                    order.productData[0].name,
+                    order.products.count,
+                    order.products.price,
+                    order.products.totalPrice,
+                    order.orderDate.toString().slice(-4) ? order.orderDate.toString().slice(0, 10) : '',
+                    order.userData[0].email,
+                    order.payment,
+
+                ])
+            })
+
+            const buffer = await workbook.xlsx.writeBuffer();
+
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            res.setHeader('Content-Disposition', 'attachment; filename=sales_report.xlsx');
+            res.send(buffer);
 
 
 
+        } catch (error) {
+
+            console.log(error)
+
+        }
 
 
-
-
-    // const orderData = req.body.datas
-    const orderData = req.body.datas !== undefined && req.body.datas.length !== 0 ? req.body.datas : orderDatas;
-
-    console.log("orderData", orderData)
-
-    const ejsPagePath = path.join(__dirname, '../views/admin/report.ejs');
-    const ejsPage = await ejs.renderFile(ejsPagePath, { orderData });
-
-    const browser = await puppeteer.launch({ headless: "new" });
-    const page = await browser.newPage();
-    await page.setContent(ejsPage);
-    const pdfBuffer = await page.pdf();
-    await browser.close();
-
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename=invoice.pdf');
-    res.send(pdfBuffer);
+    }
 
 }
 
