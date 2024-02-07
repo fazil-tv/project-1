@@ -320,10 +320,10 @@
                                             </thead>
                                             <tbody>
 
-                                                <% for (let i=0; i < orders.length; i++) { %>
+                                                <% for (let i= orders.length-1; i>=0; i--) { %>
                                                     <tr>
                                                         <td class="pl-2">
-                                                            <%= i + 1 %>
+                                                            <%=orders.length-i%>
                                                         </td>
                                                         <td>
                                                             <%= orders[i].orderDate.toLocaleDateString('en-US', {

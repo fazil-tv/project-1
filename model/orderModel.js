@@ -18,6 +18,10 @@ const orderSchema = new mongoose.Schema({
         required: true,
         method: ['Cash on delivery']
       },
+      orderId:{
+        type:Number,
+        required:true
+      },
       products: [{
         productId: {
           type: mongoose.Types.ObjectId,

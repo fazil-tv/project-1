@@ -149,10 +149,14 @@ const checkoutPost = async (req, res) => {
 
         console.log("******", discountamount);
 
+        const count = 1000;
+        const generatedId = await orderSchema.countDocuments()+count
+
         const order = new orderSchema({
             user: userId,
             delivery_address: selectedAddress,
             payment: selectedpayament,
+            orderId: generatedId,
             products: orderItems,
             subtotal: discountamount,
             orderStatus: status,

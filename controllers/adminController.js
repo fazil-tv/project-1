@@ -53,8 +53,10 @@ const users = async (req, res) => {
 const orders = async (req, res) => {
     try {
         const cartData = await orderSchema.find({}).populate('products.productId');
+        // const id = 1000;
+        // const orderId = await orderSchema.countDocuments() + id;
         console.log(cartData, 'hghfg');
-        res.render("orders", { cartData });
+        res.render("orders", { cartData});
     } catch (error) {
         console.log(error.message);
     }

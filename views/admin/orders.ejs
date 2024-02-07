@@ -70,8 +70,7 @@
                 </li>
                 <li class="menu-item ">
                     <a class="menu-link" href="/admin/coupon">
-                        <!-- <i class="icon material-icons md-shopping_cart"></i> -->
-                        <!-- <i class=" fa-solid fa-ticket"></i> -->
+                    
 
                         <i class="icon fa-solid fa-ticket"></i>
                         <span class="text">Coupon</span>
@@ -120,77 +119,37 @@
     <main class="main-wrap">
         <header class="main-header navbar">
             <div class="col-search">
-                <form class="searchform">
-                    <div class="input-group">
-                        <input list="search_terms" type="text" class="form-control" placeholder="Search term" />
-                        <button class="btn btn-light bg" type="button"><i class="material-icons md-search"></i></button>
-                    </div>
-                    <datalist id="search_terms">
-                        <option value="Products"></option>
-                        <option value="New orders"></option>
-                        <option value="Apple iphone"></option>
-                        <option value="Ahmed Hassan"></option>
-                    </datalist>
-                </form>
+                <div class="content-header mt-2 mb-0">
+                    <h2 class="content-title card-title">Order List</h2>
+                </div>
+                
             </div>
             <div class="col-nav">
                 <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"><i
                         class="material-icons md-apps"></i></button>
                 <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link btn-icon" href="#">
-                            <i class="material-icons md-notifications animation-shake"></i>
-                            <span class="badge rounded-pill">3</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="requestfullscreen nav-link btn-icon"><i
-                                class="material-icons md-cast"></i></a>
-                    </li>
-                    <li class="dropdown nav-item">
-                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage"
-                            aria-expanded="false"><i class="material-icons md-public"></i></a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
-                            <a class="dropdown-item text-brand" href="#"><img src="assets/imgs/theme/flag-us.png"
-                                    alt="English" />English</a>
-                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-fr.png"
-                                    alt="Français" />Français</a>
-                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-jp.png"
-                                    alt="Français" />日本語</a>
-                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-cn.png"
-                                    alt="Français" />中国人</a>
-                        </div>
-                    </li>
+                    
+                    
+                    
                     <li class="dropdown nav-item">
                         <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount"
                             aria-expanded="false"> <img class="img-xs rounded-circle"
-                                src="assets/imgs/people/avatar-2.png" alt="User" /></a>
+                                src="/assets/imgs/people/avatar-2.png" alt="User" /></a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
-                            <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit
-                                Profile</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account
-                                Settings</a>
-                            <a class="dropdown-item" href="#"><i
-                                    class="material-icons md-account_balance_wallet"></i>Wallet</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help
-                                center</a>
+                            
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="#"><i
+                            <a class="dropdown-item text-danger" href="/admin/logout"><i
                                     class="material-icons md-exit_to_app"></i>Logout</a>
                         </div>
                     </li>
+
                 </ul>
             </div>
         </header>
         <section class="content-main">
             <div class="content-header">
                 <div>
-                    <h2 class="content-title card-title">Order List</h2>
+                   
                     <p>Lorem ipsum dolor sit amet.</p>
                 </div>
                 <div>
@@ -242,15 +201,17 @@
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
-                                    <% for (let i=0; i < cartData.length; i++) { %>
+                                    <% for (let i=cartData.length-1; i >= 0; i--) { %>
 
                                         <% console.log(cartData[i].products)%>
                                             <tr>
-                                                <td><b>
-                                                        <%=i+1%>
-                                                    </b></td>
                                                 <td>
-                                                    <%=cartData[i]._id%>
+                                                    <b>
+                                                        <%=cartData.length-i%>
+                                                    </b>
+                                                </td>
+                                                <td>
+                                                    <%=cartData[i].orderId%>
                                                 </td>
                                                 <td>
                                                     <%= cartData[i].payment%>
@@ -282,6 +243,9 @@
 
                                             </tr>
                                             <%}%>
+                                               
+
+
 
 
 
@@ -293,6 +257,7 @@
                         <!-- table-responsive //end -->
                     </div>
                     <%}else{%>
+                        <p class="p-5 text-center">no orders</p>
 
 
                         <%}%>
