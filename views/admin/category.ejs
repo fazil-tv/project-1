@@ -82,14 +82,14 @@
                 </li>
                 <li class="menu-item ">
                     <a class="menu-link" href="/admin/banner">
-                       
+
                         <i class="icon fa-regular fa-object-group"></i>
                         <span class="text">Banner</span>
                     </a>
                 </li>
                 <li class="menu-item ">
                     <a class="menu-link" href="/admin/sales">
-                        
+
                         <i class="icon fa-solid fa-border-all"></i>
                         <span class="text">Sales</span>
                     </a>
@@ -239,8 +239,9 @@
                                     </td>
                                     <td>
                                         <b>
+                                            <input type="hidden" value="<%= NewCategory[i]._id %>" id="hiddenid">
                                             <button class="Edit-category"
-                                                onclick="confirmationeditModal('<%= NewCategory[i]._id %>')">EDIT
+                                                onclick="confirmationeditModal('<%= NewCategory[i].name %>',' <%= NewCategory[i].discription %>')">EDIT
                                             </button>
                                         </b>
                                     </td>
@@ -302,13 +303,19 @@
 
                 <div class="modal fade" id="confirmationeditModal" tabindex="-1"
                     aria-labelledby="confirmationeditModalLabel" aria-hidden="true">
+
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
+
                                 <h5 class="modal-title" id="confirmationeditModalLabel">Confirmation</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
+
+
                             </div>
+                            <p id="added" style="text-align: center; color: red; display: none;">this category is
+                                already added</p>
                             <div class="modal-body">
                                 <% if(typeof message !=='undefined' ) {%>
                                     <p class="">
@@ -352,21 +359,46 @@
 
                 function editcategoryvalidation() {
                     event.preventDefault();
+
+
                     const categoryname = document.getElementById('editcategoryname').value;
                     console.log(categoryname);
                     const editdiscription = document.getElementById('editcategorydescription').value;
 
 
 
-                    const validateCategoryName = (categoryName, editdiscription) => {
-                        if (categoryName && editdiscription) {
+                    const validateCategoryName = (categoryname, editdiscription) => {
 
-                            const categoryRegex = /^[a-zA-Z0-9]+\s*[a-zA-Z0-9]*$/;
 
-                            const isValid = categoryRegex.test(categoryName);
+                        document.getElementById('edit-category-name').textContent = '';
+                        document.getElementById('edit-category-desc').textContent = '';
+                        if (categoryname && editdiscription) {
+
+                            // const categoryRegex = /^[a-zA-Z0-9]+\s*[a-zA-Z0-9]*$/;
+                            // const isValid = categoryRegex.test(categoryName);
+
+
+                            const validateCategoryName = (categoryname) => {
+                                const categoryRegex = /^[a-zA-Z0-9]+\s*[a-zA-Z0-9]*$/;
+                                return categoryRegex.test(categoryname);
+                            };
+
+                            const isValid = validateCategoryName(categoryname);
+
+
 
                             if (isValid) {
-                                confirmEditCategory();
+                                confirmEditCategory(categoryname);
+                            }
+                        } else {
+                            if (categoryname.trim() === "") {
+                                document.getElementById('edit-category-name').textContent = "Please enter a name";
+                                
+                            }
+
+                            if (editdiscription.trim() === "") {
+                                document.getElementById('edit-category-desc').textContent = "Please enter a description";
+                               
                             }
                         }
                     };
@@ -450,47 +482,69 @@
 
 
 
-                function confirmationeditModal(categoryId, status) {
+                function confirmationeditModal(catname, catdisc) {
 
-                    $('#confirmationeditModal').data('categoryId', categoryId);
-                    console.log("chexk:", categoryId);
+                    // $('#confirmationeditModal').data('categoryId', categoryId);
+                    // console.log("chexk:", categoryId);
                     $('#confirmationeditModal').modal('show');
+
+
+
+                    document.querySelector('[name="editname"]').value = catname;
+                    document.querySelector('[name="editdiscription"]').value = catdisc;
+
                 }
 
-                function confirmEditCategory() {
-                    const categoryId = $('#confirmationeditModal').data('categoryId');
-                    console.log("what od")
-                    console.log('check edit catogery'.categoryId);
-                    editcategory(categoryId)
-                    $('#confirmationeditModal').modal('hide');
+                function confirmEditCategory(categoryname) {
+                    // const categoryId = $('#confirmationeditModal').data('categoryId');
+                    // console.log("what od")
+                    // console.log('check edit catogery'.categoryId);
+                    editcategory(categoryname);
                 }
 
-                function editcategory(categoryId) {
-                    console.log("hi");
-                    console.log("categoryId" + categoryId)
+                function editcategory(categoryname) {
+                    const id = document.getElementById('hiddenid').value;
+                    console.log("%%%%%%%%%%%", id);
+
+                    console.log("hi", categoryname);
+
                     const editcategoryname = document.getElementById('editcategoryname').value;
                     const editcategorydesc = document.getElementById('editcategorydescription').value;
 
-                    console.log(editcategoryname);
-                    console.log(editcategorydesc);
-                    $.ajax({
-                        url: `/admin/editcategory/${categoryId}`,
-                        type: 'PUT',
-                        contentType: 'application/json',
-
-                        data: JSON.stringify({ categoryId, editcategoryname, editcategorydesc }),
-                        success: function (data) {
-                            console.log(data.message);
-
-                            // $('#changecategory').load('/admin/category #changecategory')
-                            window.location.reload();
 
 
+                    fetch(`/admin/editcategory/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
                         },
-                        error: function (error) {
-                            console.log("error", error);
-                        }
-                    });
+                        body: JSON.stringify({
+                            editcategoryname,
+
+
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === "failed") {
+
+                                document.getElementById("added").style.display = "block";
+
+                            } else {
+                                window.location.href = "/admin/category";
+
+                            }
+
+
+                        }).catch(error => {
+                            console.log(error);
+
+                        })
+
+
+
+
+
                 }
 
             </script>

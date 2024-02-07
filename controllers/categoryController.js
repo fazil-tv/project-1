@@ -99,11 +99,13 @@ const editcategory = async (req, res) => {
         console.log(editname);
         console.log(editcategorydesc);
 
-        const existingCategory = await categorySchema.findOne({ name: editname });
-        if (existingCategory) {
-            return res.status(400).json({ status: "error", message: "Category with the same name already exists." });
-        }
+        const nameRegex = new RegExp(`^${editname }$`, 'i'); 
 
+        const existingCategory = await categorySchema.findOne({ name: nameRegex });
+        
+        if (existingCategory) {
+            return res.status(400).json({ status: "failed", message: "Category with the same name already exists." });
+        }
         const updatecategory = await categorySchema.findByIdAndUpdate(categoryId, { name: editname, discription: editcategorydesc }, { new: true });
         res.json({ status: "success", updatecategory })
 

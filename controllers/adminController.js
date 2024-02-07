@@ -97,12 +97,6 @@ const orderdetaile = async (req, res) => {
 
 
 
-
-
-
-
-
-
 //admin password verification
 const adminverifyLogin = async (req, res) => {
 
