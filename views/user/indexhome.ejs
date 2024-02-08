@@ -63,34 +63,35 @@
 								class="fa-regular fa-circle-user user-icon nav-link"></i></a></li> -->
 					<% console.log("User:", user); %>
 
-					<% if (user) { %>
-						<li class="nav-item"><a href="/wishlist"><i
-									class="fa-regular fa-heart user-icon nav-link"></i></a></li>
-									
-						<% } else { %>
-							<li class="nav-item"><a href="/signup"><i
-								class="fa-regular fa-heart user-icon nav-link"></i></a></li>
-							
-
-							<% } %>
-
-
-
-
-
 						<% if (user) { %>
-							<li class="nav-item"><a href="/useraccount"><i
-										class="fa-regular fa-circle-user user-icon nav-link"></i></a></li>
+							<li class="nav-item"><a href="/wishlist"><i
+										class="fa-regular fa-heart user-icon nav-link"></i></a></li>
 
 							<% } else { %>
 								<li class="nav-item"><a href="/signup"><i
-											class="fa-regular fa-circle-user user-icon nav-link"></i></a></li>
+											class="fa-regular fa-heart user-icon nav-link"></i></a></li>
+
 
 								<% } %>
 
 
 
-							
+
+
+									<% if (user) { %>
+										<li class="nav-item"><a href="/useraccount"><i
+													class="fa-regular fa-circle-user user-icon nav-link"></i></a></li>
+
+										<% } else { %>
+											<li class="nav-item"><a href="/signup"><i
+														class="fa-regular fa-circle-user user-icon nav-link"></i></a>
+											</li>
+
+											<% } %>
+
+
+
+
 
 				</ul>
 			</div>
@@ -108,16 +109,22 @@
 						<div class="container-fluid p-0">
 							<div class="row d-md-flex no-gutters slider-text align-items-center justify-content-end"
 								data-scrollax-parent="true">
-								<img class="one-third order-md-last img-fluid" src="/assets/images/banner/<%= bannerData[i].images %>" alt="">
+								<img class="one-third order-md-last img-fluid"
+									src="/assets/images/banner/<%= bannerData[i].images %>" alt="">
 								<div class="one-forth d-flex align-items-center ftco-animate"
 									data-scrollax=" properties: { translateY: '70%' }">
 									<div class="text">
 										<span class="subheading">#New Arrival</span>
 										<div class="horizontal">
-											<h1 class="mb-4 mt-3"><%=bannerData[i].title%></h1>
-											<p class="mb-4"><%=bannerData[i]. description%></p>
+											<h1 class="mb-4 mt-3">
+												<%=bannerData[i].title%>
+											</h1>
+											<p class="mb-4">
+												<%=bannerData[i]. description%>
+											</p>
 
-											<p><a href="<%=bannerData[i].targeturl%>" class="btn-custom">Discover Now</a></p>
+											<p><a href="<%=bannerData[i].targeturl%>" class="btn-custom">Discover
+													Now</a></p>
 										</div>
 									</div>
 								</div>
@@ -210,27 +217,46 @@
 
 
 		<div class="container">
-			<div class="row">
+			<div class="row" >
 				<% product.forEach(product=> { %>
 					<% if (!product.is_blocked) { %>
-						<div class="col-lg-4 col-sm-6
+						<div class="col-lg-4 col-sm-6 
 						 ftco-animate d-flex">
-							<div class="product d-flex flex-column">
+							<div class="product d-flex flex-column "  >
 								<a href="/singleproduct?id=<%=product._id%>" class="img-prod"><img class="img-fluid"
 										src="/sharpimg/<%= product.images.image1%>" alt="Colorlib Template">
 									<span class="status">
 										<%=product.offer%>% Off
 									</span>
-									
-									
-									
+
+
+
 									<div class="overlay"></div>
 								</a>
 
-								
-								<span class="statuswishlist">
-									<i onclick="addwishlist('<%=product._id%>')" id=" buttonId<%=product._id%>" class="fa-regular fa-heart"></i> 
+								<span class="statuswishlist" id="wishlistrelode">
+
+
+										
+
+									<%if (Wishlist){%>
+											<i onclick="addwishlist('<%=product._id%>')" id="buttonId<%=product._id%>"
+												class="<%= Wishlist.product.findIndex(item=>item.productId === product._id.toString())===-1 ? 'fa-regular' : 'fa-solid' %> fa-heart"></i>
+
+									<%}else{%>
+										<i onclick="addwishlist('<%=product._id%>')" id="" class="fa-regular fa-heart"></i>
+
+									<%}%>
+
+
+
+
+
+
 								</span>
+
+
+
 
 
 								<div class="text py-3 pb-4 px-3">
@@ -260,7 +286,7 @@
 												cart <i class="ion-ios-add ml-1"></i></span></a>
 										<a href="#" class="buy-now text-center py-2">Buy now<span><i
 													class="ion-ios-cart ml-1"></i></span></a>
-													
+
 									</p>
 								</div>
 							</div>
@@ -653,8 +679,8 @@
 				stroke="#F96D00" />
 		</svg></div>
 
-		<script src="/js/fetch.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="/js/fetch.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 
@@ -676,6 +702,16 @@
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
+
+
+
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.js"
+		integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+
 
 </body>
 

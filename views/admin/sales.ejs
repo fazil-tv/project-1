@@ -191,10 +191,8 @@
                                     <a onclick="validateDates()" class=" btn-icon">submit</a>
                                 </form>
 
-                                <p id="error1" style="display: none ; color: red;margin-top: 5px; ">Please enter both
-                                    start and end dates</p>
-                                <p id="error2" style="display: none ; color: red; margin-top: 5px;">End date must be
-                                    greater than the start date</p>
+                                <p id="error1" style=" color: red;margin-top: 5px; "></p>
+                                <p id="error2" style=" color: red; margin-top: 5px;"></p>
 
                             </div>
 
@@ -206,6 +204,14 @@
 
 
                                 function selctfilter() {
+
+
+
+
+
+
+
+
                                     const selectedOption = document.getElementById("selectoption").value;
 
                                     if (selectedOption === "Custom Date") {
@@ -221,6 +227,11 @@
                                 function validateDates() {
 
 
+                                    document.getElementById('error1').innerText = '';
+                                    document.getElementById('error2').innerText = '';
+
+
+
                                     const startDateInput = document.getElementById("startDate").value;
                                     const endDateInput = document.getElementById("endDate").value;
 
@@ -230,12 +241,13 @@
                                     let isValid = true;
 
                                     if (!startDateInput || !endDateInput) {
-                                    
-                                        document.getElementById("error1").style.display = "block";
+
+                                        document.getElementById('error1').innerText = 'Please enter both start and end dates';
                                         isValid = false;
                                     } else if (new Date(startDateInput) >= new Date(endDateInput)) {
-                              
-                                        document.getElementById("error2").style.display = "block";
+
+                                
+                                        document.getElementById('error2').innerText = 'End date must be  greater than the start date'
                                         isValid = false;
                                     }
 
@@ -321,8 +333,8 @@
                                         </td>
 
                                         <td scope="col">
-                                            <p> <%=data.orderDate.toLocaleDateString('en-US', { weekday: 'short' ,
-                                                day: 'numeric'     , month: 'short' ,   year: 'numeric' })%></p>
+                                            <p> <%=data.orderDate.toLocaleDateString('en-US', {
+                                                    day: 'numeric' , month: 'short' , year: 'numeric' })%></p>
                                         </td>
                                         <td scope="col">
                                             <p>

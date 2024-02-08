@@ -9,12 +9,12 @@ const wishlistSchema = new mongoose.Schema({
     ref: "users",
   },
   product: [{
-      productId: {
-        type: String,
-        required: true,
-        ref: "product",
-      },
-    }],
+    productId: {
+      type: String,
+      required: true,
+      ref: "product",
+    },
+  }],
 });
 module.exports = mongoose.model("Wishlist", wishlistSchema);
 

@@ -32,6 +32,9 @@ const orderSchema = new mongoose.Schema({
           type:String,
           required:true
         },
+        returnreason:{
+          type:String,
+        },
         count: {
           type: Number,
           required: true

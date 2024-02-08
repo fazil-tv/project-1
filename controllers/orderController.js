@@ -350,6 +350,8 @@ const returnorders = async (req, res) => {
     const id = req.body.id;
     const orderId = req.body.orderId;
     console.log("here ", productId);
+    const returnReason = req.body.returnReason;
+    console.log(returnReason,"%%%%%%%%%");
 
 
     try {
@@ -365,6 +367,11 @@ const returnorders = async (req, res) => {
         });
         orderdata.products[index].productstatus = "return";
         await orderdata.save();
+
+
+        await orderSchema.updateMany({}, { $set: { "products.$[].returnreason": returnReason } });
+
+
 
 
         const updatedOrders = await orderSchema.findById(orderId)

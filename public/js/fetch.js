@@ -1079,58 +1079,16 @@ function verifyPayment(responce, order) {
 
 
 
-function cancelorder(x,ids,order_id) {
+function cancelorder(x, ids, order_id) {
     // const orderId = x;
 
     const productId = x;
     const id = ids;
     const orderId = order_id;
     console.log(productId);
-    console.log( id );
-    console.log(orderId );
+    console.log(id);
+    console.log(orderId);
     fetch('/orderstatus', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            productId,
-            id ,
-            orderId
-        })
-    })
-        .then(response => response.json())
-        .then(data => {
-
-
-            if (data.status === "success") {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Order Cancelled',
-
-                });
-            }
-
-            window.location.reload();
-
-
-
-
-        }).catch(error => {
-            console.log(error);
-
-        })
-}
-
-function returnorder(x,y,z) {
-    const productId = x;
-    const id = y;
-    const orderId = z;
-    console.log("productId",productId )
-    console.log("id",id)
-    console.log("orderId",orderId)
-
-    fetch('/returnorder', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -1139,7 +1097,6 @@ function returnorder(x,y,z) {
             productId,
             id,
             orderId
-
         })
     })
         .then(response => response.json())
@@ -1166,6 +1123,60 @@ function returnorder(x,y,z) {
 }
 
 
+function returnorder(x, y, z) {
+    const productId = x;
+    const id = y;
+    const orderId = z;
+    console.log("productId", productId)
+    console.log("id", id)
+    console.log("orderId", orderId)
+
+    Swal.fire({
+        title: 'Enter Return Reason',
+        input: 'text',
+        inputLabel: 'Return Reason',
+        inputPlaceholder: 'Please enter the reason for Return',
+        showCancelButton: true,
+        confirmButtonText: 'Cancel Order',
+        cancelButtonText: 'Cancel',
+        preConfirm: (returnReason) => {
+            if (!returnReason) {
+                Swal.showValidationMessage('Return reason is required');
+            }
+            return returnReason;
+        },
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const data = {
+                returnReason: result.value,
+                productId,
+                id,
+                orderId
+            };
+
+            fetch('/returnorder', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Order Cancelled',
+                        });
+                    }
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    });
+}
 
 function addwishlist(productId) {
     try {
@@ -1181,28 +1192,28 @@ function addwishlist(productId) {
             .then(response => response.json())
             .then(data => {
 
-                if (data.status) {
-                    console.log("failed")
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'removed',
-
-                    });
-                    window.location.reload();
+                // if (data.status) {
+                //     $('#edit-address-div').load('/checkout #edit-address-div')
+                //     // window.location.reload();
+                    
 
 
-                } else {
-                    console.log("added")
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Adedd',
-                    });
-                    window.location.reload();
+                // } else {
+                //     $('#edit-address-div').load('/checkout #edit-address-div')
+                //     // window.location.reload();
+                    
 
-                }
+                // }
 
-                // window.location.reload();
-                // $('#relode-div').load('/detaile #relode-div');
+                                window.location.reload();
+
+
+
+                                // $('#edit-address-div').load('/checkout #edit-address-div')
+
+
+
+                
 
 
             }).catch(error => {
@@ -1292,7 +1303,7 @@ function couponapply(x) {
 
                 $('#relodedives').load('/checkout #relodedives');
                 $('#checkrelodedives').load('/checkout #checkrelodedives');
-                
+
 
             } else if (data.status === 'alreadyused') {
 

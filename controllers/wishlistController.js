@@ -54,6 +54,8 @@ const getwishlist = async (req, res) => {
                 );
                 console.log(wishlistSchema);
 
+
+
                 res.json({ status: true, productId: productId });
             } else {
 

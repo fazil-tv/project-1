@@ -261,9 +261,11 @@ const indexhome = async (req, res) => {
 
         const bannerData = await bannerSchema.find({});
 
-        const Wishlist = await wishlistSchema.find({});
+        const Wishlist = await wishlistSchema.findOne({user:req.session.user_id});
+        console.log(Wishlist,'kdfksdfk')
 
 
+        console.log(Wishlist,"^^^^^^okkk")
 
 
 
@@ -298,6 +300,8 @@ const shop = async (req, res) => {
         const category = await categorySchema.find({});
         console.log(category)
 
+        const Wishlist = await wishlistSchema.findOne({user:req.session.user_id});
+
 
         const searchQuery = req.query.search || "";
         const page = req.query.page ? req.query.page : 1;
@@ -308,7 +312,7 @@ const shop = async (req, res) => {
 
 
         console.log(totalDoc);
-        res.render("shop", { product: product, category: category, searchQuery, page, totalDoc });
+        res.render("shop", { product: product, category: category, searchQuery, page, totalDoc ,Wishlist});
 
         // const category = await categorySchema.find({}).sort({ name: 1 })
         // console.log(category)
