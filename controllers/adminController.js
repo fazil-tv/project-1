@@ -284,6 +284,11 @@ const updatestatus = async (req, res) => {
 
 // sales
 const sales = async (req, res) => {
+    const startDate = req.body.startDate
+    const endDate = req.body.endDate
+    console.log(startDate);
+    console.log(endDate);
+
     const selectedvalue = req.body.selectedvalue;
     console.log(selectedvalue);
 
@@ -472,7 +477,42 @@ const sales = async (req, res) => {
             ]);
             res.json({ orderData })
 
-        } else if (selectedvalue === "ALL") {
+        } else if (selectedvalue === "Custom Date") {
+
+            const orderData = await orderSchema.aggregate([
+                {
+                    $match: {
+                      orderStatus: 'placed',
+                      orderDate: { $gte: new Date(startDate), $lte: new Date(endDate) }
+                    }
+                  },
+                {
+                    $lookup: {
+                        from: "users",
+                        localField: "user",
+                        foreignField: "_id",
+                        as: "userData"
+                    }
+                },
+                {
+                    $unwind: "$products"
+                },
+                {
+                    $lookup: {
+                        from: "products",
+                        localField: "products.productId",
+                        foreignField: "_id",
+                        as: "productData"
+                    }
+                }
+            ]);
+
+            console.log('oooooooooo', orderData);
+            res.json({ orderData })
+
+
+
+        }else if (selectedvalue === "ALL") {
 
 
 
@@ -581,6 +621,16 @@ const salesreport = async (req, res) => {
 
     console.log(orderDatas, "OOOOOI");
     const selectedformat = req.body.selectedformat;
+    const startDate = req.body.startDate;
+    const endDate = req.body.endDate;
+
+    console.log(startDate)
+    console.log(endDate)
+
+
+
+
+
     console.log(selectedformat, "hoiiiiiii")
 
 
@@ -641,8 +691,6 @@ const salesreport = async (req, res) => {
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             res.setHeader('Content-Disposition', 'attachment; filename=sales_report.xlsx');
             res.send(buffer);
-
-
 
         } catch (error) {
 

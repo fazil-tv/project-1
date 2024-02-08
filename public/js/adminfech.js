@@ -148,6 +148,16 @@ function applyfilter() {
     const selectedvalue = document.getElementById("selectoption").value;
     console.log(selectedvalue);
 
+
+    const startDate = document.getElementById("startDate").value
+    const endDate = document.getElementById("endDate").value
+
+    console.log(startDate)
+    console.log(endDate)
+
+
+
+
     try {
         fetch('/admin/salesfilter', {
             method: 'POST',
@@ -155,7 +165,11 @@ function applyfilter() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                selectedvalue
+                selectedvalue,
+                startDate,
+                endDate
+                
+
             })
         })
             .then(response => response.json())

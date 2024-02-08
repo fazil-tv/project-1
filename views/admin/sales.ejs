@@ -156,32 +156,109 @@
                 <header class="card-header">
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-md-6 mb-lg-0 mb-15">
-                            <span> <i class="material-icons md-calendar_today"></i>
+                            <!-- <span> <i class="material-icons md-calendar_today"></i> -->
+                            <select class="form-select d-inline-block mb-lg-0 mr-5 mw-200" id="selectformat"
+                                onchange="downlode()">
+                                <option selected disabled>--DOWNLODE SALESRIPORT--</option>
+                                <option>PDF</option>
+                                <option>Excel</option>
+                            </select>
 
                         </div>
                         <div class="col-lg-9 col-md-6 ms-auto text-md-end">
                             <select class="form-select d-inline-block mb-lg-0 mr-5 mw-200" id="selectoption"
-                                onchange="applyfilter()">
+                                onchange="selctfilter()">
 
                                 <option selected>ALL</option>
                                 <option onclick="applyfilter()">Daily</option>
                                 <option>Weekly</option>
                                 <option>Monthly</option>
                                 <option>Yearly</option>
+                                <option>Custom Date</option>
+
+
+
 
                             </select>
-                            <!-- <a class="btn btn-primary" onclick="applyfilter()">Apply Filter</a> -->
 
-                            <!-- <a class="btn btn-secondary print ms-2" onclick="downlode()">
-                                <i class="icon fa-solid fa-download" style="font-size: 25px;"></i>
-                            </a> -->
+                            <div id="customDateInputs" style="display: none; margin-top: 15px; padding: 2px;">
+                                <form action="">
+                                    <label for="startDate">Start Date:</label>
+                                    <input type="date" id="startDate" required>
 
-                            <select class="form-select d-inline-block mb-lg-0 mr-5 mw-200" id="selectformat"
-                                onchange="downlode()">
-                                <option selected disabled>--DOWNLODE SALESRIPORT--</option>
-                                <option>Download PDF</option>
-                                <option>Download EXCEL</option>
-                            </select>
+                                    <label for="endDate">End Date:</label>
+                                    <input type="date" id="endDate" required>
+                                    <a onclick="validateDates()" class=" btn-icon">submit</a>
+                                </form>
+
+                                <p id="error1" style="display: none ; color: red;margin-top: 5px; ">Please enter both
+                                    start and end dates</p>
+                                <p id="error2" style="display: none ; color: red; margin-top: 5px;">End date must be
+                                    greater than the start date</p>
+
+                            </div>
+
+
+
+                            <script>
+
+
+
+
+                                function selctfilter() {
+                                    const selectedOption = document.getElementById("selectoption").value;
+
+                                    if (selectedOption === "Custom Date") {
+                                        document.getElementById("customDateInputs").style.display = "block";
+
+                                    } else {
+                                        document.getElementById("customDateInputs").style.display = "none";
+                                        applyfilter();
+
+
+                                    }
+                                }
+                                function validateDates() {
+
+
+                                    const startDateInput = document.getElementById("startDate").value;
+                                    const endDateInput = document.getElementById("endDate").value;
+
+                                    console.log(startDateInput);
+                                    console.log(endDateInput);
+
+                                    let isValid = true;
+
+                                    if (!startDateInput || !endDateInput) {
+                                    
+                                        document.getElementById("error1").style.display = "block";
+                                        isValid = false;
+                                    } else if (new Date(startDateInput) >= new Date(endDateInput)) {
+                              
+                                        document.getElementById("error2").style.display = "block";
+                                        isValid = false;
+                                    }
+
+                                    if (!isValid) {
+                                        return;
+                                    } else {
+
+                                        applyfilter();
+
+                                    }
+
+                                }
+
+
+
+
+
+
+
+
+                            </script>
+
+
                         </div>
                     </div>
                 </header>
@@ -245,7 +322,7 @@
 
                                         <td scope="col">
                                             <p> <%=data.orderDate.toLocaleDateString('en-US', { weekday: 'short' ,
-                                                    year: 'numeric' , month: 'short' , day: 'numeric' })%></p>
+                                                day: 'numeric'     , month: 'short' ,   year: 'numeric' })%></p>
                                         </td>
                                         <td scope="col">
                                             <p>
@@ -319,7 +396,7 @@
 
         function downlode() {
             const selectedformat = document.getElementById("selectformat").value;
-            console.log("%", selectedformat);
+
             console.log(data, "globslll");
             const datas = data;
             console.log("oo%%%ok", datas);
@@ -332,7 +409,10 @@
                     },
                     body: JSON.stringify({
                         datas,
-                        selectedformat
+                        selectedformat,
+
+
+
                     })
                 })
                     .then(response => {
@@ -343,38 +423,26 @@
                     })
                     .then(blob => {
 
-
-
-
-                        // if (selectedformat === 'PDF') {
-                        //     a.download = 'invoice.pdf';
-                        // } else if (selectedformat === 'Excel') {
-                        //     a.download = 'sales_report.xlsx';
-                        // }
-
-
-
-                        // const url = window.URL.createObjectURL(blob);
-                        // const a = document.createElement('a');
-                        // a.href = url;
-                        // // a.download = 'invoice.pdf';
-                        // document.body.appendChild(a);
-                        // a.click();
-                        // document.body.removeChild(a);
-                        // window.URL.revokeObjectURL(url);
-
-                        const url = window.URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        if (selectedformat === 'PDF') {
+                        if (selectedformat === "PDF") {
+                            const url = window.URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
                             a.download = 'invoice.pdf';
-                        } else if (selectedformat === 'Excel') {
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            window.URL.revokeObjectURL(url);
+                        } else {
+
+                            const url = window.URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
                             a.download = 'sales_report.xlsx';
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            window.URL.revokeObjectURL(url);
                         }
-                        a.href = url;
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                        window.URL.revokeObjectURL(url);
 
 
                     })
