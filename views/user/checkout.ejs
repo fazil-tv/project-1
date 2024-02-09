@@ -490,30 +490,30 @@
 
 	<section>
 		<div id="checkoutEditAddressmodal" class="modal" id="editmodal">
-			<div class="modal-content  address-modal">
+			<div class="modal-content  address-modal  w-50">
 				<form>
 					<span class="close" onclick="checkouteditaddressclosemodal()">&times;</span>
-					<h6 class="mb-4">Contacts</h6>
+					
 
-					<div class="form-group">
+					<div class="form-group m-0">
 						<label class="form-label">Full Name *</label>
 						<input type="text" id="editfullname" class="form-control" name="editfullname">
 						<span id="edit-fullname-error" style="color: red;"></span>
 					</div>
 					<div class="row">
 						<div class="col-lg-6">
-							<div class="form-group">
+							<div class="form-group m-0">
 								<label class="form-label">Email *</label>
 								<input type="email" id="editemail" class="form-control" name="editemail">
 								<span id="edit-email-error" style="color: red;"></span>
 							</div>
-							<div class="form-group">
+							<div class="form-group m-0">
 								<label class="form-label">State *</label>
 								<input type="text" id="editstate" class="form-control" name="editstate">
 								<span id="edit-state-error" style="color: red;"></span>
 
 							</div>
-							<div class="form-group">
+							<div class="form-group m-0">
 								<label class="form-label">Pincode *</label>
 								<input type="text" id="editpin" class="form-control" name="editpin">
 								<span id="edit-pin-error" style="color: red;"></span>
@@ -521,18 +521,18 @@
 							</div>
 						</div>
 						<div class="col-lg-6">
-							<div class="form-group">
+							<div class="form-group m-0">
 								<label class="form-label">Mobile *</label>
 								<input type="text" id="editmobile" class="form-control" name="editmobile">
 								<span id="edit-mobile-error" style="color: red;"></span>
 
 							</div>
-							<div class="form-group">
+							<div class="form-group m-0">
 								<label class="form-label">City *</label>
 								<input type="text" id="editcity" class="form-control" name="editcity">
 								<span id="edit-city-error" style="color: red;"></span>
 							</div>
-							<div class="form-group">
+							<div class="form-group m-0">
 								<label class="form-label">House name *</label>
 								<input type="text" id="edithousename" class="form-control" name="edithousename">
 								<span id="edit-houseName-error" style="color: red;"></span>
@@ -543,7 +543,7 @@
 							<input type="hidden" name="editAddressId" id="editAddressId" />
 
 						</div>
-						<div class="pt-2 pb-4 me-1 d-flex justify-content -center">
+						<div class="pt-2 me-1 d-flex justify-content-center w-100">
 							<button class="btn btn-primary edit-btn" id="EditAddressButtons">
 								<i class="text-muted material-icons md-post_add"></i>Save Address
 							</button>
@@ -555,32 +555,30 @@
 	</section>
 
 	<section>
-		<div id="checkaddaddressmodal" class="modal">
-			<div class="modal-content  address-modal">
+		<div id="checkaddaddressmodal" class="modal ">
+			<div class="modal-content  address-modal  w-50 ">
 				<form>
 					<span class="close" onclick=" addressclosemodal()">&times;</span>
-					<h6 class="mb-4">Contacts</h6>
-
-					<div class="form-group">
+					<div class="form-group " >
 						<label class="form-label"> Full name *</label>
 						<input type="text" id="fullname" class="form-control" name="fullname">
 						<span id="fullname-error" style="color: red;"></span>
 
 					</div>
 					<div class="row">
-						<div class="col-lg-6">
-							<div class="form-group">
+						<div class="col-lg-6  ">
+							<div class="form-group ">
 								<label class="form-label">Email *</label>
 								<input type="text" id="email" class="form-control" name="email">
 								<span id="email-error" style="color: red;"></span>
 							</div>
-							<div class="form-group">
+							<div class="form-group ">
 								<label class="form-label">State *</label>
 								<input type="text" id="state" class="form-control" name="state">
 								<span id="state-error" style="color: red;"></span>
 
 							</div>
-							<div class="form-group">
+							<div class="form-group ">
 								<label class="form-label">Pincode *</label>
 								<input type="text" id="pin" class="form-control" name="pin">
 								<span id="pin-error" style="color: red;"></span>
@@ -588,26 +586,26 @@
 							</div>
 						</div>
 						<div class="col-lg-6">
-							<div class="form-group">
+							<div class="form-group ">
 								<label class="form-label">Mobile *</label>
 								<input type="text" id="mobile" class="form-control" name="mobile">
 								<span id="mobile-error" style="color: red;"></span>
 
 							</div>
-							<div class="form-group">
+							<div class="form-group  ">
 								<label class="form-label">City *</label>
 								<input type="text" id="city" class="form-control" name="city">
 								<span id="city-error" style="color: red;"></span>
 							</div>
-							<div class="form-group">
+							<div class="form-group  ">
 								<label class="form-label">House name *</label>
 								<input type="text" id="housename" class="form-control" name="housename">
 								<span id="houseName-error" style="color: red;"></span>
 
 							</div>
 						</div>
-						<div class="pt-2 pb-4 me-1 d-flex justify-content -center">
-							<button class="btn btn-primary edit-btn" id="addAddressButton">
+						<div class="pt-1 me-1 d-flex justify-content-center w-100">
+							<button class="btn btn-primary edit-btn justify-content-center" id="addAddressButton">
 								<i class="text-muted material-icons md-post_add"></i>Save Address
 							</button>
 						</div>

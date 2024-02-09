@@ -28,7 +28,7 @@
     <aside class="navbar-aside" id="offcanvas_aside">
         <div class="aside-top">
             <a href="index.html" class="brand-wrap">
-                <img src="assets/imgs/theme/logo.svg" class="logo" alt="Nest Dashboard" />
+                <img src="/images/shous-logo.png" class="logo" alt="Nest Dashboard" />
             </a>
             <div>
                 <button class="btn btn-icon btn-aside-minimize"><i
@@ -120,21 +120,21 @@
                 <div class="content-header mt-2 mb-0">
                     <h2 class="content-title">AddCoupon</h2>
                 </div>
-                
+
             </div>
             <div class="col-nav">
                 <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"><i
                         class="material-icons md-apps"></i></button>
                 <ul class="nav">
-                    
-                    
-                    
+
+
+
                     <li class="dropdown nav-item">
                         <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount"
                             aria-expanded="false"> <img class="img-xs rounded-circle"
                                 src="/assets/imgs/people/avatar-2.png" alt="User" /></a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
-                            
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-danger" href="/admin/logout"><i
                                     class="material-icons md-exit_to_app"></i>Logout</a>
@@ -181,16 +181,15 @@
                                         class="form-control w-75 float-left" id="couponCode" /> -->
                                         <div class="row">
                                             <div class="col-md-8">
-                                                <input type="text" name="couponCode" placeholder="Type here"
-                                                     disabled class="form-control"
-                                                    id="couponCode" />
+                                                <input type="text" name="couponCode" placeholder="Type here" disabled
+                                                    class="form-control" id="couponCode" />
                                             </div>
                                             <div class="col-md-4">
                                                 <a class="btn btn-primary" onclick="couponCode1()"
                                                     type="button">Generate</a>
 
                                             </div>
-                                          
+
                                         </div>
 
 
@@ -267,7 +266,7 @@
 <script>
 
     function addCouponValidation() {
-     
+
         event.preventDefault();
         const couponname = document.getElementById('couponname').value;
         const couponCode = document.getElementById('couponCode').value;
@@ -301,8 +300,8 @@
             isValid = false;
         }
 
-        if (DiscountPercentage < 0 || DiscountPercentage > 100) {
-            document.getElementById('DiscountPercentage-e').innerText = 'Discount percentage must be between 0 and 100';
+        if (DiscountPercentage <= 1 || DiscountPercentage > 100 ) {
+            document.getElementById('DiscountPercentage-e').innerText = 'Discount percentage must be between 1 and 100';
             isValid = false;
         }
         if (CriteriaAmount < 0) {
@@ -365,7 +364,10 @@
             .then(data => {
                 if (data.status) {
                     Swal.fire({
-                        icon: 'success',
+                        title: "Success",
+                        text: "Coupon added successfully!",
+                        icon: "success",
+                        confirmButtonText: "OK",
 
                     });
                     window.location.href = "/admin/coupon";
