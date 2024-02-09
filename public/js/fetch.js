@@ -1291,7 +1291,7 @@ function couponapply(x) {
         .then(response => response.json())
         .then(data => {
 
-            if (data.status) {
+            if (data.status==="applid") {
 
                 Swal.fire({
                     title: "Success",
@@ -1316,7 +1316,7 @@ function couponapply(x) {
 
 
             }
-            else {
+            else if(data.status === 'alreadyapplid') {
                 Swal.fire({
                     title: "One coupon is already Active",
                     icon: "info",

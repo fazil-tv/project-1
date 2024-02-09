@@ -100,12 +100,13 @@ const applycoupon = async (req, res) => {
             if (existingCart && existingCart.couponDiscount == null) {
                 await couponSchema.findOneAndUpdate({ _id: couponId }, { $push: { usedUsers: userId } });
                 await cartSchema.findOneAndUpdate({ user: userId }, { $set: { couponDiscount: couponDatas._id } });
-                res.json({ status: true });
-            } else {
-                res.json({ status: false });
+                res.json({ status: "applid" });
+            }else{
+                res.json({ status:"alreadyapplid" });
             }
+            
         } else {
-            res.json({ status: false });
+            res.json({ status:"alreadyused" });
         }
 
 
