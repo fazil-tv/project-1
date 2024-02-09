@@ -70,7 +70,6 @@ const insertUser = async (req, res) => {
             await sendmailUser(email, id, res);
 
         } else {
-            // Handle the case where the save operation did not return user data
             return res.render('signup', { message: "Signup failed" });
         }
     } catch (error) {
@@ -301,8 +300,6 @@ const shop = async (req, res) => {
         console.log(category)
 
         const Wishlist = await wishlistSchema.findOne({user:req.session.user_id});
-
-
         const searchQuery = req.query.search || "";
         const page = req.query.page ? req.query.page : 1;
         const prevPage = page - 1;

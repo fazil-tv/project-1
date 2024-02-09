@@ -56,11 +56,23 @@ const users = async (req, res) => {
 // users
 const orders = async (req, res) => {
     try {
-        const cartData = await orderSchema.find({}).populate('products.productId');
+
+
+
+        const page = req.query.page ? req.query.page : 1;
+        const prevPage = page - 1;
+
+
+        console.log(page,"$$$$$$$$$$$$$$$$$$$$$$$$$$");
+
+        const totalDoc = await orderSchema.countDocuments();
+        const cartData = await orderSchema.find({}).populate('products.productId').skip(prevPage * 4).limit(6);
+
         // const id = 1000;
         // const orderId = await orderSchema.countDocuments() + id;
         console.log(cartData, 'hghfg');
-        res.render("orders", { cartData });
+        console.log(totalDoc, 'hghfg%%%%%%');
+        res.render("orders", { cartData , totalDoc,page});
     } catch (error) {
         console.log(error.message);
     }
@@ -129,7 +141,7 @@ const loaddashbord = async (req, res) => {
 
     const totalproducts = await productSchema.countDocuments();
 
-    console.log(totalproducts,"%%%%%%okd")
+    console.log(totalproducts, "%%%%%%okd")
 
 
     const totalorers = await orderSchema.countDocuments();
@@ -485,10 +497,10 @@ const sales = async (req, res) => {
             const orderData = await orderSchema.aggregate([
                 {
                     $match: {
-                      orderStatus: 'placed',
-                      orderDate: { $gte: new Date(startDate), $lte: new Date(endDate) }
+                        orderStatus: 'placed',
+                        orderDate: { $gte: new Date(startDate), $lte: new Date(endDate) }
                     }
-                  },
+                },
                 {
                     $lookup: {
                         from: "users",
@@ -515,7 +527,7 @@ const sales = async (req, res) => {
 
 
 
-        }else if (selectedvalue === "ALL") {
+        } else if (selectedvalue === "ALL") {
 
 
 

@@ -25,6 +25,9 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+
+
 </head>
 
 <body>
@@ -246,7 +249,7 @@
                                         isValid = false;
                                     } else if (new Date(startDateInput) >= new Date(endDateInput)) {
 
-                                
+
                                         document.getElementById('error2').innerText = 'End date must be  greater than the start date'
                                         isValid = false;
                                     }
@@ -333,8 +336,8 @@
                                         </td>
 
                                         <td scope="col">
-                                            <p> <%=data.orderDate.toLocaleDateString('en-US', {
-                                                    day: 'numeric' , month: 'short' , year: 'numeric' })%></p>
+                                            <p> <%=data.orderDate.toLocaleDateString('en-US', { day: 'numeric' ,
+                                                    month: 'short' , year: 'numeric' })%></p>
                                         </td>
                                         <td scope="col">
                                             <p>
@@ -356,6 +359,15 @@
                 </div>
             </div>
         </section>
+
+
+
+
+
+
+
+
+
         <!-- content-main end// -->
         <footer class="main-footer font-xs">
             <div class="row pb-30 pt-15">
@@ -467,6 +479,16 @@
         }
 
 
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tablePagination').DataTable();
+        });
     </script>
 
     <script src="assets/js/vendors/jquery-3.6.0.min.js"></script>
