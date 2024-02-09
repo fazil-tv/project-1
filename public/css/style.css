@@ -176,6 +176,167 @@ sup {
   font-size: 15px;
 }
 
+.modal {
+  display: none;
+  z-index: 99999999999;
+  left: 30%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  overflow: auto;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.forget-btn {}
+
+.edit-btn {
+  background-color: #dbcc8f !important;
+}
+
+.save-btn {
+  background-color: #dbcc8f;
+  border: none;
+  width: 50%;
+  height: 50px;
+  position: relative;
+  left: 24%;
+  margin-top: 20px;
+}
+
+.modalhead {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.address-modal {
+  width: 100% !important;
+  overflow: hidden !important;
+  margin-top: 28px !important;
+}
+
+.addaddressbutton {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.applycoupon {
+  background-color: #dbcc8f;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.couponcard {
+  background-image: url(/images/couponimg-1.jpg) !important;
+  background-size: cover !important;
+}
+
+.couponcard-2 {
+  background-image: url(/images/coupon-2.jpg) !important;
+  background-size: cover !important;
+}
+
+.offer-t {
+  margin-bottom: 0;
+  position: relative;
+  top: -12px !important;
+  font-size: 50px;
+  font-weight: bold;
+  color: black;
+  left: -4px;
+}
+
+.coupon-name {
+  margin-bottom: 0px;
+  color: black;
+  font-size: 17px;
+  position: relative;
+  text-align: justify;
+  top: -18px;
+}
+
+.coupon-code {
+  margin-bottom: 0px;
+  color: black;
+  font-size: 17px;
+  position: relative;
+  text-align: justify;
+  top: -9px;
+}
+
+.coupon-button {
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  float: right;
+  position: relative;
+  left: 0px;
+  text-align: center;
+  top: -14px;
+  padding: 2px;
+  width: 108px;
+  color: black;
+
+}
+
+.couun-date {
+
+  color: black;
+
+}
+
+.card-section {
+  display: none;
+}
+.removebtn{
+  background-color: gray;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .searchinputs{
   text-align: center;

@@ -169,25 +169,61 @@
 									<section>
 										<div class=" mt-5">
 
-											<a type="button" class="addaddressbutton" onclick=" addressopenmodal()">
+											<a type="button" class="addaddressbutton" onclick=" addressopenmodal()" >
 												add
 												address
 											</a>
 
-											<a type="button" id="showHideButton" class="applycoupon">
+											<a type="button" id="showHideButton" class="applycoupon" style="color: rgb(255, 255, 255);">
 												Apply Coupon
 											</a>
 
 
-											<div class="card-section mt-5" id="cardSection">
+											<!-- <div class="card-section mt-5" id="cardSection">
 												<div class="row" id="relodedives">
+													<% for (let i=0; i < coupon.length; i++) { %>
+														<div class="col-lg-6 pb-2">
+															<div class="card coupon-card">
+																<div class="card-body">
+																	<h5 class="card-title">
+																		<%= coupon[i].name %>
+																	</h5>
+																	<h6 class="card-subtitle mb-2 text-muted">
+																		<%= coupon[i].discountPercentage %> OFF
+																	</h6>
+																	<p class="card-text">
+																		Coupon Code: <%= coupon[i].couponCode %>
+																	</p>
+																	<p class="card-text">
+																		Validity Period: <%= coupon[i].expiryDate.toLocaleDateString('en-US', { weekday: 'short' , year: 'numeric' , month: 'short' , day: 'numeric' }) %>
+																	</p>
+																	<% if(subtotel > coupon[i].criteriaValue) { %>
+																		<% if (!cartData.couponDiscount || coupon[i]._id.toString() !== cartData.couponDiscount._id.toString()) { %>
+																			<button class="btn btn-primary" onclick="couponapply('<%= coupon[i]._id %>')">Use It</button>
+																		<% } else { %>
+																			<button class="btn btn-secondary" onclick="removecoupon('<%= coupon[i]._id %>')">Remove</button>
+																		<% } %>
+																	<% } else { %>
+																		<span class="badge badge-danger">Not Applicable</span>
+																	<% } %>
+																</div>
+															</div>
+														</div>
+													<% } %>
+												</div>
+											</div> -->
+											
+
+
+											<div class="card-section mt-5" id="cardSection">
+												<div class="" id="relodedives">
 												
 														<% for (let i=0; i < coupon.length; i++) { %>
 															<div class="col-lg-6 pb-2">
 																<div
 																	class="cart-detail cart-total bg-light p-md-4  couponcard">
 																	<p class="offer-t">
-																		<%= coupon[i].discountPercentage %>
+																		<%= coupon[i].discountPercentage %> %OFF
 																	</p>
 																	<p class="coupon-name">
 																		<%= coupon[i].name %>
@@ -219,12 +255,11 @@
 																					?
 																					cartData.couponDiscount._id.toString()
 																					: null)) { %>
-																					<a class="coupon-button"
+																					<a class="coupon-button removebtn"
 																						onclick="removecoupon('<%= coupon[i]._id %>')">Remove</a>
 																					<% } %>
 
 																			<%}else{%>
-
 																				<span class="badge not-applicable">Not Applicable</span>
 																			<%}%>
 																	</p>
@@ -258,7 +293,7 @@
 												<p class="d-flex">
 													<span>Discount</span>
 													<span>
-														%     <%=coupondiscount%>
+													 <%=coupondiscount%>	%    
 													</span>
 												</p>
 												<hr>
@@ -656,144 +691,7 @@
 	</script>
 
 	<style>
-		.modal {
-			display: none;
-			z-index: 99999999999;
-			left: 30%;
-			top: 0;
-			width: 50%;
-			height: 100%;
-			overflow: auto;
-		}
-
-		.modal-content {
-			background-color: #fefefe;
-			margin: 15% auto;
-			padding: 20px;
-			border: 1px solid #888;
-			width: 80%;
-		}
-
-		.close {
-			color: #aaa;
-			float: right;
-			font-size: 28px;
-			font-weight: bold;
-		}
-
-		.close:hover,
-		.close:focus {
-			color: black;
-			text-decoration: none;
-			cursor: pointer;
-		}
-
-		.forget-btn {}
-
-		.edit-btn {
-			background-color: #dbcc8f !important;
-		}
-
-		.save-btn {
-			background-color: #dbcc8f;
-			border: none;
-			width: 50%;
-			height: 50px;
-			position: relative;
-			left: 24%;
-			margin-top: 20px;
-		}
-
-		.modalhead {
-			text-align: center;
-			margin-bottom: 5px;
-		}
-
-		.address-modal {
-			width: 100% !important;
-			overflow: hidden !important;
-			margin-top: 28px !important;
-		}
-
-		.addaddressbutton {
-			background-color: black;
-			color: white;
-			border: none;
-			border-radius: 3px;
-			padding: 10px;
-		}
-
-		.applycoupon {
-			background-color: #dbcc8f;
-			color: white;
-			border: none;
-			border-radius: 3px;
-			padding: 10px;
-		}
-
-		.couponcard {
-			background-image: url(/images/couponimg-1.jpg) !important;
-			background-size: cover !important;
-		}
-
-		.couponcard-2 {
-			background-image: url(/images/coupon-2.jpg) !important;
-			background-size: cover !important;
-		}
-
-		.offer-t {
-			margin-bottom: 0;
-			position: relative;
-			top: -12px !important;
-			font-size: 50px;
-			font-weight: bold;
-			color: black;
-			left: -4px;
-		}
-
-		.coupon-name {
-			margin-bottom: 0px;
-			color: black;
-			font-size: 17px;
-			position: relative;
-			text-align: justify;
-			top: -18px;
-		}
-
-		.coupon-code {
-			margin-bottom: 0px;
-			color: black;
-			font-size: 17px;
-			position: relative;
-			text-align: justify;
-			top: -9px;
-		}
-
-		.coupon-button {
-			background-color: white;
-
-			border: none;
-			border-radius: 5px;
-			float: right;
-			position: relative;
-			left: 0px;
-			text-align: center;
-			top: -14px;
-			padding: 2px;
-			width: 108px;
-			color: black;
-
-		}
-
-		.couun-date {
-
-			color: black;
-
-		}
-
-		.card-section {
-			display: none;
-		}
+		
 	</style>
 
 

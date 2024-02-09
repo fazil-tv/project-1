@@ -1,7 +1,7 @@
 require('dotenv').config();
 const userModal = require('../model/userSchema');
 const cartSchema = require('../model/cartModel');
-const productSchema = require('../model/categoryModel');
+const productSchema = require('../model/productSchema');
 const orderSchema = require('../model/orderModel');
 const mongoose = require('mongoose');
 const { ObjectId } = require('mongodb');
@@ -12,6 +12,8 @@ const ejs = require("ejs");
 const puppeteerpdf = require("pdf-puppeteer");
 let express = require('express');
 const ExcelJS = require('exceljs');
+
+
 
 
 
@@ -126,7 +128,8 @@ const adminverifyLogin = async (req, res) => {
 const loaddashbord = async (req, res) => {
 
     const totalproducts = await productSchema.countDocuments();
-    console.log(totalproducts / 2, "%%%%%%okd")
+
+    console.log(totalproducts,"%%%%%%okd")
 
 
     const totalorers = await orderSchema.countDocuments();
