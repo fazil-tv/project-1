@@ -192,6 +192,8 @@ userRoute.post('/applycoupons', userauth.isLogin, couponController.applycoupon);
 userRoute.delete('/removecoupons', userauth.isLogin, couponController.removecoupon);
 
 
+// invoice downlode
+userRoute.get('/invoice', userauth.isLogin,userController.invoice);
 
 
 module.exports = userRoute;

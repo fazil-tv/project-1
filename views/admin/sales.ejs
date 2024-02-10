@@ -405,17 +405,12 @@
             <td>${order.orderId}</td>
             <td>${order.productData[0] ? order.productData[0].name : ''}</td>
             <td>${order.products ? order.products.count : ''}</td>
-            <td>${order.products ? order.products.price : ''}</td>
+            <td>${order.products ? order.products.price : ''} </td>
             <td>${order.products ? order.products.totalPrice : ''}</td>
             <td>${order.orderDate.toString().slice(-4) ? order.orderDate.toString().slice(0, 10) : ''}</td>
             <td>${order.userData[0] ? order.userData[0].email : ''}</td>
             <td>${order.payment}</td>`;
             tableBody.appendChild(row);
-
-            // return order
-
-
-
         }
 
         function downlode() {

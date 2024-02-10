@@ -301,9 +301,6 @@
 
 
                             <div class="tab-pane fade" id="account-social-links">
-
-
-
                                 <div class="" style="position: relative; top: -15px; text-align: center;">
                                     <% if (orders && orders.length> 0) { %>
                                         <table class="table" style="border-radius: 5px;">
@@ -314,14 +311,19 @@
                                                     <th class="total">Amount</th>
                                                     <th class="Payment">Payment</th>
                                                     <th class="Payment">Status</th>
+                                                    <th class="Payment">Invoice</th>
                                                     <th class="Payment"></th>
-
                                                 </tr>
                                             </thead>
                                             <tbody> 
+                                              
+                                           
 
                                                 <% for (let i= orders.length-1; i>=0; i--) { %>
                                                     <tr>
+                                                        <%if(orders[i].orderStatus!=="pending"){%>
+                                                            
+                                                      
                                                         <td class="pl-2">
                                                             <%=orders.length-i%>
                                                         </td>
@@ -340,12 +342,16 @@
                                                             <%= orders[i]. orderStatus %>
                                                         </td>
                                                         <td>
+                                                            <a  href="/invoice?id=<%= orders[i]._id %>" class="" style="border: none; background-color: white;"><i class="fa-solid fa-download"></i></a>
+                                                        </td>
+                                                        <td>
                                                             <a href="/orderstatus?id=<%=orders[i]._id%>"
                                                                 style="color: black; font-size: 14px; text-decoration: none;">Details</a>
                                                         </td>
 
                                                     </tr>
                                                     <% } %>
+                                                    <%}%>
                                             </tbody>
                                         </table>
                                         <% } else { %>
@@ -353,11 +359,6 @@
                                             <p>No orders yet.</p>
                                             <% } %>
                                 </div>
-
-
-
-
-
                             </div>
 
                             <!-- my wallet -->

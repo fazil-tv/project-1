@@ -220,14 +220,7 @@
                                         </div>
                                         <div class="col-lg-6">
 
-                                            <!-- <div class="progress-track">
-                                                <ul id="progressbar">
-                                                    <li class="step0 active " id="step1">Ordered</li>
-                                                    <li class="step0 active text-center" id="step2">Shipped</li>
-                                                    <li class="step0 active text-right" id="step3">On the way</li>
-                                                    <li class="step0 text-right" id="step4">Delivered</li>
-                                                </ul>
-                                            </div> -->
+                                           
 
 
 
@@ -356,11 +349,16 @@
                                                                             <% }else
                                                                                 if(product.productstatus==="Delivered"
                                                                                 ){ %>
+                                                                                    
+                                                                                      
+                                                                                    
                                                                                 <div class="status-icon-deliverd"></div>
                                                                                 <%=product.productstatus%>
 
-                                                                                    <div class="justify-content-center">
-                                                                                        <button class="btn edit-btn"
+                                                                                    <div class="justify-content-center ">
+                                                                                        
+                                                                                        
+                                                                                        <button class="btn mt-2 pl-0"
                                                                                             id=""
                                                                                             onclick="returnorder('<%= product._id %>','<%= product.productId._id %>','<%=orders._id%>')">
                                                                                             <i
@@ -368,6 +366,10 @@
                                                                                                 class="fa-solid fa-truck-arrow-right pr-2"></i>Return
                                                                                             Order
                                                                                         </button>
+
+                            
+                                                                                      
+                                                                                        
                                                                                     </div>
 
                                                                                     <% }else

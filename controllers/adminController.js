@@ -214,7 +214,7 @@ const loaddashbord = async (req, res) => {
     const graphValue = Array(12).fill(0);
 
     montlyrevenue.forEach(entry => {
-        const monthIndex = entry._id - 1; // MongoDB months are 1-indexed
+        const monthIndex = entry._id - 1; 
         graphValue[monthIndex] = entry.monthlyrevenue;
     });
 

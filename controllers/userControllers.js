@@ -15,6 +15,12 @@ const orderSchema = require('../model/orderModel');
 const couponSchema = require("../model/couponModel")
 const bannerSchema = require("../model/bannerModel");
 const wishlistSchema = require("../model/wishlistModel");
+const mongoose = require('mongoose');
+
+
+const puppeteer = require('puppeteer')
+const ejs = require("ejs");
+const puppeteerpdf = require("pdf-puppeteer");
 
 
 
@@ -260,15 +266,15 @@ const indexhome = async (req, res) => {
 
         const bannerData = await bannerSchema.find({});
 
-        const Wishlist = await wishlistSchema.findOne({user:req.session.user_id});
-        console.log(Wishlist,'kdfksdfk')
+        const Wishlist = await wishlistSchema.findOne({ user: req.session.user_id });
+        console.log(Wishlist, 'kdfksdfk')
 
 
-        console.log(Wishlist,"^^^^^^okkk")
+        console.log(Wishlist, "^^^^^^okkk")
 
 
 
-        res.render("indexhome", { user: req.session.user_id, product: product ,  bannerData , Wishlist});
+        res.render("indexhome", { user: req.session.user_id, product: product, bannerData, Wishlist });
     } catch (error) {
         console.log(error.message);
     }
@@ -299,7 +305,7 @@ const shop = async (req, res) => {
         const category = await categorySchema.find({});
         console.log(category)
 
-        const Wishlist = await wishlistSchema.findOne({user:req.session.user_id});
+        const Wishlist = await wishlistSchema.findOne({ user: req.session.user_id });
         const searchQuery = req.query.search || "";
         const page = req.query.page ? req.query.page : 1;
         const prevPage = page - 1;
@@ -309,7 +315,7 @@ const shop = async (req, res) => {
 
 
         console.log(totalDoc);
-        res.render("shop", { product: product, category: category, searchQuery, page, totalDoc ,Wishlist});
+        res.render("shop", { product: product, category: category, searchQuery, page, totalDoc, Wishlist });
 
         // const category = await categorySchema.find({}).sort({ name: 1 })
         // console.log(category)
@@ -557,7 +563,7 @@ const getemail = async (req, res) => {
 
             console.log(usrid)
 
-            res.render('forgototp', {  usrid,mail });
+            res.render('forgototp', { usrid, mail });
         } else {
             res.render('getemail', { error: 'Email not found' });
         }
@@ -621,14 +627,14 @@ const otpverification = async (req, res) => {
         const { num1, num2, num3, num4 } = req.body;
         const otp = `${num1}${num2}${num3}${num4}`;
 
-        console.log(otp,"otp");
-       
+        console.log(otp, "otp");
+
 
 
         const userId = req.session.user_id;
         const user = await User.findOne({ _id: userId });
         const email = user.email;
-        
+
 
 
         console.log(userId);
@@ -649,7 +655,7 @@ const otpverification = async (req, res) => {
             console.log("invalid otp");
             console.log("this", email);
             console.log("this", userId);
-          
+
             return res.json({ success: false, message: 'invalid otp' });
 
 
@@ -658,7 +664,7 @@ const otpverification = async (req, res) => {
             console.log("hmmmmm")
             if (req.session.user_id) {
                 // res.render('changepasswordform')
-                 return res.json({ success: true, message: 'done' });
+                return res.json({ success: true, message: 'done' });
             } else {
                 const userId = req.session.user_id;
                 const user = await User.findOne({ _id: userId });
@@ -710,6 +716,48 @@ const changepassword = async (req, res) => {
     }
 
 
+
+}
+
+
+const invoice = async (req, res) => {
+    try {
+
+        const id = req.query.id;
+        const totelorders = await orderSchema.findOne({ _id: id }).populate('products.productId');
+
+        const orders = totelorders.products.filter((val) => val.productstatus === 'Delivered');
+
+        console.log("orders", orders)
+        console.log("totelorders", totelorders)
+
+
+
+
+        const deliveryAddressObjectId = new mongoose.Types.ObjectId(totelorders.delivery_address);
+        console.log(deliveryAddressObjectId, 'jkjk')
+        const userAddress = await addressSchema.findOne(
+            { 'address._id': deliveryAddressObjectId },
+            { 'address.$': 1 }
+        );
+
+
+        const ejsPagePath = path.join(__dirname, '../views/user/pdf.ejs');
+        const ejsPage = await ejs.renderFile(ejsPagePath, { orders, userAddress, totelorders });
+
+        const browser = await puppeteer.launch({ headless: "new" });
+        const page = await browser.newPage();
+        await page.setContent(ejsPage);
+        const pdfBuffer = await page.pdf();
+        await browser.close();
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename=invoice.pdf');
+        res.send(pdfBuffer);
+
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
@@ -744,6 +792,6 @@ module.exports = {
     otpverification,
     changepasswordform,
     changepassword,
-    userLogout
-
+    userLogout,
+    invoice
 }
