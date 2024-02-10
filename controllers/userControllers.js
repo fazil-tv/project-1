@@ -21,6 +21,7 @@ const mongoose = require('mongoose');
 const puppeteer = require('puppeteer')
 const ejs = require("ejs");
 const puppeteerpdf = require("pdf-puppeteer");
+const cartSchema = require("../model/cartModel");
 
 
 
@@ -267,6 +268,9 @@ const indexhome = async (req, res) => {
         const bannerData = await bannerSchema.find({});
 
         const Wishlist = await wishlistSchema.findOne({ user: req.session.user_id });
+
+        const categoryData = await categorySchema.find({});
+        console.log(product,"productssssss");
         console.log(Wishlist, 'kdfksdfk')
 
 
@@ -274,7 +278,7 @@ const indexhome = async (req, res) => {
 
 
 
-        res.render("indexhome", { user: req.session.user_id, product: product, bannerData, Wishlist });
+        res.render("indexhome", { user: req.session.user_id, product: product, bannerData, Wishlist ,categoryData});
     } catch (error) {
         console.log(error.message);
     }

@@ -50,7 +50,7 @@
 						<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false">Catalog</a>
 						<div class="dropdown-menu" aria-labelledby="dropdown04">
-							<a class="dropdown-item" href="/shop">Shop</a>
+							<a class="dropdown-item " href="/shop">Shop</a>
 							<!-- <a class="dropdown-item" href="/singleproduct">Single Product</a> -->
 							<a class="dropdown-item" href="/cart">Cart</a>
 							<!-- <a class="dropdown-item" href="/checkout">Checkout</a> -->
@@ -102,39 +102,42 @@
 	<section id="home-section" class="hero">
 		<% for (let i=0; i < bannerData.length; i++) { %>
 
-			<%if (bannerData[i].is_blocked) { %>
-				<div class="home-slider owl-carousel" style="background-color: rgb(165, 165, 165);">
-					<div class="slider-item js-fullheight">
-						<div class="overlay"></div>
-						<div class="container-fluid p-0">
-							<div class="row d-md-flex no-gutters slider-text align-items-center justify-content-end"
-								data-scrollax-parent="true">
-								<img class="one-third order-md-last img-fluid"
-									src="/assets/images/banner/<%= bannerData[i].images %>" alt="">
-								<div class="one-forth d-flex align-items-center ftco-animate"
-									data-scrollax=" properties: { translateY: '70%' }">
-									<div class="text">
-										<span class="subheading">#New Arrival</span>
-										<div class="horizontal">
-											<h1 class="mb-4 mt-3">
-												<%=bannerData[i].title%>
-											</h1>
-											<p class="mb-4">
-												<%=bannerData[i]. description%>
-											</p>
+			<%if (bannerData[i].is_blocked ) { %>
+			
+					<div class="home-slider owl-carousel" style="background-color: rgb(165, 165, 165);">
+						<div class="slider-item js-fullheight">
+							<div class="overlay"></div>
+							<div class="container-fluid p-0">
+								<div class="row d-md-flex no-gutters slider-text align-items-center justify-content-end"
+									data-scrollax-parent="true">
+									<img class="one-third order-md-last img-fluid"
+										src="/assets/images/banner/<%= bannerData[i].images %>" alt="">
+									<div class="one-forth d-flex align-items-center ftco-animate"
+										data-scrollax=" properties: { translateY: '70%' }">
+										<div class="text">
+											<span class="subheading">#New Arrival</span>
+											<div class="horizontal">
+												<h1 class="mb-4 mt-3">
+													<%=bannerData[i].title%>
+												</h1>
+												<p class="mb-4">
+													<%=bannerData[i]. description%>
+												</p>
 
-											<p><a href="<%=bannerData[i].targeturl%>" class="btn-custom">Discover
-													Now</a></p>
+												<p><a style="background-color: black !important;"
+														href="<%=bannerData[i].targeturl%>" class="btn-custom">Discover
+														Now</a></p>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<%}%>
 						<%}%>
+							<%}%>
+							
 
-							<!-- <div class="slider-item js-fullheight">
+									<!-- <div class="slider-item js-fullheight">
 								<div class="overlay"></div>
 								<div class="container-fluid p-0">
 									<div class="row d-flex no-gutters slider-text align-items-center justify-content-end"
@@ -158,7 +161,7 @@
 									</div>
 								</div>
 							</div> -->
-				</div>
+					</div>
 	</section>
 
 	<section class="ftco-section ftco-no-pt ftco-no-pb">
@@ -217,12 +220,12 @@
 
 
 		<div class="container">
-			<div class="row" >
+			<div class="row">
 				<% product.forEach(product=> { %>
-					<% if (!product.is_blocked) { %>
+					<% if (!product.is_blocked &&!product.category. is_list) { %>
 						<div class="col-lg-4 col-sm-6 
 						 ftco-animate d-flex">
-							<div class="product d-flex flex-column "  >
+							<div class="product d-flex flex-column ">
 								<a href="/singleproduct?id=<%=product._id%>" class="img-prod"><img class="img-fluid"
 										src="/sharpimg/<%= product.images.image1%>" alt="Colorlib Template">
 									<span class="status">
@@ -237,16 +240,17 @@
 								<span class="statuswishlist" id="wishlistrelode">
 
 
-										
+
 
 									<%if (Wishlist){%>
-											<i onclick="addwishlist('<%=product._id%>')" id="buttonId<%=product._id%>"
-												class="<%= Wishlist.product.findIndex(item=>item.productId === product._id.toString())===-1 ? 'fa-regular' : 'fa-solid' %> fa-heart"></i>
+										<i onclick="addwishlist('<%=product._id%>')" id="buttonId<%=product._id%>"
+											class="<%= Wishlist.product.findIndex(item=>item.productId === product._id.toString())===-1 ? 'fa-regular' : 'fa-solid' %> fa-heart"></i>
 
-									<%}else{%>
-										<i onclick="addwishlist('<%=product._id%>')" id="" class="fa-regular fa-heart"></i>
+										<%}else{%>
+											<i onclick="addwishlist('<%=product._id%>')" id=""
+												class="fa-regular fa-heart"></i>
 
-									<%}%>
+											<%}%>
 
 
 
@@ -365,7 +369,7 @@
 			</div>
 		</div>
 	</section> -->
-<!-- 
+	<!-- 
 	<section class="ftco-section ftco-deal bg-primary">
 		<div class="container">
 			<div class="row">
