@@ -760,6 +760,15 @@ const invoice = async (req, res) => {
     }
 }
 
+// const erros404 = async(req,res)=> {
+//     try {
+//         res.render("404");
+        
+//     } catch (error) {
+        
+//     }
+// }
+
 
 
 
@@ -793,5 +802,6 @@ module.exports = {
     changepasswordform,
     changepassword,
     userLogout,
-    invoice
+    invoice,
+   
 }

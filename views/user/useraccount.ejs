@@ -86,7 +86,7 @@
         </div>
     </nav>
 
-    <div class="hero-wrap hero-bread" style="background-image: url('images/bg_6.jpg');">
+	<div class="hero-wrap hero-bread" style="background-image: url('/images/about-heading.webp');">
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center">
                 <div class="col-md-9 ftco-animate text-center">
@@ -310,7 +310,7 @@
                                                     <th class="date ">Date</th>
                                                     <th class="total">Amount</th>
                                                     <th class="Payment">Payment</th>
-                                                    <th class="Payment">Status</th>
+                                                
                                                     <th class="Payment">Invoice</th>
                                                     <th class="Payment"></th>
                                                 </tr>
@@ -338,9 +338,7 @@
                                                         <td>
                                                             <%= orders[i].payment %>
                                                         </td>
-                                                        <td>
-                                                            <%= orders[i]. orderStatus %>
-                                                        </td>
+                                                        
                                                         <td>
                                                             <a  href="/invoice?id=<%= orders[i]._id %>" class="" style="border: none; background-color: white;"><i class="fa-solid fa-download"></i></a>
                                                         </td>

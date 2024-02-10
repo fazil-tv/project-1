@@ -195,5 +195,7 @@ userRoute.delete('/removecoupons', userauth.isLogin, couponController.removecoup
 // invoice downlode
 userRoute.get('/invoice', userauth.isLogin,userController.invoice);
 
+// // 404
+// userRoute.get('/erros404', userauth.isLogin,userController.erros404);
 
 module.exports = userRoute;
