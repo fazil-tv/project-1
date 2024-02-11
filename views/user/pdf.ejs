@@ -44,7 +44,7 @@
 
         h2.content-title {
             margin-bottom: 10px;
-            color: #007bff;
+            color: #000000;
         }
 
         .order-info-wrap {
@@ -99,7 +99,7 @@
     <section class="content-main">
         <div class="content-header">
             <h2 class="content-title">Order Detail</h2>
-            <p>Order ID:  <%=orders.orderId%>
+            <p>Order ID:  <%=totelorders.orderId%>
             </p>
         </div>
 
@@ -108,10 +108,10 @@
                 <article class="icontext">
                     <div class="text">
                         <p class="mb-1">
-                            <b>Customer</b><br>
-                            <%= userAddress.address[0].fullname %> <br>
-                            <%= userAddress.address[0].email%> <br>
-                            <%= userAddress.address[0].mobile%> <br>
+                            <b>Customer</b>
+                          <p>  <%= userAddress.address[0].fullname %> </p>
+                           <p> <%= userAddress.address[0].email%> </p>
+                           <p> <%= userAddress.address[0].mobile%></p>
                         </p>
                     </div>
                 </article>
@@ -121,9 +121,10 @@
                 <article class="icontext">
                     <div class="text">
                         <p class="mb-1">
+                            <%console.log(orders[0].totalPrice,"okeyyy")%>
                             <b>Order Info</b><br>
-                            Total Amount: ₹<%= orders.subtotal %><br>
-                                Payment:<%=orders.payment%><br>
+                            Total Amount: ₹<%= orders[0].totalPrice %><br>
+                                Payment:<%=totelorders.payment%><br>
                                     Payment Date:<%=totelorders.orderDate.toLocaleDateString('en-US', {
                                         weekday: 'short' , year: 'numeric' , month: 'short' , day: 'numeric' })%><br>
                         </p>
@@ -164,6 +165,8 @@
                     <% orders.forEach((product, index)=> { %>
                         <tr>
                             <td>
+                                <%console.log(product)%>
+                                
                                 <%=index + 1%>
                             </td>
                             <td>

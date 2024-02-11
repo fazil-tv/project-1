@@ -55,8 +55,11 @@ const orderSchema = new mongoose.Schema({
       orderStatus: {
         type: String,
         default: 'pending'
-      }
-      ,
+      },
+      invoice:{
+        type:Boolean,
+        default:false
+      },
       orderDate: {
         type: Date,
         default: Date.now,

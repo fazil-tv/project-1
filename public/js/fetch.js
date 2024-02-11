@@ -1032,9 +1032,9 @@ function razerpay(order, subtotel) {
 
         },
         "prefill": {
-            "name": "Gaurav Kumar",
-            "email": "gaurav.kumar@example.com",
-            "contact": "9000090000"
+            "name": "MUHAMMED FAZIL TV",
+            "email": "MUHAMMEDFAZIL@GMAIL.COM",
+            "contact": "9947948636"
         },
         "notes": {
             "address": "Razorpay Corporate Office"

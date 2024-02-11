@@ -365,13 +365,28 @@ const useraccount = async (req, res) => {
     try {
         const userId = req.session.user_id;
         const useraddress = await addressSchema.findOne({ user: userId });
-        const orders = await orderSchema.find({ user: userId });
-        console.log(orders, "orders")
+        const orders = await orderSchema.find({ user: userId })
+        // const invoice = await orderSchema.findByIdAndUpdate({ user: userId },{});
+        const invoice = await orderSchema.findOneAndUpdate(
+            { 
+              user: userId,
+              "products.productstatus": 'Delivered',
+              "products.productstatus": 'return' 
+            },
+            { 
+              $set: { invoice: true } 
+            },
+            { new: true }
+          ).populate('products.productId');
+          
+          
 
-        console.log("ooi", useraddress);
+        console.log(invoice, "orders,$$$$$$$$$$$$$$$$$$$$")
+
+       
         const user = await User.findById(userId);
-        console.log(user);
-        res.render('useraccount', { user, useraddress, orders });
+
+        res.render('useraccount', { user, useraddress, orders ,invoice});
 
     } catch (error) {
         console.log(error);
@@ -729,14 +744,12 @@ const invoice = async (req, res) => {
 
         const id = req.query.id;
         const totelorders = await orderSchema.findOne({ _id: id }).populate('products.productId');
+        
 
         const orders = totelorders.products.filter((val) => val.productstatus === 'Delivered');
-
+     
         console.log("orders", orders)
         console.log("totelorders", totelorders)
-
-
-
 
         const deliveryAddressObjectId = new mongoose.Types.ObjectId(totelorders.delivery_address);
         console.log(deliveryAddressObjectId, 'jkjk')
