@@ -125,10 +125,6 @@ const listbanner = async (req, res) => {
     }
     await bannerDatas.save()
 
-
-
-
-
 }
 
 

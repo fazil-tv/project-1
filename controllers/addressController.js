@@ -47,7 +47,7 @@ const adaddress = async (req, res) => {
 const editaddress = async (req, res) => {
 
     try {    
-        const {fullname, email, state, pin, mobile, city, housename, addressId } = req.body;
+        const {fullname, email, state, pin, mobile, city, houseName, addressId } = req.body;
         const userId = req.session.user_id;
         console.log(userId);
         console.log("editaddressID",addressId);
@@ -61,7 +61,7 @@ const editaddress = async (req, res) => {
                 'address.$.state':state,
                 'address.$.pin':pin,
                 'address.$.city':city,
-                'address.$.houseName': housename,
+                'address.$.houseName': houseName,
             }
         })
         res.json({status:"editaddress success",editaddress})
@@ -77,7 +77,6 @@ const deletaddress = async (req,res)=>{
     try {
         const userId = req.session.user_id;
         const addressId= req.body.addressId;
-
         console.log("where",userId);
         console.log("where adderssId",addressId);
         await addressSchema.updateOne({user:userId},{$pull:{address:{_id:addressId}}})
@@ -94,6 +93,5 @@ module.exports = {
     adaddress,
     editaddress,
     deletaddress
-
 
 }

@@ -367,18 +367,20 @@ const useraccount = async (req, res) => {
         const useraddress = await addressSchema.findOne({ user: userId });
         const orders = await orderSchema.find({ user: userId })
         // const invoice = await orderSchema.findByIdAndUpdate({ user: userId },{});
-        const invoice = await orderSchema.findOneAndUpdate(
+        const result = await orderSchema.updateMany(
             { 
-              user: userId,
-              "products.productstatus": 'Delivered',
-              "products.productstatus": 'return' 
+                user: userId,
+                $or: [
+                    {"products.productstatus": 'Delivered'},
+                    {"products.productstatus": 'return'} 
+                ]
             },
             { 
-              $set: { invoice: true } 
-            },
-            { new: true }
-          ).populate('products.productId');
-          
+                $set: { invoice: true } 
+            }
+        );
+        
+        
           
 
         console.log(invoice, "orders,$$$$$$$$$$$$$$$$$$$$")
@@ -645,7 +647,6 @@ const otpverification = async (req, res) => {
         console.log("jkl");
         const { num1, num2, num3, num4 } = req.body;
         const otp = `${num1}${num2}${num3}${num4}`;
-
         console.log(otp, "otp");
 
 
@@ -744,7 +745,6 @@ const invoice = async (req, res) => {
 
         const id = req.query.id;
         const totelorders = await orderSchema.findOne({ _id: id }).populate('products.productId');
-        
 
         const orders = totelorders.products.filter((val) => val.productstatus === 'Delivered');
      

@@ -1,6 +1,7 @@
 const productSchema = require("../model/productSchema");
 const userSchema = require("../model/userSchema");
 const categorySchema = require("../model/categoryModel");
+const wishlistSchema = require("../model/wishlistModel");
 
 const path = require("path")
 
@@ -8,6 +9,7 @@ const path = require("path")
 const multer = require("multer")
 const sharp = require('sharp');
 const { id } = require("schema/lib/objecttools");
+
 
 
 
@@ -201,6 +203,7 @@ const editProductpost = async (req, res) => {
 
 const productsearching = async (req, res) => {
     try {
+
         const userId = req.session.user_id;
         const searchQuery = req.query.search || "";
         const categoryData = await categorySchema.find({});
@@ -208,6 +211,10 @@ const productsearching = async (req, res) => {
         const category = req.query.category;
         const page = req.query.page ? req.query.page : 1;
         const prevPage = page - 1;
+        const Wishlist = await wishlistSchema.findOne({ user: req.session.user_id });
+    
+
+
 
 
         console.log(searchQuery);
@@ -216,12 +223,12 @@ const productsearching = async (req, res) => {
         }).skip(prevPage * 4).limit(6);
 
         if (productData) {
-            res.render('shop', { product: productData, category: categoryData, userId, searchQuery, totalDoc, page, prevPage })
+            res.render('shop', { product: productData, category: categoryData, userId, searchQuery, totalDoc, page, prevPage,Wishlist})
 
 
         }else{
             const message = "product not find";
-            res.render('shop', { product: productData, category: categoryData, userId, searchQuery, totalDoc, page, prevPage,message});
+            res.render('shop', { product: productData, category: categoryData, userId, searchQuery, totalDoc, page, prevPage,message,Wishlist});
             
         }
 
@@ -233,6 +240,7 @@ const productsearching = async (req, res) => {
 
     }
 }
+
 
 
 
@@ -251,6 +259,8 @@ const productfilter = async (req, res) => {
         console.log(searchQuery)
         const categoryData = await categorySchema.find({});
         const totalDoc = await productSchema.countDocuments();
+        const Wishlist = await wishlistSchema.findOne({ user: req.session.user_id });
+
 
         console.log(sort);
         console.log(fromprice);
@@ -266,7 +276,7 @@ const productfilter = async (req, res) => {
                 price: { $gte: fromprice, $lte: toprice }
             }).sort({ price: sort === 0 ? 1 : -1 }).skip(prevPage * 4).limit(6);
 
-            res.render('shop', { product: productData, category: categoryData, userId, totalDoc, searchQuery, page, prevPage })
+            res.render('shop', { product: productData, category: categoryData, userId, totalDoc, searchQuery, page, prevPage, Wishlist})
 
         } else {
             console.log("me ");
@@ -277,7 +287,7 @@ const productfilter = async (req, res) => {
             }).sort({ price: sort === 0 ? 1 : -1 }).skip(prevPage * 4).limit(6);
             console.log(productData)
 
-            res.render('shop', { product: productData, category: categoryData, userId, totalDoc,searchQuery, page, prevPage })
+            res.render('shop', { product: productData, category: categoryData, userId, totalDoc,searchQuery, page, prevPage ,Wishlist})
         }
 
 

@@ -138,11 +138,11 @@ const checkoutPost = async (req, res) => {
 
         // const discountamount = subtotelamount - coupondiscount;
         let discountamount;
-        if(cartDatas.couponDiscount){
-             discountamount = (coupondiscount / 100) * subtotelamount;
+        if (cartDatas.couponDiscount) {
+            discountamount = (coupondiscount / 100) * subtotelamount;
             //  discountamount = ((subtotelamount - coupondiscount) / subtotelamount) * 100;
 
-        }else{
+        } else {
             discountamount = subtotelamount
         }
 
@@ -150,7 +150,7 @@ const checkoutPost = async (req, res) => {
         console.log("******", discountamount);
 
         const count = 1000;
-        const generatedId = await orderSchema.countDocuments()+count
+        const generatedId = await orderSchema.countDocuments() + count
 
         const order = new orderSchema({
             user: userId,
@@ -259,10 +259,21 @@ const orderstatus = async (req, res) => {
         console.log(orders, "klklklk");
         const deliveryAddressObjectId = new mongoose.Types.ObjectId(orders.delivery_address);
         console.log(deliveryAddressObjectId, 'jkjk')
+
+
+
+
         const userAddress = await addressSchema.findOne(
             { 'address._id': deliveryAddressObjectId },
             { 'address.$': 1 }
         );
+
+        
+
+
+
+
+
         console.log(userAddress);
 
         res.render('orderstatus', { orders, userAddress });
@@ -351,7 +362,7 @@ const returnorders = async (req, res) => {
     const orderId = req.body.orderId;
     console.log("here ", productId);
     const returnReason = req.body.returnReason;
-    console.log(returnReason,"%%%%%%%%%");
+    console.log(returnReason, "%%%%%%%%%");
 
 
     try {
@@ -455,7 +466,7 @@ const verifyPayment = async (req, res) => {
                     }
                 },
                 { new: true }
-            ); 
+            );
 
             console.log(addressStatus, "heeeyyyyy");
 

@@ -48,7 +48,7 @@
 
     <!-- styles -->
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="shortcut icon" type="image/x-icon" href="/assets/imgs/theme/favicon.svg" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/shous-1.png" />
 
 </head>
 
@@ -341,13 +341,13 @@
                                                         
                                                         <td>
                                                             <% if(orders[i].invoice){%>
-                                                            <a  href="/invoice?id=<%= orders[i]._id %>" class="" style="border: none; background-color: white;"><i class="fa-solid fa-download"></i></a>
+                                                            <a  href="/invoice?id=<%= orders[i]._id %>" class="" style="border: none; background-color: white; color: rgb(0, 0, 136);"><i class="fa-solid fa-download"></i></a>
                                                             <p style="font-size: 9px ;">invoice</p>
                                                             <%}%>
                                                         </td>
                                                         <td>
                                                             <a href="/orderstatus?id=<%=orders[i]._id%>"
-                                                                style="color: black; font-size: 14px; text-decoration: none;">Details</a>
+                                                                style="color: black; font-size: 14px; text-decoration: none;"><b style="color: rgb(156, 6, 4);">Details</b></a>
                                                         </td>
 
                                                     </tr>
@@ -355,7 +355,11 @@
                                                     <%}%>
                                             </tbody>
                                         </table>
-                                        <% } %>
+                                        <% }else{ %>
+                                            <p class="mt-5">no orders</p>
+
+
+                                        <%}%>
                                 </div>
                             </div>
 

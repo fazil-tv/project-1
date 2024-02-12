@@ -354,6 +354,7 @@ const sales = async (req, res) => {
                     }
                 }
             ]);
+            
 
             console.log(orderData, "11111111");
 

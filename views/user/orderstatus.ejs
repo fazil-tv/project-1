@@ -107,6 +107,8 @@
                     <div class="info bg-white p-4">
                         <h4 class="pb-3">Delivery Address</h4>
 
+                        <%console.log(userAddress,"######")%>
+
                         <p><span class="address-p">Name:</span> <a class="pr-5">
                                 <%= userAddress.address[0].fullname %></br>
                             </a></p>
@@ -162,6 +164,10 @@
                         <p><span>Payment Methode:</span> <a class="pr-5">
                                 <%=orders.payment%>
                             </a></p>
+                            
+                        <p><span>subtotal:</span> <a class="pr-5">
+                            <%=orders. subtotal%>
+                        </a></p>
 
                         <p><span>Status:</span> <a class="pr-5">
                                 <%=orders. orderStatus%>
@@ -220,12 +226,7 @@
                                         </div>
                                         <div class="col-lg-6">
 
-                                           
-
-
-
-
-
+                                        
                                             <% if (product.productstatus==="canceled" ) { %>
                                                 <div class="progress-track">
                                                     <ul id="progressbar">

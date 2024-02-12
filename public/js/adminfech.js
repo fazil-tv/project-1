@@ -156,8 +156,6 @@ function applyfilter() {
     console.log(endDate)
 
 
-
-
     try {
         fetch('/admin/salesfilter', {
             method: 'POST',
@@ -174,16 +172,20 @@ function applyfilter() {
         })
             .then(response => response.json())
             .then(data => {
+                console.log(data.totalDoc,data.page)
                 if (data && data.orderData) {
 
                     const tableBody = document.getElementById('table-body');
                     tableBody.innerHTML = '';
 
+                  
 
 
                     data.orderData.forEach((order,index) => {
                         order.index = index
+                      
                         appendOrderToTable(order,index);
+
 
                     });
                 }
