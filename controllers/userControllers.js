@@ -413,7 +413,7 @@ const verifyLogin = async (req, res) => {
             if (passwordMatch && userblock) {
                 req.session.user_id = userData._id;
                 req.session.email = email;
-                res.redirect('/indexhome');
+                res.redirect('/');
                 console.log(req.session.user_id)
             } else {
                 res.render('login', { message: "Incorrect username or password", type: "error" });

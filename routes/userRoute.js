@@ -26,7 +26,7 @@ userRoute.set('view engine', 'ejs')
 userRoute.set('views', './views/user')
 
 
-userRoute.get("/indexhome",userController.indexhome)
+userRoute.get("/",userController.indexhome)
 
 
 userRoute.get("/login",userauth.isLogout, (req, res) => {
@@ -69,8 +69,8 @@ userRoute.post('/',userauth.isLogout, userController.verifyLogin);
 
 
 //indexhome
-userRoute.get("/indexhome", userController.indexhome);
-userRoute.post('/indexhome', userController.indexhome);
+userRoute.get("/", userController.indexhome);
+userRoute.post('/', userController.indexhome);
 
 //blog
 userRoute.get("/blog", userController.blog);
