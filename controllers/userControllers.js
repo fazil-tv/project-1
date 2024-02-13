@@ -348,7 +348,7 @@ const singleproduct = async (req, res) => {
         console.log(product);
 
         const cartdata = await cartSchema.findOne({user: req.session.user_id})
-        console.log(cartdata.length)
+        console.log(cartdata)
         
         res.render("singleproduct", { product, user: req.session.user_id, cartdata });
     } catch (error) {
