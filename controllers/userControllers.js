@@ -270,7 +270,7 @@ const indexhome = async (req, res) => {
         const Wishlist = await wishlistSchema.findOne({ user: req.session.user_id });
 
         const categoryData = await categorySchema.find({});
-        console.log(product,"productssssss");
+        console.log(product, "productssssss");
         console.log(Wishlist, 'kdfksdfk')
 
 
@@ -278,7 +278,7 @@ const indexhome = async (req, res) => {
 
 
 
-        res.render("indexhome", { user: req.session.user_id, product: product, bannerData, Wishlist ,categoryData});
+        res.render("indexhome", { user: req.session.user_id, product: product, bannerData, Wishlist, categoryData });
     } catch (error) {
         console.log(error.message);
     }
@@ -346,7 +346,11 @@ const singleproduct = async (req, res) => {
         console.log(productId);
         const product = await productSchema.findOne({ _id: productId }).populate('category');
         console.log(product);
-        res.render("singleproduct", { product });
+
+        const cartdata = await cartSchema.findOne({user: req.session.user_id})
+        console.log(cartdata.length)
+        
+        res.render("singleproduct", { product, user: req.session.user_id, cartdata });
     } catch (error) {
         console.log(error.message);
     }
@@ -368,27 +372,27 @@ const useraccount = async (req, res) => {
         const orders = await orderSchema.find({ user: userId })
         // const invoice = await orderSchema.findByIdAndUpdate({ user: userId },{});
         const result = await orderSchema.updateMany(
-            { 
+            {
                 user: userId,
                 $or: [
-                    {"products.productstatus": 'Delivered'},
-                    {"products.productstatus": 'return'} 
+                    { "products.productstatus": 'Delivered' },
+                    { "products.productstatus": 'return' }
                 ]
             },
-            { 
-                $set: { invoice: true } 
+            {
+                $set: { invoice: true }
             }
         );
-        
-        
-          
+
+
+
 
         console.log(invoice, "orders,$$$$$$$$$$$$$$$$$$$$")
 
-       
+
         const user = await User.findById(userId);
 
-        res.render('useraccount', { user, useraddress, orders ,invoice});
+        res.render('useraccount', { user, useraddress, orders, invoice });
 
     } catch (error) {
         console.log(error);
@@ -747,7 +751,7 @@ const invoice = async (req, res) => {
         const totelorders = await orderSchema.findOne({ _id: id }).populate('products.productId');
 
         const orders = totelorders.products.filter((val) => val.productstatus === 'Delivered');
-     
+
         console.log("orders", orders)
         console.log("totelorders", totelorders)
 
@@ -780,9 +784,9 @@ const invoice = async (req, res) => {
 // const erros404 = async(req,res)=> {
 //     try {
 //         res.render("404");
-        
+
 //     } catch (error) {
-        
+
 //     }
 // }
 
@@ -820,5 +824,5 @@ module.exports = {
     changepassword,
     userLogout,
     invoice,
-   
+
 }

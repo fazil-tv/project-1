@@ -347,7 +347,7 @@ function editaddress() {
             fullname: fullname,
             mobile: mobile,
             email: email,
-            houseName: houseName,   
+            houseName: houseName,
             state: state,
             city: city,
             pin: pin,
@@ -967,11 +967,26 @@ function checkouteditaddress() {
 
 
 
-function validateForm(event) {
-    event.preventDefault();
-    checkoutpost()
 
-}
+
+
+
+   
+    function validateForm(event) {
+        event.preventDefault();
+     
+        const paymentMethod = document.querySelector('input[name="payment"]:checked');
+
+        if (!paymentMethod) {
+            document.getElementById("inputid").style.display = "block";
+            event.preventDefault();
+        }else{
+            checkoutpost()
+        }
+      
+
+    }
+
 
 
 function checkoutpost() {
@@ -1195,25 +1210,25 @@ function addwishlist(productId) {
                 // if (data.status) {
                 //     $('#edit-address-div').load('/checkout #edit-address-div')
                 //     // window.location.reload();
-                    
+
 
 
                 // } else {
                 //     $('#edit-address-div').load('/checkout #edit-address-div')
                 //     // window.location.reload();
-                    
+
 
                 // }
 
-                                window.location.reload();
+                window.location.reload();
 
 
 
-                                // $('#edit-address-div').load('/checkout #edit-address-div')
+                // $('#edit-address-div').load('/checkout #edit-address-div')
 
 
 
-                
+
 
 
             }).catch(error => {
@@ -1291,7 +1306,7 @@ function couponapply(x) {
         .then(response => response.json())
         .then(data => {
 
-            if (data.status==="applid") {
+            if (data.status === "applid") {
 
                 Swal.fire({
                     title: "Success",
@@ -1316,7 +1331,7 @@ function couponapply(x) {
 
 
             }
-            else if(data.status === 'alreadyapplid') {
+            else if (data.status === 'alreadyapplid') {
                 Swal.fire({
                     title: "One coupon is already Active",
                     icon: "info",

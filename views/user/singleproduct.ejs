@@ -274,14 +274,25 @@
 									</span>
 								</div> -->
 								<div class="w-100"></div>
-								<div class="col-md-12">
-									<p style="color: #000;">
+								<!-- <div class="col-md-12">
+									<p style="color: #000; font-size: 19px;">
 										<%=product.quantity%> piece available
 									</p>
-								</div>
+								</div> -->
 							</div>
-							<p> <a onclick="addcart('<%=product._id%>')" class="btn btn-black py-3 px-5 mr-2">Add to
-									Cart</a><a href="cart.html" class="btn btn-primary py-3 px-5">Buy now</a></p>
+							<p> <%if(user){%><a onclick="addcart('<%=product._id%>')" class="btn btn-black py-3 px-5 mr-2">Add to Cart</a>
+							<%}else{%>
+								<a href="/login" class="btn btn-black py-3 px-5 mr-2">Add to Cart</a>
+							<%}%>
+
+							<%if(cartdata.length>=0){%>
+								<a href="/checkout" class="btn btn-primary py-3 px-5">Buy now</a></p>
+							<%}else{%>
+								<a href="/cart" class="btn btn-primary py-3 px-5">Buy now</a></p>
+
+							<%}%>
+
+									
 						</div>
 						<%}%>
 				</div>

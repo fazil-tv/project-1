@@ -83,7 +83,7 @@ const orders = async (req, res) => {
 const orderdetaile = async (req, res) => {
     try {
         const id = req.query.id;
-        console.log(id);
+
 
         const orders = await orderSchema.findOne({ _id: id }).populate('products.productId');
 
@@ -94,10 +94,8 @@ const orderdetaile = async (req, res) => {
             { 'address._id': deliveryAddressObjectId },
             { 'address.$': 1 }
         );
-        console.log(userAddress);
+        console.log(userAddress,"userAddress");
 
-        console.log(orders);
-        console.log(userAddress);
 
         res.render("detaile", { userAddress, orders });
     } catch (error) {

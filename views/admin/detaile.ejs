@@ -187,10 +187,24 @@
                                     <i class="text-primary material-icons md-person"></i>
                                 </span>
                                 <div class="text">
+                                    
                                     <h6 class="mb-1">Customer</h6>
 
-                                    <a href="#">View profile</a>
+
+                        
+                                    <% userAddress.forEach(function(item) { %>
+                                        <% item.address.forEach(function(addressItem) { %>
+                                          <div>
+                                            Name: <%= addressItem.fullname %><br>
+                                            Mobile: <%= addressItem.mobile %><br>
+                                            <%= addressItem.email %><br>
+                                            
+    
+                                          </div>
+                                     
+                     
                                 </div>
+                               
                             </article>
                         </div>
                         <!-- col// -->
@@ -200,11 +214,23 @@
                                     <i class="text-primary material-icons md-local_shipping"></i>
                                 </span>
                                 <div class="text">
-                                    <h6 class="mb-1">Order info</h6>
+                                 
+                                    <h6 class="mb-1">Order info</h6> 
+                                    Order ID: <%=orders.orderId%><br>
+                                    Paymet Methode: <%=orders.payment%><br>
+                                    OrderDate:<%=orders.orderDate.toLocaleDateString('en-US', {
+                                        weekday: 'short' , year: 'numeric' , month: 'short' ,
                                     
-                                    <a href="#">Download info</a>
+                                        hour: 'numeric',
+                                        minute: 'numeric'
+                                        })%>
+
+
+                                    
+                                 
                                 </div>
                             </article>
+                          
                         </div>
                         <!-- col// -->
                         <div class="col-md-4">
@@ -214,11 +240,15 @@
                                 </span>
                                 <div class="text">
                                     <h6 class="mb-1">Deliver to</h6>
-                                    <p class="mb-1">
+                                    House Name: <%= addressItem.houseName %><br>
+                                    City: <%= addressItem.city %><br>
+                                    Pin: <%= addressItem.pin %><br>
 
-                                    </p>
-                                    <a href="#">View profile</a>
+                                  
                                 </div>
+
+                                <% }) %>
+                                <% }) %>
                             </article>
                         </div>
                         <!-- col// -->
