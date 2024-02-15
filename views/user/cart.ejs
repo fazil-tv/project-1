@@ -70,7 +70,7 @@
 						<div class="dropdown-menu" aria-labelledby="dropdown04">
 							<a class="dropdown-item" href="/shop">Shop</a>
 							<a class="dropdown-item" href="/cart">Cart</a>
-						
+
 						</div>
 					</li>
 					<li class="nav-item"><a href="/about" class="nav-link">About</a></li>
@@ -133,7 +133,7 @@
 
 												<td class="image-prod">
 													<div class="img-cart">
-														
+
 														<img src="/sharpimg/<%= product.productId.images.image1%>"
 															alt="" class="w-100 h-100">
 													</div>
@@ -161,7 +161,31 @@
 															</td>
 															<% } %>
 
-																<td class="price">₹<%=product.productId.price%>
+																
+
+																		<% if (!product.productId.offer) { %>
+
+
+																			<td class="price">₹<%=product.productId.price%></td>
+
+																				<% } else { %>
+
+																				<td class="price">₹<%=product.productId. discountedPrice%></td>
+
+
+						
+																							<% } %>
+																
+
+
+
+
+
+
+
+
+
+
 																</td>
 
 																<td class="quantity w-0">
@@ -173,7 +197,7 @@
 																				<i class="ion-ios-remove"></i>
 																			</button>
 																		</span>
-																		<input type="number" name="quantity" readonly 
+																		<input type="number" name="quantity" readonly
 																			class="quantity form-control input-number"
 																			value="<%=product.count %>">
 																		<span class="input-group-btn ml-2">
@@ -186,22 +210,7 @@
 																		</span>
 																	</div>
 
-																	
 
-																	<!-- <div class="input-group mb-3 d-flex">
-																		<button class="input-btn decrease-quantity" type="button" onclick=" decreasequantity('<%=product.productId._id %>','<%=product.productId.price %>','<%= product.productId.quantity %>')">-</button>
-																		<input  type="number" name="quantity" disabled 
-																			class="quantity form-control input-number" value="1" min="1" maxlength="5" id="quantity-display<%=product.productId._id %>"
-																			max="5">
-				
-																			<button class="input-btn increase-quantity" onclick="increasequantity('<%=product.productId._id%>','<%=product.productId.price %>','<%= product.productId.quantity %>')">+</button>
-																	</div> -->
-
-																	<!-- <div class="input-group mb-3 d-flex">
-																		<button class="input-btn decrease-quantity" type="button" onclick="decreasequantity('<%=product.productId._id %>','<%=product.productId.price %>','<%= product.productId.quantity %>')">-</button>
-																		<input type="number" name="quantity" class="quantity form-control input-number" value="1" min="1" max="<%= product.productId.quantity %>">
-																		<button class="input-btn increase-quantity" type="button"  onclick="increasequantity('<%=product.productId._id%>','<%=product.productId.price %>','<%= product.productId.quantity %>')">+</button>
-																	</div> -->
 
 																</td>
 
@@ -218,69 +227,69 @@
 									</tbody>
 								</table>
 							</div>
-							
+
 				</div>
 			</div>
 
-				<div class="row justify-content-start">
-					<div class="col col-lg-3  col-md-6 mt-5 cart-wrap"></div>
-					<div class="col col-lg-6 col-md-6 mt-5 cart-wrap">
-						<div class="cart-total mb-3">
-							<h3>Cart Totals</h3>
-							<p class="d-flex">
-								<span>Subtotal</span>
-								<span id="subtotel-amount">
+			<div class="row justify-content-start">
+				<div class="col col-lg-3  col-md-6 mt-5 cart-wrap"></div>
+				<div class="col col-lg-6 col-md-6 mt-5 cart-wrap">
+					<div class="cart-total mb-3">
+						<h3>Cart Totals</h3>
+						<p class="d-flex">
+							<span>Subtotal</span>
+							<span id="subtotel-amount">
 
-									
-			
-									<% let subtotel = 0 %>
 
-									<% for (let j = 0; j < cartData.products.length; j++) { %>
-										<% subtotel += cartData.products[j].totalPrice %>
-									<% } %>
-									
-									₹ <%= subtotel %>
-									
 
-								</span>
-							</p>
-							
-							<p class="d-flex">
-								<span>Delivery</span>
-								<span>₹0.00</span>
-							</p>
-							<p class="d-flex">
-								<span>Discount</span>
-								<span>₹0.00</span>
-							</p>
-							<hr>
+								<% let subtotel=0 %>
 
-							<p class="d-flex total-price">
-								<span>Total</span>
-								<!-- <span>$17.60</span> -->
-								<span id="subtotel-amount">
-									
-									<% let totalprice=0 %>
-
-									<% for (let i=0; i < cartData.products.length; i++) { %>
-										<% totalprice += cartData.products[i].totalPrice %>
+									<% for (let j=0; j < cartData.products.length; j++) { %>
+										<% subtotel +=cartData.products[j].totalPrice %>
 											<% } %>
 
-											₹<%= totalprice%>
-								</span>
-							</p>
-						</div>
+												₹ <%= subtotel %>
 
-						
 
-						<p class="text-center"><a href="/checkout" class="btn btn-primary py-3 px-4">Proceed to
-								Checkout</a></p>
+							</span>
+						</p>
+
+						<p class="d-flex">
+							<span>Delivery</span>
+							<span>₹0.00</span>
+						</p>
+						<p class="d-flex">
+							<span>Discount</span>
+							<span>₹0.00</span>
+						</p>
+						<hr>
+
+						<p class="d-flex total-price">
+							<span>Total</span>
+							<!-- <span>$17.60</span> -->
+							<span id="subtotel-amount">
+
+								<% let totalprice=0 %>
+
+									<% for (let i=0; i < cartData.products.length; i++) { %>
+										<% totalprice +=cartData.products[i].totalPrice %>
+											<% } %>
+
+												₹<%= totalprice%>
+							</span>
+						</p>
 					</div>
+
+
+
+					<p class="text-center"><a href="/checkout" class="btn btn-primary py-3 px-4">Proceed to
+							Checkout</a></p>
 				</div>
-				<div class="col col-lg-3  col-md-6 mt-5 cart-wrap"></div>
+			</div>
+			<div class="col col-lg-3  col-md-6 mt-5 cart-wrap"></div>
 
 
-				<%}%>
+			<%}%>
 
 		</div>
 	</section>
@@ -374,7 +383,7 @@
 				stroke="#F96D00" />
 		</svg></div>
 
-		
+
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-migrate-3.0.1.min.js"></script>
 	<script src="js/popper.min.js"></script>

@@ -230,7 +230,19 @@
 											style="color: #bbb;">Sold</span></a>
 								</p>
 							</div>
-							<p class="price"><span>₹<%=product.price%></span></p>
+
+							<% if (!product.offer) { %>
+
+
+								<p class="price"><span>₹<%=product.price%></span></p>
+
+									<% } else { %>
+
+									<p class="price"><span>₹<%=product. discountedPrice%></span></p>
+
+
+
+												<% } %>
 							<p>
 								<b>
 									<%=product.description%>
@@ -285,7 +297,7 @@
 								<a href="/login" class="btn btn-black py-3 px-5 mr-2">Add to Cart</a>
 							<%}%>
 
-							<%if(cartdata.length>=0){%>
+							<%if(cartdata){%>
 								<a href="/checkout" class="btn btn-primary py-3 px-5">Buy now</a></p>
 							<%}else{%>
 								<a href="/cart" class="btn btn-primary py-3 px-5">Buy now</a></p>

@@ -17,9 +17,21 @@ const product = require("../model/productSchema");
 const cart = async (req, res) => {
     try {
         if (req.session.user_id) {
-            console.log("here");
             const userId = req.session.user_id;
-            const cartData = await cartSchema.findOne({ user: userId }).populate('products.productId');
+
+            const cartData = await cartSchema.findOne({ user: userId }).populate({
+                path: 'products.productId',
+                populate: {
+                    path: 'category',
+                    populate: {
+                        path: 'offer'
+                    }
+                },
+                populate: {
+                    path: 'offer'
+                }
+            });
+
             console.log("ok set", cartData);
             res.render('cart', { cartData });
         } else {
@@ -37,15 +49,49 @@ const cart = async (req, res) => {
 
 const getcart = async (req, res) => {
     try {
-        console.log("what is this happend");
         const userId = req.session.user_id;
         console.log(userId)
         const productId = req.body.productId;
         console.log(productId);
 
-        const productdata = await productSchema.findById(productId);
+        const productdata = await productSchema.findById(productId).populate({
+            path: 'category',
+            populate: {
+                path: 'offer'
+            }
+        })
+            .populate({
+                path: 'offer'
+            })
+
+            console.log(productdata,"ooooooooooooooooooooooooooooo")
+
+        let productprice
+
+
+        if (productdata.category.offer) {
+
+            productprice = productdata.discountedPrice;
+
+        } else if (productdata.offer) {
+             productprice = productdata.discountedPrice;
+
+
+            
+
+        } else {
+            console.log("normal")
+             productprice = productdata.price;
+        }
+
+
+
+
+
         const cartproduct = await cartSchema.findOne({ user: userId, 'products.productId': productId });
-        const productprice = productdata.price;
+        // const productprice = productdata.price;
+
+
         const productcount = productdata.quantity;
         console.log(cartproduct);
 
@@ -53,6 +99,20 @@ const getcart = async (req, res) => {
             res.json({ status: "cart already added" });
         }
         else {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             const data = {
                 productId: productId,
                 count: 1,
@@ -119,14 +179,56 @@ const updatecart = async (req, res) => {
         const userId = req.session.user_id;
         const productId = req.body.productId;
         const count = req.body.count;
-        const product = await productSchema.findById(productId);
-        const totalprice = product.price*count;
-        console.log("naaah",totalprice)
+        console.log(count, '1111111111111111111');
+
+
+
+
+        const product = await productSchema.findById(productId).populate({
+            path: 'category',
+            populate: {
+                path: 'offer'
+            }
+        })
+            .populate({
+                path: 'offer'
+            })
+
+
+        let totalprice
+
+
+        if (product.category.offer) {
+
+            console.log("count", count)
+            console.log("count", product.discountedPrice)
+
+
+
+            totalprice = product.discountedPrice * count;
+
+
+
+
+        } else if (product.offer) {
+            console.log("productoffer")
+            totalprice = product.discountedPrice * count;
+            console.log(product.discountedPrice, "productdiscountedPrice");
+
+
+
+
+        } else {
+            console.log("normal")
+            totalprice = product.price * count;
+        }
+
+        console.log(totalprice, 'tottll');
+
+
+
         const cartData = await cartSchema.findOne({ user: userId });
-        console.log(count)
-        console.log(totalprice);
-        console.log("kiki",product.quantity);
-        console.log("productoooo",product);
+
 
         if (count === -1) {
             const currentQuantity = cartData.products.find((p) => p.productId == productId).count;
@@ -140,11 +242,10 @@ const updatecart = async (req, res) => {
             if (currentQuantity + count > product.quantity) {
                 return res.json({ success: false, message: 'Stock limit reached' });
             }
+            console.log(currentQuantity, "ooooooooooooooooo000");
+
         }
 
-        console.log("userId", userId);
-        console.log("productId", productId);
-        console.log("currentQuantity", count);
 
         const updateuser = await cartSchema.findOneAndUpdate(
             { user: userId, 'products.productId': productId },

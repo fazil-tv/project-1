@@ -314,7 +314,7 @@ const shop = async (req, res) => {
         const page = req.query.page ? req.query.page : 1;
         const prevPage = page - 1;
         const totalDoc = await productSchema.countDocuments();
-        const product = await productSchema.find({}).populate('category').skip(prevPage * 4).limit(6)
+        const product = await productSchema.find({}).populate('category').populate('offer').skip(prevPage * 4).limit(6)
 
 
 
@@ -344,7 +344,7 @@ const singleproduct = async (req, res) => {
     try {
         const productId = req.query.id;
         console.log(productId);
-        const product = await productSchema.findOne({ _id: productId }).populate('category');
+        const product = await productSchema.findOne({ _id: productId }).populate('category').populate('offer');
         console.log(product);
 
         const cartdata = await cartSchema.findOne({user: req.session.user_id})

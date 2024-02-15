@@ -768,10 +768,19 @@ b {
 .applyoffer{
   border: none;
   border-radius: 5px;
-  color: white;
-  background-color: #c6c245;
+  color: #087990;
+  background-color: #cff4fc;
+  border-color: #b6effb;
  
 }
+.removeoffer{
+  border: none;
+  border-radius: 5px;
+  color: #98530c;
+  background-color: #ffe8d0;
+  border-color: #fedcb9;
+}
+ 
 
 .block-user{
   color: white;
