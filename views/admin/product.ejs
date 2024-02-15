@@ -205,7 +205,12 @@
 
                                                 <% if (!product[i].offer) { %>
                                                     <%= product[i].price %>
-                                                        <% } else { %>
+                                                        <% } else if(product[i].category.offer){%>
+                                                            <del>₹<%= product[i].price %></del><br>₹
+                                                            <%=product[i].discountedPrice %>
+                                                                
+
+                                                       <% }else { %>
                                                             <del>₹<%= product[i].price %></del><br>₹
                                                             <%=product[i].discountedPrice %>
                                                                 <% } %>
@@ -215,32 +220,40 @@
                                         </td>
                                         <td>
                                             <% if (product[i].offer) { %>
-                                                <%= product[i].offer.discountAmount %>
-                                                    <% } else { %>
+                                                <p class="badge rounded-pill alert-success">
+                                                <%= product[i].offer.discountAmount %>% offer 
+                                                </p>
+                                                    <% }else if(product[i].category.offer){%>
+                                                        <p class="badge rounded-pill alert-success">
+                                                            <%= product[i].category.offer.discountAmount %>%
+                                                                offer
+                                                        </p>
+                                                    <%} else { %>
                                                         N/A
                                                         <% }%>
                                         </td>
-                                        <td>
+                                        <td class="justify-content-center text-center">
 
                                             <b>
-                                                <%if (product[i]. category.offer){%>
-                                                    <p class="badge rounded-pill alert-success">
-                                                        <%= product[i].category.offer.discountAmount %>%
-                                                            offer
+                                                <%if (product[i].category.offer){%>
+                                                    <p class="badge alert-dark">
+                                                                category offer applied                                                        
                                                     </p>
 
                                                 <% }else if(product[i].offer){ %>
+                                                    <p class="badge  alert-dark">
+                                                        Product offer applied                                                        
+                                            </p>
                                                     <a><button type="button" class="applyoffer"
                                                             onclick="removeoffer('<%=i%>')">Remove</button></a>
                                                     <input type="hidden" value='<%= product[i]._id %>'
                                                         id="hiddenproductId<%=i%>">
+                                                     
                                                     <%}else{%>
                                                         <a><button type="button" class="applyoffer"
                                                                 onclick="showofferModal('<%=i%>')"> APPLY</button></a>
                                                         <input type="hidden" value='<%= product[i]._id %>'
                                                             id="hiddenproductId<%=i%>">
-
-
                                                         <%}%>
                                             </b>
                                         </td>

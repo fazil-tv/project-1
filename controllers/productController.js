@@ -17,20 +17,32 @@ const Product = async (req, res) => {
     try {
 
         const product = await productSchema.find({}).populate('offer').populate({
-            path: 'category', populate:{
-                path:'offer'
+            path: 'category', populate: {
+                path: 'offer'
             }
-          });
+        });
 
         console.log(product, "product");
         const offer = await offerSchema.find({});
 
         product.forEach(async (product) => {
-            if (product.offer) {
-                console.log(product, product.price,"productprice",product.offer.discountAmount ,"discountedPrice")
+            console.log(product.category,"products")
+
+            if (product.category.offer) {
+                console.log(product.category.offer,"products")
+                const discountedPrice = product.price * (1 - product.category.offer.discountAmount / 100);
+
+                product.discountedPrice = parseInt(discountedPrice);
+                product.offer = product.category.offer
+                await product.save();
+
+            } else if (product.offer) {
+                console.log(product, product.price, "productprice", product.offer.discountAmount, "discountedPrice")
                 const discountedPrice = product.price * (1 - product.offer.discountAmount / 100);
                 product.discountedPrice = parseInt(discountedPrice);
                 await product.save();
+
+
             }
         })
 
