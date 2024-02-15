@@ -8,6 +8,7 @@ const productController = require('../controllers/productController')
 const categoryController = require('../controllers/categoryController');
 const bannerController = require('../controllers/bannerController');
 const couponController = require("../controllers/couponController");
+const offerController = require('../controllers/offerController');
 
 const multer = require("../middlewares/multer");
 const auth = require('../middlewares/authAdmin')
@@ -103,8 +104,17 @@ adminRoute.post('/salesreport', auth.isLogin, adminController.salesreport);
 
 
 
+adminRoute.get('/offer', auth.isLogin, offerController.offer);
+adminRoute.get('/addoffer', auth.isLogin, offerController.addoffer);
+adminRoute.post('/addoffer', auth.isLogin, offerController.postoffer);
+adminRoute.delete('/removeoffer', auth.isLogin, offerController.deletoffer);
+adminRoute.post('/applyoffer', auth.isLogin, offerController.applyoffer);
 
 
+
+adminRoute.post('/categoryofferapply', auth.isLogin, offerController.applycategoryoffer);
+adminRoute.patch('/removeoffer', auth.isLogin, offerController.removeoffer);
+adminRoute.patch('/removecategoryoffer', auth.isLogin, offerController.removecategoryoffer);
 
 
 

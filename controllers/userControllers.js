@@ -263,7 +263,7 @@ const blog = async (req, res) => {
 // indexhome
 const indexhome = async (req, res) => {
     try {
-        const product = await productSchema.find({}).populate('category')
+        const product = await productSchema.find({}).populate('category').populate('offer');
 
         const bannerData = await bannerSchema.find({});
 

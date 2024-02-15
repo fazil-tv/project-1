@@ -63,7 +63,7 @@ const orders = async (req, res) => {
         const prevPage = page - 1;
 
 
-        console.log(page,"$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        console.log(page, "$$$$$$$$$$$$$$$$$$$$$$$$$$");
 
         const totalDoc = await orderSchema.countDocuments();
         const cartData = await orderSchema.find({}).populate('products.productId').skip(prevPage * 4).limit(6);
@@ -72,7 +72,7 @@ const orders = async (req, res) => {
         // const orderId = await orderSchema.countDocuments() + id;
         console.log(cartData, 'hghfg');
         console.log(totalDoc, 'hghfg%%%%%%');
-        res.render("orders", { cartData , totalDoc,page});
+        res.render("orders", { cartData, totalDoc, page });
     } catch (error) {
         console.log(error.message);
     }
@@ -94,7 +94,7 @@ const orderdetaile = async (req, res) => {
             { 'address._id': deliveryAddressObjectId },
             { 'address.$': 1 }
         );
-        console.log(userAddress,"userAddress");
+        console.log(userAddress, "userAddress");
 
 
         res.render("detaile", { userAddress, orders });
@@ -212,7 +212,7 @@ const loaddashbord = async (req, res) => {
     const graphValue = Array(12).fill(0);
 
     montlyrevenue.forEach(entry => {
-        const monthIndex = entry._id - 1; 
+        const monthIndex = entry._id - 1;
         graphValue[monthIndex] = entry.monthlyrevenue;
     });
 
@@ -352,7 +352,7 @@ const sales = async (req, res) => {
                     }
                 }
             ]);
-            
+
 
             console.log(orderData, "11111111");
 
@@ -718,6 +718,13 @@ const salesreport = async (req, res) => {
 }
 
 
+
+
+
+
+
+
+
 module.exports = {
     adminverifyLogin,
     signup,
@@ -727,7 +734,7 @@ module.exports = {
     blockUser,
     unblockUser,
     logout,
-    orders,
+    orders, 
     orderdetaile,
     updatestatus,
     sales,

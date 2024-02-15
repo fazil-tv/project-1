@@ -2,6 +2,7 @@ const productSchema = require("../model/productSchema");
 const userSchema = require("../model/userSchema");
 const categorySchema = require("../model/categoryModel");
 const wishlistSchema = require("../model/wishlistModel");
+const offerSchema = require('../model/offerModel');
 
 const path = require("path")
 
@@ -11,15 +12,29 @@ const sharp = require('sharp');
 const { id } = require("schema/lib/objecttools");
 
 
-
-
-
 // product
 const Product = async (req, res) => {
     try {
-        const users = await productSchema.find({}).populate('category');
-        console.log(users);
-        res.render("product", { product: users });
+
+        const product = await productSchema.find({}).populate('offer').populate({
+            path: 'category', populate:{
+                path:'offer'
+            }
+          });
+
+        console.log(product, "product");
+        const offer = await offerSchema.find({});
+
+        product.forEach(async (product) => {
+            if (product.offer) {
+                console.log(product, product.price,"productprice",product.offer.discountAmount ,"discountedPrice")
+                const discountedPrice = product.price * (1 - product.offer.discountAmount / 100);
+                product.discountedPrice = parseInt(discountedPrice);
+                await product.save();
+            }
+        })
+
+        res.render("product", { product: product, offer });
     } catch (error) {
         console.log(error.message);
     }
@@ -46,9 +61,7 @@ const addProductspost = async (req, res) => {
 
     try {
         const requestData = req.body;
-        console.log(requestData);
         const uploadedFiles = req.files;
-        console.log("check:", uploadedFiles);
 
         const img = [
             uploadedFiles && uploadedFiles.image1 ? uploadedFiles.image1[0].filename : null,
@@ -212,7 +225,7 @@ const productsearching = async (req, res) => {
         const page = req.query.page ? req.query.page : 1;
         const prevPage = page - 1;
         const Wishlist = await wishlistSchema.findOne({ user: req.session.user_id });
-    
+
 
 
 
@@ -223,13 +236,13 @@ const productsearching = async (req, res) => {
         }).skip(prevPage * 4).limit(6);
 
         if (productData) {
-            res.render('shop', { product: productData, category: categoryData, userId, searchQuery, totalDoc, page, prevPage,Wishlist})
+            res.render('shop', { product: productData, category: categoryData, userId, searchQuery, totalDoc, page, prevPage, Wishlist })
 
 
-        }else{
+        } else {
             const message = "product not find";
-            res.render('shop', { product: productData, category: categoryData, userId, searchQuery, totalDoc, page, prevPage,message,Wishlist});
-            
+            res.render('shop', { product: productData, category: categoryData, userId, searchQuery, totalDoc, page, prevPage, message, Wishlist });
+
         }
 
 
@@ -276,7 +289,7 @@ const productfilter = async (req, res) => {
                 price: { $gte: fromprice, $lte: toprice }
             }).sort({ price: sort === 0 ? 1 : -1 }).skip(prevPage * 4).limit(6);
 
-            res.render('shop', { product: productData, category: categoryData, userId, totalDoc, searchQuery, page, prevPage, Wishlist})
+            res.render('shop', { product: productData, category: categoryData, userId, totalDoc, searchQuery, page, prevPage, Wishlist })
 
         } else {
             console.log("me ");
@@ -287,7 +300,7 @@ const productfilter = async (req, res) => {
             }).sort({ price: sort === 0 ? 1 : -1 }).skip(prevPage * 4).limit(6);
             console.log(productData)
 
-            res.render('shop', { product: productData, category: categoryData, userId, totalDoc,searchQuery, page, prevPage ,Wishlist})
+            res.render('shop', { product: productData, category: categoryData, userId, totalDoc, searchQuery, page, prevPage, Wishlist })
         }
 
 

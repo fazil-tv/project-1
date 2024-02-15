@@ -971,21 +971,21 @@ function checkouteditaddress() {
 
 
 
-   
-    function validateForm(event) {
+
+function validateForm(event) {
+    event.preventDefault();
+
+    const paymentMethod = document.querySelector('input[name="payment"]:checked');
+
+    if (!paymentMethod) {
+        document.getElementById("inputid").style.display = "block";
         event.preventDefault();
-     
-        const paymentMethod = document.querySelector('input[name="payment"]:checked');
-
-        if (!paymentMethod) {
-            document.getElementById("inputid").style.display = "block";
-            event.preventDefault();
-        }else{
-            checkoutpost()
-        }
-      
-
+    } else {
+        checkoutpost()
     }
+
+
+}
 
 
 
@@ -1403,6 +1403,241 @@ function removecoupon(x) {
 
         })
 }
+
+
+
+// couponapply
+
+
+
+function offerapply(x) {
+    const offerId = x;
+    const productId = document.getElementById(`hiddenproductId${index}`).value;
+    console.log(productId,"productid");
+    fetch('/admin/applyoffer', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            offerId,
+            productId
+        })
+    })
+  
+        .then(response => response.json())
+        .then(data => {
+
+            if (data.status === "applid") {
+
+                Swal.fire({
+                    title: "Success",
+                    text: "offer added successfully!",
+                    icon: "success",
+                    confirmButtonText: "OK",
+
+                });
+
+                // $('#relodedives').load('/checkout #relodedives');
+                // $('#checkrelodedives').load('/checkout #checkrelodedives');
+
+
+            }
+            window.location.reload();
+
+        }).catch(error => {
+            console.log(error);
+
+        })
+}
+
+
+// removeoffer
+
+function removeoffer(i) {
+    let index;
+    index = i;
+    const productId = document.getElementById(`hiddenproductId${index}`).value;
+    console.log(productId);
+    fetch('/admin/removeoffer', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            productId
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+
+            if (data.status === "applid") {
+
+                Swal.fire({
+                    title: "Success",
+                    text: "offer added successfully!",
+                    icon: "success",
+                    confirmButtonText: "OK",
+
+                });
+
+                // $('#relodedives').load('/checkout #relodedives');
+                // $('#checkrelodedives').load('/checkout #checkrelodedives');
+
+
+            }
+            window.location.reload();
+
+        }).catch(error => {
+            console.log(error);
+
+        })
+}
+
+
+
+function removecoupon(x) {
+    const couponId = x;
+    console.log(couponId);
+    fetch('/removecoupons', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            couponId
+
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+
+
+            if (data.status) {
+
+                Swal.fire({
+                    title: "Coupon removed",
+                    icon: "success",
+                    confirmButtonText: "OK",
+
+                })
+
+                $('#relodedives').load('/checkout #relodedives');
+
+                $('#checkrelodedives').load('/checkout #checkrelodedives');
+
+            } else {
+                Swal.fire({
+                    title: "Error removing coupon",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                });
+
+
+
+
+            }
+
+            // window.location.reload();
+
+
+
+
+        }).catch(error => {
+            console.log(error);
+
+        })
+}
+
+
+
+// categoryofferapply
+
+function categoryofferapply(x) {
+   
+    const offerId = x;
+    const categoryId = document.getElementById(`hiddencategoryid${index}`).value;
+
+    fetch('/admin/categoryofferapply', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            offerId,
+            categoryId
+        })
+    })
+  
+        .then(response => response.json())
+        .then(data => {
+
+            if (data.status === "applid") {
+
+                Swal.fire({
+                    title: "Success",
+                    text: "offer added successfully!",
+                    icon: "success",
+                    confirmButtonText: "OK",
+
+                });
+
+            }
+            window.location.reload();
+
+        }).catch(error => {
+            console.log(error);
+
+        })
+}
+
+
+// cancel offer
+
+function removecategoryoffer(x) {
+    let index;
+    index = x;
+    const categoryId = document.getElementById(`hiddencategoryid${index}`).value;
+
+    fetch('/admin/removecategoryoffer', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            categoryId
+        })
+    })
+  
+        .then(response => response.json())
+        .then(data => {
+
+            if (data.status === "applid") {
+
+                Swal.fire({
+                    title: "Success",
+                    text: "offer added successfully!",
+                    icon: "success",
+                    confirmButtonText: "OK",
+
+                });
+
+            }
+            window.location.reload();
+
+        }).catch(error => {
+            console.log(error);
+
+        })
+}
+
+
+
+
+
+
+
+
 
 
 

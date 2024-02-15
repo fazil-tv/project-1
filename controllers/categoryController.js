@@ -1,14 +1,16 @@
 const productSchema = require("../model/productSchema");
 const categorySchema = require("../model/categoryModel");
+const offerSchema = require("../model/offerModel");
 
 
 
 // category
 const category = async (req, res) => {
     try {
-        const NewCategory = await categorySchema.find({});
-        console.log(" NewCategory")
-        res.render("category", { NewCategory });
+        const NewCategory = await categorySchema.find({})
+        const offer = await offerSchema.find({});
+     
+        res.render("category", { NewCategory,offer});
     } catch (error) {
         console.log(error.message);
     }
@@ -41,7 +43,7 @@ const addCategoryPost = async (req, res) => {
         if (validData) {
 
             res.json({status:"failed"})
-            // res.render('addcategory', { message: "this category is already added", })
+            // r es.render('addcategory', { message: "this category is already added", })
         } else {
             const NewCategory = new categorySchema({
                 name: name,

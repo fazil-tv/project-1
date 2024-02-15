@@ -73,7 +73,7 @@ const deletcoupon = async (req, res) => {
         console.log(couponId);
         const couponremoved = await couponSchema.deleteOne({ _id: couponId });
         res.json({ status: true });
-    } catch (error) {
+     } catch (error) {
         console.log(error);
     }
 }

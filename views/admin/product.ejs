@@ -82,14 +82,14 @@
                 </li>
                 <li class="menu-item ">
                     <a class="menu-link" href="/admin/banner">
-                       
+
                         <i class="icon fa-regular fa-object-group"></i>
                         <span class="text">Banner</span>
                     </a>
                 </li>
                 <li class="menu-item ">
                     <a class="menu-link" href="/admin/sales">
-                        
+
                         <i class="icon fa-solid fa-border-all"></i>
                         <span class="text">Sales</span>
                     </a>
@@ -122,21 +122,21 @@
                 <div class="content-header mt-2 mb-0">
                     <h2 class="content-title">Products</h2>
                 </div>
-                
+
             </div>
             <div class="col-nav">
                 <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"><i
                         class="material-icons md-apps"></i></button>
                 <ul class="nav">
-                    
-                    
-                    
+
+
+
                     <li class="dropdown nav-item">
                         <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount"
                             aria-expanded="false"> <img class="img-xs rounded-circle"
                                 src="/assets/imgs/people/avatar-2.png" alt="User" /></a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
-                            
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-danger" href="/admin/logout"><i
                                     class="material-icons md-exit_to_app"></i>Logout</a>
@@ -149,7 +149,7 @@
         <section class="content-main">
             <div class="">
                 <div class="content-header d-flex justify-content-center">
-                   
+
 
                 </div>
 
@@ -165,6 +165,7 @@
                                 <th scope="col" class="th-header">Category</th>
                                 <th scope="col" class="th-header">Price</th>
                                 <th scope="col" class="th-header">Offer</th>
+                                <th scope="col" class="th-header">applyoffer</th>
                                 <th scope="col" class="th-header">Edit</th>
                                 <th scope="col" class="th-header">Update</th>
                             </tr>
@@ -201,19 +202,55 @@
                                         </td>
                                         <td>
                                             <b>
-                                                <%= product[i].price %>
+
+                                                <% if (!product[i].offer) { %>
+                                                    <%= product[i].price %>
+                                                        <% } else { %>
+                                                            <del>₹<%= product[i].price %></del><br>₹
+                                                            <%=product[i].discountedPrice %>
+                                                                <% } %>
                                             </b>
                                         </td>
+
+                                        </td>
                                         <td>
+                                            <% if (product[i].offer) { %>
+                                                <%= product[i].offer.discountAmount %>
+                                                    <% } else { %>
+                                                        N/A
+                                                        <% }%>
+                                        </td>
+                                        <td>
+
                                             <b>
-                                                <%= product[i].offer %>
+                                                <%if (product[i]. category.offer){%>
+                                                    <p class="badge rounded-pill alert-success">
+                                                        <%= product[i].category.offer.discountAmount %>%
+                                                            offer
+                                                    </p>
+
+                                                <% }else if(product[i].offer){ %>
+                                                    <a><button type="button" class="applyoffer"
+                                                            onclick="removeoffer('<%=i%>')">Remove</button></a>
+                                                    <input type="hidden" value='<%= product[i]._id %>'
+                                                        id="hiddenproductId<%=i%>">
+                                                    <%}else{%>
+                                                        <a><button type="button" class="applyoffer"
+                                                                onclick="showofferModal('<%=i%>')"> APPLY</button></a>
+                                                        <input type="hidden" value='<%= product[i]._id %>'
+                                                            id="hiddenproductId<%=i%>">
+
+
+                                                        <%}%>
                                             </b>
                                         </td>
                                         <td>
                                             <b>
                                                 <a href="/admin/editproduct?id=<%=product[i]._id%>"><button
-                                                        class="Edit-category"> EDIT</button></a>
+                                                        class="Edit-category">EDIT</button></a>
+
                                             </b>
+
                                         </td>
                                         <td id="buttonContainer<%= product[i].id%>">
 
@@ -252,7 +289,10 @@
 
         </script> -->
 
-        <!-- Modal -->
+
+        <!-- block modal -->
+
+
         <section>
             <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
                 aria-hidden="true">
@@ -273,6 +313,62 @@
                     </div>
                 </div>
             </div>
+        </section>
+
+
+
+        <!-- Modal -->
+        <section>
+            <div class="modal fade" id="offerconfirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <% if (offer.length> 0) { %>
+                                <div class="row " style="justify-content: space-between;">
+                                    <% for (let i=0; i < offer.length; i++) { %>
+                                        <div class="col-md-6 mb-4 p-0 ">
+                                            <div class="card m-3">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">
+                                                        <%= offer[i].name %>
+                                                    </h5>
+                                                    <p class="card-text">Discount: <%= offer[i].discountAmount %>
+                                                    </p>
+                                                    <p class="card-text">Activation Date: <%=
+                                                            offer[i].activationDate.toLocaleDateString('en-US', {
+                                                            year:'numeric', month: 'short' , day: '2-digit'
+                                                            }).replace(/\//g, '-' ) %>
+                                                    </p>
+                                                    <p class="card-text">Expiry Date: <%=
+                                                            offer[i].expiryDate.toLocaleDateString('en-US', {
+                                                            year:'numeric', month: 'short' , day: '2-digit'
+                                                            }).replace(/\//g, '-' ) %>
+                                                    </p>
+
+                                                    <button class="btn Edit-category" onclick="offerapply('<%= offer[i]._id %>')">Apply</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                </div>
+                                <% } else { %>
+                                    <p class="text-center">No offers available</p>
+                                    <% } %>
+                        </div>
+        </section>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+        </div>
+        </div>
+        </div>
+        </div>
         </section>
 
         <script>
@@ -356,6 +452,39 @@
 
 
 
+
+        <script>
+            let index;
+            function showofferModal(i) {
+                index = i;
+                //button text changing
+                if (status == "true") {
+
+                    document.getElementById('mbid').innerText = 'unblock'
+                    document.getElementById('mbid').style.backgroundColor = '#ed6f56';
+
+                } else {
+                    document.getElementById('mbid').innerText = 'block'
+                    document.getElementById('mbid').style.backgroundColor = '#29A56C';
+                }
+                $('#offerconfirmationModal').modal('show');
+            }
+
+            function confirmBlockUser() {
+
+                const userId = $('#offerconfirmationModal').data('userId');
+                console.log(userId);
+                blockUser(userId)
+
+                $('#offerconfirmationModal').modal('hide');
+            }
+        </script>
+
+
+
+
+
+
         <!-- content-main end// -->
         <footer class="main-footer font-xs pt-5 ">
             <div class="row pb-30 pt-15">
@@ -377,6 +506,8 @@
             $('#tablePagination').DataTable();
         });
     </script>
+
+    <script src="/js/fetch.js"></script>
 
 
     <!-- <script src="assets/js/vendors/jquery-3.6.0.min.js"></script>

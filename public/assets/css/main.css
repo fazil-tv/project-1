@@ -765,6 +765,13 @@ b {
   background-color: #4e9de6;
  
 }
+.applyoffer{
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #c6c245;
+ 
+}
 
 .block-user{
   color: white;
