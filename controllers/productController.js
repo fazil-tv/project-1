@@ -96,7 +96,6 @@ const addProductspost = async (req, res) => {
                 quantity: requestData.quantity,
                 category: requestData.category,
                 price: requestData.price,
-                offer: requestData.offer,
                 description: requestData.description,
                 "images.image1": uploadedFiles.image1[0].filename,
                 "images.image2": uploadedFiles.image2[0].filename,
@@ -205,7 +204,6 @@ const editProductpost = async (req, res) => {
                 quantity: requestData.quantity,
                 category: requestData.category,
                 price: requestData.price,
-                offer: requestData.offer,
                 description: requestData.description,
                 images: {
                     image1: img[0],
