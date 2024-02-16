@@ -57,7 +57,6 @@
 					<li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
 					<li class="nav-item cta cta-colored"><a href="/cart" class="nav-link"><span
 								class="icon-shopping_cart"></span></a></li>
-
 				</ul>
 			</div>
 		</div>
@@ -80,12 +79,16 @@
 		<div class="container" id="checkout-relode">
 			<div class="row">
 				<div class="col-md-12 " id="cart-relod-divs">
-					<% if (wishlist===null||wishlist.product.length==0) { %>
+					<%console.log(wishlist,"wishlist")%>
+					<%console.log(wishlist.product,"wishlist")%>
+					<%console.log(wishlist,"wishlist")%>
+					
+					<% if (!wishlist || !wishlist.product || wishlist.product.length === 0) { %>
 						<div class="empty-cart">
 							<h5 class="empty-head ">empty Wishlist</h5>
 							<img src="/images/9960436.jpg" alt="" class="cart-img">
 							<p class="mt-3">your Wishlist is empty</p>
-							<a href="/indexhome" class="btn cart-btn"><span class="">fill your Wishlist</span></a>
+							<a href="/" class="btn cart-btn"><span class="">fill your Wishlist</span></a>
 						</div>
 						<%}else{%>
 							<div class="cart-list" id="cart-relod-div">
@@ -140,12 +143,32 @@
 															</td>
 															<% } %>
 
-																<td class="price">$<%=product.productId.price%>
+															
+
+																	<% if (!product.productId.offer) { %>
+
+
+																		<td class="price">₹<%=product.productId.price%></td>
+
+																			<% } else { %>
+
+																			<td class="price">₹<%=product.productId. discountedPrice%></td>
+
+
+					
+																						<% } %>
+
+
+
+
+
+
+
+
 																</td>
 
 																<td>
-																	<%=console.log("kkkkkkkkkkkkk",product.
-																	productId._id,"jjjjjjjjjjjjjjk")%>
+																	
 																	<p class="bottom-area d-flex px-3">
 																		<a type="button" class="add-to-cart text-center py-2 mr-1" onclick="addcart('<%=product.productId._id%>')"><span>Add to
 																				cart <i class="ion-ios-add ml-1"></i></span></a>

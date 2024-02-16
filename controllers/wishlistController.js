@@ -18,9 +18,22 @@ const wishlistSchema = require("../model/wishlistModel");
 const wishlist = async (req, res) => {
     try {
         if (req.session.user_id) {
-            console.log("here");
-            const wishlist = await wishlistSchema.findOne({}).populate('product.productId');
-            console.log(wishlist);
+            const wishlist1 = await wishlistSchema.find({user:req.session.user_id})
+            console.log(wishlist1,"mmmm");
+            const wishlist = await wishlistSchema.findOne({user:req.session.user_id}).populate({
+                path: 'product.productId',
+                populate: {
+                    path: 'category',
+                    populate: {
+                        path: 'offer'
+                    }
+                },
+                populate: {
+                    path: 'offer'
+                }
+            });
+    
+            console.log(wishlist,"wishliST ALL");
             res.render('wishlist', { wishlist });
         } else {
             console.log('not sesssion');
@@ -33,33 +46,24 @@ const wishlist = async (req, res) => {
 
 const getwishlist = async (req, res) => {
     try {
-        console.log("hmmmmm")
         if (req.session.user_id) {
             const productId = req.body.productId;
             const userId = req.session.user_id;
 
-
-            console.log(productId);
-
             const wishlistproduct = await wishlistSchema.findOne({ user: userId, 'product.productId': productId })
 
             if (wishlistproduct) {
-                console.log("kkkkkkkk")
                 const userId = req.session.user_id;
-
-
                 await wishlistSchema.findOneAndUpdate(
                     { user: userId, 'product.productId': productId },
                     { $pull: { 'product': { 'productId': productId } } }
                 );
-                console.log(wishlistSchema);
 
 
 
                 res.json({ status: true, productId: productId });
             } else {
 
-                console.log("lllllo", productId);
                 const data = {
                     productId: productId,
                 };
@@ -85,16 +89,13 @@ const getwishlist = async (req, res) => {
 
 const removewishlist = async (req, res) => {
     try {
-        console.log("klklklk")
 
         const productId = req.body.productId;
         const userId = req.session.user_id;
-        console.log(productId);
        const wishlist =   await wishlistSchema.findOneAndUpdate(
         { user: userId},
         { $pull: { 'product': { '_id': productId } } },{new:true});
 
-        console.log(wishlist,"hmmmmmmmmm");
 
             if(wishlist){
                 res.json({status:true})
