@@ -35,6 +35,7 @@
     <!-- fount awsome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 
 
@@ -86,7 +87,7 @@
         </div>
     </nav>
 
-	<div class="hero-wrap hero-bread" style="background-image: url('/images/about-heading.webp');">
+    <div class="hero-wrap hero-bread p-5" style="background-image: url('/images/about-heading.webp');">
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center">
                 <div class="col-md-9 ftco-animate text-center">
@@ -94,6 +95,39 @@
                     </p>
                     <h1 class="mb-0 bread">MY ACCOUNT</h1>
                 </div>
+
+                <div class="row justify-content-center mt-3 ">
+                    <div class="col-md-3">
+                        <div class="card  reffrel-code">
+                            <div class="card-body text-center ">
+                                <h5 class="card-title">Your Referral Code</h5>
+                                <p class="card-text">Share this code with your friends to earn rewards!</p>
+                                <div class="input-group mb-1">
+                                    <input type="text" class="form-control text-center reffrelcodevalue" value="http://localhost:5000/signup?referral=<%= user.refferel %>" readonly>
+                                    <div class="input-group-append">
+                                        <button class="btn " type="button"
+                                            onclick="copyToClipboard()"><i class="fa-solid fa-copy"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <style>
+                    .reffrel-code{
+                        background-color: #e7e7e735 !important;
+                    }
+                    .reffrelcodevalue{
+                        background-color: #e7e7e735!important;
+                        border: none !important;
+                        color: white !important;
+                        font-weight: 500 !important;
+                    }
+                    .card-text{
+                        color: #3e3e3e !important;
+                    }
+                </style>
             </div>
         </div>
     </div>
@@ -310,56 +344,59 @@
                                                     <th class="date ">Date</th>
                                                     <th class="total">Amount</th>
                                                     <th class="Payment">Payment</th>
-                                                
+
                                                     <th class="Payment"></th>
                                                     <th class="Payment"></th>
                                                 </tr>
                                             </thead>
-                                            <tbody> 
-                                              
-                                           
+                                            <tbody>
 
-                                                <% for (let i= orders.length-1; i>=0; i--) { %>
+
+
+                                                <% for (let i=orders.length-1; i>=0; i--) { %>
                                                     <tr>
                                                         <%if(orders[i].orderStatus!=="pending"){%>
-                                                            
-                                                      
-                                                        <td class="pl-2">
-                                                            <%=orders.length-i%>
-                                                        </td>
-                                                        <td>
-                                                            <%= orders[i].orderDate.toLocaleDateString('en-US', {
-                                                                weekday: 'short' , year: 'numeric' , month: 'short' ,
-                                                                day: 'numeric' }) %>
-                                                        </td>
-                                                        <td>
-                                                            <%= orders[i].subtotal %>
-                                                        </td>
-                                                        <td>
-                                                            <%= orders[i].payment %>
-                                                        </td>
-                                                        
-                                                        <td>
-                                                            <% if(orders[i].invoice){%>
-                                                            <a  href="/invoice?id=<%= orders[i]._id %>" class="" style="border: none; background-color: white; color: rgb(0, 0, 136);"><i class="fa-solid fa-download"></i></a>
-                                                            <p style="font-size: 9px ;">invoice</p>
-                                                            <%}%>
-                                                        </td>
-                                                        <td>
-                                                            <a href="/orderstatus?id=<%=orders[i]._id%>"
-                                                                style="color: black; font-size: 14px; text-decoration: none;"><b style="color: rgb(156, 6, 4);">Details</b></a>
-                                                        </td>
+
+
+                                                            <td class="pl-2">
+                                                                <%=orders.length-i%>
+                                                            </td>
+                                                            <td>
+                                                                <%= orders[i].orderDate.toLocaleDateString('en-US', {
+                                                                    weekday: 'short' , year: 'numeric' , month: 'short'
+                                                                    , day: 'numeric' }) %>
+                                                            </td>
+                                                            <td>
+                                                                <%= orders[i].subtotal %>
+                                                            </td>
+                                                            <td>
+                                                                <%= orders[i].payment %>
+                                                            </td>
+
+                                                            <td>
+                                                                <% if(orders[i].invoice){%>
+                                                                    <a href="/invoice?id=<%= orders[i]._id %>" class=""
+                                                                        style="border: none; background-color: white; color: rgb(0, 0, 136);"><i
+                                                                            class="fa-solid fa-download"></i></a>
+                                                                    <p style="font-size: 9px ;">invoice</p>
+                                                                    <%}%>
+                                                            </td>
+                                                            <td>
+                                                                <a href="/orderstatus?id=<%=orders[i]._id%>"
+                                                                    style="color: black; font-size: 14px; text-decoration: none;"><b
+                                                                        style="color: rgb(156, 6, 4);">Details</b></a>
+                                                            </td>
 
                                                     </tr>
                                                     <% } %>
-                                                    <%}%>
+                                                        <%}%>
                                             </tbody>
                                         </table>
                                         <% }else{ %>
                                             <p class="mt-5">no orders</p>
 
 
-                                        <%}%>
+                                            <%}%>
                                 </div>
                             </div>
 
@@ -394,18 +431,18 @@
 
                                     <div class="table-responsive border card w-100 text-center">
                                         <% if (user.walletHistory && user.walletHistory.length> 0) { %>
-                                        <table class="table ">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Date</th>
+                                            <table class="table ">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Date</th>
 
-                                                    <th scope="col">Amount</th>
-                                                    <th scope="col">Type</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                              
+                                                        <th scope="col">Amount</th>
+                                                        <th scope="col">Type</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
                                                     <% user.walletHistory.forEach(function(walletdata,index) { %>
 
                                                         <tr>
@@ -446,9 +483,9 @@
 
                                                         <% } else { %>
                                                             <p>no wallet history</p>
-                                                        <% } %>
-                                            </tbody>
-                                        </table>
+                                                            <% } %>
+                                                </tbody>
+                                            </table>
                                     </div>
 
 
@@ -465,7 +502,7 @@
 
 
             <!--   add address  modal section    -->
-            
+
 
             <section>
                 <div id="addaddressmodal" class="modal">
@@ -1046,12 +1083,38 @@
                 });
 
             });
+
+            // reffrel code copid 
+
+
+
+
+            function copyToClipboard() {
+                var referralCode = document.querySelector('.form-control');
+                referralCode.select();
+                document.execCommand('copy');
+            }
+
+
+
+
+
+
+
+
+
+
+
         </script>
         <!-- Latest version of jQuery -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
 

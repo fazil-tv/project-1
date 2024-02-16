@@ -236,14 +236,14 @@
 
                                             <b>
                                                 <%if (product[i].category.offer){%>
-                                                    <p class="badge alert-dark">
+                                                   <div> <p class="badge alert-dark">
                                                                 category offer applied                                                        
-                                                    </p>
+                                                    </p></div>
 
                                                 <% }else if(product[i].offer){ %>
-                                                    <p class="badge  alert-dark">
+                                                    <div class="mb-2"><p class="badge  alert-dark">
                                                         Product offer applied                                                        
-                                            </p>
+                                            </p></div>
                                                     <a><button type="button" class="removeoffer "
                                                             onclick="removeoffer('<%=i%>')">Remove</button></a>
                                                     <input type="hidden" value='<%= product[i]._id %>'
@@ -376,8 +376,7 @@
         </section>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-
+           
         </div>
         </div>
         </div>

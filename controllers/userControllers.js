@@ -46,6 +46,30 @@ const insertUser = async (req, res) => {
         // Check if the user already exists based on username or email
         const existingUser = await User.findOne({ $or: [{ username }, { email }, { mobilenumber }] });
 
+        const referral = req.query.referral;
+        if (referral) {
+
+            const existingreferral = await User.findOne({ refferel: referral })
+
+
+
+            if (existingreferral) {
+
+                const data = {
+                    amount: 1000,
+                    date: Date.now(),
+                }
+
+                const existingreferral = await User.findOneAndUpdate({ refferel: referral }, { $inc: { wallet: 1000 }, $push: { walletHistory: data } });
+
+
+
+            } else {
+                const message = "Invalid link"
+                return res.render('signup', { message });
+            }
+        }
+
         if (existingUser) {
             // User already exists
             const message = "User already exists"
@@ -59,17 +83,67 @@ const insertUser = async (req, res) => {
         const hashedpassword = await bcrypt.hash(req.body.password, 10);
         const hashedconfirmPassword = await bcrypt.hash(req.body.confirmPassword, 10);
 
+
+        // reffrel code creation
+
+        function generateRandomString() {
+            const letters = 'abcdefghijklmnopqrstuvwxyz';
+            const numbers = '0123456789';
+
+            let randomString = '';
+
+            for (let i = 0; i < 3; i++) {
+                const randomIndex = Math.floor(Math.random() * letters.length);
+                randomString += letters.charAt(randomIndex);
+            }
+
+            for (let i = 0; i < 7; i++) {
+                const randomIndex = Math.floor(Math.random() * numbers.length);
+                randomString += numbers.charAt(randomIndex);
+            }
+
+            randomString = randomString.split('').sort(() => Math.random() - 0.5).join('');
+
+            return randomString;
+        }
+        const couponnumber = generateRandomString()
+
+
+
         const user = new User({
             username: req.body.username,
             email: req.body.email,
             mobilenumber: req.body.mobilenumber,
             password: hashedpassword,
-            confirmPassword: hashedconfirmPassword
+            confirmPassword: hashedconfirmPassword,
+            refferel: couponnumber
 
         });
 
         // Save the new user
         const userData = await user.save();
+
+        if (referral) {
+          
+            const existingreferral = await User.findOne({ refferel: referral })
+
+
+            if (existingreferral) {
+
+                const data = {
+                    amount: 200,
+                    date: Date.now(),
+
+                };
+
+                await User.updateOne(
+                    { _id: userData._id },
+                    { $inc: { wallet: 200 }, $push: { walletHistory: data } }
+                );
+            }
+        }
+
+
         req.session.user_id = userData._id;
         const id = userData._id
         if (userData) {
@@ -110,6 +184,7 @@ let sendEmails = async (email, _id) => {
         };
 
         // Send the email
+        console.log("OTP", otp)
         const hashedOTP = await bcrypt.hash(otp, 10);
 
         await transporter.sendMail(mailOptions);
@@ -230,7 +305,7 @@ const verifyPost = async (req, res) => {
 
                 await Otp.deleteOne({ user_id: userId });
                 console.log("ok da kitty")
-                res.redirect(`/indexhome`);
+                res.redirect(`/`);
 
             }
         }
@@ -347,9 +422,9 @@ const singleproduct = async (req, res) => {
         const product = await productSchema.findOne({ _id: productId }).populate('category').populate('offer');
         console.log(product);
 
-        const cartdata = await cartSchema.findOne({user: req.session.user_id})
+        const cartdata = await cartSchema.findOne({ user: req.session.user_id })
         console.log(cartdata)
-        
+
         res.render("singleproduct", { product, user: req.session.user_id, cartdata });
     } catch (error) {
         console.log(error.message);

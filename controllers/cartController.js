@@ -64,7 +64,6 @@ const getcart = async (req, res) => {
                 path: 'offer'
             })
 
-            console.log(productdata,"ooooooooooooooooooooooooooooo")
 
         let productprice
 
@@ -75,9 +74,6 @@ const getcart = async (req, res) => {
 
         } else if (productdata.offer) {
              productprice = productdata.discountedPrice;
-
-
-            
 
         } else {
             console.log("normal")

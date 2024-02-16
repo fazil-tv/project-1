@@ -38,6 +38,9 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    refferel:{
+        type:String,
+    },
     walletHistory: [{
         date: {
             type: Date
