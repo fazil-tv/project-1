@@ -43,7 +43,6 @@ const cart = async (req, res) => {
         console.log(error)
     }
 
-    // res.render('cart',{cartproduct:cartproduct});
 }
 
 

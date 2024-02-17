@@ -121,9 +121,8 @@
                 <article class="icontext">
                     <div class="text">
                         <p class="mb-1">
-                            <%console.log(orders[0].totalPrice,"okeyyy")%>
                             <b>Order Info</b><br>
-                            Total Amount: ₹<%= orders[0].totalPrice %><br>
+                            Total Amount: ₹<%= totelorders.subtotal%><br>
                                 Payment:<%=totelorders.payment%><br>
                                     Payment Date:<%=totelorders.orderDate.toLocaleDateString('en-US', {
                                         weekday: 'short' , year: 'numeric' , month: 'short' , day: 'numeric' })%><br>
@@ -172,15 +171,36 @@
                             <td>
                                 <%= product.productId.name %>
                             </td>
-                            <td>₹<%= product.productId.price %>
-                            </td>
+                            <% if (!product.productId.offer) { %>
+
+
+                                <td>₹<%=product.productId.price%> </td>
+
+                                    <% } else { %>
+
+                                    <td class="price">₹<%=product.productId. discountedPrice%></td>
+                                                <% } %>
                             <td>
                                 <%= product.count %>
                             </td>
-                            <td>₹<%= product.totalPrice %>
-                            </td>
+                           
+
+                            <% if (!product.productId.offer) { %>
+
+
+                                <td>₹<%= product.totalPrice %> </td>
+
+                                    <% } else { %>
+
+                                    <td class="price">₹<%=product.productId. discountedPrice%></td>
+                                                <% } %>
+
+
+
+
+
                             <td>
-                                <%console.log(product. productstatus)%>
+                               
                                 <p><%= product. productstatus%></p>
                             </td>
                         </tr>

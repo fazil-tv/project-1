@@ -823,7 +823,20 @@ const invoice = async (req, res) => {
     try {
 
         const id = req.query.id;
-        const totelorders = await orderSchema.findOne({ _id: id }).populate('products.productId');
+        const totelorders = await orderSchema.findOne({ _id: id }).populate({
+            path: 'products.productId',
+            populate: {
+                path: 'category',
+                populate: {
+                    path: 'offer'
+                }
+            },
+            populate: {
+                path: 'offer'
+            }
+        });
+
+        console.log("totelorders",totelorders)
 
         const orders = totelorders.products.filter((val) => val.productstatus === 'Delivered');
 
