@@ -217,7 +217,7 @@
                         <!-- col// -->
                         <div class="col-md-4">
                             <article class="icontext align-items-start">
-                                <span class="icon icon-sm rounded-circle bg-primary-light">
+                                <span class="icon icon-sm rounded-circle bg-primary-light " style="margin-right: 10px !important;">
                                     <i class="text-primary material-icons md-local_shipping"></i>
                                 </span>
                                 <div class="text">
@@ -355,8 +355,9 @@
                                                                                             !=='Delivered' ){%>
                                                                                                 <select class="form-select d-inline-block mb-lg-0 mr-5 mw-200" id="<%= orders._id + product._id %>" <%= (product.productstatus === "canceled" || product.productstatus === "return") ? 'disabled' : '' %> onchange="changeProductStatus('<%= orders._id %>','<%= product._id %>')">
                                                                                                     <option value="placed" <%= (product.productstatus === 'placed') ? 'selected' : '' %>>Placed</option>
-                                                                                                    <option value="Out for Delivery" <%= (product.productstatus === 'Out for Delivery') ? 'selected' : '' %>>Out for Delivery</option>
+                                   
                                                                                                     <option value="Shipped" <%= (product.productstatus === 'Shipped') ? 'selected' : '' %>>Shipped</option>
+                                                                                                    <option value="Out for Delivery" <%= (product.productstatus === 'Out for Delivery') ? 'selected' : '' %>>Out for Delivery</option>
                                                                                                     <option value="Delivered" <%= (product.productstatus === 'Delivered') ? 'selected' : '' %>>Delivered</option>
                                                                                                 </select>
                                                                                                 

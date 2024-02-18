@@ -157,8 +157,8 @@
 
             <div class="content-header" style="justify-content: end">
 
-                <div class="d-flex ">
-                    <a href="/admin/addcategory" class="btn btn-secondary"><i
+                <div class="d-flex justify-content-center">
+                    <a href="/admin/addcategory" class="btn btn-primary"><i
                             class="text-muted material-icons md-post_add"></i>Add
                         Category</a>
                 </div>
@@ -199,27 +199,28 @@
                                     </td>
 
 
-
-
                                     <td>
                                         <b>
                                             <%= NewCategory[i].is_list%>
-                                        </b>
+                                        </b> 
                                     </td>
                                     <td>
                                         <b>
                                             <% if(NewCategory[i].offer){ %>
-                                                <a><button type="button" class="removeoffer"
+                                                <a>
+                                                    <button type="button" class="removeoffer"
                                                         onclick="removecategoryoffer('<%=i%>')">Remove</button></a>
                                                 <input type="hidden" value='<%= NewCategory[i]._id %>'
                                                     id="hiddencategoryid<%=i%>">
                                                 <%}else{%>
-                                                    <a><button type="button" class="applyoffer"
-                                                            onclick="showofferModal('<%=i%>')"> APPLY</button></a>
+                                                    <a>
+                                                        <button type="button" class="applyoffer"
+                                                            onclick="showofferModal('<%=i%>')"> APPLY</button>
+                                                    </a>
                                                     <input type="hidden" value='<%= NewCategory[i]._id %>'
                                                         id="hiddencategoryid<%=i%>">
 
-
+ 
                                                     <%}%>
                                         </b>
                                     </td>
@@ -229,6 +230,7 @@
                                             <button class="Edit-category"
                                                 onclick="confirmationeditModal('<%= NewCategory[i].name %>',' <%= NewCategory[i].discription %>')">EDIT
                                             </button>
+                                            
                                         </b>
                                     </td>
 
@@ -439,9 +441,7 @@
                         document.getElementById('edit-category-desc').textContent = '';
                         if (categoryname && editdiscription) {
 
-                            // const categoryRegex = /^[a-zA-Z0-9]+\s*[a-zA-Z0-9]*$/;
-                            // const isValid = categoryRegex.test(categoryName);
-
+                        
 
                             const validateCategoryName = (categoryname) => {
                                 const categoryRegex = /^[a-zA-Z0-9]+\s*[a-zA-Z0-9]*$/;
@@ -478,8 +478,7 @@
 
 
                 function blockCategory(categoryId) {
-                    console.log("kkkk");
-                    console.log("category is :", categoryId);
+              
                     const blockButton = document.getElementById(`blockButton${categoryId}`);
                     let text = blockButton.innerHTML;
                     if (text === 'block') {
@@ -547,8 +546,7 @@
 
                 function confirmationeditModal(catname, catdisc) {
 
-                    // $('#confirmationeditModal').data('categoryId', categoryId);
-                    // console.log("chexk:", categoryId);
+               
                     $('#confirmationeditModal').modal('show');
 
 
@@ -559,17 +557,15 @@
                 }
 
                 function confirmEditCategory(categoryname) {
-                    // const categoryId = $('#confirmationeditModal').data('categoryId');
-                    // console.log("what od")
-                    // console.log('check edit catogery'.categoryId);
+              
                     editcategory(categoryname);
                 }
 
                 function editcategory(categoryname) {
                     const id = document.getElementById('hiddenid').value;
-                    console.log("%%%%%%%%%%%", id);
+                 
 
-                    console.log("hi", categoryname);
+                    
 
                     const editcategoryname = document.getElementById('editcategoryname').value;
                     const editcategorydesc = document.getElementById('editcategorydescription').value;
@@ -616,11 +612,11 @@
 
 
 
-            <div class="d-flex justify-content-center">
+            <!-- <div class="d-flex justify-content-center">
                 <a href="/admin/addcategory" class="btn btn-primary"><i
                         class="text-muted material-icons md-post_add"></i>Add
                     Category</a>
-            </div>
+            </div> -->
 
         </section>
 

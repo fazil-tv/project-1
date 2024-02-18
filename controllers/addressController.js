@@ -34,7 +34,7 @@ const adaddress = async (req, res) => {
 
 
     } catch (error) {
-        console.log(error)
+        res.status(500).render('500');
     }
 
 }
@@ -66,7 +66,7 @@ const editaddress = async (req, res) => {
         })
         res.json({status:"editaddress success",editaddress})
     } catch (error) {
-        console.log(error);
+        res.status(500).render('500');
 
     }
 
@@ -83,7 +83,7 @@ const deletaddress = async (req,res)=>{
         res.json({add:true});
 
     } catch (error) {
-        console.log(error);
+        res.status(500).render('500');
     }
 }
 

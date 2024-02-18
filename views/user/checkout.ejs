@@ -97,7 +97,7 @@
 								<div class="row ">
 									<% address.address.forEach(function (address,index) { %>
 										<%console.log(address._id,'asdfghjk')%>
-											<div class="addressdiv col-lg-5 pb-4 mt-4 justify-content-between mr-4">
+											<div class="addressdiv col-lg-5 pb-4 mt-4 justify-content-between mr-4 ">
 												<input type="radio" id="selectedAddress" name="selectedAddress"
 													value="<%= address._id %>" <% if (index===0) { %>checked<% } %>
 													required>

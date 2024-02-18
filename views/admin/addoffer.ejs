@@ -99,21 +99,12 @@
                         <span class="text">Offer</span>
                     </a>
                 </li>
-                <li class="menu-item active">
-                    <a class="menu-link" href="/admin/offer">
-
-                        <i class="icon fa-solid fa-tags"></i>
-                        <span class="text">Offer</span>
-                    </a>
-                </li>
-
                 <li class="menu-item has-submenu">
                     <a class="menu-link" href="#">
                         <i class="icon material-icons md-person"></i>
                         <span class="text">Account</span>
                     </a>
                 </li>
-
             </ul>
             <hr />
             <ul class="menu-aside">
@@ -190,7 +181,7 @@
                                     
                                     <div class="mb-4 col-lg-6">
                                         <label class="form-label" id="labelu">Discount Percentage</label>
-                                        <input type="text" name="DiscountPercentage" placeholder="Type here"
+                                        <input type="number" name="DiscountPercentage" placeholder="Type here"
                                             class="form-control " id="DiscountPercentage" />
                                         <p id="DiscountPercentage-e" style="text-align: center; color: red;"></p>
 
@@ -267,7 +258,7 @@
         }
 
         
-        if (DiscountPercentage <= 1 || DiscountPercentage > 100 ) {
+        if (DiscountPercentage <= 1 || DiscountPercentage > 99 ) {
             document.getElementById('DiscountPercentage-e').innerText = 'Discount percentage must be between 1 and 100';
             isValid = false;
         }
@@ -283,6 +274,7 @@
             document.getElementById('ActivateDate-e').innerText = 'Expiry date must be after activate date';
             isValid = false;
         }
+        
         if (!isValid) {
             return
 

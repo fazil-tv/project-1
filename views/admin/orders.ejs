@@ -179,7 +179,7 @@
 
 
                                         <th scope="col">Date</th>
-                                        <th scope="col">Status</th>
+                                        <th scope="col">Subtotal</th>
 
                                         <th scope="col" class="text-end">Action</th>
                                     </tr>
@@ -203,20 +203,17 @@
                                                 <td>
                                                     <%=cartData[i].orderDate.toLocaleDateString('en-US', {
                                                         weekday: 'short' , year: 'numeric' , month: 'short' ,
-                                                        day: 'numeric' })%>
+                                                        day: 'numeric'  ,
+                                    
+                                                        hour: 'numeric',
+                                                        minute: 'numeric' })%>
                                                 </td>
 
 
 
-                                                <% if (cartData[i].orderStatus==="canceled" ) { %>
-                                                    <td><span class="badge rounded-pill alert-danger">Canceled</span>
-                                                    </td>
-                                                    <% } else { %>
-                                                        <!-- <td><span class="badge rounded-pill alert-warning">Pending</span></td>   -->
-                                                        <td><span
-                                                                class="badge rounded-pill alert-success">Received</span>
-                                                        </td>
-                                                        <% } %>
+                                                <td>
+                                                    <%= cartData[i].subtotal%>
+                                                </td>
 
 
                                                             <td class="text-end">

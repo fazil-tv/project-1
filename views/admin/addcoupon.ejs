@@ -206,7 +206,7 @@
                                     </div>
                                     <div class="mb-4 col-lg-6">
                                         <label class="form-label" id="labelu">Discount Percentage</label>
-                                        <input type="text" name="DiscountPercentage" placeholder="Type here"
+                                        <input type="number" name="DiscountPercentage" placeholder="Type here"
                                             class="form-control " id="DiscountPercentage" />
                                         <p id="DiscountPercentage-e" style="text-align: center; color: red;"></p>
 
@@ -214,7 +214,7 @@
                                     </div>
                                     <div class="mb-4 col-lg-6">
                                         <label class="form-label" id="labelu">Max Discount</label>
-                                        <input type="text" name="MaxDiscount" placeholder="Type here"
+                                        <input type="number" name="MaxDiscount" placeholder="Type here"
                                             class="form-control " id="MaxDiscount" />
                                         <p id="MaxDiscount-e" style="text-align: center; color: red;">
                                         </p>
@@ -239,7 +239,7 @@
                                     </div>
                                     <div class="mb-4 col-lg-6">
                                         <label class="form-label" id="labelu">Criteria-Amount</label>
-                                        <input type="text" name="CriteriaAmount" placeholder="Type here"
+                                        <input type="number" name="CriteriaAmount" placeholder="Type here"
                                             class="form-control " id="CriteriaAmount" />
                                         <p id="CriteriaAmount-e" style="text-align: center; color: red;">
                                         </p>
@@ -307,13 +307,14 @@
             isValid = false;
         }
 
-        if (DiscountPercentage <= 1 || DiscountPercentage > 100 ) {
+        if (DiscountPercentage <= 1 || DiscountPercentage > 99 ) {
             document.getElementById('DiscountPercentage-e').innerText = 'Discount percentage must be between 1 and 100';
             isValid = false;
         }
         if (CriteriaAmount < 0) {
             document.getElementById('CriteriaAmount-e').textContent = 'Criteria amount cannot be negative';
             isValid = false;
+
         }
 
         const activateDate = new Date(ActivateDate);

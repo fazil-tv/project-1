@@ -72,7 +72,7 @@ const blockCategory = async (req, res) => {
         console.log(categorySchema);
         res.status(200).json({ message: 'category blocked' })
     } catch (error) {
-        res.status(500).json({ message: "internal server error" });
+        res.status(500).render('500');
     }
 }
 //unblock category
@@ -83,7 +83,7 @@ const unblockCategory = async (req, res) => {
         await categorySchema.updateOne({ _id: categoryId }, { $set: { is_list: false } })
         res.status(200).json({ message: "category unblocked" });
     } catch (error) {
-        res.status(500).json({ message: "internal server error" })
+        res.status(500).render('500');
     }
 
 }
@@ -112,7 +112,7 @@ const editcategory = async (req, res) => {
         res.json({ status: "success", updatecategory })
 
     } catch (error) {
-        console.log(error);
+        res.status(500).render('500');
     }
 }
 

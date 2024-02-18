@@ -40,7 +40,7 @@ const cart = async (req, res) => {
 
 
     } catch (erorr) {
-        console.log(error)
+        res.status(500).render('500');
     }
 
 }
@@ -88,7 +88,7 @@ const getcart = async (req, res) => {
 
 
         const productcount = productdata.quantity;
-        console.log(cartproduct);
+        
 
         if (cartproduct) {
             res.json({ status: "cart already added" });
@@ -128,7 +128,7 @@ const getcart = async (req, res) => {
 
 
     } catch (error) {
-        console.log(error);
+        res.status(500).render('500');
     }
 }
 
@@ -143,8 +143,7 @@ const removecarts = async (req, res) => {
 
         console.log(("done"));
 
-        // const removecart = await cartSchema.findOneAndUpdate({'user':userId},{$pull:{'products':{
-        //     productId:productId}}},{new:true})
+        
         const removecart = await cartSchema.findOneAndUpdate(
             { 'user': userId },
             { $pull: { 'products': { _id: productId } } },
@@ -161,7 +160,7 @@ const removecarts = async (req, res) => {
         }
 
     } catch (error) {
-        console.log(error);
+        res.status(500).render('500');
     }
 
 }
@@ -174,7 +173,7 @@ const updatecart = async (req, res) => {
         const userId = req.session.user_id;
         const productId = req.body.productId;
         const count = req.body.count;
-        console.log(count, '1111111111111111111');
+ 
 
 
 

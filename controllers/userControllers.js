@@ -427,7 +427,7 @@ const singleproduct = async (req, res) => {
 
         res.render("singleproduct", { product, user: req.session.user_id, cartdata });
     } catch (error) {
-        console.log(error.message);
+        res.status(500).render('500');
     }
 
 }
@@ -470,7 +470,7 @@ const useraccount = async (req, res) => {
         res.render('useraccount', { user, useraddress, orders, invoice });
 
     } catch (error) {
-        console.log(error);
+        res.status(500).render('500');
     }
 }
 
@@ -502,7 +502,7 @@ const verifyLogin = async (req, res) => {
             res.render('login', { message: "Incorrect username or password" });
         }
     } catch (error) {
-        console.log(error.message);
+        res.status(500).render('500');
     }
 }
 
@@ -540,7 +540,7 @@ const edituser = async (req, res) => {
 
     } catch (err) {
         console.log(err);
-        res.status(500).send('Error updating user information')
+        res.status(500).render('500');
 
     }
 }
@@ -594,7 +594,7 @@ const resetpassword = async (req, res) => {
         res.json({ reseted: true });
 
     } catch (error) {
-        console.log(error);
+        res.status(500).render('500');
     }
 
 
@@ -616,7 +616,7 @@ const forgotpassword = async (req, res) => {
         res.render("forgotpassword");
     } catch (error) {
         console.error("Error in forgotpassword:", error.message);
-        res.status(500).send("Internal Server Error");
+        res.status(500).render('500');
     }
 }
 
@@ -627,7 +627,7 @@ const forgototp = async (req, res) => {
         res.render("forgototp");
     } catch (error) {
         console.error("Error in forgototp:", error.message);
-        res.status(500).send("Internal Server Error");
+        res.status(500).render('500');
     }
 }
 
@@ -678,7 +678,6 @@ const getemail = async (req, res) => {
 
 const verifysendEmails = async (email, _id) => {
     try {
-
         const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
         const mailOptions = {
             from: process.env.NODE_MAILER_EMAIL,
@@ -690,7 +689,6 @@ const verifysendEmails = async (email, _id) => {
 
         // Send the email
         const hashedOTP = await bcrypt.hash(otp, 10);
-
         await transporter.sendMail(mailOptions);
         const newOtp = new Otp({
             user_id: _id,
@@ -698,7 +696,6 @@ const verifysendEmails = async (email, _id) => {
             otp: hashedOTP,
         });
         await newOtp.save();
-
         console.log("Email sent successfully");
     } catch (error) {
         console.error("Error sending email:", error.message);
@@ -865,18 +862,18 @@ const invoice = async (req, res) => {
         res.send(pdfBuffer);
 
     } catch (error) {
-        console.log(error);
+        res.status(500).render('500');
     }
 }
 
-// const erros404 = async(req,res)=> {
-//     try {
-//         res.render("404");
+const Internalerror = async(req,res)=> {
+    try {
+        res.render("500");
 
-//     } catch (error) {
+    } catch (error) {
 
-//     }
-// }
+    }
+}
 
 
 
@@ -912,5 +909,6 @@ module.exports = {
     changepassword,
     userLogout,
     invoice,
+    Internalerror
 
 }
