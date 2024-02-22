@@ -24,33 +24,34 @@ const razorpay = new Razorpay({
 
 
 const checkout = async (req, res) => {
+
     try {
-        console.log(req.session.user)
+      
         const userId = req.session.user_id;
-        console.log(userId);
+     
         const userData = await userSchema.findById(userId);
-        console.log(userData);
+      
         const address = await addressSchema.findOne({ user: userId });
-        console.log(address, 'adresssss');
+      
         const cartData = await cartSchema.findOne({ user: userId }).populate('products').populate('couponDiscount')
 
         const currentDate = new Date();
         const coupon = await couponSchema.find({ expiryDate: { $gte: currentDate }, is_blocked: false });
 
-        // const coupondiscount = cartData.couponDiscount ? cartData.couponDiscount.discountPercentage : 0;
+       
         let coupondiscount = 0;
         if (cartData.couponDiscount) {
             coupondiscount = cartData.couponDiscount.discountPercentage;
         }
 
-        // console.log(coupondiscount, "$$$$$$%%%%%%$$$$", cartData.couponDiscount.discountPercentage)
+      
 
         const subtotel = cartData.products.reduce((acc, val) => acc + (val.totalPrice || 0), 0);
-        console.log(subtotel, "rrt");
+    
 
 
 
-        // const discountamount = subtotel - coupondiscount;
+       
         let discountamount;
         if (cartData.couponDiscount) {
             discountamount = (coupondiscount / 100) * subtotel;
@@ -58,9 +59,6 @@ const checkout = async (req, res) => {
             discountamount = subtotel
         }
 
-        console.log("######", discountamount)
-        console.log(coupon);
-        console.log(cartData);
         res.render('checkout', { address, cartData, subtotel, coupon, discountamount, coupondiscount, userData });
     } catch (error) {
         console.log(error);
@@ -73,16 +71,16 @@ const checkoutPost = async (req, res) => {
     try {
 
         const userId = req.session.user_id;
-        console.log(userId, 'userr');
+       
         const user = await userSchema.findOne({ _id: userId })
         const cartData = await cartSchema.findOne({ user: userId });
 
-        console.log(cartData.products, "llllllllllll");
+       
 
 
 
 
-        console.log(cartData, "kmmmmm");
+       
 
         const { jsonData } = req.body;
 
@@ -93,7 +91,7 @@ const checkoutPost = async (req, res) => {
             { 'address._id': deliveryAddressObjectId },
             { 'address.$': 1 }
         );
-        console.log("lockone", userAddress);
+       
 
         const selectedpayament = jsonData.payment
 
@@ -103,11 +101,8 @@ const checkoutPost = async (req, res) => {
 
         const subtotel = cartData.products.reduce((acc, val) => acc + (val.totalPrice || 0), 0);
 
-        console.log("user", user);
-        console.log("cartdata", cartData);
-        console.log("body here", req.body);
-        console.log("selectedaddress", selectedAddress);
-        console.log("payment", selectedpayament);
+    
+       
 
 
 
@@ -231,8 +226,7 @@ const checkoutPost = async (req, res) => {
                 if (err) {
                     console.log(err);
                 }
-                console.log("errorrr", order);
-                console.log("klklklkl");
+               
                 res.json({ status: "false", message: "product placed succesfully", order, subtotel });
             });
 
@@ -253,28 +247,15 @@ const success = async (req, res) => {
 
 const orderstatus = async (req, res) => {
     try {
-        console.log("mmm");
+
         const id = req.query.id;
         const orders = await orderSchema.findOne({ _id: id }).populate('products.productId');
-        console.log(orders, "klklklk");
         const deliveryAddressObjectId = new mongoose.Types.ObjectId(orders.delivery_address);
-        console.log(deliveryAddressObjectId, 'jkjk')
-
-
-
-
+    
         const userAddress = await addressSchema.findOne(
             { 'address._id': deliveryAddressObjectId },
             { 'address.$': 1 }
         );
-
-        
-
-
-
-
-
-        console.log(userAddress);
 
         res.render('orderstatus', { orders, userAddress });
     } catch (error) {
@@ -292,12 +273,7 @@ const cancelorder = async (req, res) => {
     const id = req.body.id;
     const orderId = req.body.orderId;
 
-    console.log("p", productId)
-    console.log("i", id)
-    console.log("o", orderId)
-
-
-
+   
 
     console.log("here ", productId);
 
@@ -318,7 +294,7 @@ const cancelorder = async (req, res) => {
 
         const updatedOrders = await orderSchema.findById(orderId)
 
-        console.log(updatedOrders, "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%****");
+
         if (updatedOrders.payment !== 'Cash on delivery') {
 
             const product = updatedOrders.products.find((products) => products.productId.toString() === id);

@@ -4558,3 +4558,16 @@ body.dark .dropdown-menu .dropdown-item.text-danger {
   right: 35px;
 }
 
+
+
+
+@media (max-width:1207px){
+  .usertable{
+    overflow-y: scroll;
+  }
+ 
+  
+  
+
+ }
+

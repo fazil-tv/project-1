@@ -364,15 +364,18 @@ const indexhome = async (req, res) => {
 const userLogout = async (req, res) => {
     console.log("jkl")
     try {
-        req.session.destroy((err) => {
-            if (err) {
-                console.log("Error destroying session:", err.message);
-            } else {
-                console.log("Session destroyed");
+        // req.session.destroy((err) => {
+        //     if (err) {
+        //         console.log("Error destroying session:", err.message);
+        //     } else {
+        //         console.log("Session destroyed");
 
-                res.redirect('/signup');
-            }
-        });
+        //         res.redirect('/signup');
+        //     }
+        // });
+
+        req.session.user_id = null;
+        res.redirect('/signup');
     } catch (error) {
         console.log(error.message);
     }
@@ -835,13 +838,16 @@ const invoice = async (req, res) => {
 
         console.log("totelorders",totelorders)
 
-        const orders = totelorders.products.filter((val) => val.productstatus === 'Delivered');
+        // const orders = totelorders.products.filter((val) => val.productstatus === 'Delivered');
+        const orders = totelorders.products.filter((val) => val.productstatus === 'Delivered' || val.productstatus === 'return');
 
-        console.log("orders", orders)
-        console.log("totelorders", totelorders)
+
+        console.log("orders1",orders)
+
+
+        
 
         const deliveryAddressObjectId = new mongoose.Types.ObjectId(totelorders.delivery_address);
-        console.log(deliveryAddressObjectId, 'jkjk')
         const userAddress = await addressSchema.findOne(
             { 'address._id': deliveryAddressObjectId },
             { 'address.$': 1 }

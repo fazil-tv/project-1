@@ -18,7 +18,7 @@ async function fetchOTP(userId, email) {
 
             window.location.reload()
 
- 
+
 
             console.log('Resend OTP request successful');
 
@@ -189,8 +189,7 @@ function address() {
                 // $('#edit-address-div').load('/useraccount #edit-address-div');
                 // $('#editdive').load('/useraccount #editdive');
                 window.location.reload();
-
-
+                // $('#edit-address-div').load('/useraccount #edit-address-div');
 
                 Swal.fire({
                     icon: 'success',
@@ -322,7 +321,7 @@ function editaddress() {
     })
         .then(response => response.json())
         .then(data => {
-            if (data) {
+            if (data.status) {
                 console.log("now")
                 document.getElementById('EditAddressmodal').style.display = "none";
                 $('#edit-address-div').load('/useraccount #edit-address-div')
@@ -365,21 +364,22 @@ function deletaddress(k) {
     })
         .then(response => response.json())
         .then(data => {
-            $('#edit-address-div').load('/useraccount #edit-address-div');
-            Swal.fire({
-                icon: 'success',
-                title: 'Deletion Successful',
-                text: 'The address has been deleted successfully!',
-            });
-        })
-        .catch(error => {
+            console.log($('#edit-address-div'))
+                $('#edit-address-div').load('/useraccount #edit-address-div');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Deletion Successful',
+                    text: 'The address has been deleted successfully!',
+                });
+     
+        }).catch(error => {
             console.log(error);
             Swal.fire({
                 icon: 'error',
                 title: 'Deletion Error',
-                text: 'An error occurred during deletion. Please try again.',
+                text: 'An error occurred during editing. Please try again.',
             });
-        });
+        })
 }
 
 
@@ -1118,7 +1118,7 @@ function returnorder(x, y, z) {
         inputLabel: 'Return Reason',
         inputPlaceholder: 'Please enter the reason for Return',
         showCancelButton: true,
-        confirmButtonText: 'Cancel Order',
+        confirmButtonText: 'Return Order',
         cancelButtonText: 'Cancel',
         preConfirm: (returnReason) => {
             if (!returnReason) {
@@ -1147,7 +1147,7 @@ function returnorder(x, y, z) {
                     if (data.status === "success") {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Order Cancelled',
+                            title: 'return order success',
                         });
                     }
                     window.location.reload();
@@ -1379,7 +1379,7 @@ function removecoupon(x) {
 function offerapply(x) {
     const offerId = x;
     const productId = document.getElementById(`hiddenproductId${index}`).value;
-    console.log(productId,"productid");
+    console.log(productId, "productid");
     fetch('/admin/applyoffer', {
         method: 'POST',
         headers: {
@@ -1390,7 +1390,7 @@ function offerapply(x) {
             productId
         })
     })
-  
+
         .then(response => response.json())
         .then(data => {
 
@@ -1520,7 +1520,7 @@ function removecoupon(x) {
 // categoryofferapply
 
 function categoryofferapply(x) {
-   
+
     const offerId = x;
     const categoryId = document.getElementById(`hiddencategoryid${index}`).value;
 
@@ -1534,7 +1534,7 @@ function categoryofferapply(x) {
             categoryId
         })
     })
-  
+
         .then(response => response.json())
         .then(data => {
 
@@ -1574,7 +1574,7 @@ function removecategoryoffer(x) {
             categoryId
         })
     })
-  
+
         .then(response => response.json())
         .then(data => {
 
