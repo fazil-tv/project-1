@@ -214,7 +214,7 @@ const sendmailUser = async (email, id, res) => {
     }
 };
 
-  
+    
 
 
 //resend otp
