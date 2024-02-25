@@ -35,9 +35,6 @@ const editbanner = async (req, res) => {
     }
 }
 
-
-
-
 const addbannerpost = async (req, res) => {
     const uploadedFiles1 = req.file.originalname
 
