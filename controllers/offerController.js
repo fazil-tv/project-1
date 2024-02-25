@@ -96,18 +96,18 @@ const applyoffer = async (req, res) => {
 
 const removeoffer = async (req, res) => {
     try {
-        console.log("heeey");
+    
 
      
         const Id = req.body.productId
        
-        console.log(Id)
+        
         const product = await productSchema.findOneAndUpdate(
             { _id: Id },
             { $unset: {offer:1,discountedPrice:1} },
             { new: true }
         );
-        console.log(product)
+  
         res.json({ status: true })
     } catch (error) {
         console.log(error);
@@ -120,7 +120,7 @@ const applycategoryoffer  = async (req,res)=>{
         const offerId = req.body.offerId;
         const categoryId = req.body.categoryId;
 
-        console.log(offerId)
+      
 
         const category = await categorySchema.findOneAndUpdate(
             { _id: categoryId },
@@ -142,9 +142,7 @@ const removecategoryoffer  = async (req,res)=>{
 
     try {
         const categoryId = req.body.categoryId;
-       
-
-        console.log(categoryId)
+ 
 
         const category = await categorySchema.findOneAndUpdate(
             { _id: categoryId },

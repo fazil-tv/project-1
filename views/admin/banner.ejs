@@ -167,7 +167,7 @@
                     <a href="/admin/addbanner" class="btn btn-primary"><i class="text-muted material-icons md-post_add"></i>Add
                         Banner</a>
                 </div>
-                <div class="pagination-area mt-30 mb-50">
+                <div class="pagination-area mt-30 mb-50 usertable">
                     <table id="tablePagination" class="table table-hover">
                         <thead class="" style="background-color:#3BB77E;">
                             <tr>
@@ -277,23 +277,18 @@
 
             function blockproduct(productId) {
 
-                console.log(productId);
-
-                // Get the button element associated with the user
                 const blockButton = document.getElementById(`blockButton${productId}`);
 
                 let text = blockButton.innerHTML;
                 if (text === "block") {
-                    console.log("hiiiii")
+               
                     $.ajax({
                         url: `/admin/blockProduct/${productId}`,
                         type: 'PUT',
                         contentType: 'application/json',
                         data: JSON.stringify({ productId }),
                         success: function (data) {
-                            console.log(data.message, 'data message from success');
-                            // $(`#buttonContainer${productId}`).load(`admin/product #buttonContainer${productId}`)
-                            // $('#buttonContainer').load('/admin/product #buttonContainer')
+                        
                             window.location.reload();
 
                         },
@@ -312,7 +307,7 @@
                         contentType: 'application/json',
                         data: JSON.stringify({ productId }),
                         success: function (data) {
-                            console.log(data.message);
+                           
                             // $("#buttonContainer").load('/admin/product #buttonContainer')
                             window.location.reload();
 
@@ -382,6 +377,9 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    
+
+        <script src="/assets/js/main.js?v=1.1" type="text/javascript"></script>
 
 
 </body>

@@ -213,7 +213,7 @@
     function addCategoryValidation() {
         event.preventDefault();
         const categoryname = document.getElementById('product_name').value;
-        console.log(categoryname);
+        
         const description = document.getElementById('product_disc').value;
 
         const validateCategoryName = (categoryname) => {
@@ -227,9 +227,6 @@
 
         if (isCategoryValid && description) {
 
-            // $('#mycard').submit();
-            // return console.log("Category name is valid");
-            console.log(categoryname, "######", description);
             document.getElementById('invalid').style.display="none"
 
 
@@ -249,7 +246,7 @@
 
 
     function addcategory(categoryname, description) {
-        console.log("$$$$$", categoryname, "%%%%%", description);
+        
 
         fetch('/admin/addcategory', {
             method: 'POST',
@@ -284,6 +281,10 @@
 
 
 
+    
+
+
+
 
 
 
@@ -297,5 +298,7 @@
 
 
 </script>
+<script src="/assets/js/main.js?v=1.1" type="text/javascript"></script>
+
 
 </html>

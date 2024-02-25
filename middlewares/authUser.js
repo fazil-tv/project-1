@@ -24,11 +24,11 @@
 const isLogout = (req, res, next) => {
     try {
         if (req.session.user_id) {
-            console.log('hi')
+         
             res.redirect('/indexhome');
 
         } else {
-            console.log('hielll')
+          
             next();
         }
 
@@ -56,8 +56,6 @@ const adminblock = async (req,res,next) => {
             next();
         }else{
             if(user.is_blocked){
-                
-                console.log(user.is_blocked)
                 res.render('login');
             }else{
                 next();

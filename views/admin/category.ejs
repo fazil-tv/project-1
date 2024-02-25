@@ -164,7 +164,7 @@
                 </div>
             </div>
 
-            <div class="pagination-area mt-30 mb-50">
+            <div class="pagination-area mt-30 mb-50 usertable">
                 <table id="tablePagination" class="table table-hover">
                     <thead style="background-color: #3BB77E;">
                         <tr>
@@ -400,7 +400,7 @@
                 let index;
                 function showofferModal(i) {
                     index = i;
-                    //button text changing
+                   
                     if (status == "true") {
 
                         document.getElementById('mbid').innerText = 'unblock'
@@ -429,7 +429,7 @@
 
 
                     const categoryname = document.getElementById('editcategoryname').value;
-                    console.log(categoryname);
+                 
                     const editdiscription = document.getElementById('editcategorydescription').value;
 
 
@@ -482,7 +482,7 @@
                     const blockButton = document.getElementById(`blockButton${categoryId}`);
                     let text = blockButton.innerHTML;
                     if (text === 'block') {
-                        console.log("heloow");
+                      
                         fetch(`/admin/blockCategory`, {
                             method: 'PUT',
                             headers: {
@@ -524,7 +524,7 @@
             <script>
                 function showConfirmationModal(categoryId, status) {
                     //button text changing
-                    console.log(categoryId, status)
+                   
                     if (status == "true") {
                         document.getElementById('mbid').innerText = 'unblock'
                     } else {
@@ -610,14 +610,6 @@
 
 
 
-
-
-            <!-- <div class="d-flex justify-content-center">
-                <a href="/admin/addcategory" class="btn btn-primary"><i
-                        class="text-muted material-icons md-post_add"></i>Add
-                    Category</a>
-            </div> -->
-
         </section>
 
 
@@ -652,13 +644,7 @@
     <script src="/js/fetch.js"></script>
 
 
-    <!-- <script src="assets/js/vendors/jquery-3.6.0.min.js"></script>
-    <script src="assets/js/vendors/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/vendors/select2.min.js"></script>
-    <script src="assets/js/vendors/perfect-scrollbar.js"></script>
-    <script src="assets/js/vendors/jquery.fullscreen.min.js"></script> -->
-    <!-- Main Script -->
-    <!-- <script src="assets/js/main.js?v=1.1" type="text/javascript"></script> -->
+
 </body>
 
 </html>

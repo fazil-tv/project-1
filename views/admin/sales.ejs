@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Nest Dashboard</title>
+    <title>Dashboard</title>
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -241,8 +241,7 @@
                                     const startDateInput = document.getElementById("startDate").value;
                                     const endDateInput = document.getElementById("endDate").value;
 
-                                    console.log(startDateInput);
-                                    console.log(endDateInput);
+                                  
 
                                     let isValid = true;
 
@@ -281,7 +280,7 @@
                     </div>
                 </header>
 
-                <div class="pagination-area  mb-50">
+                <div class="pagination-area  mb-50 usertable">
 
                     <table id="" class="table table-hover">
                         <thead style="background-color: #3BB77E; text-align: center;">
@@ -346,7 +345,7 @@
                                         </td>
                                         <td scope="col">
                                             <p>
-                                                <%console.log(data,"datas")%>
+                                               
                                                 <%= data.userData[0].email%>
                                             </p>
                                         </td>
@@ -406,7 +405,7 @@
             if (index === 0) data = [];
             data.push(order);
 
-            console.log(order.orderDate, "hmmmmmmm");
+           
             const tableBody = document.getElementById('table-body');
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -425,9 +424,9 @@
         function downlode() {
             const selectedformat = document.getElementById("selectformat").value;
 
-            console.log(data, "globslll");
+            
             const datas = data;
-            console.log("oo%%%ok", datas);
+        
 
             try {
                 fetch('/admin/salesreport', {
@@ -503,6 +502,8 @@
     <script src="assets/js/main.js?v=1.1" type="text/javascript"></script>
 
     <script src="/js/adminfech.js"></script>
+    <script src="/assets/js/main.js?v=1.1" type="text/javascript"></script>
+
 </body>
 
 </html>

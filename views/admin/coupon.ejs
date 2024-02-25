@@ -156,7 +156,7 @@
             </div>
         </header>
         <section class="content-main">
-            <div class="pagination-area mt-30 mb-50">
+            <div class="pagination-area mt-30 mb-50 usertable">
                 <% if (coupon.length> 0) { %>
 
                     <table id="tablePagination" class="table table-hover">
@@ -244,7 +244,7 @@
 
                                 });
                                 window.location.href = "/admin/coupon";
-                                // $('#reloadDiv').load('/coupon #reloadDiv');
+                              
                             }
                         })
                         .catch(error => {
@@ -298,6 +298,9 @@
 
     <!-- validation form -->
     <script src="/validation/validation.js"></script>
+
+    <script src="/assets/js/main.js?v=1.1" type="text/javascript"></script>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

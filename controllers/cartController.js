@@ -32,7 +32,7 @@ const cart = async (req, res) => {
                 }
             });
 
-            console.log("ok set", cartData);
+         
             res.render('cart', { cartData });
         } else {
             console.log('not sesssion');
@@ -49,10 +49,7 @@ const cart = async (req, res) => {
 const getcart = async (req, res) => {
     try {
         const userId = req.session.user_id;
-        console.log(userId)
         const productId = req.body.productId;
-        console.log(productId);
-
         const productdata = await productSchema.findById(productId).populate({
             path: 'category',
             populate: {
@@ -75,17 +72,12 @@ const getcart = async (req, res) => {
              productprice = productdata.discountedPrice;
 
         } else {
-            console.log("normal")
+         
              productprice = productdata.price;
         }
 
 
-
-
-
         const cartproduct = await cartSchema.findOne({ user: userId, 'products.productId': productId });
-        // const productprice = productdata.price;
-
 
         const productcount = productdata.quantity;
         
@@ -94,20 +86,6 @@ const getcart = async (req, res) => {
             res.json({ status: "cart already added" });
         }
         else {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             const data = {
                 productId: productId,
                 count: 1,
@@ -125,8 +103,6 @@ const getcart = async (req, res) => {
             res.json({ success: true })
         }
 
-
-
     } catch (error) {
         res.status(500).render('500');
     }
@@ -137,24 +113,17 @@ const getcart = async (req, res) => {
 const removecarts = async (req, res) => {
     try {
         const productId = req.body.productId;
-        console.log(productId);
-        const userId = req.session.user_id;
-        console.log(userId);
-
-        console.log(("done"));
-
-        
+        const userId = req.session.user_id; 
         const removecart = await cartSchema.findOneAndUpdate(
             { 'user': userId },
             { $pull: { 'products': { _id: productId } } },
             { new: true }
         );
 
-        console.log("remove cart", removecart)
 
         if (removecart) {
             res.json({ success: true });
-            console.log("done done")
+           
         } else {
             res.status(404).json({ error: 'Product not found in the cart' });
         }
@@ -236,7 +205,7 @@ const updatecart = async (req, res) => {
             if (currentQuantity + count > product.quantity) {
                 return res.json({ success: false, message: 'Stock limit reached' });
             }
-            console.log(currentQuantity, "ooooooooooooooooo000");
+        
 
         }
 

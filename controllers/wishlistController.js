@@ -18,9 +18,9 @@ const wishlistSchema = require("../model/wishlistModel");
 const wishlist = async (req, res) => {
     try {
         if (req.session.user_id) {
-            const wishlist1 = await wishlistSchema.find({user:req.session.user_id})
-            console.log(wishlist1,"mmmm");
-            const wishlist = await wishlistSchema.findOne({user:req.session.user_id}).populate({
+            const wishlist1 = await wishlistSchema.find({ user: req.session.user_id })
+
+            const wishlist = await wishlistSchema.findOne({ user: req.session.user_id }).populate({
                 path: 'product.productId',
                 populate: {
                     path: 'category',
@@ -32,8 +32,8 @@ const wishlist = async (req, res) => {
                     path: 'offer'
                 }
             });
-    
-            console.log(wishlist,"wishliST ALL");
+
+
             res.render('wishlist', { wishlist });
         } else {
             console.log('not sesssion');
@@ -92,19 +92,19 @@ const removewishlist = async (req, res) => {
 
         const productId = req.body.productId;
         const userId = req.session.user_id;
-       const wishlist =   await wishlistSchema.findOneAndUpdate(
-        { user: userId},
-        { $pull: { 'product': { '_id': productId } } },{new:true});
+        const wishlist = await wishlistSchema.findOneAndUpdate(
+            { user: userId },
+            { $pull: { 'product': { '_id': productId } } }, { new: true });
 
 
-            if(wishlist){
-                res.json({status:true})
+        if (wishlist) {
+            res.json({ status: true })
 
-            }else{
-                res.json({status:false});
+        } else {
+            res.json({ status: false });
 
-            }
-        } catch (erorr) {
+        }
+    } catch (erorr) {
         console.log(error);
     }
 }

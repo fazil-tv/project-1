@@ -50,7 +50,7 @@
 						<div class="dropdown-menu" aria-labelledby="dropdown04">
 							<a class="dropdown-item" href="/shop">Shop</a>
 							<a class="dropdown-item" href="/cart">Cart</a>
-							
+
 						</div>
 					</li>
 					<li class="nav-item"><a href="/about" class="nav-link">About</a></li>
@@ -168,12 +168,13 @@
 									<section>
 										<div class=" mt-5">
 
-											<a type="button" class="addaddressbutton" onclick=" addressopenmodal()" >
+											<a type="button" class="addaddressbutton" onclick=" addressopenmodal()">
 												add
 												address
 											</a>
 
-											<a type="button" id="showHideButton" class="applycoupon" style="color: rgb(255, 255, 255);">
+											<a type="button" id="showHideButton" class="applycoupon"
+												style="color: rgb(255, 255, 255);">
 												Apply Coupon
 											</a>
 
@@ -211,35 +212,35 @@
 													<% } %>
 												</div>
 											</div> -->
-											
+
 
 
 											<div class="card-section mt-5" id="cardSection">
 												<div class="" id="relodedives">
-												
-														<% for (let i=0; i < coupon.length; i++) { %>
-															<div class="col-lg-6 pb-2">
-																<div
-																	class="cart-detail cart-total bg-light p-md-4  couponcard">
-																	<p class="offer-t">
-																		<%= coupon[i].discountPercentage %> %OFF
-																	</p>
-																	<p class="coupon-name">
-																		<%= coupon[i].name %>
-																	</p>
-																	<p class="coupon-code">
-																		<a class="">
-																			<%= coupon[i].couponCode %>
-																		</a>
-																	</p>
-																	<p class="mb-0 couun-date">
-																		Validity Period :
-																		<%= coupon[i].expiryDate.toLocaleDateString('en-US',
-																			{ weekday: 'short' , year: 'numeric' ,
-																			month: 'short' , day: 'numeric' }) %>
+
+													<% for (let i=0; i < coupon.length; i++) { %>
+														<div class="col-lg-6 pb-2">
+															<div
+																class="cart-detail cart-total bg-light p-md-4  couponcard">
+																<p class="offer-t">
+																	<%= coupon[i].discountPercentage %> %OFF
+																</p>
+																<p class="coupon-name">
+																	<%= coupon[i].name %>
+																</p>
+																<p class="coupon-code">
+																	<a class="">
+																		<%= coupon[i].couponCode %>
+																	</a>
+																</p>
+																<p class="mb-0 couun-date">
+																	Validity Period :
+																	<%= coupon[i].expiryDate.toLocaleDateString('en-US',
+																		{ weekday: 'short' , year: 'numeric' ,
+																		month: 'short' , day: 'numeric' }) %>
 
 
-																			<% if(subtotel>coupon[i].criteriaValue) {%>
+																		<% if(subtotel>coupon[i].criteriaValue) {%>
 
 																			<% if (coupon[i]._id.toString()
 																				!==(cartData.couponDiscount ?
@@ -258,13 +259,15 @@
 																						onclick="removecoupon('<%= coupon[i]._id %>')">Remove</a>
 																					<% } %>
 
-																			<%}else{%>
-																				<span class="badge not-applicable">Not Applicable</span>
-																			<%}%>
-																	</p>
-																</div>
+																						<%}else{%>
+																							<span
+																								class="badge not-applicable">Not
+																								Applicable</span>
+																							<%}%>
+																</p>
 															</div>
-															<% } %>
+														</div>
+														<% } %>
 												</div>
 											</div>
 
@@ -282,17 +285,17 @@
 												<p class="d-flex">
 													<span>Subtotal</span>
 													<span>
-														₹	<%=subtotel%>
+														₹ <%=subtotel%>
 													</span>
 												</p>
 												<p class="d-flex">
 													<span>Delivery</span>
-													<span>₹    0.00</span>
+													<span>₹ 0.00</span>
 												</p>
 												<p class="d-flex">
 													<span>Discount</span>
 													<span>
-													 <%=coupondiscount%>	%    
+														<%=coupondiscount%> %
 													</span>
 												</p>
 												<hr>
@@ -303,7 +306,7 @@
 														<% if (discountamount !==subtotel ) { %>
 															<del>
 																₹<%= subtotel %>
-															</del> 
+															</del>
 															<br>
 
 													</span>
@@ -333,14 +336,32 @@
 										<div class="col-md-6">
 											<div class="cart-detail bg-light p-3 p-md-4">
 												<h3 class="billing-heading mb-4">Payment Method</h3>
-												<p class="" id="inputid" style="display: none; color: rgb(255, 93, 93);">Please select a payment methode</p>
+												<p class="" id="inputid"
+													style="display: none; color: rgb(255, 93, 93);">Please select a
+													payment methode</p>
 												<div class="form-group">
 													<div class="col-md-12">
+
+
 														<div class="radio">
-															<label> <input type="radio" name="payment" 
-																	value="Cash on delivery" id="radio1 " <%= subtotel > 1500 ? 'disabled' : '' %>  >
-																Cash on Delevery
-															</label>
+															<% if (subtotel > 1500) { %>
+
+																<label class="m-0">
+
+																	<input type="radio" name="payment" value="Cash on delivery" id="radio1" disabled>
+																	Cash on Delivery
+
+																	<p style="font-size: 13px; color: rgb(255, 165, 165);" class="">Cash on Delivery is not available </br> for orders over 1500.</p>
+
+																</label>
+															<% } else { %>
+																<label>
+																	<input type="radio" name="payment" value="Cash on delivery" id="radio1">
+																	Cash on Delivery
+																</label>
+															<% } %>
+															
+															
 														</div>
 													</div>
 												</div>
@@ -357,18 +378,22 @@
 
 												<div class="form-group">
 													<div class="col-md-12">
-														<div class="radio" >
-															<label >
-																<input type="radio" name="payment" value="Wallet" id="radio3" <%= userData.wallet > subtotel ? '' : 'disabled' %> />
+														<div class="radio">
+															<label>
+																<input type="radio" name="payment" value="Wallet"
+																	id="radio3" <%=userData.wallet> subtotel ? '' :
+																'disabled' %> />
 																wallet
-																
+
 															</label>
-															<p style="float: right;">Wallet Balance: <%= userData.wallet %></p>
-															
+															<p style="float: right;">Wallet Balance: <%= userData.wallet
+																	%>
+															</p>
+
 														</div>
-														
+
 													</div>
-													
+
 												</div>
 												<div class="form-group">
 													<div class="col-md-12">
@@ -493,7 +518,7 @@
 			<div class="modal-content  address-modal  w-50">
 				<form>
 					<span class="close" onclick="checkouteditaddressclosemodal()">&times;</span>
-						
+
 
 					<div class="form-group m-0">
 						<label class="form-label">Full Name *</label>
@@ -559,7 +584,7 @@
 			<div class="modal-content  address-modal  w-50 ">
 				<form>
 					<span class="close" onclick=" addressclosemodal()">&times;</span>
-					<div class="form-group " >
+					<div class="form-group ">
 						<label class="form-label"> Full name *</label>
 						<input type="text" id="fullname" class="form-control" name="fullname">
 						<span id="fullname-error" style="color: red;"></span>
@@ -620,8 +645,7 @@
 	<script>
 
 		function checkouteditaddressopenmodal(fullname, mobile, email, state, city, houseName, pin, addressId) {
-			console.log("ty", fullname);
-			console.log("ok", addressId);
+			
 
 			document.querySelector('[name="editfullname"]').value = fullname;
 			document.querySelector('[name="editmobile"]').value = mobile;
@@ -640,7 +664,7 @@
 
 		}
 		function checkouteditaddressclosemodal() {
-			console.log("heey")
+			
 			document.getElementById('checkoutEditAddressmodal').style.display = "none";
 		}
 		// edit address validation 
@@ -688,7 +712,7 @@
 
 	</script>
 
-	
+
 	<!-- swal -->
 
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

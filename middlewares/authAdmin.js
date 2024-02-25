@@ -5,7 +5,7 @@ const isLogin = async (req, res, next) => {
         if (req.session.admin_email) {
             next();
         } else {
-            res.redirect('/admin/index');
+            res.redirect('/admin/login');
         }
 
     } catch (error) {

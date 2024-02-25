@@ -35,8 +35,7 @@ const addCategoryPost = async (req, res) => {
         const  name= req.body.categoryname;
         const discription = req.body.description;
 
-        console.log(name);
-        console.log(discription);
+     
         const nameRegex = new RegExp(`^${name}$`, 'i'); 
 
         const validData = await categorySchema.findOne({ name: nameRegex });
@@ -66,10 +65,10 @@ const blockCategory = async (req, res) => {
     try {
         const categoryId = req.body.categoryId;
 
-        console.log(categoryId);
+       
         await categorySchema.updateOne({ _id: categoryId }, { $set: { is_list: true } })
 
-        console.log(categorySchema);
+   
         res.status(200).json({ message: 'category blocked' })
     } catch (error) {
         res.status(500).render('500');
@@ -79,7 +78,7 @@ const blockCategory = async (req, res) => {
 const unblockCategory = async (req, res) => {
     try {
         const categoryId = req.body.categoryId;
-        console.log(categoryId);
+      
         await categorySchema.updateOne({ _id: categoryId }, { $set: { is_list: false } })
         res.status(200).json({ message: "category unblocked" });
     } catch (error) {
@@ -91,15 +90,12 @@ const unblockCategory = async (req, res) => {
 
 // edit category
 const editcategory = async (req, res) => {
-    console.log("hiiiiia")
 
     try {
         const categoryId = req.params.categoryId;
         const editname = req.body.editcategoryname;
         const editcategorydesc = req.body.editcategorydesc;
-        console.log("done", categoryId);
-        console.log(editname);
-        console.log(editcategorydesc);
+        
 
         const nameRegex = new RegExp(`^${editname }$`, 'i'); 
 
