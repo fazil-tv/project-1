@@ -20,20 +20,20 @@ adminRoute.set('view engine', 'ejs');
 adminRoute.set('views', './views/admin')
 
 
-adminRoute.get("/login", auth.isLogout, adminController.signup);
-adminRoute.post('/login', auth.isLogout, adminController.adminverifyLogin);
+adminRoute.get("/login", auth.isLogout, adminController.Signup);
+adminRoute.post('/login', auth.isLogout, adminController.AdminverifyLogin);
 
-adminRoute.get("/users", auth.isLogin, adminController.loadUser);
-adminRoute.get("/index", auth.isLogin, adminController.loaddashbord);
+adminRoute.get("/users", auth.isLogin, adminController.LoadUser);
+adminRoute.get("/index", auth.isLogin, adminController.Loaddashbord);
 
-adminRoute.get('/logout', adminController.logout);
+adminRoute.get('/logout', adminController.Logout);
 
-// adminRoute.get("/product",adminController.AddProduct);
-adminRoute.put('/blockUser', auth.isLogin, adminController.blockUser);
-adminRoute.put('/unblockUser', auth.isLogin, adminController.unblockUser);
+
+adminRoute.put('/blockUser', auth.isLogin, adminController.BlockUser);
+adminRoute.put('/unblockUser', auth.isLogin, adminController.UnblockUser);
 
 //users
-adminRoute.get('/users', auth.isLogin, adminController.users);
+adminRoute.get('/users', auth.isLogin, adminController.Users);
 //product
 adminRoute.get('/product', auth.isLogin, productController.Product);
 //addproduct
@@ -42,7 +42,7 @@ adminRoute.get('/addproduct', auth.isLogin, productController.addproduct);
 adminRoute.post('/addproduct', auth.isLogin, multer.uploadProduct, productController.addProductspost);
 
 // edit product
-// adminRoute.get('/editproduct',productController.editproduct);
+
 adminRoute.get('/editproduct', productController.editProduct);
 adminRoute.post('/editproduct', multer.uploadProduct, productController.editProductpost);
 
@@ -61,19 +61,18 @@ adminRoute.put('/unblockCategory', auth.isLogin, categoryController.unblockCateg
 adminRoute.put('/blockProduct/:id', auth.isLogin, productController.blockProduct);
 
 // orders
-adminRoute.get("/orders", adminController.orders);
-
+adminRoute.get("/orders", adminController.Orders);
 
 
 //updatestatus
-adminRoute.post('/updatestatus', adminController.updatestatus);
+adminRoute.post('/updatestatus', adminController.Updatestatus);
 
 
 
 
 
 // orderdetaile
-adminRoute.get("/orderdetailes", adminController.orderdetaile);
+adminRoute.get("/orderdetailes", adminController.Orderdetaile);
 
 
 // banner lode
@@ -97,11 +96,10 @@ adminRoute.post('/addcoupon', auth.isLogin, couponController.addcouponpost);
 adminRoute.delete('/removecoupon', auth.isLogin, couponController.deletcoupon);
 
 // sales
-adminRoute.get('/sales', auth.isLogin, adminController.sales);
-adminRoute.post('/salesfilter', auth.isLogin, adminController.sales);
+adminRoute.get('/sales', auth.isLogin, adminController.Sales);
+adminRoute.post('/salesfilter', auth.isLogin, adminController.Sales);
 
-adminRoute.post('/salesreport', auth.isLogin, adminController.salesreport);
-
+adminRoute.post('/salesreport', auth.isLogin, adminController.Salesreport);
 
 
 adminRoute.get('/offer', auth.isLogin, offerController.offer);
@@ -109,8 +107,6 @@ adminRoute.get('/addoffer', auth.isLogin, offerController.addoffer);
 adminRoute.post('/addoffer', auth.isLogin, offerController.postoffer);
 adminRoute.delete('/removeoffer', auth.isLogin, offerController.deletoffer);
 adminRoute.post('/applyoffer', auth.isLogin, offerController.applyoffer);
-
-
 
 adminRoute.post('/categoryofferapply', auth.isLogin, offerController.applycategoryoffer);
 adminRoute.patch('/removeoffer', auth.isLogin, offerController.removeoffer);

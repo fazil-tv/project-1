@@ -5,8 +5,6 @@ const wishlistSchema = require("../model/wishlistModel");
 const offerSchema = require('../model/offerModel');
 
 const path = require("path")
-
-
 const multer = require("multer")
 const sharp = require('sharp');
 const { id } = require("schema/lib/objecttools");
@@ -22,14 +20,13 @@ const Product = async (req, res) => {
             }
         });
 
-        console.log(product, "product");
         const offer = await offerSchema.find({});
 
         product.forEach(async (product) => {
-            console.log(product.category,"products")
+        
 
             if (product.category.offer) {
-                console.log(product.category.offer,"products")
+            
                 const discountedPrice = product.price * (1 - product.category.offer.discountAmount / 100);
 
                 product.discountedPrice = parseInt(discountedPrice);
@@ -37,7 +34,6 @@ const Product = async (req, res) => {
                 await product.save();
 
             } else if (product.offer) {
-                console.log(product, product.price, "productprice", product.offer.discountAmount, "discountedPrice")
                 const discountedPrice = product.price * (1 - product.offer.discountAmount / 100);
                 product.discountedPrice = parseInt(discountedPrice);
                 await product.save();
@@ -57,7 +53,6 @@ const addproduct = async (req, res) => {
 
     const datas = await categorySchema.find({})
 
-    // Render the addproductand  view and pass the categorys data
     const categorys = await categorySchema.find({});
     try {
         res.render("addproduct", { datas, categorys });
@@ -90,7 +85,7 @@ const addProductspost = async (req, res) => {
             }
         }
         if (requestData.quantity > 0 && requestData.price > 0) {
-            console.log("ok");
+           
             const product = new productSchema({
                 name: requestData.title,
                 quantity: requestData.quantity,
@@ -104,7 +99,7 @@ const addProductspost = async (req, res) => {
             })
 
             await product.save()
-            console.log(product);
+           
             res.redirect('/admin/product');
         }
     } catch (error) {
@@ -114,13 +109,13 @@ const addProductspost = async (req, res) => {
 
 //block product
 const blockProduct = async (req, res) => {
-    console.log("kkkk")
+   
 
     try {
         const productId = req.params.id;
-        console.log(productId);
+       
         const productvalue = await productSchema.findOne({ _id: productId });
-        console.log(productvalue)
+      
 
         if (productvalue) {
             if (productvalue.is_blocked) {
@@ -136,31 +131,16 @@ const blockProduct = async (req, res) => {
         }
 
     } catch (error) {
-        console.error("Error:", error.message);
+       
         res.status(500).json({ message: "Internal server error" });
     }
 };
 
 
-//edit product
-// const editproduct = async (req, res) => {
-//     try {
-//         const id = req.query.id;
-//         const product = await productSchema.find({}).populate('category');
-//         const categorys = await categorySchema.find({});
-//         console.log(categorys );
-//         // console.log("dfsd",product);
-//         // console.log(categorys);
-
-//         res.render("editproduct", { product,categorys })
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
 const editProduct = async (req, res) => {
     try {
         const id = req.query.id;
-        console.log(id)
+     
         const product = await productSchema.findById(id)
         const categorys = await categorySchema.find({});
         res.render("editproduct", { product, categorys, id });
@@ -173,9 +153,9 @@ const editProduct = async (req, res) => {
 //product post
 const editProductpost = async (req, res) => {
     try {
-        console.log("kkkkk");
+  
         const id = req.query.id;
-        console.log("kitty", id);
+        
         const uploadedFiles = req.files;
         const requestData = req.body;
         const existingData = await productSchema.findOne({ _id: id })
@@ -185,7 +165,7 @@ const editProductpost = async (req, res) => {
             uploadedFiles?.image3 ? (uploadedFiles.image3[0]?.filename || existingData.images.image3) : existingData.images.image3,
             uploadedFiles?.image4 ? (uploadedFiles.image4[0]?.filename || existingData.images.image4) : existingData.images.image4,
         ];
-        console.log(img);
+     
 
         for (let i = 0; i < img.length; i++) {
             if (img[i]) {
@@ -197,7 +177,7 @@ const editProductpost = async (req, res) => {
 
 
         if (requestData.quantity > 0 && requestData.price > 0) {
-            console.log("ok");
+           
             const product = {
 
                 name: requestData.title,
@@ -212,10 +192,10 @@ const editProductpost = async (req, res) => {
                     image4: img[3],
                 },
             }
-            console.log("io io io io");
+          
             const risult = await productSchema.findOneAndUpdate({ _id: id }, product, { new: true });
             risult.save();
-            console.log("done")
+         
             res.redirect('/admin/product');
         }
     } catch (error) {
@@ -240,7 +220,7 @@ const productsearching = async (req, res) => {
 
 
 
-        console.log(searchQuery);
+    
         const productData = await productSchema.find({
             name: { $regex: searchQuery, $options: 'i' },
         }).skip(prevPage * 4).limit(6);
@@ -279,20 +259,13 @@ const productfilter = async (req, res) => {
         const searchQuery = req.query.search || "";
         const page = req.query.page ? req.query.page : 1;
         const prevPage = page - 1;
-        console.log(searchQuery)
+     
         const categoryData = await categorySchema.find({});
         const totalDoc = await productSchema.countDocuments();
         const Wishlist = await wishlistSchema.findOne({ user: req.session.user_id });
 
-
-        console.log(sort);
-        console.log(fromprice);
-        console.log(toprice);
-        console.log(userId);
-        console.log(category);
-
         if (category == "all") {
-            console.log(searchQuery);
+          
             const productData = await productSchema.find({
 
                 name: { $regex: searchQuery, $options: 'i' },
@@ -302,13 +275,13 @@ const productfilter = async (req, res) => {
             res.render('shop', { product: productData, category: categoryData, userId, totalDoc, searchQuery, page, prevPage, Wishlist })
 
         } else {
-            console.log("me ");
+           
             const productData = await productSchema.find({
                 name: { $regex: searchQuery, $options: 'i' },
                 price: { $gte: fromprice, $lte: toprice },
                 category: category
             }).sort({ price: sort === 0 ? 1 : -1 }).skip(prevPage * 4).limit(6);
-            console.log(productData)
+      
 
             res.render('shop', { product: productData, category: categoryData, userId, totalDoc, searchQuery, page, prevPage, Wishlist })
         }
@@ -319,10 +292,6 @@ const productfilter = async (req, res) => {
     }
 
 }
-
-
-
-
 
 
 

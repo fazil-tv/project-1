@@ -19,7 +19,7 @@ const ExcelJS = require('exceljs');
 
 
 // signup
-const signup = async (req, res) => {
+const Signup = async (req, res) => {
     try {
         res.render("login");
     } catch (error) {
@@ -29,7 +29,7 @@ const signup = async (req, res) => {
 
 
 //logout
-const logout = async (req, res) => {
+const Logout = async (req, res) => {
     try {
         req.session.admin_email = null;
         res.redirect('/admin/login')
@@ -45,7 +45,7 @@ const logout = async (req, res) => {
 
 
 // users
-const users = async (req, res) => {
+const Users = async (req, res) => {
     try {
         res.render("users");
     } catch (error) {
@@ -54,24 +54,12 @@ const users = async (req, res) => {
 }
 
 // users
-const orders = async (req, res) => {
+const Orders = async (req, res) => {
     try {
-
-
-
-        const page = req.query.page ? req.query.page : 1;
+        const page = req.query.page ? req.query.page : 1; 
         const prevPage = page - 1;
-
-
-        console.log(page, "$$$$$$$$$$$$$$$$$$$$$$$$$$");
-
         const totalDoc = await orderSchema.countDocuments();
         const cartData = await orderSchema.find({}).populate('products.productId').skip(prevPage * 4).limit(6);
-
-        // const id = 1000;
-        // const orderId = await orderSchema.countDocuments() + id;
-        console.log(cartData, 'hghfg');
-        console.log(totalDoc, 'hghfg%%%%%%');
         res.render("orders", { cartData, totalDoc, page });
     } catch (error) {
         console.log(error.message);
@@ -80,41 +68,23 @@ const orders = async (req, res) => {
 
 
 // Order detail
-const orderdetaile = async (req, res) => {
+const Orderdetaile = async (req, res) => {
     try {
         const id = req.query.id;
-
-
         const orders = await orderSchema.findOne({ _id: id }).populate('products.productId');
-
-        console.log(orders);
         const deliveryAddressObjectId = new mongoose.Types.ObjectId(orders.delivery_address);
-        console.log(deliveryAddressObjectId);
         const userAddress = await addressSchema.find(
             { 'address._id': deliveryAddressObjectId },
             { 'address.$': 1 }
         );
-        console.log(userAddress, "userAddress");
-
-
         res.render("detaile", { userAddress, orders });
     } catch (error) {
         console.log(error.message);
     }
 }
 
-
-
-
-
-
-
-
-
-
-
 //admin password verification
-const adminverifyLogin = async (req, res) => {
+const AdminverifyLogin = async (req, res) => {
 
     try {
         const email = process.env.ADMIN_EMAIL;
@@ -135,13 +105,9 @@ const adminverifyLogin = async (req, res) => {
     }
 }
 
-const loaddashbord = async (req, res) => {
+const Loaddashbord = async (req, res) => {
 
     const totalproducts = await productSchema.countDocuments();
-
-    console.log(totalproducts, "%%%%%%okd")
-
-
     const totalorers = await orderSchema.countDocuments();
 
     const revenue = await orderSchema.aggregate([
@@ -167,26 +133,6 @@ const loaddashbord = async (req, res) => {
     endOfMonth.setHours(23);
 
     const currentMonthName = new Date().toLocaleString('default', { month: 'long' });
-
-
-    // const montlyrevenue = await orderSchema.aggregate([
-    //     {
-    //         $unwind: "$products"
-    //     },
-    //     {
-    //         $match: {
-    //             "orderDate": { $gte: startOfMonth, $lt: endOfMonth }
-    //         }
-    //     },
-    //     {
-    //         $group: {
-    //             _id: null,
-    //             monthlyrevenue: {
-    //                 $sum: "$products.totalPrice"
-    //             }
-    //         }
-    //     }
-    // ]);
     const montlyrevenue = await orderSchema.aggregate([
         {
             $match: {
@@ -206,9 +152,6 @@ const loaddashbord = async (req, res) => {
         }
     ]);
 
-
-    console.log("monthly revenue", montlyrevenue);
-
     const graphValue = Array(12).fill(0);
 
     montlyrevenue.forEach(entry => {
@@ -216,16 +159,13 @@ const loaddashbord = async (req, res) => {
         graphValue[monthIndex] = entry.monthlyrevenue;
     });
 
-    console.log(graphValue, "ooooor");
-
+   
     const cashondelivery = await orderSchema.countDocuments({ "payment": "Cash on delivery" })
-    console.log("TOTTEL", cashondelivery)
     const Wallet = await orderSchema.countDocuments({ "payment": "Wallet" })
-    console.log("TOTTEL", cashondelivery)
     Razorpay = await orderSchema.countDocuments({ "payment": "Razorpay" })
 
     try {
-        console.log("t", totalproducts, "or", totalorers, "re", revenue, "cur", currentMonthName, "mo", montlyrevenue)
+      
         res.render("index", { totalproducts, totalorers, revenue: revenue[0].revenue, currentMonthName, montlyrevenue: montlyrevenue[0].monthlyrevenue, graphValue, Wallet, cashondelivery, Razorpay });
     } catch (error) {
         console.log(error);
@@ -233,10 +173,10 @@ const loaddashbord = async (req, res) => {
 }
 
 // loding admin dashbord
-const loadUser = async (req, res) => {
+const LoadUser = async (req, res) => {
     try {
         const usersData = await userModal.find({})
-        console.log(usersData);
+     
         res.render("users", { usersData });
     } catch (error) {
         console.log(error);
@@ -246,11 +186,11 @@ const loadUser = async (req, res) => {
 
 
 // block user
-const blockUser = async (req, res) => {
+const BlockUser = async (req, res) => {
 
     try {
         const userId = req.body.userId;
-        console.log(userId)
+  
         await userModal.updateOne({ _id: userId }, { $set: { is_blocked: true } });
         res.status(200).json({ message: 'User blocked successfully' });
     } catch (error) {
@@ -259,7 +199,7 @@ const blockUser = async (req, res) => {
 };
 
 // unblock user
-const unblockUser = async (req, res) => {
+const UnblockUser = async (req, res) => {
     try {
         const user = req.body.userId;
         await userModal.updateOne({ _id: user }, { $set: { is_blocked: false } });
@@ -270,15 +210,13 @@ const unblockUser = async (req, res) => {
 };
 
 
-const updatestatus = async (req, res) => {
+const Updatestatus = async (req, res) => {
     try {
         const orderId = req.body.orderId;
         const productId = req.body.productId;
         const newstatus = req.body.newstatus;
 
-        console.log("newstatus ", newstatus);
-        console.log("orderId", orderId);
-        console.log(" productId ", productId)
+      
 
         const order = await orderSchema.findOne({ _id: orderId });
         const index = order.products.findIndex((item) => {
@@ -296,20 +234,17 @@ const updatestatus = async (req, res) => {
 
 
 // sales
-const sales = async (req, res) => {
+const Sales = async (req, res) => {
     const startDate = req.body.startDate
     const endDate = req.body.endDate
-    console.log(startDate);
-    console.log(endDate);
+  
 
     const selectedvalue = req.body.selectedvalue;
-    console.log(selectedvalue);
+ 
 
     try {
 
         if (selectedvalue === "Daily") {
-
-            console.log("dailyyyyy");
             const orderData = await orderSchema.aggregate([
                 {
                     $match: {
@@ -353,14 +288,11 @@ const sales = async (req, res) => {
                 }
             ]);
 
-
-            console.log(orderData, "11111111");
-
             res.json({ orderData })
 
 
         } else if (selectedvalue === "Weekly") {
-            console.log("wekleeeee");
+      
             const orderData = await orderSchema.aggregate([
                 {
                     $match: {
@@ -406,7 +338,7 @@ const sales = async (req, res) => {
             res.json({ orderData })
 
         } else if (selectedvalue === "Monthly") {
-            console.log("montlyyyyy");
+       
             const orderData = await orderSchema.aggregate([
                 {
                     $match: {
@@ -446,13 +378,8 @@ const sales = async (req, res) => {
 
             res.json({ orderData })
 
-
-
-
-
-
         } else if (selectedvalue === "Yearly") {
-            console.log("yearlyyyyy");
+         
             const orderData = await orderSchema.aggregate([
                 {
                     $match: {
@@ -521,7 +448,6 @@ const sales = async (req, res) => {
                 }
             ]);
 
-            console.log('oooooooooo', orderData);
             res.json({ orderData })
 
 
@@ -557,7 +483,6 @@ const sales = async (req, res) => {
                 }
             ]);
 
-            console.log('oooooooooo', orderData);
             res.json({ orderData })
 
 
@@ -602,7 +527,7 @@ const sales = async (req, res) => {
 }
 
 
-const salesreport = async (req, res) => {
+const Salesreport = async (req, res) => {
 
     const orderDatas = await orderSchema.aggregate([
         {
@@ -633,28 +558,16 @@ const salesreport = async (req, res) => {
 
 
 
-    console.log(orderDatas, "OOOOOI");
     const selectedformat = req.body.selectedformat;
     const startDate = req.body.startDate;
     const endDate = req.body.endDate;
 
-    console.log(startDate)
-    console.log(endDate)
-
-
-
-
-
-    console.log(selectedformat, "hoiiiiiii")
-
-
     if (selectedformat === "PDF") {
 
         try {
-            // const orderData = req.body.datas
             const orderData = req.body.datas !== undefined && req.body.datas.length !== 0 ? req.body.datas : orderDatas;
 
-            console.log("orderData", orderData)
+      
 
             const ejsPagePath = path.join(__dirname, '../views/admin/report.ejs');
             const ejsPage = await ejs.renderFile(ejsPagePath, { orderData });
@@ -683,7 +596,7 @@ const salesreport = async (req, res) => {
 
             worksheet.addRow(["NO", "ID", "PRODUCT NAME", "QUANTITY SOLD", "PRICE", "TOTTEL SALES", "ORDER DATE", "CUSTOMER", "PAYMENT METHODE"]);
 
-            console.log(orderData, "*********");
+            
 
             orderData.forEach((order, index) => {
                 worksheet.addRow([
@@ -726,17 +639,17 @@ const salesreport = async (req, res) => {
 
 
 module.exports = {
-    adminverifyLogin,
-    signup,
-    loadUser,
-    users,
-    loaddashbord,
-    blockUser,
-    unblockUser,
-    logout,
-    orders, 
-    orderdetaile,
-    updatestatus,
-    sales,
-    salesreport
+    AdminverifyLogin,
+    Signup,
+    LoadUser,
+    Users,
+    Loaddashbord,
+    BlockUser,
+    UnblockUser,
+    Logout,
+    Orders, 
+    Orderdetaile,
+    Updatestatus,
+    Sales,
+    Salesreport
 }

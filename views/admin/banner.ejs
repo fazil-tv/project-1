@@ -277,23 +277,18 @@
 
             function blockproduct(productId) {
 
-                console.log(productId);
-
-                // Get the button element associated with the user
                 const blockButton = document.getElementById(`blockButton${productId}`);
 
                 let text = blockButton.innerHTML;
                 if (text === "block") {
-                    console.log("hiiiii")
+               
                     $.ajax({
                         url: `/admin/blockProduct/${productId}`,
                         type: 'PUT',
                         contentType: 'application/json',
                         data: JSON.stringify({ productId }),
                         success: function (data) {
-                            console.log(data.message, 'data message from success');
-                            // $(`#buttonContainer${productId}`).load(`admin/product #buttonContainer${productId}`)
-                            // $('#buttonContainer').load('/admin/product #buttonContainer')
+                        
                             window.location.reload();
 
                         },
@@ -312,7 +307,7 @@
                         contentType: 'application/json',
                         data: JSON.stringify({ productId }),
                         success: function (data) {
-                            console.log(data.message);
+                           
                             // $("#buttonContainer").load('/admin/product #buttonContainer')
                             window.location.reload();
 

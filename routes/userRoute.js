@@ -26,7 +26,7 @@ userRoute.set('view engine', 'ejs')
 userRoute.set('views', './views/user')
 
 
-userRoute.get("/",userController.indexhome)
+userRoute.get("/",userController.indexhome);
 
 
 userRoute.get("/login",userauth.isLogout, (req, res) => {
@@ -35,12 +35,9 @@ userRoute.get("/login",userauth.isLogout, (req, res) => {
 
 
 userRoute.get("/otp", async (req, res) => {
-   
     const userId = req.session.user_id
-    console.log("kitty:",userId);
     const user = await User.findOne({_id:userId});
     const email = user.email;
-    console.log("kitty:",email);
     res.render("otp", { userId ,email});
 
 });
@@ -50,8 +47,6 @@ userRoute.post('/otp', userController.verifyPost)
 
 userRoute.post('/resendotp', (req, res) => {
     const { email, userId } = req.body;
-    console.log("nooop");
-    console.log(userId);
     userController.resendmailUser(userId,res);
 });
 
@@ -64,7 +59,7 @@ userRoute.post('/signup',userauth.isLogout, userController.insertUser);
 
 
 // LOGIN
-userRoute.post('/login',userauth.isLogout, userController .verifyLogin);
+userRoute.post('/login', userController .verifyLogin);
 userRoute.post('/',userauth.isLogout, userController.verifyLogin);
 
 
@@ -89,11 +84,10 @@ userRoute.post('/singleproduct', userController.singleproduct);
 userRoute.get("/shop",userauth.adminblock, userController.shop);
 userRoute.post('/shop',userauth.adminblock, userController.shop);
 //about
-userRoute.get("/about", userController.about);
-userRoute.post('/about', userController.about);
+userRoute.get("/about",userauth.adminblock, userController.about);
+userRoute.post('/about',userauth.adminblock, userController.about);
 //useraccount
-userRoute.get("/useraccount",userauth.isLogin, userController.useraccount);
-// userRoute.post('/about', userController.about);
+userRoute.get("/useraccount",userauth.adminblock,userauth.isLogin, userController.useraccount);
 
 //resetpassword
 userRoute.get("/resetpassword", userController.resetpassword);
@@ -110,35 +104,35 @@ userRoute.get("/contact", (req, res) => {
 
 
 // edit user
-userRoute.post('/edituser', userController. edituser);
+userRoute.post('/edituser', userauth.adminblock,userController. edituser);
 
 
 //reset password 
-userRoute.put('/resetpassword', userController. resetpassword)
+userRoute.put('/resetpassword', userauth.adminblock,userController. resetpassword)
 
 
 //adaddress 
-userRoute.post('/adaddress', addressController. adaddress);
+userRoute.post('/adaddress', userauth.adminblock,addressController. Postaddress);
 
 //editaddress
-userRoute.patch('/editaddress', addressController.editaddress);
+userRoute.patch('/editaddress',userauth.adminblock, addressController.Patchaddress);
 
 // deletaddress
-userRoute.delete('/deletaddress', addressController.deletaddress);
+userRoute.delete('/deletaddress', userauth.adminblock,addressController.Deletaddress);
 
 
 
 //cart
 
-userRoute.get('/cart', userauth.isLogin,cartController.cart);
+userRoute.get('/cart',userauth.adminblock, userauth.isLogin,cartController.cart);
 
-userRoute.post('/getcart', userauth.isLogin, cartController.getcart);
+userRoute.post('/getcart',userauth.adminblock,userauth.isLogin, cartController.getcart);
 
 //remove cart
-userRoute.post('/removecarts', userauth.isLogin,cartController.removecarts);
+userRoute.post('/removecarts',userauth.adminblock, userauth.isLogin,cartController.removecarts);
 
 // update quantity
-userRoute.post('/updatecart',userauth.isLogin,cartController.updatecart);
+userRoute.post('/updatecart',userauth.adminblock,userauth.isLogin,cartController.updatecart);
 
 
 
@@ -165,31 +159,31 @@ userRoute.get('/searching',productController.productsearching)
 
 
 //checkout
-userRoute.get('/checkout',orderController.checkout)
-userRoute.post('/checkoutform',orderController.checkoutPost)
+userRoute.get('/checkout',userauth.adminblock,orderController.checkout)
+userRoute.post('/checkoutform',userauth.adminblock,orderController.checkoutPost)
 
 userRoute.get('/success',orderController.success );
 
-userRoute.get('/orderstatus',orderController.orderstatus );
+userRoute.get('/orderstatus',userauth.adminblock,orderController.orderstatus );
 userRoute.delete('/orderstatus',orderController.cancelorder);
 
 //return order
 userRoute.delete('/returnorder',orderController.returnorders);
 
-userRoute.post('/verifyPayments',orderController.verifyPayment );
+userRoute.post('/verifyPayments',userauth.adminblock,orderController.verifyPayment );
 
 // wish list
-userRoute.get('/wishlist', userauth.isLogin,wishlistController.wishlist);
+userRoute.get('/wishlist',userauth.adminblock, userauth.isLogin,wishlistController.wishlist);
 
-userRoute.post('/getwishlist', userauth.isLogin, wishlistController.getwishlist);
+userRoute.post('/getwishlist',userauth.adminblock, userauth.isLogin, wishlistController.getwishlist);
 
 // remove wishlist
-userRoute.patch('/removewishlist', userauth.isLogin, wishlistController.removewishlist);
+userRoute.patch('/removewishlist', userauth.adminblock,userauth.isLogin, wishlistController.removewishlist);
 
 
-userRoute.post('/applycoupons', userauth.isLogin, couponController.applycoupon);
+userRoute.post('/applycoupons', userauth.adminblock,userauth.isLogin, couponController.applycoupon);
 // remove coupon
-userRoute.delete('/removecoupons', userauth.isLogin, couponController.removecoupon);
+userRoute.delete('/removecoupons', userauth.adminblock,userauth.isLogin, couponController.removecoupon);
 
 
 // invoice downlode

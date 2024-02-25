@@ -165,7 +165,7 @@
                 </div>
 
 
-                <div class="pagination-area mt-30 mb-50">
+                <div class="pagination-area mt-30 mb-50 usertable">
                     <table id="tablePagination" class="table table-hover">
                         <thead style="background-color: #3BB77E;">
                             <tr>
@@ -405,7 +405,7 @@
 
                 let text = blockButton.innerHTML;
                 if (text === "block") {
-                    console.log("hiiiii")
+                   
                     $.ajax({
                         url: `/admin/blockProduct/${productId}`,
                         type: 'PUT',
@@ -531,7 +531,8 @@
     </script>
 
     <script src="/js/fetch.js"></script>
-    <script src="/assets/js/main.js?v=1.1" type="text/javascript"></script>
+
+    <!-- <script src="/assets/js/main.js?v=1.1" type="text/javascript"></script> -->
 
 
 

@@ -32,52 +32,6 @@ async function fetchOTP(userId, email) {
 }
 
 
-
-
-//forget resend otp
-
-// async function forgetOTP(userId, email) {
-
-//     event.preventDefault();
-//     try {
-//         const response = await fetch('/resendotp', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({ userId, email }),
-//         });
-
-//         if (response.ok) {
-
-//             window.location.reload()
-
-
-
-//             console.log('Resend OTP request successful');
-
-
-//         } else {
-//             console.error('Resend OTP request failed');
-//         }
-//     } catch (error) {
-//         console.error('Error during Resend OTP request:', error);
-//     }
-// }
-
-
-
-
-// otp timer
-
-
-
-
-
-
-
-
-
 function addressvalidation() {
 
     const fullname = document.getElementById('fullname').value;
@@ -106,7 +60,7 @@ function addressvalidation() {
         document.getElementById('fullname-error').textContent = 'enter your name';
         isValid = false;
     }
-    console.log(email)
+    
     const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
     if (!email || !emailPattern.test(email)) {
@@ -156,7 +110,7 @@ function addressvalidation() {
 
 
 function address() {
-    console.log("ok");
+    
 
     const fullname = document.getElementById('fullname').value;
     const mobile = document.getElementById('mobile').value;
@@ -186,10 +140,9 @@ function address() {
             if (data) {
 
                 document.getElementById('addaddressmodal').style.display = "none";
-                // $('#edit-address-div').load('/useraccount #edit-address-div');
-                // $('#editdive').load('/useraccount #editdive');
+                
                 window.location.reload();
-                // $('#edit-address-div').load('/useraccount #edit-address-div');
+               
 
                 Swal.fire({
                     icon: 'success',
@@ -222,7 +175,6 @@ function editaddressvalidation() {
     const pin = document.getElementById('editpin').value;
 
 
-    console.log(email);
 
     document.getElementById('fullname-error').innerText = '';
     document.getElementById('mobile-error').innerText = '';
@@ -301,7 +253,7 @@ function editaddress() {
     const pin = document.getElementById('editpin').value;
     const addressId = document.getElementById('editAddressId').value;
 
-    // console.log(addressId);
+
 
     fetch('/editaddress', {
         method: 'PATCH',
@@ -321,8 +273,8 @@ function editaddress() {
     })
         .then(response => response.json())
         .then(data => {
-            if (data.status) {
-                console.log("now")
+            if (data) {
+           
                 document.getElementById('EditAddressmodal').style.display = "none";
                 $('#edit-address-div').load('/useraccount #edit-address-div')
                 Swal.fire({
@@ -350,7 +302,7 @@ function editaddress() {
 
 function deletaddress(k) {
     const adderssId = k;
-    console.log("addressid", adderssId);
+   
 
 
     fetch('/deletaddress', {
@@ -392,7 +344,7 @@ function deletaddress(k) {
 function addcart(x) {
 
     const productId = x;
-    console.log("ha ok ", x);
+   
 
     fetch('/getcart', {
         method: 'POST',
@@ -448,7 +400,7 @@ function addcart(x) {
 function removecart(x) {
 
     const productId = x;
-    console.log("p", productId)
+
     fetch("/removecarts", {
         method: 'POST',
         headers: {
@@ -484,10 +436,7 @@ function removecart(x) {
 
 
 function updateQuantity(productId, count) {
-    console.log("heiiiii");
-
-    console.log(productId);
-    console.log(count);
+  
 
     fetch("/updatecart", {
         method: 'POST',
@@ -519,20 +468,14 @@ function updateQuantity(productId, count) {
 
 }
 
-// document.addEventListener('DOMContentLoaded', function () {
-//     updatesubTottel();
-// });
 
 
 function updatesubTottel() {
-    console.log("hiii")
+   
     const totalColumns = document.querySelectorAll('.cart-totals');
-    console.log(totalColumns)
+   
     const subtotal = document.getElementById('subtotel-amount');
 
-
-    // console.log(totalColumns);
-    console.log(subtotal);
 
     let sum = 0;
 
@@ -556,9 +499,7 @@ function updateTottal(productId, currentQuantity, productprice) {
     const Quantity = currentQuantity;
     const price = productprice;
 
-    console.log(Id);
-    console.log(Quantity);
-    console.log(price);
+    
 
     const tottelelement = document.getElementById('total' + Id);
     const newtottal = price * Quantity;
@@ -597,7 +538,7 @@ function edituser(event) {
         return console.log('your validation failed')
     }
     else {
-        console.log("haa ok")
+       
         useredit()
     }
 
@@ -628,11 +569,9 @@ function useredit() {
                     text: 'Do you want to see cart?',
                     timer: 2000,
                 })
-                // window.location.reload();
                 document.getElementById('editProfileModal').style.display = "none";
                 $('#user-profile-relode').load('/useraccount #user-profile-relode');
 
-                // $('#editProfileModal').load('/useraccount #editProfileModal');
 
             }
 
@@ -731,7 +670,7 @@ function checkoutaddressvalidation() {
 
 
 function checkoutaddress() {
-    console.log("ok");
+  
 
     const fullname = document.getElementById('fullname').value;
     const mobile = document.getElementById('mobile').value;
@@ -760,15 +699,10 @@ function checkoutaddress() {
         .then(data => {
 
             document.getElementById('checkaddaddressmodal').style.display = "none";
-            // $('#edit-address-div').load('/checkour #edit-address-div');
             window.location.reload();
 
 
             if (data) {
-
-
-                // $('#editdive').load('/useraccount #editdive');
-
 
                 Swal.fire({
                     icon: 'success',
@@ -797,7 +731,7 @@ function checkoutaddress() {
 
 
 function checkouteditaddressvalidation() {
-    console.log("kkkkkk");
+    
     const fullname = document.getElementById('editfullname').value;
     const mobile = document.getElementById('editmobile').value;
     const email = document.getElementById('editemail').value;
@@ -887,7 +821,7 @@ function checkouteditaddress() {
     const pin = document.getElementById('editpin').value;
     const addressId = document.getElementById('editAddressId').value;
 
-    // console.log(addressId);
+    
 
     fetch('/editaddress', {
         method: 'PATCH',
@@ -908,7 +842,7 @@ function checkouteditaddress() {
         .then(response => response.json())
         .then(data => {
             if (data) {
-                console.log("now")
+             
                 document.getElementById('checkoutEditAddressmodal').style.display = "none";
                 // $('#edit-address-div').load('/checkout #edit-address-div')
                 window.location.reload();
@@ -962,9 +896,9 @@ function checkoutpost() {
     const params = new URLSearchParams(formData);
     const jsonData = Object.fromEntries([...params.entries()]);
 
-    console.log(formData)
+   
 
-    console.log("klkl");
+   
 
     fetch('/checkoutform', {
         method: 'POST',
@@ -977,14 +911,12 @@ function checkoutpost() {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+        
             if (data.status === "success") {
                 console.log("Product placed successfully");
                 window.location.href = "/success";
             } else if (data.status === "false") {
 
-                console.log(data.order, "***********")
-                console.log(data.subtotel, "***********")
                 razerpay(data.order, data.subtotel)
             } else {
 
@@ -996,8 +928,7 @@ function checkoutpost() {
 }
 
 function razerpay(order, subtotel) {
-    console.log(order, "#######")
-    console.log(subtotel, "######")
+    
 
 
     var options = {
@@ -1066,9 +997,7 @@ function cancelorder(x, ids, order_id) {
     const productId = x;
     const id = ids;
     const orderId = order_id;
-    console.log(productId);
-    console.log(id);
-    console.log(orderId);
+ 
     fetch('/orderstatus', {
         method: 'DELETE',
         headers: {
@@ -1108,9 +1037,7 @@ function returnorder(x, y, z) {
     const productId = x;
     const id = y;
     const orderId = z;
-    console.log("productId", productId)
-    console.log("id", id)
-    console.log("orderId", orderId)
+   
 
     Swal.fire({
         title: 'Enter Return Reason',
@@ -1173,27 +1100,9 @@ function addwishlist(productId) {
             .then(response => response.json())
             .then(data => {
 
-                // if (data.status) {
-                //     $('#edit-address-div').load('/checkout #edit-address-div')
-                //     // window.location.reload();
-
-
-
-                // } else {
-                //     $('#edit-address-div').load('/checkout #edit-address-div')
-                //     // window.location.reload();
-
-
-                // }
+               
 
                 window.location.reload();
-
-
-
-                // $('#edit-address-div').load('/checkout #edit-address-div')
-
-
-
 
 
 
@@ -1241,8 +1150,7 @@ function removewishlist(productId) {
 
                 }
 
-                // window.location.reload();
-                // $('#relode-div').load('/detaile #relode-div');
+                
 
 
             }).catch(error => {
@@ -1258,7 +1166,7 @@ function removewishlist(productId) {
 
 function couponapply(x) {
     const couponId = x;
-    console.log(couponId);
+
     fetch('/applycoupons', {
         method: 'POST',
         headers: {
@@ -1319,7 +1227,7 @@ function couponapply(x) {
 
 function removecoupon(x) {
     const couponId = x;
-    console.log(couponId);
+ 
     fetch('/removecoupons', {
         method: 'DELETE',
         headers: {
@@ -1359,7 +1267,7 @@ function removecoupon(x) {
 
             }
 
-            // window.location.reload();
+           
 
 
 
@@ -1379,7 +1287,7 @@ function removecoupon(x) {
 function offerapply(x) {
     const offerId = x;
     const productId = document.getElementById(`hiddenproductId${index}`).value;
-    console.log(productId, "productid");
+   
     fetch('/admin/applyoffer', {
         method: 'POST',
         headers: {
@@ -1404,8 +1312,6 @@ function offerapply(x) {
 
                 });
 
-                // $('#relodedives').load('/checkout #relodedives');
-                // $('#checkrelodedives').load('/checkout #checkrelodedives');
 
 
             }
@@ -1424,7 +1330,7 @@ function removeoffer(i) {
     let index;
     index = i;
     const productId = document.getElementById(`hiddenproductId${index}`).value;
-    console.log(productId);
+ 
     fetch('/admin/removeoffer', {
         method: 'PATCH',
         headers: {
@@ -1447,8 +1353,6 @@ function removeoffer(i) {
 
                 });
 
-                // $('#relodedives').load('/checkout #relodedives');
-                // $('#checkrelodedives').load('/checkout #checkrelodedives');
 
 
             }
@@ -1464,7 +1368,7 @@ function removeoffer(i) {
 
 function removecoupon(x) {
     const couponId = x;
-    console.log(couponId);
+  
     fetch('/removecoupons', {
         method: 'DELETE',
         headers: {
@@ -1504,8 +1408,7 @@ function removecoupon(x) {
 
             }
 
-            // window.location.reload();
-
+      
 
 
 

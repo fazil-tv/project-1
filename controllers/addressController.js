@@ -6,7 +6,7 @@ const productSchema = require('../model/productSchema')
 const addressSchema = require('../model/addressModel');
 
 // add address
-const adaddress = async (req, res) => {
+const Postaddress = async (req, res) => {
     try {
         const userId = req.session.user_id;
         const data = {
@@ -44,7 +44,7 @@ const adaddress = async (req, res) => {
 
 // edit address
 
-const editaddress = async (req, res) => {
+const Patchaddress = async (req, res) => {
 
     try {
         const { fullname, email, state, pin, mobile, city, houseName, addressId } = req.body;
@@ -64,7 +64,7 @@ const editaddress = async (req, res) => {
                 'address.$.houseName': houseName,
             }
         })
-        res.json({ status: "editaddress success", editaddress })
+        res.json({ add: true })
     } catch (error) {
         res.status(500).render('500');
 
@@ -72,7 +72,7 @@ const editaddress = async (req, res) => {
 
 }
 
-const deletaddress = async (req, res) => {
+const Deletaddress = async (req, res) => {
 
     try {
         const userId = req.session.user_id;
@@ -94,8 +94,8 @@ const deletaddress = async (req, res) => {
 
 
 module.exports = {
-    adaddress,
-    editaddress,
-    deletaddress
+    Postaddress,
+    Patchaddress,
+    Deletaddress
 
 }

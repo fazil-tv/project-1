@@ -26,40 +26,50 @@ const razorpay = new Razorpay({
 const checkout = async (req, res) => {
 
     try {
-      
+
+
+
+
         const userId = req.session.user_id;
-     
-        const userData = await userSchema.findById(userId);
-      
-        const address = await addressSchema.findOne({ user: userId });
-      
-        const cartData = await cartSchema.findOne({ user: userId }).populate('products').populate('couponDiscount')
 
-        const currentDate = new Date();
-        const coupon = await couponSchema.find({ expiryDate: { $gte: currentDate }, is_blocked: false });
+        const cart = await cartSchema.find({ user: userId });
 
-       
-        let coupondiscount = 0;
-        if (cartData.couponDiscount) {
-            coupondiscount = cartData.couponDiscount.discountPercentage;
-        }
+        if (cart.length > 0) {
 
-      
+            const userData = await userSchema.findById(userId);
 
-        const subtotel = cartData.products.reduce((acc, val) => acc + (val.totalPrice || 0), 0);
-    
+            const address = await addressSchema.findOne({ user: userId });
+
+            const cartData = await cartSchema.findOne({ user: userId }).populate('products').populate('couponDiscount')
+
+            const currentDate = new Date();
+            const coupon = await couponSchema.find({ expiryDate: { $gte: currentDate }, is_blocked: false });
 
 
+            let coupondiscount = 0;
+            if (cartData.couponDiscount) {
+                coupondiscount = cartData.couponDiscount.discountPercentage;
+            }
 
-       
-        let discountamount;
-        if (cartData.couponDiscount) {
-            discountamount = (coupondiscount / 100) * subtotel;
+
+
+            const subtotel = cartData.products.reduce((acc, val) => acc + (val.totalPrice || 0), 0);
+
+
+
+
+
+            let discountamount;
+            if (cartData.couponDiscount) {
+                discountamount = (coupondiscount / 100) * subtotel;
+            } else {
+                discountamount = subtotel
+            }
+
+            res.render('checkout', { address, cartData, subtotel, coupon, discountamount, coupondiscount, userData });
         } else {
-            discountamount = subtotel
+            res.redirect('/shop');
         }
-
-        res.render('checkout', { address, cartData, subtotel, coupon, discountamount, coupondiscount, userData });
     } catch (error) {
         console.log(error);
     }
@@ -71,16 +81,16 @@ const checkoutPost = async (req, res) => {
     try {
 
         const userId = req.session.user_id;
-       
+
         const user = await userSchema.findOne({ _id: userId })
         const cartData = await cartSchema.findOne({ user: userId });
 
-       
 
 
 
 
-       
+
+
 
         const { jsonData } = req.body;
 
@@ -91,7 +101,7 @@ const checkoutPost = async (req, res) => {
             { 'address._id': deliveryAddressObjectId },
             { 'address.$': 1 }
         );
-       
+
 
         const selectedpayament = jsonData.payment
 
@@ -101,8 +111,8 @@ const checkoutPost = async (req, res) => {
 
         const subtotel = cartData.products.reduce((acc, val) => acc + (val.totalPrice || 0), 0);
 
-    
-       
+
+
 
 
 
@@ -124,14 +134,8 @@ const checkoutPost = async (req, res) => {
 
         }
         const subtotelamount = cartDatas.products.reduce((acc, val) => acc + (val.totalPrice || 0), 0);
-        console.log(subtotel, "rrt");
+      
 
-
-        // const discountAmount = (coupondiscount / 100) * subtotelamount;
-
-
-
-        // const discountamount = subtotelamount - coupondiscount;
         let discountamount;
         if (cartDatas.couponDiscount) {
             discountamount = (coupondiscount / 100) * subtotelamount;
@@ -142,7 +146,7 @@ const checkoutPost = async (req, res) => {
         }
 
 
-        console.log("******", discountamount);
+
 
         const count = 1000;
         const generatedId = await orderSchema.countDocuments() + count
@@ -158,18 +162,16 @@ const checkoutPost = async (req, res) => {
             orderDate: new Date(),
         })
         await order.save();
-        console.log(order);
+     
 
         const orderId = order._id;
-        console.log(orderId);
+ 
 
         if (order.orderStatus === "placed") {
             for (let i = 0; i < cartData.products.length; i++) {
                 let product = cartData.products[i].productId;
                 let count = cartData.products[i].count;
 
-                console.log(product);
-                console.log(count);
                 await productSchema.updateOne({ _id: product }, { $inc: { quantity: -count } })
             }
             await cartSchema.deleteOne({ user: userId });
@@ -188,8 +190,6 @@ const checkoutPost = async (req, res) => {
                 let product = cartData.products[i].productId;
                 let count = cartData.products[i].count;
 
-                console.log(product);
-                console.log(count);
                 await productSchema.updateOne({ _id: product }, { $inc: { quantity: -count } })
             }
             await cartSchema.deleteOne({ user: userId });
@@ -205,12 +205,6 @@ const checkoutPost = async (req, res) => {
                 },
                 { new: true }
             );
-
-
-
-
-
-
             res.json({ status: 'success', message: "product placed succesfully" });
 
 
@@ -226,7 +220,7 @@ const checkoutPost = async (req, res) => {
                 if (err) {
                     console.log(err);
                 }
-               
+
                 res.json({ status: "false", message: "product placed succesfully", order, subtotel });
             });
 
@@ -251,7 +245,7 @@ const orderstatus = async (req, res) => {
         const id = req.query.id;
         const orders = await orderSchema.findOne({ _id: id }).populate('products.productId');
         const deliveryAddressObjectId = new mongoose.Types.ObjectId(orders.delivery_address);
-    
+
         const userAddress = await addressSchema.findOne(
             { 'address._id': deliveryAddressObjectId },
             { 'address.$': 1 }
@@ -266,35 +260,23 @@ const orderstatus = async (req, res) => {
 
 
 const cancelorder = async (req, res) => {
-    console.log("hiiii");
-    // const orderId = req.body.orderId;
+
 
     const productId = req.body.productId;
     const id = req.body.id;
     const orderId = req.body.orderId;
 
-   
 
-    console.log("here ", productId);
 
     try {
         const userId = req.session.user_id;
-        console.log(userId);
-
-
-
         const orderdata = await orderSchema.findOne({ 'products._id': productId });
         const index = orderdata.products.findIndex((item) => {
             return item._id.toString() === productId;
         });
         orderdata.products[index].productstatus = "canceled";
         await orderdata.save();
-
-
-
         const updatedOrders = await orderSchema.findById(orderId)
-
-
         if (updatedOrders.payment !== 'Cash on delivery') {
 
             const product = updatedOrders.products.find((products) => products.productId.toString() === id);
@@ -304,15 +286,10 @@ const cancelorder = async (req, res) => {
                 amount: walletamount,
                 date: Date.now(),
             }
-            // await orderSchema.findById(orderId)
+
             await userSchema.findOneAndUpdate({ _id: userId }, { $inc: { wallet: walletamount }, $push: { walletHistory: data } })
 
         }
-
-
-
-
-
         for (let i = 0; i < orderdata.products.length; i++) {
 
             let product = orderdata.products[i].productId;
@@ -332,56 +309,31 @@ const cancelorder = async (req, res) => {
 
 const returnorders = async (req, res) => {
 
-    console.log("hiiii");
+
     const productId = req.body.productId;
     const id = req.body.id;
     const orderId = req.body.orderId;
-    console.log("here ", productId);
     const returnReason = req.body.returnReason;
-    console.log(returnReason, "%%%%%%%%%");
-
-
     try {
         const userId = req.session.user_id;
-        console.log(userId);
-
-
-
         const orderdata = await orderSchema.findOne({ 'products._id': productId });
-        console.log(orderdata, "##########")
         const index = orderdata.products.findIndex((item) => {
             return item._id.toString() === productId;
         });
         orderdata.products[index].productstatus = "return";
         await orderdata.save();
-
-
         await orderSchema.updateMany({}, { $set: { "products.$[].returnreason": returnReason } });
-
-
-
-
         const updatedOrders = await orderSchema.findById(orderId)
-        console.log(updatedOrders, "klllllllllll");
         const product = updatedOrders.products.find((products) => products.productId.toString() === id);
-        console.log(product, "klllllllllll");
-
         const walletamount = product.totalPrice;
-        console.log(walletamount, "%%%%%%%$$$$");
-
         const data = {
             amount: walletamount,
             date: Date.now(),
         }
-
-
         for (let i = 0; i < orderdata.products.length; i++) {
-
             let product = orderdata.products[i].productId;
             let count = orderdata.products[i].count;
-
             await productSchema.updateOne({ _id: product }, { $inc: { quantity: count } })
-
 
         }
         await userSchema.findOneAndUpdate({ _id: userId }, { $inc: { wallet: walletamount }, $push: { walletHistory: data } })
@@ -407,15 +359,11 @@ const verifyPayment = async (req, res) => {
         const userId = req.session.user_id;
 
         const user = await userSchema.findOne({ _id: userId });
-        console.log(user, "userssssss");
 
-
-        console.log(responce, "responce");
-        console.log(order, "order");
 
 
         const cartData = await cartSchema.findOne({ user: userId })
-        console.log(cartData);
+
 
         const hmac = crypto.createHmac("sha256", process.env.RAZORPAY_SCRETKEY);
         hmac.update(responce.razorpay_order_id + "|" + responce.razorpay_payment_id);
@@ -427,12 +375,9 @@ const verifyPayment = async (req, res) => {
                 let product = cartData.products[i].productId;
                 let count = cartData.products[i].count;
 
-                console.log(product);
-                console.log(count);
                 await productSchema.updateOne({ _id: product }, { $inc: { quantity: -count } })
             }
 
-            // const addressStatus = await orderSchema.findByIdAndUpdate({ _id: order.receipt }, { $set: { orderStatus: "placed" },{products.productstatus:"placed"} },{ new: true } );
             const addressStatus = await orderSchema.findByIdAndUpdate(
                 { _id: order.receipt },
                 {
@@ -443,10 +388,6 @@ const verifyPayment = async (req, res) => {
                 },
                 { new: true }
             );
-
-            console.log(addressStatus, "heeeyyyyy");
-
-
 
             await cartSchema.deleteOne({ user: userId });
             res.json({ status: 'success', message: "product placed succesfully" });

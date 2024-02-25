@@ -24,8 +24,6 @@ const coupon = async (req, res) => {
 
 const addcoupon = async (req, res) => {
     try {
-
-        // const coupondata = await couponSchema.findOne({couponCode:req.body.couponCode})
         res.render('addcoupon');
     } catch (error) {
         console.log(error);
@@ -33,20 +31,13 @@ const addcoupon = async (req, res) => {
 }
 const addcouponpost = async (req, res) => {
     try {
-        console.log(req.body);
-        // const couponname = req.body.couponname;
-        // const couponCode = req.body.couponCode;
-        // const DiscountPercentage = req.body.DiscountPercentage;
-        // const MaxDiscount = req.body.MaxDiscount;
-        // const ActivateDate = req.body.ActivateDate;
-        // const ExpiryDate = req.body.ExpiryDate;
-        // const CriteriaAmount = req.body.CriteriaAmount;
+
         const couponData = await couponSchema.findOne({ couponCode: req.body.couponCode });
 
 
 
         if (couponData) {
-            // res.render("addcoupon", { message: 'coupon code already exist' })
+        
             res.json({ status: false })
 
         } else {
@@ -70,10 +61,10 @@ const addcouponpost = async (req, res) => {
 const deletcoupon = async (req, res) => {
     try {
         const couponId = req.body.couponId;
-        console.log(couponId);
+      
         const couponremoved = await couponSchema.deleteOne({ _id: couponId });
         res.json({ status: true });
-     } catch (error) {
+    } catch (error) {
         console.log(error);
     }
 }
@@ -83,12 +74,10 @@ const applycoupon = async (req, res) => {
     try {
         const couponId = req.body.couponId
         const userId = req.session.user_id;
-        console.log(couponId)
-        console.log(userId)
+
 
         const currentDate = new Date();
         const couponDatas = await couponSchema.findOne({ _id: couponId, expiryDate: { $gte: currentDate }, is_blocked: false });
-        console.log(couponDatas);
         const couponexists = couponDatas.usedUsers.includes(userId);
 
         if (!couponexists) {
@@ -101,12 +90,12 @@ const applycoupon = async (req, res) => {
                 await couponSchema.findOneAndUpdate({ _id: couponId }, { $push: { usedUsers: userId } });
                 await cartSchema.findOneAndUpdate({ user: userId }, { $set: { couponDiscount: couponDatas._id } });
                 res.json({ status: "applid" });
-            }else{
-                res.json({ status:"alreadyapplid" });
+            } else {
+                res.json({ status: "alreadyapplid" });
             }
-            
+
         } else {
-            res.json({ status:"alreadyused" });
+            res.json({ status: "alreadyused" });
         }
 
 
@@ -120,15 +109,12 @@ const removecoupon = async (req, res) => {
 
         const couponId = req.body.couponId
         const userId = req.session.user_id;
-
-        console.log(couponId, "kkkkkk")
-        console.log(userId);
         const couponData = await couponSchema.findOneAndUpdate({ _id: couponId }, { $pull: { usedUsers: userId } });
         const cartData = await cartSchema.findOneAndUpdate({ user: userId }, { $set: { couponDiscount: null } });
         res.json({ status: true })
     } catch (error) {
 
-        res.json({ status:"alreadyused"})
+        res.json({ status: "alreadyused" })
         console.log(error);
     }
 
@@ -140,7 +126,7 @@ module.exports = {
     addcouponpost,
     deletcoupon,
     applycoupon,
-    removecoupon 
+    removecoupon
 }
 
 
