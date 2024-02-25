@@ -183,6 +183,7 @@ let sendEmails = async (email, _id) => {
                    <p>This code <b>expires in 5 minits</b>.</p>`,
         };
 
+        
         // Send the email
         console.log("OTP", otp)
         const hashedOTP = await bcrypt.hash(otp, 10);
