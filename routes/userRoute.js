@@ -34,13 +34,14 @@ userRoute.get("/login",userauth.isLogout, (req, res) => {
 })
 
 
-userRoute.get("/otp", async (req, res) => {
-    const userId = req.session.user_id
+userRoute.get("/otp",userauth.isLogout , async (req, res) => {
+    const userId = req.query.id;
     const user = await User.findOne({_id:userId});
     const email = user.email;
     res.render("otp", { userId ,email});
 
 });
+
 
 userRoute.post('/otp', userController.verifyPost)
 
@@ -142,14 +143,9 @@ userRoute.post('/getemail',userController.getemail)
 
 //forgototp
 userRoute.get("/forgototp",userController.forgototp);
-// userRoute.post("/forgototp",userController.)
 
-
-//
 userRoute.post("/forgototp",userController.otpverification);
 
-
-//
 userRoute.get('/changepasswordform',userController.changepasswordform);
 userRoute.post('/changepasswordform',userController.changepassword);
 
@@ -188,7 +184,6 @@ userRoute.delete('/removecoupons', userauth.adminblock,userauth.isLogin, couponC
 
 // invoice downlode
 userRoute.get('/invoice', userauth.isLogin,userController.invoice);
-
 userRoute.get('/500', userauth.isLogin,userController.Internalerror);
 
 

@@ -21,7 +21,7 @@
     <h4>Enter OTP Code</h4>
     <div>
       <%if (locals.message ){%>
-        <p id="message"> 
+        <p id="message">
           <%=message%>
         </p>
         <%}%>
@@ -34,11 +34,13 @@
         <input id="num3" name="num3" type="number" disabled />
         <input id="num" name="num4" type="number" disabled />
       </div>
-      <%console.log( userId, email) %>
+
+  
+
       <p class="otp-text w-100" id="resend-div" style="display: none;">Not received your code <a href=""
           onclick=" forgotfetchOTP('<%= userId %>','<%=email%>')" id="resendButton"
-          style="font-size: 12px;  text-decoration: none; color: #0e4bf1">RESEND OTP</a></p>
-
+          style="font-size: 12px;  text-decoration: none; color: #0e4bf1">RESEND OTP</a>
+      </p>
 
       <div class="time-div" id="time-div-id">
         <p class="otp-text">Not received your code </p>
@@ -90,7 +92,7 @@
           document.getElementById('resend-div').style.display = 'block';
           const buttons = document.getElementById('submitbutton');
           buttons.disabled = true;
-        
+
 
 
           minutes.value = '0';

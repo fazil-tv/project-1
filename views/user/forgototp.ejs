@@ -33,8 +33,11 @@
         <input id="num2" name="num2" type="number" disabled />
         <input id="num3" name="num3" type="number" disabled />
         <input id="num4" name="num4" type="number" disabled />
+    
       </div>
-      <%console.log(usrid, mail) %>
+      <input type="hidden" value="<%= usrid %>" id="userhidenvalue">
+
+    
         <p class="otp-text w-100" id="resend-div" style="display: none;">Not received your code <a href=""
             onclick="fetchOTP('<%= usrid %>','<%=mail%>')" id="resendButton"
             style="font-size: 12px;  text-decoration: none; color: #0e4bf1">RESEND OTP</a></p>
@@ -128,12 +131,11 @@
       const num2 = document.getElementById('num2').value;
       const num3 = document.getElementById('num3').value;
       const num4 = document.getElementById('num4').value;
-      console.log(num1)
-      console.log(num2)
 
-      console.log(num3)
+      const userId = document.getElementById("userhidenvalue").value;
 
-      console.log(num4)
+
+   
 
 
 
@@ -147,6 +149,7 @@
           num2,
           num3,
           num4,
+          userId
 
         })
       })

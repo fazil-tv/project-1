@@ -144,8 +144,11 @@ const insertUser = async (req, res) => {
         }
 
 
-        req.session.user_id = userData._id;
+        // req.session.user_id = userData._id;
         const id = userData._id
+    
+
+        
         if (userData) {
 
             await sendmailUser(email, id, res);
@@ -208,7 +211,8 @@ const sendmailUser = async (email, id, res) => {
         await sendEmails(email, id);
        
         console.log("Email sent successfully");
-        res.redirect(`/otp`);
+        res.redirect(`/otp?id=${id}`);
+
     } catch (error) {
         console.error("Error sending email:", error);
         res.send("Error sending email");
@@ -221,9 +225,7 @@ const sendmailUser = async (email, id, res) => {
 //resend otp
 const resendEmails = async (email, _id) => {
     try {
-        console.log("sdsdsdhg")
-        console.log(email);
-
+     
         // Generate a new OTP
         const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
         const mailOptions = {
@@ -268,11 +270,14 @@ const resendmailUser = async (userId, res) => {
 //otp verification 
 const verifyPost = async (req, res) => {
     try {
+
+        
         const { num1, num2, num3, num4 } = req.body;
         const otp = `${num1}${num2}${num3}${num4}`;
 
 
-        const userId = req.session.user_id;
+        
+        const userId = req.query.id;
         const user = await User.findOne({ _id: userId });
         const email = user.email;
 
@@ -282,9 +287,10 @@ const verifyPost = async (req, res) => {
      
 
         if (userOTPVerificationrecord.length == 0) {
+            
             res.render('otp', { message: "record doesn't exist or has been verified already" })
         } else {
-            // const { expiresAt } = userOTPVerificationrecord[0];
+
             const hashedOTP = userOTPVerificationrecord[0].otp;
 
 
@@ -295,7 +301,13 @@ const verifyPost = async (req, res) => {
                 
                 res.render('otp', { message: 'invalid otp', userId, email });
             } else {
+
+                const userData = await User.findOne({ _id: userId });
+                req.session.user_id = userData._id;
+                
                 const user = await User.findOneAndUpdate({ _id: userId },{verfied:true});
+
+              
 
                 await Otp.deleteOne({ user_id: userId });
             
@@ -493,16 +505,9 @@ const edituser = async (req, res) => {
     }
 }
 
-
-
-// }
-
 const resetpassword = async (req, res) => {
     try {
         const { newpassword, currentpassword, repeatpassword } = req.body;
-       
-
-
         if (newpassword == repeatpassword) {
 
             userData = await User.findById(req.session.user_id);
@@ -578,8 +583,7 @@ const getemail = async (req, res) => {
 
         const userId = userData._id;
         const email = userData.email;
-        req.session.user_id = userId;
-
+        // req.session.user_id = userId;
 
         if (userData) {
 
@@ -646,11 +650,9 @@ const otpverification = async (req, res) => {
        
         const { num1, num2, num3, num4 } = req.body;
         const otp = `${num1}${num2}${num3}${num4}`;
+
+        const userId = req.body.userId;
        
-
-
-
-        const userId = req.session.user_id;
         const user = await User.findOne({ _id: userId });
         const email = user.email;
 
@@ -669,11 +671,11 @@ const otpverification = async (req, res) => {
             return res.json({ success: false, message: 'invalid otp' });
 
         } else {
-            if (req.session.user_id) {
+            if (userId) {
           
                 return res.json({ success: true, message: 'done' });
             } else {
-                const userId = req.session.user_id;
+                const userId = userId;
                 const user = await User.findOne({ _id: userId });
                 if (user) {
            
