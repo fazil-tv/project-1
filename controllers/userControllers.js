@@ -295,6 +295,7 @@ const verifyPost = async (req, res) => {
                 
                 res.render('otp', { message: 'invalid otp', userId, email });
             } else {
+                const user = await User.findOneAndUpdate({ _id: userId },{verfied:true});
 
                 await Otp.deleteOne({ user_id: userId });
             

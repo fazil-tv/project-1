@@ -198,7 +198,14 @@
                                             <%= usersData[i]. mobilenumber %>
                                         </b></td>
                                     <td>
-                                        <%= usersData[i].verfied%>
+                                        
+                                        <% if (usersData[i].verfied){%>
+                                            verified
+
+                                        <%}else{%>
+                                            not verified
+
+                                        <%}%>
                                     </td>
                                     <td id="table-id">
                                         <% if (usersData[i].is_blocked) { %>
@@ -211,7 +218,7 @@
                                                     class="block-user"
                                                     id="blockButton<%= usersData[i]._id %>">block</button>
                                                 <% } %>
-                                    </td>
+                                    </td>   
                                 </tr>
                                 <% } %>
                                     <% } else { %>
