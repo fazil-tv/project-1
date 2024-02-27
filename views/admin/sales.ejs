@@ -162,8 +162,8 @@
             </div>
         </header>
         <section class="content-main">
+            <% if (orderData&&orderData.length>0){ %>
             <div class="card">
-                <% if (orderData>0) { %>
                 <header class="card-header">
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-md-6 mb-lg-0 mb-15">
@@ -363,11 +363,12 @@
                         </tbody>
                     </table>
                 </div>
-                <% }{ %>
-                    <p class="text-center">no orders</p>
-
-                <%}%>
+                
             </div>
+            <% }else{ %>
+                <p class="text-center">no orders</p>
+
+            <%}%>
         </section>
 
 
