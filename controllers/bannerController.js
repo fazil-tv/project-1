@@ -91,6 +91,8 @@ const editbannerpost = async (req, res) => {
 }
 
 
+
+
 const listbanner = async (req, res) => {
 
     const bannerId = req.body.bannerId
