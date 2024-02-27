@@ -163,8 +163,7 @@ const updatecart = async (req, res) => {
 
         if (product.category.offer) {
 
-            console.log("count", count)
-            console.log("count", product.discountedPrice)
+         
 
 
 
@@ -174,19 +173,19 @@ const updatecart = async (req, res) => {
 
 
         } else if (product.offer) {
-            console.log("productoffer")
+          
             totalprice = product.discountedPrice * count;
-            console.log(product.discountedPrice, "productdiscountedPrice");
+          
 
 
 
 
         } else {
-            console.log("normal")
+       
             totalprice = product.price * count;
         }
 
-        console.log(totalprice, 'tottll');
+ 
 
 
 

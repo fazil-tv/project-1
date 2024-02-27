@@ -93,7 +93,7 @@ function blockButton(bannerId) {
                 if (data.status === true || data.status === false) {
 
                     window.location.reload();
-                    // $('#relode-div').load('/detaile #relode-div');
+               
 
                 }
 
@@ -125,7 +125,7 @@ function addwishlist() {
                 if (data.status === true || data.status === false) {
 
                     window.location.reload();
-                    // $('#relode-div').load('/detaile #relode-div');
+                 
 
                 }
             }).catch(error => {

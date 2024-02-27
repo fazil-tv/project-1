@@ -163,6 +163,7 @@
         </header>
         <section class="content-main">
             <div class="card">
+                <% if (orderData>0) { %>
                 <header class="card-header">
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-md-6 mb-lg-0 mb-15">
@@ -279,7 +280,7 @@
                         </div>
                     </div>
                 </header>
-
+            
                 <div class="pagination-area  mb-50 usertable">
 
                     <table id="" class="table table-hover">
@@ -362,6 +363,10 @@
                         </tbody>
                     </table>
                 </div>
+                <% }{ %>
+                    <p class="text-center">no orders</p>
+
+                <%}%>
             </div>
         </section>
 

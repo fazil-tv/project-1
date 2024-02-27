@@ -122,6 +122,9 @@ const Loaddashbord = async (req, res) => {
         }
     ]);
 
+    const datas = revenue && revenue.length > 0 ? revenue[0].revenue : 0;
+
+
 
     const currentDate = new Date();
     const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
@@ -152,12 +155,18 @@ const Loaddashbord = async (req, res) => {
         }
     ]);
 
+    
+
     const graphValue = Array(12).fill(0);
 
-    montlyrevenue.forEach(entry => {
-        const monthIndex = entry._id - 1;
-        graphValue[monthIndex] = entry.monthlyrevenue;
-    });
+    
+
+    if (montlyrevenue && montlyrevenue.length > 0) {
+        montlyrevenue.forEach(entry => {
+            const monthIndex = entry._id - 1;
+            graphValue[monthIndex] = entry.monthlyrevenue;
+        });
+    }
 
    
     const cashondelivery = await orderSchema.countDocuments({ "payment": "Cash on delivery" })
@@ -166,7 +175,7 @@ const Loaddashbord = async (req, res) => {
 
     try {
       
-        res.render("index", { totalproducts, totalorers, revenue: revenue[0].revenue, currentMonthName, montlyrevenue: montlyrevenue[0].monthlyrevenue, graphValue, Wallet, cashondelivery, Razorpay });
+        res.render("index", { totalproducts, totalorers, revenue: datas, currentMonthName, montlyrevenue:montlyrevenue[0]?.monthlyrevenue || 0, graphValue, Wallet, cashondelivery, Razorpay });
     } catch (error) {
         console.log(error);
     }

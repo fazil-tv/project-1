@@ -96,7 +96,7 @@ const checkoutPost = async (req, res) => {
 
         const selectedAddress = jsonData.selectedAddress
         const deliveryAddressObjectId = new ObjectId(selectedAddress);
-        console.log(deliveryAddressObjectId)
+     
         const userAddress = await addressSchema.findOne(
             { 'address._id': deliveryAddressObjectId },
             { 'address.$': 1 }

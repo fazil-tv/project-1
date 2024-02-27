@@ -450,7 +450,7 @@ function updateQuantity(productId, count) {
     }).then(response => response.json())
         .then(data => {
             if (data.success === true) {
-                console.log("hiiii ok done");
+              
 
                 $('#checkout-relode').load('/cart #checkout-relode');
 
@@ -484,7 +484,7 @@ function updatesubTottel() {
         sum += parseFloat(column.textContent.replace("$", '') || 0);
     });
 
-    console.log(totalColumns)
+    
 
     subtotal.textContent = sum;
     document.getElementById('subtotel-amount').innerHTML;
@@ -592,7 +592,7 @@ function useredit() {
 
 
 function checkoutaddressvalidation() {
-    console.log("heiiii");
+ 
 
     const fullname = document.getElementById('fullname').value;
     const mobile = document.getElementById('mobile').value;
@@ -937,7 +937,7 @@ function razerpay(order, subtotel) {
         "currency": "INR",
         "name": "Mini Shop",
         "description": "Test Transaction",
-        "image": "https://example.com/your_logo",
+        "image": "https://example.com/your_logo ",
         "order_id": order.id,
         "handler": function (responce) {
             verifyPayment(responce, order);

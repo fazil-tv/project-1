@@ -75,7 +75,7 @@ const deletoffer = async (req, res) => {
 
 const applyoffer = async (req, res) => {
     try {
-        console.log("heeey");
+      
 
         const offerID = req.body.offerId
         const Id = req.body.productId
@@ -86,7 +86,7 @@ const applyoffer = async (req, res) => {
             { $set: {offer: offerId,discountedPrice:0} },
             { new: true }
         );
-        console.log(product)
+    
         res.json({ status: true })
     } catch (error) {
         console.log(error);
@@ -127,7 +127,7 @@ const applycategoryoffer  = async (req,res)=>{
             { $set: {offer: offerId } },
             { new: true }
         );
-        console.log(category)
+      
 
         res.json({ status: true })
 

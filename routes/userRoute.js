@@ -10,8 +10,6 @@ const addressController = require('../controllers/addressController');
 
 const cartController = require('../controllers/cartController');
 
-const checkoutController = require("../controllers/checkoutController");
-
 const orderController = require('../controllers/orderController');
 
 const wishlistController = require('../controllers/wishlistController');

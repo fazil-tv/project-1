@@ -195,30 +195,7 @@
                                 </div>
                             </div>
 
-                            <!--   changing password    -->
-
-                            <!-- <div class="tab-pane fade" id="account-change-password">
-                            <div class="card-body pb-2">
-                                <form id="editProfileForm">
-                                    <div class="form-group">
-                                        <label class="form-label">Current password</label>
-                                        <input type="password" class="form-control" name="currentpassword"
-                                            id="currentpassword">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">New password</label>
-                                        <input type="password" class="form-control" name="newpassword" id="newpassword">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Repeat new password</label>
-                                        <input type="password" class="form-control" name="repeatpassword"
-                                            id="repeatpassword">
-                                    </div>
-                                    <button type="submit" class="save-btn" class="form-control"
-                                        onclick="resetpassword()">Submit</button>
-                                </form>
-                            </div>
-                        </div> -->
+                           
 
                             <div class="tab-pane fade " id="account-change-password">
                                 <div class="card-body pb-2">
@@ -645,13 +622,7 @@
 
 
 
-            <!-- loader -->
-            <!-- <div id=" ftco-loader" class="show fullscreen "><svg class="circular" width="48px" height="48px">
-                <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-                <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-                    stroke="#F96D00" />
-            </svg>
-        </div> -->
+          
 
 
 
@@ -695,8 +666,7 @@
                 }
 
                 function openModal(name, number) {
-                    console.log(name);
-                    console.log(number);
+                  
 
                     document.querySelector('[name="editname"]').value = name;
                     document.querySelector('[name="editMobile"]').value = number;
@@ -706,13 +676,7 @@
                 function closeModal() {
                     document.getElementById('editProfileModal').style.display = 'none';
                 }
-                // function saveChanges() {
-                //     const newUsername = document.getElementById('newUsername').value;
-                //     document.getElementById('usernameInput').value = newUsername;
-                //     const newMobile = document.getElementById('newMobile').value;
-                //     document.getElementById('phoneInput').value = newMobile;
-                //     closeModal();
-                // }
+               
 
 
 
@@ -720,7 +684,7 @@
 
                 function resetPasswordvalidation(event) {
                     event.preventDefault();
-                    console.log("here")
+                  
 
                     const newpassword = document.getElementById('newpassword').value;
                     const repeatpassword = document.getElementById('repeatpassword').value;
@@ -784,11 +748,10 @@
                                 $('#resetdiv').load('/useraccount #resetdiv');
                                 document.getElementById('message').innerHTML = 'reset password completed successfully';
 
-                                // window.relode();
-                                // window.location.reload();
+                              
                             } else {
                                 console.log('Password reset failed');
-                                // document.getElementById('resetdiv').textContent = 'Current password is wrong';
+                             
                                 document.getElementById('message').innerHTML = 'Current password is wrong';
 
                             }
@@ -820,8 +783,7 @@
                 // edit addres modal
 
                 function editaddressopenmodal(fullname, mobile, email, state, city, houseName, pin, addressId) {
-                    console.log("ty", fullname);
-                    console.log("ok", addressId)
+                  
 
                     document.querySelector('[name="editfullname"]').value = fullname;
                     document.querySelector('[name="editmobile"]').value = mobile;

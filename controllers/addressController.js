@@ -15,8 +15,7 @@ const Postaddress = async (req, res) => {
             city: req.body.city,
             pin: req.body.pin
         }
-        console.log(data);
-        console.log(userId);
+       
 
 
         await addressSchema.findOneAndUpdate(
@@ -46,9 +45,7 @@ const Patchaddress = async (req, res) => {
     try {
         const { fullname, email, state, pin, mobile, city, houseName, addressId } = req.body;
         const userId = req.session.user_id;
-        console.log(userId);
-        console.log("editaddressID", addressId);
-        console.log("editfullname", fullname);
+       
 
         await addressSchema.updateOne({ user: userId, 'address._id': addressId }, {
             $set: {
@@ -74,8 +71,7 @@ const Deletaddress = async (req, res) => {
     try {
         const userId = req.session.user_id;
         const addressId = req.body.addressId;
-        console.log("where", userId);
-        console.log("where adderssId", addressId);
+
         const data = await addressSchema.updateOne({ user: userId }, { $pull: { address: { _id: addressId } } })
 
         res.json({ add: true })
