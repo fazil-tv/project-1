@@ -1,8 +1,5 @@
 const User = require('../model/userSchema')
-
-
 const productSchema = require('../model/productSchema')
-
 const addressSchema = require('../model/addressModel');
 
 // add address
